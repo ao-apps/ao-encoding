@@ -35,6 +35,8 @@ import javax.servlet.jsp.tagext.BodyContent;
  * Coerces objects to String compatible with JSP Expression Language (JSP EL)
  * and the Java Standard Taglib (JSTL).
  *
+ * TODO: Once no longer used by ChainWriter, this should go to the aocode-public-taglib project.
+ *
  * @author  AO Industries, Inc.
  */
 public final class Coercion  {
