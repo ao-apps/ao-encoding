@@ -27,7 +27,7 @@ import java.io.Writer;
 
 /**
  * Encodes arbitrary text into a JavaScript string.  The static utility
- * methods to not add the quotes.  When used as a MediaWriter, the text is
+ * methods do not add the quotes.  When used as a MediaWriter, the text is
  * automatically surrounded by double quotes.  Any binary data is encoded with
  * \\uxxxx escapes.
  *
