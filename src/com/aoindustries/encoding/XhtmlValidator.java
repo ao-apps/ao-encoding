@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -42,12 +42,15 @@ public class XhtmlValidator extends MediaValidator {
      */
     public static void checkCharacter(char c) throws IOException {
         if(
-            c!=0x9
-            && c!=0xA
-            && c!=0xD
-            && (c<0x20 || c>0xD7FF)
-            && (c<0xE000 || c>0xFFFD)
-            && (c<0x10000 || c>0x10FFFF)
+            (c < 0x20 || c > 0xD7FF) // common case first
+            && c != 0x9
+            && c != 0xA
+            && c != 0xD
+            && (c < 0xE000 || c > 0xFFFD)
+			// high and low surrogates
+            //&& (c < 0x10000 || c > 0x10FFFF)
+            && (c < Character.MIN_HIGH_SURROGATE || c > Character.MAX_LOW_SURROGATE)
+			
         ) throw new IOException(ApplicationResources.accessor.getMessage("XhtmlValidator.invalidCharacter", Integer.toHexString(c)));
     }
 
