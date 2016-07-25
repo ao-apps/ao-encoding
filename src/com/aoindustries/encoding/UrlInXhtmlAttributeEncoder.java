@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -60,7 +60,8 @@ public class UrlInXhtmlAttributeEncoder extends BufferedEncoder {
         encodeTextInXhtmlAttribute(
             response.encodeURL(
                 UrlUtils.encodeUrlPath(
-                    buffer.toString()
+                    buffer.toString(),
+					response.getCharacterEncoding()
                 )
             ),
             out
