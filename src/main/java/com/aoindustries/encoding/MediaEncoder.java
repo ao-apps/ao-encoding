@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,7 +25,6 @@ package com.aoindustries.encoding;
 import com.aoindustries.io.Encoder;
 import java.io.IOException;
 import java.io.Writer;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Encodes media to allow it to be contained in a different type of media.
@@ -47,14 +46,14 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
      * When no encoder is returned, it is necessary to use a separate validator
      * if character validation is required.
      *
-	 * @param  response  Only required when contentType is MediaType.URL
+	 * @param  context  Only required when contentType is MediaType.URL
 	 *
      * @return the encoder or <code>null</code> if no encoding is necessary
      *
      * @exception MediaException when unable to encode the content into the container
      *                           either because it is impossible or not yet implemented.
      */
-    public static MediaEncoder getInstance(HttpServletResponse response, MediaType contentType, MediaType containerType) throws MediaException {
+    public static MediaEncoder getInstance(EncodingContext context, MediaType contentType, MediaType containerType) throws MediaException {
         final MediaEncoder encoder;
         switch(contentType) {
             case JAVASCRIPT :
@@ -77,11 +76,11 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
                 break;
             case URL :
                 switch(containerType) {
-                    case JAVASCRIPT :      encoder = new UrlInJavaScriptEncoder(response); break;
+                    case JAVASCRIPT :      encoder = new UrlInJavaScriptEncoder(context); break;
                     case TEXT :            return null;
                     case URL :             return null;
-                    case XHTML :           encoder = new UrlInXhtmlEncoder(response); break;
-                    case XHTML_ATTRIBUTE : encoder = new UrlInXhtmlAttributeEncoder(response); break;
+                    case XHTML :           encoder = new UrlInXhtmlEncoder(context); break;
+                    case XHTML_ATTRIBUTE : encoder = new UrlInXhtmlAttributeEncoder(context); break;
 					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
                 }
                 break;

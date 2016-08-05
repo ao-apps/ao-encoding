@@ -22,10 +22,7 @@
  */
 package com.aoindustries.encoding;
 
-import static com.aoindustries.encoding.TextInXhtmlEncoder.encodeTextInXhtml;
-import com.aoindustries.net.UrlUtils;
 import java.io.IOException;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Encodes a URL into XHTML.  It uses HttpServletRequest.encodeURL to
@@ -35,11 +32,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class UrlInXhtmlEncoder extends BufferedEncoder {
 
-    private final HttpServletResponse response;
+    private final EncodingContext context;
 
-    public UrlInXhtmlEncoder(HttpServletResponse response) {
+    public UrlInXhtmlEncoder(EncodingContext context) {
         super(128);
-        this.response = response;
+        this.context = context;
     }
 
     @Override
@@ -57,13 +54,8 @@ public class UrlInXhtmlEncoder extends BufferedEncoder {
 
     @Override
     protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
-        encodeTextInXhtml(
-            response.encodeURL(
-                UrlUtils.encodeUrlPath(
-                    buffer.toString(),
-					response.getCharacterEncoding()
-                )
-            ),
+        TextInXhtmlEncoder.encodeTextInXhtml(
+			context.encodeURL(buffer.toString()),
             out
         );
     }

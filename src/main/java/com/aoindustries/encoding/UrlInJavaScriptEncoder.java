@@ -22,10 +22,7 @@
  */
 package com.aoindustries.encoding;
 
-import static com.aoindustries.encoding.TextInJavaScriptEncoder.encodeTextInJavaScript;
-import com.aoindustries.net.UrlUtils;
 import java.io.IOException;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Encodes a URL into a JavaScript string.  It uses HttpServletRequest.encodeURL
@@ -35,11 +32,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class UrlInJavaScriptEncoder extends BufferedEncoder {
 
-    private final HttpServletResponse response;
+    private final EncodingContext context;
 
-	public UrlInJavaScriptEncoder(HttpServletResponse response) {
+	public UrlInJavaScriptEncoder(EncodingContext context) {
 		super(128);
-        this.response = response;
+        this.context = context;
     }
 
     @Override
@@ -62,13 +59,8 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
 
 	@Override
     protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
-        encodeTextInJavaScript(
-            response.encodeURL(
-                UrlUtils.encodeUrlPath(
-                    buffer.toString(),
-					response.getCharacterEncoding()
-                )
-            ),
+        TextInJavaScriptEncoder.encodeTextInJavaScript(
+			context.encodeURL(buffer.toString()),
             out
         );
         out.append('"');

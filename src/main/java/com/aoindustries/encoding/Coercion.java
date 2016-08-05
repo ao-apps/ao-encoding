@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2013, 2015  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -29,7 +29,6 @@ import java.io.Writer;
 import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.jsp.tagext.BodyContent;
 
 /**
  * Coerces objects to String compatible with JSP Expression Language (JSP EL)
@@ -63,13 +62,13 @@ public final class Coercion  {
 	private static final String BODY_CONTENT_IMPL_CLASS = "org.apache.jasper.runtime.BodyContentImpl";
 	private static final String WRITER_FIELD = "writer";
 
-	private static final Class<? extends BodyContent> bodyContentImplClass;
+	private static final Class<?> bodyContentImplClass;
 	private static final Field writerField;
 	static {
-		Class<? extends BodyContent> clazz;
+		Class<?> clazz;
 		Field field;
 		try {
-			clazz = Class.forName(BODY_CONTENT_IMPL_CLASS).asSubclass(BodyContent.class);
+			clazz = Class.forName(BODY_CONTENT_IMPL_CLASS);
 			field = clazz.getDeclaredField(WRITER_FIELD);
 			field.setAccessible(true);
 		} catch(Exception e) {
