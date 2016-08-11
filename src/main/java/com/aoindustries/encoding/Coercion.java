@@ -205,8 +205,8 @@ public final class Coercion  {
 	}
 
 	/**
-     * Make no instances.
-     */
-    private Coercion() {
-    }
+	 * Make no instances.
+	 */
+	private Coercion() {
+	}
 }

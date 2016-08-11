@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2013, 2015  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -32,68 +32,68 @@ import java.io.Writer;
  */
 abstract public class BufferedEncoder extends MediaEncoder {
 
-    /**
-     * Buffers all contents to pass to writeSuffix.
-     */
-    private final StringBuilder buffer;
+	/**
+	 * Buffers all contents to pass to writeSuffix.
+	 */
+	private final StringBuilder buffer;
 
 	protected BufferedEncoder(int initialCapacity) {
 		this.buffer = new StringBuilder(initialCapacity);
-    }
-
-    @Override
-    final public void write(int c, Writer out) {
-        buffer.append((char)c);
-    }
-
-	@Override
-    final public void write(char cbuf[], Writer out) {
-        buffer.append(cbuf);
 	}
 
 	@Override
-    final public void write(char[] cbuf, int off, int len, Writer out) {
-        buffer.append(cbuf, off, len);
-    }
-
-	@Override
-    final public void write(String str, Writer out) {
-        if(str==null) throw new IllegalArgumentException("str is null");
-        buffer.append(str);
+	final public void write(int c, Writer out) {
+		buffer.append((char)c);
 	}
 
 	@Override
-    final public void write(String str, int off, int len, Writer out) {
-        if(str==null) throw new IllegalArgumentException("str is null");
-        buffer.append(str, off, off+len);
-    }
-
-    @Override
-    final public BufferedEncoder append(char c, Appendable out) {
-        buffer.append(c);
-        return this;
-    }
+	final public void write(char cbuf[], Writer out) {
+		buffer.append(cbuf);
+	}
 
 	@Override
-    final public BufferedEncoder append(CharSequence csq, Appendable out) {
+	final public void write(char[] cbuf, int off, int len, Writer out) {
+		buffer.append(cbuf, off, len);
+	}
+
+	@Override
+	final public void write(String str, Writer out) {
+		if(str==null) throw new IllegalArgumentException("str is null");
+		buffer.append(str);
+	}
+
+	@Override
+	final public void write(String str, int off, int len, Writer out) {
+		if(str==null) throw new IllegalArgumentException("str is null");
+		buffer.append(str, off, off+len);
+	}
+
+	@Override
+	final public BufferedEncoder append(char c, Appendable out) {
+		buffer.append(c);
+		return this;
+	}
+
+	@Override
+	final public BufferedEncoder append(CharSequence csq, Appendable out) {
 		buffer.append(csq);
-        return this;
-    }
+		return this;
+	}
 
-    @Override
-    final public BufferedEncoder append(CharSequence csq, int start, int end, Appendable out) {
+	@Override
+	final public BufferedEncoder append(CharSequence csq, int start, int end, Appendable out) {
 		buffer.append(csq, start, end);
-        return this;
-    }
+		return this;
+	}
 
 	/**
 	 * Writes the suffix and clears the buffer for reuse.
 	 */
 	@Override
-    final public void writeSuffixTo(Appendable out) throws IOException {
+	final public void writeSuffixTo(Appendable out) throws IOException {
 		writeSuffix(buffer, out);
 		buffer.setLength(0);
-    }
+	}
 
 	abstract protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException;
 }

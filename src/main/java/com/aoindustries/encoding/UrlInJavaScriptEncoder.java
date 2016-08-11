@@ -32,37 +32,37 @@ import java.io.IOException;
  */
 public class UrlInJavaScriptEncoder extends BufferedEncoder {
 
-    private final EncodingContext context;
+	private final EncodingContext context;
 
 	public UrlInJavaScriptEncoder(EncodingContext context) {
 		super(128);
-        this.context = context;
-    }
-
-    @Override
-    public boolean isValidatingMediaInputType(MediaType inputType) {
-        return
-            inputType==MediaType.URL
-            || inputType==MediaType.TEXT        // No validation required
-        ;
-    }
-
-    @Override
-    public MediaType getValidMediaOutputType() {
-        return MediaType.JAVASCRIPT;
-    }
-
-    @Override
-    public void writePrefixTo(Appendable out) throws IOException {
-        out.append('"');
-    }
+		this.context = context;
+	}
 
 	@Override
-    protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
-        TextInJavaScriptEncoder.encodeTextInJavaScript(
+	public boolean isValidatingMediaInputType(MediaType inputType) {
+		return
+			inputType==MediaType.URL
+			|| inputType==MediaType.TEXT        // No validation required
+		;
+	}
+
+	@Override
+	public MediaType getValidMediaOutputType() {
+		return MediaType.JAVASCRIPT;
+	}
+
+	@Override
+	public void writePrefixTo(Appendable out) throws IOException {
+		out.append('"');
+	}
+
+	@Override
+	protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
+		TextInJavaScriptEncoder.encodeTextInJavaScript(
 			context.encodeURL(buffer.toString()),
-            out
-        );
-        out.append('"');
-    }
+			out
+		);
+		out.append('"');
+	}
 }

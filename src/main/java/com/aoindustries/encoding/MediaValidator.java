@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -33,40 +33,40 @@ import java.io.Writer;
  */
 abstract public class MediaValidator extends FilterWriter implements ValidMediaFilter {
 
-    /**
-     * Gets the media validator for the given type.  If the given writer is
-     * already validator for the requested type, will return the provided writer.
-     *
-     * @exception MediaException when unable to find an appropriate validator.
-     */
-    public static MediaValidator getMediaValidator(MediaType contentType, Writer out) throws MediaException {
-        // If the existing out is already validating for this type, use it.
-        // This occurs when one validation validates to a set of characters that are a subset of the requested validator.
-        // For example, a URL is always valid TEXT.
-        if(out instanceof MediaValidator) {
-            MediaValidator inputValidator = (MediaValidator)out;
-            if(inputValidator.isValidatingMediaInputType(contentType)) return inputValidator;
-        }
-        // Add filter if needed for the given type
-        switch(contentType) {
-            case JAVASCRIPT:
-                return new JavaScriptValidator(out);
-            case TEXT:
-                return new TextValidator(out);
-            case URL:
-                return new UrlValidator(out);
-            case XHTML:
-                return new XhtmlValidator(out);
-            case XHTML_ATTRIBUTE:
-                return new XhtmlAttributeValidator(out);
-            default:
-                throw new MediaException(ApplicationResources.accessor.getMessage("MediaValidator.unableToFindValidator", contentType.getContentType()));
-        }
-    }
+	/**
+	 * Gets the media validator for the given type.  If the given writer is
+	 * already validator for the requested type, will return the provided writer.
+	 *
+	 * @exception MediaException when unable to find an appropriate validator.
+	 */
+	public static MediaValidator getMediaValidator(MediaType contentType, Writer out) throws MediaException {
+		// If the existing out is already validating for this type, use it.
+		// This occurs when one validation validates to a set of characters that are a subset of the requested validator.
+		// For example, a URL is always valid TEXT.
+		if(out instanceof MediaValidator) {
+			MediaValidator inputValidator = (MediaValidator)out;
+			if(inputValidator.isValidatingMediaInputType(contentType)) return inputValidator;
+		}
+		// Add filter if needed for the given type
+		switch(contentType) {
+			case JAVASCRIPT:
+				return new JavaScriptValidator(out);
+			case TEXT:
+				return new TextValidator(out);
+			case URL:
+				return new UrlValidator(out);
+			case XHTML:
+				return new XhtmlValidator(out);
+			case XHTML_ATTRIBUTE:
+				return new XhtmlAttributeValidator(out);
+			default:
+				throw new MediaException(ApplicationResources.accessor.getMessage("MediaValidator.unableToFindValidator", contentType.getContentType()));
+		}
+	}
 
-    protected MediaValidator(Writer out) {
-        super(out);
-    }
+	protected MediaValidator(Writer out) {
+		super(out);
+	}
 
 	/**
 	 * Gets the wrapped writer.
@@ -82,35 +82,35 @@ abstract public class MediaValidator extends FilterWriter implements ValidMediaF
 	abstract public boolean canSkipValidation(MediaType inputType);
 
 	/**
-     * The default implementation of this append method in Writer converts
-     * to a String for backward-compatibility.  This passes the append directly
-     * to the wrapped Writer.
-     */
-    @Override
-    public MediaValidator append(CharSequence csq) throws IOException {
-        out.append(csq);
-        return this;
-    }
+	 * The default implementation of this append method in Writer converts
+	 * to a String for backward-compatibility.  This passes the append directly
+	 * to the wrapped Writer.
+	 */
+	@Override
+	public MediaValidator append(CharSequence csq) throws IOException {
+		out.append(csq);
+		return this;
+	}
 
-    /**
-     * The default implementation of this append method in Writer converts
-     * to a String for backward-compatibility.  This passes the append directly
-     * to the wrapped Writer.
-     */
-    @Override
-    public MediaValidator append(CharSequence csq, int start, int end) throws IOException {
-        out.append(csq, start, end);
-        return this;
-    }
+	/**
+	 * The default implementation of this append method in Writer converts
+	 * to a String for backward-compatibility.  This passes the append directly
+	 * to the wrapped Writer.
+	 */
+	@Override
+	public MediaValidator append(CharSequence csq, int start, int end) throws IOException {
+		out.append(csq, start, end);
+		return this;
+	}
 
-    /**
-     * The default implementation of this append method in Writer calls
-     * the write(int) method for backward-compatibility.  This passes the
-     * append directly to the wrapped Writer.
-     */
-    @Override
-    public MediaValidator append(char c) throws IOException {
-        out.append(c);
-        return this;
-    }
+	/**
+	 * The default implementation of this append method in Writer calls
+	 * the write(int) method for backward-compatibility.  This passes the
+	 * append directly to the wrapped Writer.
+	 */
+	@Override
+	public MediaValidator append(char c) throws IOException {
+		out.append(c);
+		return this;
+	}
 }

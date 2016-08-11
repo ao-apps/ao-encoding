@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -34,14 +34,14 @@ import java.io.File;
  */
 public final class ApplicationResources_ja extends EditableResourceBundle {
 
-    /**
-     * Do not use directly.
-     */
-    public ApplicationResources_ja() {
-        super(
-            Locales.JAPANESE,
-            ApplicationResources.bundleSet,
-            new File(System.getProperty("user.home")+"/common/aoprod/cvswork/ao-encoding/src/com/aoindustries/encoding/ApplicationResources_ja.properties")
-        );
-    }
+	/**
+	 * Do not use directly.
+	 */
+	public ApplicationResources_ja() {
+		super(
+			Locales.JAPANESE,
+			ApplicationResources.bundleSet,
+			new File(System.getProperty("user.home")+"/common/aoprod/cvswork/ao-encoding/src/main/java/com/aoindustries/encoding/ApplicationResources_ja.properties")
+		);
+	}
 }
