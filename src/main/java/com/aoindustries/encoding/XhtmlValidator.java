@@ -35,51 +35,51 @@ import java.io.Writer;
  */
 public class XhtmlValidator extends MediaValidator {
 
-    /**
-     * Checks one character, throws IOException if invalid.
-     *
-     * {@link http://www.w3.org/TR/REC-xml/#charsets}
-     */
-    public static void checkCharacter(char c) throws IOException {
-        if(
-            (c < 0x20 || c > 0xD7FF) // common case first
-            && c != 0x9
-            && c != 0xA
-            && c != 0xD
-            && (c < 0xE000 || c > 0xFFFD)
+	/**
+	 * Checks one character, throws IOException if invalid.
+	 *
+	 * {@link http://www.w3.org/TR/REC-xml/#charsets}
+	 */
+	public static void checkCharacter(char c) throws IOException {
+		if(
+			(c < 0x20 || c > 0xD7FF) // common case first
+			&& c != 0x9
+			&& c != 0xA
+			&& c != 0xD
+			&& (c < 0xE000 || c > 0xFFFD)
 			// high and low surrogates
-            //&& (c < 0x10000 || c > 0x10FFFF)
-            && (c < Character.MIN_HIGH_SURROGATE || c > Character.MAX_LOW_SURROGATE)
-			
-        ) throw new IOException(ApplicationResources.accessor.getMessage("XhtmlValidator.invalidCharacter", Integer.toHexString(c)));
-    }
+			//&& (c < 0x10000 || c > 0x10FFFF)
+			&& (c < Character.MIN_HIGH_SURROGATE || c > Character.MAX_LOW_SURROGATE)
 
-    /**
-     * Checks a set of characters, throws IOException if invalid
-     */
-    public static void checkCharacters(char[] cbuf, int off, int len) throws IOException {
-        int end = off + len;
-        while(off<end) checkCharacter(cbuf[off++]);
-    }
+		) throw new IOException(ApplicationResources.accessor.getMessage("XhtmlValidator.invalidCharacter", Integer.toHexString(c)));
+	}
 
-    /**
-     * Checks a set of characters, throws IOException if invalid
-     */
-    public static void checkCharacters(CharSequence str, int off, int end) throws IOException {
-        while(off<end) checkCharacter(str.charAt(off++));
-    }
+	/**
+	 * Checks a set of characters, throws IOException if invalid
+	 */
+	public static void checkCharacters(char[] cbuf, int off, int len) throws IOException {
+		int end = off + len;
+		while(off<end) checkCharacter(cbuf[off++]);
+	}
 
-    protected XhtmlValidator(Writer out) {
-        super(out);
-    }
+	/**
+	 * Checks a set of characters, throws IOException if invalid
+	 */
+	public static void checkCharacters(CharSequence str, int off, int end) throws IOException {
+		while(off<end) checkCharacter(str.charAt(off++));
+	}
 
-    @Override
-    public boolean isValidatingMediaInputType(MediaType inputType) {
-        return
-            inputType==MediaType.XHTML
-            || inputType==MediaType.TEXT        // No validation required
-        ;
-    }
+	protected XhtmlValidator(Writer out) {
+		super(out);
+	}
+
+	@Override
+	public boolean isValidatingMediaInputType(MediaType inputType) {
+		return
+			inputType==MediaType.XHTML
+			|| inputType==MediaType.TEXT        // No validation required
+		;
+	}
 
 	@Override
 	public boolean canSkipValidation(MediaType inputType) {
@@ -90,47 +90,47 @@ public class XhtmlValidator extends MediaValidator {
 	}
 
 	@Override
-    public MediaType getValidMediaOutputType() {
-        return MediaType.XHTML;
-    }
+	public MediaType getValidMediaOutputType() {
+		return MediaType.XHTML;
+	}
 
-    @Override
-    public void write(int c) throws IOException {
-        checkCharacter((char)c);
-        out.write(c);
-    }
+	@Override
+	public void write(int c) throws IOException {
+		checkCharacter((char)c);
+		out.write(c);
+	}
 
-    @Override
-    public void write(char[] cbuf, int off, int len) throws IOException {
-        checkCharacters(cbuf, off, len);
-        out.write(cbuf, off, len);
-    }
+	@Override
+	public void write(char[] cbuf, int off, int len) throws IOException {
+		checkCharacters(cbuf, off, len);
+		out.write(cbuf, off, len);
+	}
 
-    @Override
-    public void write(String str, int off, int len) throws IOException {
-        if(str==null) throw new IllegalArgumentException("str is null");
-        checkCharacters(str, off, off + len);
-        out.write(str, off, len);
-    }
+	@Override
+	public void write(String str, int off, int len) throws IOException {
+		if(str==null) throw new IllegalArgumentException("str is null");
+		checkCharacters(str, off, off + len);
+		out.write(str, off, len);
+	}
 
-    @Override
-    public XhtmlValidator append(CharSequence csq) throws IOException {
-        checkCharacters(csq, 0, csq.length());
-        out.append(csq);
-        return this;
-    }
+	@Override
+	public XhtmlValidator append(CharSequence csq) throws IOException {
+		checkCharacters(csq, 0, csq.length());
+		out.append(csq);
+		return this;
+	}
 
-    @Override
-    public XhtmlValidator append(CharSequence csq, int start, int end) throws IOException {
-        checkCharacters(csq, start, end);
-        out.append(csq, start, end);
-        return this;
-    }
+	@Override
+	public XhtmlValidator append(CharSequence csq, int start, int end) throws IOException {
+		checkCharacters(csq, start, end);
+		out.append(csq, start, end);
+		return this;
+	}
 
-    @Override
-    public XhtmlValidator append(char c) throws IOException {
-        checkCharacter(c);
-        out.append(c);
-        return this;
-    }
+	@Override
+	public XhtmlValidator append(char c) throws IOException {
+		checkCharacter(c);
+		out.append(c);
+		return this;
+	}
 }

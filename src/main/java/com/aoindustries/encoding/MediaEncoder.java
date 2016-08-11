@@ -39,118 +39,118 @@ import java.io.Writer;
  */
 abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 
-    /**
-     * Gets the media encoder for the requested types or <code>null</code> if
-     * no encoding is necessary.  When an encoder is returned it is also a validator
-     * for the contentType and produces valid output for the containerType.
-     * When no encoder is returned, it is necessary to use a separate validator
-     * if character validation is required.
-     *
+	/**
+	 * Gets the media encoder for the requested types or <code>null</code> if
+	 * no encoding is necessary.  When an encoder is returned it is also a validator
+	 * for the contentType and produces valid output for the containerType.
+	 * When no encoder is returned, it is necessary to use a separate validator
+	 * if character validation is required.
+	 *
 	 * @param  context  Only required when contentType is MediaType.URL
 	 *
-     * @return the encoder or <code>null</code> if no encoding is necessary
-     *
-     * @exception MediaException when unable to encode the content into the container
-     *                           either because it is impossible or not yet implemented.
-     */
-    public static MediaEncoder getInstance(EncodingContext context, MediaType contentType, MediaType containerType) throws MediaException {
-        final MediaEncoder encoder;
-        switch(contentType) {
-            case JAVASCRIPT :
-                switch(containerType) {
-                    case JAVASCRIPT :      return null;
-                    case TEXT :            return null;
-                    case XHTML :           encoder = JavaScriptInXhtmlEncoder.javaScriptInXhtmlEncoder; break;
-                    case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
+	 * @return the encoder or <code>null</code> if no encoding is necessary
+	 *
+	 * @exception MediaException when unable to encode the content into the container
+	 *                           either because it is impossible or not yet implemented.
+	 */
+	public static MediaEncoder getInstance(EncodingContext context, MediaType contentType, MediaType containerType) throws MediaException {
+		final MediaEncoder encoder;
+		switch(contentType) {
+			case JAVASCRIPT :
+				switch(containerType) {
+					case JAVASCRIPT :      return null;
+					case TEXT :            return null;
+					case XHTML :           encoder = JavaScriptInXhtmlEncoder.javaScriptInXhtmlEncoder; break;
+					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
 					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
-                }
-                break;
-            case TEXT:
-                switch(containerType) {
-                    case JAVASCRIPT :      encoder = TextInJavaScriptEncoder.textInJavaScriptEncoder; break;
-                    case TEXT :            return null;
-                    case XHTML :           encoder = TextInXhtmlEncoder.textInXhtmlEncoder; break;
-                    case XHTML_ATTRIBUTE : encoder = TextInXhtmlAttributeEncoder.textInXhtmlAttributeEncoder; break;
+				}
+				break;
+			case TEXT:
+				switch(containerType) {
+					case JAVASCRIPT :      encoder = TextInJavaScriptEncoder.textInJavaScriptEncoder; break;
+					case TEXT :            return null;
+					case XHTML :           encoder = TextInXhtmlEncoder.textInXhtmlEncoder; break;
+					case XHTML_ATTRIBUTE : encoder = TextInXhtmlAttributeEncoder.textInXhtmlAttributeEncoder; break;
 					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
-                }
-                break;
-            case URL :
-                switch(containerType) {
-                    case JAVASCRIPT :      encoder = new UrlInJavaScriptEncoder(context); break;
-                    case TEXT :            return null;
-                    case URL :             return null;
-                    case XHTML :           encoder = new UrlInXhtmlEncoder(context); break;
-                    case XHTML_ATTRIBUTE : encoder = new UrlInXhtmlAttributeEncoder(context); break;
+				}
+				break;
+			case URL :
+				switch(containerType) {
+					case JAVASCRIPT :      encoder = new UrlInJavaScriptEncoder(context); break;
+					case TEXT :            return null;
+					case URL :             return null;
+					case XHTML :           encoder = new UrlInXhtmlEncoder(context); break;
+					case XHTML_ATTRIBUTE : encoder = new UrlInXhtmlAttributeEncoder(context); break;
 					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
-                }
-                break;
-            case XHTML :
-                switch(containerType) {
-                    case TEXT :            return null;
-                    case XHTML :           return null;
+				}
+				break;
+			case XHTML :
+				switch(containerType) {
+					case TEXT :            return null;
+					case XHTML :           return null;
 					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
-                }
-                //break;
-            case XHTML_ATTRIBUTE :
-                switch(containerType) {
-                    case TEXT :            return null;
-                    case XHTML :           return null;
-                    case XHTML_ATTRIBUTE : return null;
+				}
+				//break;
+			case XHTML_ATTRIBUTE :
+				switch(containerType) {
+					case TEXT :            return null;
+					case XHTML :           return null;
+					case XHTML_ATTRIBUTE : return null;
 					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
-                }
-                //break;
+				}
+				//break;
 			default : throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
-        }
+		}
 		// Make sure types match - bug catching
 		assert encoder.getValidMediaOutputType()==containerType : "encoder.getValidMediaOutputType()!=containerType: "+encoder.getValidMediaOutputType()+"!="+containerType;
 		assert encoder.isValidatingMediaInputType(contentType) : "encoder="+encoder.getClass().getName()+" is not a validator for contentType="+contentType;
-        return encoder;
-    }
+		return encoder;
+	}
 
-    protected MediaEncoder() {
-    }
+	protected MediaEncoder() {
+	}
 
-    /**
+	/**
 	 * {@inheritDoc}
-     * <p>
-     * This default implementation does nothing.
-     * </p>
-     */
+	 * <p>
+	 * This default implementation does nothing.
+	 * </p>
+	 */
 	@Override
-    public void writePrefixTo(Appendable out) throws IOException {
-    }
+	public void writePrefixTo(Appendable out) throws IOException {
+	}
 
 	@Override
-    abstract public void write(int c, Writer out) throws IOException;
-	
+	abstract public void write(int c, Writer out) throws IOException;
+
 	@Override
-    abstract public void write(char cbuf[], Writer out) throws IOException;
+	abstract public void write(char cbuf[], Writer out) throws IOException;
 
 	@Override
 	abstract public void write(char cbuf[], int off, int len, Writer out) throws IOException;
 
 	@Override
-    abstract public void write(String str, Writer out) throws IOException;
+	abstract public void write(String str, Writer out) throws IOException;
 
 	@Override
 	abstract public void write(String str, int off, int len, Writer out) throws IOException;
 
 	@Override
-    abstract public MediaEncoder append(char c, Appendable out) throws IOException;
+	abstract public MediaEncoder append(char c, Appendable out) throws IOException;
 
 	@Override
 	abstract public MediaEncoder append(CharSequence csq, Appendable out) throws IOException;
 
 	@Override
-    abstract public MediaEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException;
+	abstract public MediaEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException;
 
-    /**
+	/**
 	 * {@inheritDoc}
-     * <p>
-     * This default implementation does nothing.
-     * </p>
-     */
+	 * <p>
+	 * This default implementation does nothing.
+	 * </p>
+	 */
 	@Override
-    public void writeSuffixTo(Appendable out) throws IOException {
-    }
+	public void writeSuffixTo(Appendable out) throws IOException {
+	}
 }

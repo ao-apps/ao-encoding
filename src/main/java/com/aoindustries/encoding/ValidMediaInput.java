@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2015  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2015, 2016  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -32,8 +32,8 @@ package com.aoindustries.encoding;
  */
 public interface ValidMediaInput {
 
-    /**
-     * Checks if this is validating the provided type.
-     */
-    boolean isValidatingMediaInputType(MediaType inputType);
+	/**
+	 * Checks if this is validating the provided type.
+	 */
+	boolean isValidatingMediaInputType(MediaType inputType);
 }

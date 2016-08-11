@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2009, 2010, 2011, 2015  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2015, 2016  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -27,21 +27,21 @@ package com.aoindustries.encoding;
  */
 public class MediaException extends Exception {
 
-    private static final long serialVersionUID = 7504967502925628639L;
+	private static final long serialVersionUID = 7504967502925628639L;
 
-    public MediaException() {
-        super();
-    }
+	public MediaException() {
+		super();
+	}
 
-    public MediaException(String message) {
-        super(message);
-    }
+	public MediaException(String message) {
+		super(message);
+	}
 
-    public MediaException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	public MediaException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public MediaException(Throwable cause) {
-        super(cause);
-    }
+	public MediaException(Throwable cause) {
+		super(cause);
+	}
 }

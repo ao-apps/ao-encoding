@@ -32,31 +32,31 @@ import java.io.IOException;
  */
 public class UrlInXhtmlAttributeEncoder extends BufferedEncoder {
 
-    private final EncodingContext context;
+	private final EncodingContext context;
 
-    public UrlInXhtmlAttributeEncoder(EncodingContext context) {
-        super(128);
-        this.context = context;
-    }
+	public UrlInXhtmlAttributeEncoder(EncodingContext context) {
+		super(128);
+		this.context = context;
+	}
 
-    @Override
-    public boolean isValidatingMediaInputType(MediaType inputType) {
-        return
-            inputType==MediaType.URL
-            || inputType==MediaType.TEXT        // No validation required
-        ;
-    }
+	@Override
+	public boolean isValidatingMediaInputType(MediaType inputType) {
+		return
+			inputType==MediaType.URL
+			|| inputType==MediaType.TEXT        // No validation required
+		;
+	}
 
-    @Override
-    public MediaType getValidMediaOutputType() {
-        return MediaType.XHTML_ATTRIBUTE;
-    }
+	@Override
+	public MediaType getValidMediaOutputType() {
+		return MediaType.XHTML_ATTRIBUTE;
+	}
 
-    @Override
-    protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
-        TextInXhtmlAttributeEncoder.encodeTextInXhtmlAttribute(
-            context.encodeURL(buffer.toString()),
-            out
-        );
-    }
+	@Override
+	protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
+		TextInXhtmlAttributeEncoder.encodeTextInXhtmlAttribute(
+			context.encodeURL(buffer.toString()),
+			out
+		);
+	}
 }

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,16 +31,16 @@ import java.io.Writer;
  */
 public class TextValidator extends MediaValidator {
 
-    protected TextValidator(Writer out) {
-        super(out);
-    }
+	protected TextValidator(Writer out) {
+		super(out);
+	}
 
-    @Override
-    public boolean isValidatingMediaInputType(MediaType inputType) {
-        return
-            inputType==MediaType.TEXT
-        ;
-    }
+	@Override
+	public boolean isValidatingMediaInputType(MediaType inputType) {
+		return
+			inputType==MediaType.TEXT
+		;
+	}
 
 
 	@Override
@@ -49,7 +49,7 @@ public class TextValidator extends MediaValidator {
 	}
 
 	@Override
-    public MediaType getValidMediaOutputType() {
-        return MediaType.TEXT;
-    }
+	public MediaType getValidMediaOutputType() {
+		return MediaType.TEXT;
+	}
 }

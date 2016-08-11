@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2013, 2015  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -38,9 +38,9 @@ final public class MediaWriter extends EncoderWriter implements ValidMediaFilter
 	private final MediaEncoder encoder;
 
 	public MediaWriter(MediaEncoder encoder, Writer out) {
-        super(encoder, out);
+		super(encoder, out);
 		this.encoder = encoder;
-    }
+	}
 
 	@Override
 	public MediaEncoder getEncoder() {
@@ -48,17 +48,17 @@ final public class MediaWriter extends EncoderWriter implements ValidMediaFilter
 	}
 
 	@Override
-    public boolean isValidatingMediaInputType(MediaType inputType) {
+	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return encoder.isValidatingMediaInputType(inputType);
-    }
-
-    @Override
-    public MediaType getValidMediaOutputType() {
-		return encoder.getValidMediaOutputType();
-    }
+	}
 
 	@Override
-    public MediaWriter append(char c) throws IOException {
+	public MediaType getValidMediaOutputType() {
+		return encoder.getValidMediaOutputType();
+	}
+
+	@Override
+	public MediaWriter append(char c) throws IOException {
 		super.append(c);
 		return this;
 	}
@@ -70,7 +70,7 @@ final public class MediaWriter extends EncoderWriter implements ValidMediaFilter
 	}
 
 	@Override
-    public MediaWriter append(CharSequence csq, int start, int end) throws IOException {
+	public MediaWriter append(CharSequence csq, int start, int end) throws IOException {
 		super.append(csq, start, end);
 		return this;
 	}
