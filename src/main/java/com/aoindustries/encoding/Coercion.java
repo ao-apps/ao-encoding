@@ -207,7 +207,7 @@ public final class Coercion  {
 	/**
 	 * Checks if a value is null or empty.
 	 */
-	public static boolean isEmpty(Object value) {
+	public static boolean isEmpty(Object value) throws IOException {
 		if(value instanceof String) {
 			// If A is a string, then the result is A.
 			return ((String)value).isEmpty();
