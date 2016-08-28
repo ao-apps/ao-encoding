@@ -205,6 +205,25 @@ public final class Coercion  {
 	}
 
 	/**
+	 * Checks if a value is null or empty.
+	 */
+	public static boolean isEmpty(Object value) {
+		if(value instanceof String) {
+			// If A is a string, then the result is A.
+			return ((String)value).isEmpty();
+		} else if(value == null) {
+			// Otherwise, if A is null, then the result is "".
+			return true;
+		} else if(value instanceof Writable) {
+			return ((Writable)value).getLength() == 0;
+		} else {
+			// Otherwise, if A.toString() throws an exception, then raise an error
+			// Otherwise, the result is A.toString();
+			return value.toString().isEmpty();
+		}
+	}
+
+	/**
 	 * Make no instances.
 	 */
 	private Coercion() {
