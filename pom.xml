@@ -178,6 +178,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<configuration>
 							<header><![CDATA[<a href="${project.url}">${project.name}<a>]]></header>
+							<keywords>true</keywords><!-- Help internal search systems -->
 							<links>
 								<link>https://www.aoindustries.com/docs/aocode-public/</link>
 							</links>
