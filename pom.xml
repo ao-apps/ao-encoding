@@ -150,7 +150,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				</plugins>
 			</build>
 		</profile>
-		<profile> 
+		<profile>
 			<id>release</id>
 			<build>
 				<plugins>
@@ -170,6 +170,11 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
+						<configuration>
+							<links>
+								<link>https://www.aoindustries.com/docs/aocode-public/</link>
+							</links>
+						</configuration>
 						<version>2.10.4</version>
 						<executions>
 							<execution>
