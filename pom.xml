@@ -36,6 +36,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 	<name>AO Encoding</name>
 	<url>https://www.aoindustries.com/docs/ao-encoding/</url>
 	<description>High performance character encoding.</description>
+	<inceptionYear>2009</inceptionYear>
 
 	<licenses>
 		<license>
@@ -43,6 +44,11 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			<url>https://www.gnu.org/licenses/lgpl-3.0.txt</url>
 		</license>
 	</licenses>
+
+	<organization>
+		<name>AO Industries, Inc.</name>
+		<url>https://www.aoindustries.com/</url>
+	</organization>
 
 	<developers>
 		<developer>
