@@ -233,6 +233,15 @@ public final class Coercion  {
 	}
 
 	/**
+	 * Shortcut for when is already String.
+	 *
+	 * @see  #nullIfEmpty(java.lang.Object)
+	 */
+	public static String nullIfEmpty(String value) throws IOException {
+		return value==null || value.isEmpty() ? null : value;
+	}
+
+	/**
 	 * Make no instances.
 	 */
 	private Coercion() {
