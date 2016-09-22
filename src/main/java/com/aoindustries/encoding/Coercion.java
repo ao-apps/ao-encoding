@@ -224,6 +224,15 @@ public final class Coercion  {
 	}
 
 	/**
+	 * Returns the provided value or null if the value is empty.
+	 * 
+	 * @see  #isEmpty(java.lang.Object)
+	 */
+	public static <T> T nullIfEmpty(T value) throws IOException {
+		return isEmpty(value) ? null : value;
+	}
+
+	/**
 	 * Make no instances.
 	 */
 	private Coercion() {
