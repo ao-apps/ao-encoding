@@ -24,6 +24,7 @@ package com.aoindustries.encoding;
 
 import com.aoindustries.io.Writable;
 import com.aoindustries.util.EncodingUtils;
+import com.aoindustries.util.StringUtility;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Field;
@@ -166,40 +167,41 @@ public final class Coercion  {
 		if(encoder==null) {
 			write(value, out);
 		} else {
-			// Unwrap out to avoid unnecessary validation of known valid output
-			while(true) {
-				out = unwrap(out);
-				if(out instanceof MediaValidator) {
-					MediaValidator validator = (MediaValidator)out;
-					if(validator.canSkipValidation(encoder.getValidMediaOutputType())) {
-						// Can skip validation, write directly to the wrapped output through the encoder
-						out = validator.getOut();
+			// Otherwise, if A is null, then the result is "".
+			// Write nothing
+			if(value != null) {
+				// Unwrap out to avoid unnecessary validation of known valid output
+				while(true) {
+					out = unwrap(out);
+					if(out instanceof MediaValidator) {
+						MediaValidator validator = (MediaValidator)out;
+						if(validator.canSkipValidation(encoder.getValidMediaOutputType())) {
+							// Can skip validation, write directly to the wrapped output through the encoder
+							out = validator.getOut();
+						} else {
+							break;
+						}
 					} else {
 						break;
 					}
-				} else {
-					break;
 				}
-			}
-			// Write through the given encoder
-			if(value instanceof String) {
-				// If A is a string, then the result is A.
-				encoder.write((String)value, out);
-			} else if(value == null) {
-				// Otherwise, if A is null, then the result is "".
-				// Write nothing
-			} else if(value instanceof Writable) {
-				Writable writable = (Writable)value;
-				if(writable.isFastToString()) {
-					encoder.write(writable.toString(), out);
+				// Write through the given encoder
+				if(value instanceof String) {
+					// If A is a string, then the result is A.
+					encoder.write((String)value, out);
+				} else if(value instanceof Writable) {
+					Writable writable = (Writable)value;
+					if(writable.isFastToString()) {
+						encoder.write(writable.toString(), out);
+					} else {
+						// Avoid intermediate String from Writable
+						writable.writeTo(encoder, out);
+					}
 				} else {
-					// Avoid intermediate String from Writable
-					writable.writeTo(encoder, out);
+					// Otherwise, if A.toString() throws an exception, then raise an error
+					// Otherwise, the result is A.toString();
+					encoder.write(value.toString(), out);
 				}
-			} else {
-				// Otherwise, if A.toString() throws an exception, then raise an error
-				// Otherwise, the result is A.toString();
-				encoder.write(value.toString(), out);
 			}
 		}
 	}
@@ -233,12 +235,12 @@ public final class Coercion  {
 	}
 
 	/**
-	 * Shortcut for when is already String.
-	 *
-	 * @see  #nullIfEmpty(java.lang.Object)
+	 * Returns the provided number or zero if the value is empty.
+	 * 
+	 * @see  #isEmpty(java.lang.Object)
 	 */
-	public static String nullIfEmpty(String value) throws IOException {
-		return value==null || value.isEmpty() ? null : value;
+	public static int zeroIfEmpty(Integer value) throws IOException {
+		return isEmpty(value) ? 0 : value;
 	}
 
 	/**
