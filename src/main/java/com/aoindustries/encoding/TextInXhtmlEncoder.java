@@ -40,6 +40,8 @@ public class TextInXhtmlEncoder extends MediaEncoder {
 	 * or null if no modification is necessary.
 	 *
 	 * @see XhtmlValidator#checkCharacter(char)
+	 *
+	 * @throws  IOException  if any text character cannot be converted to XHTML
 	 */
 	private static String getEscapedCharacter(char c) throws IOException {
 		switch(c) {
@@ -47,7 +49,6 @@ public class TextInXhtmlEncoder extends MediaEncoder {
 			case '>': return "&gt;";
 			case '&': return "&amp;";
 			default:
-				// Cause error if any text character cannot be converted to XHTML
 				XhtmlValidator.checkCharacter(c);
 				return null;
 		}
