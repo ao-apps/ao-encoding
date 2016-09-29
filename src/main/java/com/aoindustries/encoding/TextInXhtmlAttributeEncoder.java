@@ -40,6 +40,8 @@ public class TextInXhtmlAttributeEncoder extends MediaEncoder {
 	 * or null if no modification is necessary.
 	 *
 	 * @see XhtmlMediaValidator#checkCharacter(char)
+	 *
+	 * @throws  IOException  if any text character cannot be converted to XHTML attribute
 	 */
 	private static String getEscapedCharacter(char c) throws IOException {
 		switch(c) {
@@ -53,7 +55,6 @@ public class TextInXhtmlAttributeEncoder extends MediaEncoder {
 			case '\n': return "&#xA;";
 			// case ' ': return null;
 			default:
-				// Cause error if any text character cannot be converted to XHTML
 				XhtmlAttributeValidator.checkCharacter(c);
 				return null;
 		}
