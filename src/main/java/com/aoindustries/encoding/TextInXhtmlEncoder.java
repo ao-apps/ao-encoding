@@ -44,6 +44,8 @@ public class TextInXhtmlEncoder extends MediaEncoder {
 	 * @throws  IOException  if any text character cannot be converted to XHTML
 	 */
 	private static String getEscapedCharacter(char c) throws IOException {
+		// 0.0037849858401 ms per call with switch
+		// 0.00360391125522 ms per call with if, no room to improve here
 		switch(c) {
 			case '<': return "&lt;";
 			case '>': return "&gt;";
