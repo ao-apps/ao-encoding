@@ -45,10 +45,9 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	private static String getEscapedCharacter(char ch) {
 		// These characters are allowed in JavaScript but need encoded for XHTML
 		switch(ch) {
-			// TODO: Should ']' be encoded to avoid potential ]]> encoding CDATA early?
-			// TODO: Test and implement as-needed.
-			// TODO: Imagine script with: if(array[array2[index]]>value) { ... }
-
+			// ']' Is encoded to avoid potential ]]> encoding CDATA early?
+			// Imagine script with: if(array[array2[index]]>value) { ... }
+			case ']' : return "\\u005d";
 			// Commented-out because now using CDATA
 			// case '<': return "&lt;";
 			// case '>': return "&gt;";
