@@ -47,7 +47,9 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 		switch(ch) {
 			// ']' Is encoded to avoid potential ]]> encoding CDATA early?
 			// Imagine script with: if(array[array2[index]]>value) { ... }
-			case ']' : return "\\u005d";
+			// This didn't work as hoped, just don't use "]]>" in scripts!
+			// TODO: Find a better way that is both HTML and XHTML compatible.
+			// case ']' : return "\\u005d";
 			// Commented-out because now using CDATA
 			// case '<': return "&lt;";
 			// case '>': return "&gt;";
