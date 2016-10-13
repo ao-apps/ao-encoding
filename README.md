@@ -7,6 +7,9 @@ High performance character encoding.
 * [Maven Central Repository](http://search.maven.org/#search|gav|1|g:%22com.aoindustries%22%20AND%20a:%22ao-encoding%22)
 * [GitHub](https://github.com/aoindustries/ao-encoding)
 
+## Modules
+* [AO Encoding Servlet](https://www.aoindustries.com/ao-encoding/servlet/)
+
 ## Contact Us
 For questions or support, please [contact us](https://www.aoindustries.com/contact):
 
