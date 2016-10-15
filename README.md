@@ -4,7 +4,7 @@ High performance character encoding.
 ## Project Links
 * [Project Home](https://www.aoindustries.com/ao-encoding/)
 * [API Docs](https://www.aoindustries.com/ao-encoding/apidocs/)
-* [Maven Central Repository](http://search.maven.org/#search|gav|1|g:%22com.aoindustries%22%20AND%20a:%22ao-encoding%22)
+* [Maven Central Repository](https://search.maven.org/#search|gav|1|g:%22com.aoindustries%22%20AND%20a:%22ao-encoding%22)
 * [GitHub](https://github.com/aoindustries/ao-encoding)
 
 ## Modules
