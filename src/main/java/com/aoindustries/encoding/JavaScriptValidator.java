@@ -32,25 +32,34 @@ import java.io.Writer;
  */
 public class JavaScriptValidator extends MediaValidator {
 
-	protected JavaScriptValidator(Writer out) {
+	private final MediaType outputType;
+
+	protected JavaScriptValidator(Writer out, MediaType outputType) {
 		super(out);
+		this.outputType = outputType;
 	}
 
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
 			inputType==MediaType.JAVASCRIPT
+			|| inputType==MediaType.JSON
+			|| inputType==MediaType.LD_JSON
 			|| inputType==MediaType.TEXT        // No validation required
 		;
 	}
 
 	@Override
 	public boolean canSkipValidation(MediaType inputType) {
-		return inputType == MediaType.JAVASCRIPT;
+		return
+			inputType==MediaType.JAVASCRIPT
+			|| inputType==MediaType.JSON
+			|| inputType==MediaType.LD_JSON
+		;
 	}
 
 	@Override
 	public MediaType getValidMediaOutputType() {
-		return MediaType.JAVASCRIPT;
+		return outputType;
 	}
 }

@@ -50,7 +50,9 @@ abstract public class MediaValidator extends FilterWriter implements ValidMediaF
 		// Add filter if needed for the given type
 		switch(contentType) {
 			case JAVASCRIPT:
-				return new JavaScriptValidator(out);
+			case JSON:
+			case LD_JSON:
+				return new JavaScriptValidator(out, contentType);
 			case TEXT:
 				return new TextValidator(out);
 			case URL:
