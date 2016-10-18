@@ -58,9 +58,33 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 		switch(contentType) {
 			case JAVASCRIPT :
 				switch(containerType) {
-					case JAVASCRIPT :      return null;
+					case JAVASCRIPT :
+					case JSON :
+					case LD_JSON :         return null;
 					case TEXT :            return null;
 					case XHTML :           encoder = JavaScriptInXhtmlEncoder.javaScriptInXhtmlEncoder; break;
+					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
+					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
+				}
+				break;
+			case JSON :
+				switch(containerType) {
+					case JAVASCRIPT :
+					case JSON :
+					case LD_JSON :         return null;
+					case TEXT :            return null;
+					case XHTML :           encoder = JavaScriptInXhtmlEncoder.jsonInXhtmlEncoder; break;
+					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
+					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
+				}
+				break;
+			case LD_JSON :
+				switch(containerType) {
+					case JAVASCRIPT :
+					case JSON :
+					case LD_JSON :         return null;
+					case TEXT :            return null;
+					case XHTML :           encoder = JavaScriptInXhtmlEncoder.ldJsonInXhtmlEncoder; break;
 					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
 					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
 				}
@@ -68,6 +92,8 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 			case TEXT:
 				switch(containerType) {
 					case JAVASCRIPT :      encoder = TextInJavaScriptEncoder.textInJavaScriptEncoder; break;
+					case JSON :            encoder = TextInJavaScriptEncoder.textInJsonEncoder; break;
+					case LD_JSON :         encoder = TextInJavaScriptEncoder.textInLdJsonEncoder; break;
 					case TEXT :            return null;
 					case XHTML :           encoder = TextInXhtmlEncoder.textInXhtmlEncoder; break;
 					case XHTML_ATTRIBUTE : encoder = TextInXhtmlAttributeEncoder.textInXhtmlAttributeEncoder; break;
@@ -76,7 +102,9 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 				break;
 			case URL :
 				switch(containerType) {
-					case JAVASCRIPT :      encoder = new UrlInJavaScriptEncoder(context); break;
+					case JAVASCRIPT :
+					case JSON :
+					case LD_JSON :         encoder = new UrlInJavaScriptEncoder(containerType, context); break;
 					case TEXT :            return null;
 					case URL :             return null;
 					case XHTML :           encoder = new UrlInXhtmlEncoder(context); break;

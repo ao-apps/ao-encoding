@@ -117,11 +117,24 @@ final public class TextInJavaScriptEncoder extends MediaEncoder {
 	// </editor-fold>
 
 	/**
-	 * Singleton instance intended for static import.
+	 * Singleton instance intended for static import for text/javascript.
 	 */
-	public static final TextInJavaScriptEncoder textInJavaScriptEncoder = new TextInJavaScriptEncoder();
+	public static final TextInJavaScriptEncoder textInJavaScriptEncoder = new TextInJavaScriptEncoder(MediaType.JAVASCRIPT);
 
-	private TextInJavaScriptEncoder() {
+	/**
+	 * Singleton instance intended for static import for application/json.
+	 */
+	public static final TextInJavaScriptEncoder textInJsonEncoder = new TextInJavaScriptEncoder(MediaType.JSON);
+
+	/**
+	 * Singleton instance intended for static import for application/ld+json.
+	 */
+	public static final TextInJavaScriptEncoder textInLdJsonEncoder = new TextInJavaScriptEncoder(MediaType.LD_JSON);
+
+	private final MediaType outputType;
+
+	private TextInJavaScriptEncoder(MediaType outputType) {
+		this.outputType = outputType;
 	}
 
 	@Override
@@ -133,7 +146,7 @@ final public class TextInJavaScriptEncoder extends MediaEncoder {
 
 	@Override
 	public MediaType getValidMediaOutputType() {
-		return MediaType.JAVASCRIPT;
+		return outputType;
 	}
 
 	@Override

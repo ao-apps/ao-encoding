@@ -32,10 +32,19 @@ import java.io.IOException;
  */
 public class UrlInJavaScriptEncoder extends BufferedEncoder {
 
+	private final MediaType outputType;
 	private final EncodingContext context;
 
-	public UrlInJavaScriptEncoder(EncodingContext context) {
+	UrlInJavaScriptEncoder(MediaType outputType, EncodingContext context) {
 		super(128);
+		if(
+			outputType != MediaType.JAVASCRIPT
+			&& outputType != MediaType.JSON
+			&& outputType != MediaType.LD_JSON
+		) {
+			throw new IllegalArgumentException("Unsupported output type: " + outputType);
+		}
+		this.outputType = outputType;
 		this.context = context;
 	}
 
@@ -49,7 +58,7 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
 
 	@Override
 	public MediaType getValidMediaOutputType() {
-		return MediaType.JAVASCRIPT;
+		return outputType;
 	}
 
 	@Override

@@ -99,6 +99,36 @@ public enum MediaType {
 	},
 
 	/**
+	 * A JSON script (<code>application/json</code>).
+	 */
+	JSON("application/json") {
+		@Override
+		boolean isUsedFor(String contentType) {
+			return "application/json".equalsIgnoreCase(contentType);
+		}
+
+		@Override
+		public MarkupType getMarkupType() {
+			return MarkupType.JAVASCRIPT;
+		}
+	},
+
+	/**
+	 * A JSON linked data script (<code>application/ld+json</code>).
+	 */
+	LD_JSON("application/ld+json") {
+		@Override
+		boolean isUsedFor(String contentType) {
+			return "application/ld+json".equalsIgnoreCase(contentType);
+		}
+
+		@Override
+		public MarkupType getMarkupType() {
+			return MarkupType.JAVASCRIPT;
+		}
+	},
+
+	/**
 	 * Any plaintext document comprised of unicode characters (<code>text/plain</code>).
 	 * This is used for any arbitrary, unknown and untrusted data.
 	 *

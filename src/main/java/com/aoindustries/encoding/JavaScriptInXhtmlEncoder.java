@@ -121,17 +121,32 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	// </editor-fold>
 
 	/**
-	 * Singleton instance intended for static import.
+	 * Singleton instance intended for static import for text/javascript.
 	 */
-	public static final JavaScriptInXhtmlEncoder javaScriptInXhtmlEncoder = new JavaScriptInXhtmlEncoder();
+	public static final JavaScriptInXhtmlEncoder javaScriptInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JAVASCRIPT);
 
-	private JavaScriptInXhtmlEncoder() {
+	/**
+	 * Singleton instance intended for static import for application/json.
+	 */
+	public static final JavaScriptInXhtmlEncoder jsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JSON);
+
+	/**
+	 * Singleton instance intended for static import for application/ld+json.
+	 */
+	public static final JavaScriptInXhtmlEncoder ldJsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.LD_JSON);
+
+	private final MediaType contentType;
+
+	private JavaScriptInXhtmlEncoder(MediaType contentType) {
+		this.contentType = contentType;
 	}
 
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
 			inputType==MediaType.JAVASCRIPT
+			|| inputType==MediaType.JSON
+			|| inputType==MediaType.LD_JSON
 			|| inputType==MediaType.TEXT  // No validation required
 		;
 	}
@@ -144,7 +159,7 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	@Override
 	public void writePrefixTo(Appendable out) throws IOException {
 		out.append("<script type=\"");
-		encodeTextInXhtmlAttribute(MediaType.JAVASCRIPT.getContentType(), out);
+		encodeTextInXhtmlAttribute(contentType.getContentType(), out);
 		out.append("\">\n"
 				+ "  // <![CDATA[\n");
 	}
