@@ -27,9 +27,18 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * Encode JavaScript into XHTML.  The static utility methods only encode
- * the characters.  When used as a MediaWriter, it automatically adds
- * the &lt;script&gt; tags and CDATA block.
+ * <p>
+ * Encode JavaScript and related formats into XHTML.  The static utility methods
+ * only encode the characters.  When used as a MediaWriter, it automatically
+ * adds the &lt;script&gt; tags and optionally a CDATA block.
+ * </p>
+ * <p>
+ * The CDATA block is not added for JSON and LD_JSON, because JSON does not
+ * support comments (insert Captain Picard facepalm pic here).  However, as the
+ * JSON format will only contain &lt;, &gt;, or &amp; within quoted strings,
+ * and those characters are unicode escaped, this should not present a
+ * compatibility issue between HTML and XHTML.
+ * </p>
  *
  * @author  AO Industries, Inc.
  */
@@ -160,8 +169,8 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	public void writePrefixTo(Appendable out) throws IOException {
 		out.append("<script type=\"");
 		encodeTextInXhtmlAttribute(contentType.getContentType(), out);
-		out.append("\">\n"
-				+ "  // <![CDATA[\n");
+		out.append("\">\n");
+		if(contentType == MediaType.JAVASCRIPT) out.append("  // <![CDATA[\n");
 	}
 
 	@Override
@@ -211,7 +220,7 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 
 	@Override
 	public void writeSuffixTo(Appendable out) throws IOException {
-		out.append("  // ]]>\n"
-				+ "</script>");
+		if(contentType == MediaType.JAVASCRIPT) out.append("  // ]]>\n");
+		out.append("</script>");
 	}
 }
