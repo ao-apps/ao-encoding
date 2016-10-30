@@ -146,7 +146,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			scmUrl="@{project.scm.url}"
 		>
 			<ul>
-				<li>Java EE 6 optional, since only used by a subset of the features.</li>
+				<li>Reverted to Java 1.6 for Android and Java EE 6 compatibility.</li>
 			</ul>
 		</changelog:release>
 
