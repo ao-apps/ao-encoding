@@ -40,13 +40,13 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		<javadoc.modules><![CDATA[<div style="float:left; margin: 0 1em">
 			<h2 style="margin-top: 0em">Modules</h2>
 			<ul>
-				<li><a target="_top" href="https://www.aoindustries.com/ao-encoding/servlet/">AO Encoding Servlet</a></li>
+				<li><a target="_top" href="https://aoindustries.com/ao-encoding/servlet/">AO Encoding Servlet</a></li>
 			</ul>
 		</div>]]></javadoc.modules>
 	</properties>
 
 	<name>AO Encoding</name>
-	<url>https://www.aoindustries.com${bookPath}/</url><!-- Can't inherit due to multi-module -->
+	<url>https://aoindustries.com${bookPath}/</url><!-- Can't inherit due to multi-module -->
 	<description>High performance character encoding.</description>
 	<inceptionYear>2009</inceptionYear>
 
@@ -68,7 +68,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<configuration>
 							<links>
-								<link>https://www.aoindustries.com/aocode-public/apidocs/</link>
+								<link>https://aoindustries.com/aocode-public/apidocs/</link>
 							</links>
 						</configuration>
 					</plugin>
