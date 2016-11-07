@@ -24,16 +24,23 @@ package com.aoindustries.encoding;
 
 import com.aoindustries.io.Writable;
 import com.aoindustries.util.EncodingUtils;
-import com.aoindustries.util.StringUtility;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Node;
 
 /**
  * Coerces objects to String compatible with JSP Expression Language (JSP EL)
- * and the Java Standard Taglib (JSTL).
+ * and the Java Standard Taglib (JSTL).  Also adds support for seemless output
+ * of XML DOM nodes.
  *
  * TODO: Once no longer used by ChainWriter, this should go to the ao-taglib project.
  *
@@ -53,6 +60,8 @@ public final class Coercion  {
 		if(value instanceof String) return (String)value;
 		// Otherwise, if A is null, then the result is "".
 		if(value == null) return "";
+		// Otherwise, if is a DOM node, serialize the output
+		// Get implemention from other EncodingUtils
 		// Otherwise, if A.toString() throws an exception, then raise an error
 		String str = value.toString();
 		// Otherwise, the result is A.toString();
@@ -150,6 +159,20 @@ public final class Coercion  {
 					// Avoid intermediate String from Writable
 					writable.writeTo(unwrap(out));
 				}
+			} else if(value instanceof Node) {
+				// Otherwise, if is a DOM node, serialize the output
+				try {
+					// Can use thread-local or pooled transformers if performance is ever an issue
+					TransformerFactory transFactory = TransformerFactory.newInstance();
+					Transformer transformer = transFactory.newTransformer();
+					transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+					transformer.transform(
+						new DOMSource((Node)value),
+						new StreamResult(unwrap(out))
+					);
+				} catch(TransformerException e) {
+					throw new IOException(e);
+				}
 			} else {
 				// Otherwise, if A.toString() throws an exception, then raise an error
 				// Otherwise, the result is A.toString();
@@ -197,6 +220,20 @@ public final class Coercion  {
 						// Avoid intermediate String from Writable
 						writable.writeTo(encoder, out);
 					}
+				} else if(value instanceof Node) {
+					// Otherwise, if is a DOM node, serialize the output
+					try {
+						// Can use thread-local or pooled transformers if performance is ever an issue
+						TransformerFactory transFactory = TransformerFactory.newInstance();
+						Transformer transformer = transFactory.newTransformer();
+						transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+						transformer.transform(
+							new DOMSource((Node)value),
+							new StreamResult(new MediaWriter(encoder, out))
+						);
+					} catch(TransformerException e) {
+						throw new IOException(e);
+					}
 				} else {
 					// Otherwise, if A.toString() throws an exception, then raise an error
 					// Otherwise, the result is A.toString();
@@ -218,6 +255,9 @@ public final class Coercion  {
 			return true;
 		} else if(value instanceof Writable) {
 			return ((Writable)value).getLength() == 0;
+		} else if(value instanceof Node) {
+			// Otherwise, if is a DOM node, serialize the output
+			return false; // There is a node, is not empty
 		} else {
 			// Otherwise, if A.toString() throws an exception, then raise an error
 			// Otherwise, the result is A.toString();
