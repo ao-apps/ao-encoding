@@ -36,13 +36,18 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2016-11-06T19:40:24-0600"
+		dateModified="2016-11-13T21:10:46-0600"
 	>
 		<!-- The current snapshot, unreleased version -->
-		<c:if test="${fn:endsWith('@{com.aoindustries:ao-encoding:jar.version}', '-SNAPSHOT')}">
+		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
+		<ao:assert
+			test="${!fn:startsWith(version, '@')}"
+			message="Version not substituted: #{version}"
+		/>
+		<c:if test="${fn:endsWith(version, '-SNAPSHOT')}">
 			<changelog:release
 				projectName="@{documented.name}"
-				version="@{com.aoindustries:ao-encoding:jar.version}"
+				version="#{version}"
 				groupId="@{documented.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{documented.scm.url}"
