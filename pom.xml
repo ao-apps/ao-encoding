@@ -33,7 +33,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 
 	<groupId>com.aoindustries</groupId>
 	<artifactId>ao-encoding</artifactId>
-	<version>1.5.1</version>
+	<version>1.5.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -55,7 +55,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		<connection>scm:git:git://github.com/aoindustries/${project.artifactId}.git</connection>
 		<developerConnection>scm:git:git@github.com:aoindustries/${project.artifactId}.git</developerConnection>
 		<url>https://github.com/aoindustries/${project.artifactId}</url>
-		<tag>ao-encoding-1.5.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<profiles>
