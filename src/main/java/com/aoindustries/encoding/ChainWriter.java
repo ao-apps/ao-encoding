@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -28,12 +28,11 @@ import static com.aoindustries.encoding.JavaScriptInXhtmlEncoder.encodeJavaScrip
 import static com.aoindustries.encoding.JavaScriptInXhtmlEncoder.javaScriptInXhtmlEncoder;
 import static com.aoindustries.encoding.TextInJavaScriptEncoder.encodeTextInJavaScript;
 import static com.aoindustries.encoding.TextInJavaScriptEncoder.textInJavaScriptEncoder;
+import static com.aoindustries.encoding.TextInXhtmlAttributeEncoder.textInXhtmlAttributeEncoder;
 import static com.aoindustries.encoding.TextInXhtmlEncoder.encodeTextInXhtml;
 import static com.aoindustries.encoding.TextInXhtmlEncoder.textInXhtmlEncoder;
-import static com.aoindustries.encoding.TextInXhtmlAttributeEncoder.textInXhtmlAttributeEncoder;
 import com.aoindustries.io.Writable;
 import com.aoindustries.sql.SQLUtility;
-import com.aoindustries.util.EncodingUtils;
 import com.aoindustries.util.Sequence;
 import com.aoindustries.util.i18n.BundleLookupMarkup;
 import com.aoindustries.util.i18n.BundleLookupThreadContext;
@@ -490,7 +489,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 */
 	@Deprecated
 	public ChainWriter encodeHtml(Object value) throws IOException {
-		EncodingUtils.encodeHtml(value, true, true, out);
+		com.aoindustries.util.EncodingUtils.encodeHtml(value, true, true, out);
 		return this;
 	}
 
@@ -505,7 +504,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 */
 	@Deprecated
 	public ChainWriter encodeHtml(Object value, boolean make_br, boolean make_nbsp) throws IOException {
-		EncodingUtils.encodeHtml(value, make_br, make_nbsp, out);
+		com.aoindustries.util.EncodingUtils.encodeHtml(value, make_br, make_nbsp, out);
 		return this;
 	}
 
@@ -529,33 +528,31 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @see  Coercion#toString(java.lang.Object, com.aoindustries.util.i18n.BundleLookup.MarkupType)
 	 */
 	public ChainWriter encodeJavaScriptStringInXmlAttribute(Object value) throws IOException {
-		if(value!=null) {
-			// Two stage encoding:
-			//   1) Text -> JavaScript (with quotes added)
-			//   2) JavaScript -> XML Attribute
-			if(
-				value instanceof Writable
-				&& !((Writable)value).isFastToString()
-			) {
-				// Avoid unnecessary toString calls
-				textInJavaScriptEncoder.writePrefixTo(javaScriptInXhtmlAttributeWriter);
-				Coercion.write(value, textInJavaScriptEncoder, javaScriptInXhtmlAttributeWriter);
-				textInJavaScriptEncoder.writeSuffixTo(javaScriptInXhtmlAttributeWriter);
+		// Two stage encoding:
+		//   1) Text -> JavaScript (with quotes added)
+		//   2) JavaScript -> XML Attribute
+		if(
+			value instanceof Writable
+			&& !((Writable)value).isFastToString()
+		) {
+			// Avoid unnecessary toString calls
+			textInJavaScriptEncoder.writePrefixTo(javaScriptInXhtmlAttributeWriter);
+			Coercion.write(value, textInJavaScriptEncoder, javaScriptInXhtmlAttributeWriter);
+			textInJavaScriptEncoder.writeSuffixTo(javaScriptInXhtmlAttributeWriter);
+		} else {
+			String str = Coercion.toString(value);
+			BundleLookupMarkup lookupMarkup;
+			BundleLookupThreadContext threadContext = BundleLookupThreadContext.getThreadContext(false);
+			if(threadContext!=null) {
+				lookupMarkup = threadContext.getLookupMarkup(str);
 			} else {
-				String str = Coercion.toString(value);
-				BundleLookupMarkup lookupMarkup;
-				BundleLookupThreadContext threadContext = BundleLookupThreadContext.getThreadContext(false);
-				if(threadContext!=null) {
-					lookupMarkup = threadContext.getLookupMarkup(str);
-				} else {
-					lookupMarkup = null;
-				}
-				if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(MarkupType.JAVASCRIPT, javaScriptInXhtmlAttributeWriter);
-				textInJavaScriptEncoder.writePrefixTo(javaScriptInXhtmlAttributeWriter);
-				textInJavaScriptEncoder.write(str, javaScriptInXhtmlAttributeWriter);
-				textInJavaScriptEncoder.writeSuffixTo(javaScriptInXhtmlAttributeWriter);
-				if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(MarkupType.JAVASCRIPT, javaScriptInXhtmlAttributeWriter);
+				lookupMarkup = null;
 			}
+			if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(MarkupType.JAVASCRIPT, javaScriptInXhtmlAttributeWriter);
+			textInJavaScriptEncoder.writePrefixTo(javaScriptInXhtmlAttributeWriter);
+			textInJavaScriptEncoder.write(str, javaScriptInXhtmlAttributeWriter);
+			textInJavaScriptEncoder.writeSuffixTo(javaScriptInXhtmlAttributeWriter);
+			if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(MarkupType.JAVASCRIPT, javaScriptInXhtmlAttributeWriter);
 		}
 		return this;
 	}
@@ -569,33 +566,31 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @see  Coercion#toString(java.lang.Object, com.aoindustries.util.i18n.BundleLookup.MarkupType)
 	 */
 	public ChainWriter encodeJavaScriptStringInXhtml(Object value) throws IOException {
-		if(value!=null) {
-			// Two stage encoding:
-			//   1) Text -> JavaScript (with quotes added)
-			//   2) JavaScript -> XHTML
-			if(
-				value instanceof Writable
-				&& !((Writable)value).isFastToString()
-			) {
-				// Avoid unnecessary toString calls
-				textInJavaScriptEncoder.writePrefixTo(javaScriptInXhtmlWriter);
-				Coercion.write(value, textInJavaScriptEncoder, javaScriptInXhtmlWriter);
-				textInJavaScriptEncoder.writeSuffixTo(javaScriptInXhtmlWriter);
+		// Two stage encoding:
+		//   1) Text -> JavaScript (with quotes added)
+		//   2) JavaScript -> XHTML
+		if(
+			value instanceof Writable
+			&& !((Writable)value).isFastToString()
+		) {
+			// Avoid unnecessary toString calls
+			textInJavaScriptEncoder.writePrefixTo(javaScriptInXhtmlWriter);
+			Coercion.write(value, textInJavaScriptEncoder, javaScriptInXhtmlWriter);
+			textInJavaScriptEncoder.writeSuffixTo(javaScriptInXhtmlWriter);
+		} else {
+			String str = Coercion.toString(value);
+			BundleLookupMarkup lookupMarkup;
+			BundleLookupThreadContext threadContext = BundleLookupThreadContext.getThreadContext(false);
+			if(threadContext!=null) {
+				lookupMarkup = threadContext.getLookupMarkup(str);
 			} else {
-				String str = Coercion.toString(value);
-				BundleLookupMarkup lookupMarkup;
-				BundleLookupThreadContext threadContext = BundleLookupThreadContext.getThreadContext(false);
-				if(threadContext!=null) {
-					lookupMarkup = threadContext.getLookupMarkup(str);
-				} else {
-					lookupMarkup = null;
-				}
-				if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(MarkupType.JAVASCRIPT, javaScriptInXhtmlWriter);
-				textInJavaScriptEncoder.writePrefixTo(javaScriptInXhtmlWriter);
-				textInJavaScriptEncoder.write(str, javaScriptInXhtmlWriter);
-				textInJavaScriptEncoder.writeSuffixTo(javaScriptInXhtmlWriter);
-				if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(MarkupType.JAVASCRIPT, javaScriptInXhtmlWriter);
+				lookupMarkup = null;
 			}
+			if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(MarkupType.JAVASCRIPT, javaScriptInXhtmlWriter);
+			textInJavaScriptEncoder.writePrefixTo(javaScriptInXhtmlWriter);
+			textInJavaScriptEncoder.write(str, javaScriptInXhtmlWriter);
+			textInJavaScriptEncoder.writeSuffixTo(javaScriptInXhtmlWriter);
+			if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(MarkupType.JAVASCRIPT, javaScriptInXhtmlWriter);
 		}
 		return this;
 	}
