@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2013, 2015, 2016  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -82,13 +82,15 @@ public final class Coercion  {
 			field = clazz.getDeclaredField(WRITER_FIELD);
 			field.setAccessible(true);
 		} catch(Exception e) {
-			logger.log(
-				Level.WARNING,
-				"Cannot get direct access to the "+BODY_CONTENT_IMPL_CLASS+"."+WRITER_FIELD+" field.  "
-				+ "Unwrapping of BodyContent disabled.  "
-				+ "The system will behave correctly, but some optimizations are disabled.",
-				e
-			);
+			if(logger.isLoggable(Level.INFO)) {
+				logger.log(
+					Level.INFO,
+					"Cannot get direct access to the "+BODY_CONTENT_IMPL_CLASS+"."+WRITER_FIELD+" field.  "
+					+ "Unwrapping of BodyContent disabled.  "
+					+ "The system will behave correctly, but some optimizations are disabled.",
+					e
+				);
+			}
 			clazz = null;
 			field = null;
 		}
