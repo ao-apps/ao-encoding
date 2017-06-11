@@ -119,16 +119,32 @@ final public class ChainWriter implements Appendable, Closeable {
 
 	// <editor-fold defaultstate="collapsed" desc="Nearly PrintWriter source compatible">
 
-	/** Flush the stream. */
-	public ChainWriter flush() {
-		out.flush();
+	/**
+	 * Flushes the stream.
+	* <p>
+	* Unlike {@link PrintWriter#flush()}, exceptions are thrown immediately, as requiring the caller
+	* to remember to invoke {@link PrintWriter#checkError()} too easily leads to swallowed
+	* exceptions and hard-to-diagnose runtime problems.
+	* </p>
+	 */
+	public ChainWriter flush() throws IOException {
+		//out.flush();
+		if(out.checkError()) throw new IOException("Error occured on underlying PrintWriter");
 		return this;
 	}
 
-	/** Close the stream. */
+	/**
+	 * Closes the stream.
+	* <p>
+	* Unlike {@link PrintWriter#close()}, exceptions are thrown immediately, as requiring the caller
+	* to remember to invoke {@link PrintWriter#checkError()} too easily leads to swallowed
+	* exceptions and hard-to-diagnose runtime problems.
+	* </p>
+	 */
 	@Override
-	public void close() {
+	public void close() throws IOException {
 		out.close();
+		if(out.checkError()) throw new IOException("Error occured on underlying PrintWriter");
 	}
 
 	/** Write a single character. */
