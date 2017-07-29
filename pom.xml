@@ -33,7 +33,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 
 	<groupId>com.aoindustries</groupId>
 	<artifactId>ao-encoding</artifactId>
-	<version>1.6.1-SNAPSHOT</version>
+	<version>1.6.1-validation-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -90,7 +90,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		<dependency>
 			<groupId>com.aoindustries</groupId>
 			<artifactId>aocode-public</artifactId>
-			<version>1.9.0</version>
+			<version>1.9.1-validation-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
