@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2013, 2015, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -26,10 +26,13 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
+ * <p>
  * Makes sure that all data going through this writer has the correct characters
  * for an XHTML attribute.
- *
+ * </p>
+ * <p>
  * <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>
+ * </p>
  *
  * @author  AO Industries, Inc.
  */
