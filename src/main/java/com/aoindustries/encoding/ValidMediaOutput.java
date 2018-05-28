@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2015, 2016  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2015, 2016, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,13 +23,16 @@
 package com.aoindustries.encoding;
 
 /**
+ * <p>
  * Indicates that at object can be trusted to generate output with only
  * valid characters for the provided type.  This will allow input validation
  * of the same type to be skipped.
- *
+ * </p>
+ * <p>
  * Note: This is currently not used to skip input validation.  Input validation
  * is always performed as a means of catching bugs the result in incorrect output
  * of nested content.
+ * </p>
  *
  * @author  AO Industries, Inc.
  */

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -27,13 +27,16 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
+ * <p>
  * Encodes media to allow it to be contained in a different type of media.
  * For example, one may have plaintext inside of HTML, or arbitrary data inside
  * a JavaScript String inside an onclick attribute of an area tag in a XHTML
  * document.  All necessary encoding is automatically performed.
- *
+ * </p>
+ * <p>
  * Each encoder both validates its input characters and produces valid output
  * characters.
+ * </p>
  *
  * @author  AO Industries, Inc.
  */
