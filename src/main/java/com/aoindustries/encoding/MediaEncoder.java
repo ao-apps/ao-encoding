@@ -92,11 +92,35 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
 				}
 				break;
+			case MYSQL :
+				switch(containerType) {
+					case MYSQL :           return null;
+					case TEXT :            return null;
+					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
+				}
+				//break;
+			case PSQL :
+				switch(containerType) {
+					case PSQL :            return null;
+					case TEXT :            return null;
+					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
+				}
+				//break;
+			case SH :
+				switch(containerType) {
+					case SH :              return null;
+					case TEXT :            return null;
+					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
+				}
+				//break;
 			case TEXT:
 				switch(containerType) {
 					case JAVASCRIPT :      encoder = TextInJavaScriptEncoder.textInJavaScriptEncoder; break;
 					case JSON :            encoder = TextInJavaScriptEncoder.textInJsonEncoder; break;
 					case LD_JSON :         encoder = TextInJavaScriptEncoder.textInLdJsonEncoder; break;
+					case MYSQL :           encoder = TextInMysqlEncoder.textInMysqlEncoder; break;
+					case PSQL :            encoder = TextInPsqlEncoder.textInPsqlEncoder; break;
+					case SH :              encoder = TextInShEncoder.textInShEncoder; break;
 					case TEXT :            return null;
 					case XHTML :           encoder = TextInXhtmlEncoder.textInXhtmlEncoder; break;
 					case XHTML_ATTRIBUTE : encoder = TextInXhtmlAttributeEncoder.textInXhtmlAttributeEncoder; break;

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -158,6 +158,51 @@ public enum MediaType {
 		@Override
 		public MarkupType getMarkupType() {
 			return MarkupType.NONE;
+		}
+	},
+
+	/**
+	 * A Bourne shell script (<code>text/x-sh</code>).
+	 */
+	SH("text/x-sh") {
+		@Override
+		boolean isUsedFor(String contentType) {
+			return "text/x-sh".equalsIgnoreCase(contentType);
+		}
+
+		@Override
+		public MarkupType getMarkupType() {
+			return MarkupType.SH;
+		}
+	},
+
+	/**
+	 * The MySQL <code>mysql</code> command line (<code>text/x-mysql</code>).
+	 */
+	MYSQL("text/x-mysql") {
+		@Override
+		boolean isUsedFor(String contentType) {
+			return "text/x-mysql".equalsIgnoreCase(contentType);
+		}
+
+		@Override
+		public MarkupType getMarkupType() {
+			return MarkupType.MYSQL;
+		}
+	},
+
+	/**
+	 * The PostgreSQL <code>psql</code> command line (<code>text/x-psql</code>).
+	 */
+	PSQL("text/x-psql") {
+		@Override
+		boolean isUsedFor(String contentType) {
+			return "text/x-psql".equalsIgnoreCase(contentType);
+		}
+
+		@Override
+		public MarkupType getMarkupType() {
+			return MarkupType.PSQL;
 		}
 	};
 
