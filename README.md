@@ -1,4 +1,4 @@
-# [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://aoindustries.com/) [AO Encoding](https://aoindustries.com/ao-encoding/)
+# [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://github.com/aoindustries) [AO Encoding](https://github.com/aoindustries/ao-encoding)
 <p>
 	<a href="https://aoindustries.com/life-cycle#project-current-stable">
 		<img src="https://aoindustries.com/ao-badges/project-current-stable.svg" alt="project: current stable" />
@@ -31,7 +31,7 @@ High performance character encoding.
 * [GitHub](https://github.com/aoindustries/ao-encoding)
 
 ## Modules
-* [AO Encoding Servlet](https://aoindustries.com/ao-encoding/servlet/)
+* [AO Encoding Servlet](https://github.com/aoindustries/ao-encoding-servlet)
 
 ## Contact Us
 For questions or support, please [contact us](https://aoindustries.com/contact):
