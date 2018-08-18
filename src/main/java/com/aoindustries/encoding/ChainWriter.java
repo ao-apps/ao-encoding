@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -28,6 +28,9 @@ import static com.aoindustries.encoding.JavaScriptInXhtmlEncoder.encodeJavaScrip
 import static com.aoindustries.encoding.JavaScriptInXhtmlEncoder.javaScriptInXhtmlEncoder;
 import static com.aoindustries.encoding.TextInJavaScriptEncoder.encodeTextInJavaScript;
 import static com.aoindustries.encoding.TextInJavaScriptEncoder.textInJavaScriptEncoder;
+import static com.aoindustries.encoding.TextInMysqlEncoder.textInMysqlEncoder;
+import static com.aoindustries.encoding.TextInPsqlEncoder.textInPsqlEncoder;
+import static com.aoindustries.encoding.TextInShEncoder.textInShEncoder;
 import static com.aoindustries.encoding.TextInXhtmlAttributeEncoder.textInXhtmlAttributeEncoder;
 import static com.aoindustries.encoding.TextInXhtmlEncoder.encodeTextInXhtml;
 import static com.aoindustries.encoding.TextInXhtmlEncoder.textInXhtmlEncoder;
@@ -632,6 +635,36 @@ final public class ChainWriter implements Appendable, Closeable {
 				}
 			}
 		}
+		return this;
+	}
+
+	/**
+	 * @see  TextInMysqlEncoder
+	 *
+	 * @param  value  the value to be encoded
+	 */
+	public ChainWriter encodeMysql(Object value) throws IOException {
+		Coercion.write(value, textInMysqlEncoder, out);
+		return this;
+	}
+
+	/**
+	 * @see  TextInPsqlEncoder
+	 *
+	 * @param  value  the value to be encoded
+	 */
+	public ChainWriter encodePsql(Object value) throws IOException {
+		Coercion.write(value, textInPsqlEncoder, out);
+		return this;
+	}
+
+	/**
+	 * @see  TextInShEncoder
+	 *
+	 * @param  value  the value to be encoded
+	 */
+	public ChainWriter encodeSh(Object value) throws IOException {
+		Coercion.write(value, textInShEncoder, out);
 		return this;
 	}
 	// </editor-fold>
