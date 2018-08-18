@@ -639,6 +639,8 @@ final public class ChainWriter implements Appendable, Closeable {
 	}
 
 	/**
+	 * This is must be used within a <code>E'...'</code> string.
+	 *
 	 * @see  TextInMysqlEncoder
 	 *
 	 * @param  value  the value to be encoded
@@ -649,6 +651,8 @@ final public class ChainWriter implements Appendable, Closeable {
 	}
 
 	/**
+	 * This is must be used within a <code>E'...'</code> string.
+	 *
 	 * @see  TextInPsqlEncoder
 	 *
 	 * @param  value  the value to be encoded
@@ -659,6 +663,8 @@ final public class ChainWriter implements Appendable, Closeable {
 	}
 
 	/**
+	 * This is must be used within a <code>$'...'</code> string.
+	 *
 	 * @see  TextInShEncoder
 	 *
 	 * @param  value  the value to be encoded
