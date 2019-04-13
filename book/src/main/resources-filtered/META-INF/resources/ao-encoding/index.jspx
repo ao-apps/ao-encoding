@@ -36,7 +36,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		dateModified="2017-07-18T08:35:06-0500"
 	>
 		<core:child page="changelog.jspx" />
-		<core:child page="apidocs/" />
+		<core:child page="apidocs/index.jspx" />
 		<core:child book="/ao-encoding/servlet" page="/index.jspx" />
 		<ao:include
 			page="/ao-badges/badges.inc.jspx"
