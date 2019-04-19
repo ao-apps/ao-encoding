@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2018-05-28T17:51:41-0500"
+		dateModified="2019-04-19T02:10:39-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -54,6 +54,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				scmUrl="@{documented.scm.url}"
 			>
 				<ul>
+					<li>Minimum Java version changed from 1.6 to 1.7.</li>
 					<li>
 						Implemented encodings for Bourne shell scripts, MySQL command line <code>mysql</code>,
 						and PostgreSQL command line <code>psql</code>.

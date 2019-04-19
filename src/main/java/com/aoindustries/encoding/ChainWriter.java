@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -831,7 +831,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	public static void writeDateTimeJavaScript(Date date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
 		if(date==null) out.append("&#160;");
 		else {
-			String dateTimeString = SQLUtility.getDateTime(date.getTime());
+			String dateTimeString = SQLUtility.getDateTime(date.getTime(), false);
 			long id = sequence.getNextSequenceValue();
 			String idString = Long.toString(id);
 			// Write the element
@@ -913,7 +913,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	public static void writeTimeJavaScript(Date date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
 		if(date==null) out.append("&#160;");
 		else {
-			String timeString = SQLUtility.getTime(date.getTime());
+			String timeString = SQLUtility.getTime(date.getTime(), false);
 			long id = sequence.getNextSequenceValue();
 			String idString = Long.toString(id);
 			// Write the element

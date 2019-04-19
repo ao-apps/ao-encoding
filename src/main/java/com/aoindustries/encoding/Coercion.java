@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance character encoding.
- * Copyright (C) 2013, 2015, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,7 +23,6 @@
 package com.aoindustries.encoding;
 
 import com.aoindustries.io.Writable;
-import com.aoindustries.util.EncodingUtils;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Field;
@@ -56,8 +55,9 @@ public final class Coercion  {
 	/**
 	 * Converts an object to a string.
 	 */
+	@SuppressWarnings("deprecation")
 	public static String toString(Object value) {
-		return EncodingUtils.toString(value);
+		return com.aoindustries.util.EncodingUtils.toString(value);
 		/* Code will move here once encodingutils no longer used
 		// If A is a string, then the result is A.
 		if(value instanceof String) return (String)value;
