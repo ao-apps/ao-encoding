@@ -52,7 +52,13 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				groupId="@{documented.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{documented.scm.url}"
-			/>
+			>
+				<!--
+					TODO: When a value is fastToString, select optimal quoting type based on content, which might be no quotes.
+					      Use this capability from ao:out tag in ao-taglib to simplify the output under common cases, while still
+					      supporting the full encoding capability.
+				-->
+			</changelog:release>
 		</c:if>
 
 		<changelog:release
