@@ -1,5 +1,5 @@
 /*
- * ao-encoding - High performance character encoding.
+ * ao-encoding - High performance streaming character encoding.
  * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir

@@ -21,7 +21,7 @@
 	</a>
 </p>
 
-High performance character encoding.
+High performance streaming character encoding.
 
 ## Project Links
 * [Project Home](https://aoindustries.com/ao-encoding/)

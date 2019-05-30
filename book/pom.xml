@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-ao-encoding - High performance character encoding.
+ao-encoding - High performance streaming character encoding.
 Copyright (C) 2016, 2017, 2018, 2019  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
@@ -39,7 +39,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		<documented.javac.link.javaApi>${javac.link.javaApi.jdk7}</documented.javac.link.javaApi>
 		<documented.name>AO Encoding</documented.name>
 		<documented.url>https://aoindustries.com/${documented.artifactId}/</documented.url>
-		<documented.description>High performance character encoding.</documented.description>
+		<documented.description>High performance streaming character encoding.</documented.description>
 		<documented.inceptionYear>2009</documented.inceptionYear>
 		<documented.scm.url>https://github.com/aoindustries/${documented.artifactId}</documented.scm.url>
 
