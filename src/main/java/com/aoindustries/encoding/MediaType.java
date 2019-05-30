@@ -131,9 +131,8 @@ public enum MediaType {
 	/**
 	 * Any plaintext document comprised of unicode characters (<code>text/plain</code>).
 	 * This is used for any arbitrary, unknown and untrusted data.
-	 *
-	 * @see #DATA
 	 */
+	 // @see #DATA
 	TEXT("text/plain") {
 		@Override
 		boolean isUsedFor(String contentType) {

@@ -501,7 +501,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Escapes HTML for displaying in browsers and writes to the internal <code>PrintWriter</code>.
 	 * Has makeBr and makeNbsp enabled.
 	 *
-	 * @param S the string to be escaped.
+	 * @param value the string to be escaped.
 	 *
 	 * @deprecated  the effects of makeBr and makeNbsp should be handled by CSS white-space property.
 	 * @see  #encodeXhtml(java.lang.Object)
@@ -515,8 +515,9 @@ final public class ChainWriter implements Appendable, Closeable {
 	/**
 	 * Escapes HTML for displaying in browsers and writes to the internal <code>PrintWriter</code>.
 	 *
-	 * @param S the string to be escaped.
-	 * @param make_br  will write &lt;BR&gt; tags for every newline character
+	 * @param value the string to be escaped.
+	 * @param make_br  will write &lt;br /&gt; tags for every newline character
+	 * @param make_nbsp  will write &amp;#160; for a space when another space follows
 	 *
 	 * @deprecated  the effects of makeBr and makeNbsp should be handled by CSS white-space property.
 	 * @see  #encodeXhtml(java.lang.Object)
@@ -528,7 +529,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	}
 
 	/**
-	 * @see TextInJavaScriptEncoder#encodeTextInJavaScript(java.lang.String, Appendable)
+	 * @see TextInJavaScriptEncoder#encodeTextInJavaScript(java.lang.CharSequence, java.lang.Appendable)
 	 *
 	 * @deprecated
 	 */
@@ -544,7 +545,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * will be added giving the translation lookup id to aid in translation of
 	 * server-translated values in JavaScript.
 	 * 
-	 * @see  Coercion#toString(java.lang.Object, com.aoindustries.util.i18n.BundleLookup.MarkupType)
+	 * @see  Coercion#toString(java.lang.Object)
 	 */
 	public ChainWriter encodeJavaScriptStringInXmlAttribute(Object value) throws IOException {
 		// Two stage encoding:
@@ -582,7 +583,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * will be added giving the translation lookup id to aid in translation of
 	 * server-translated values in JavaScript.
 	 * 
-	 * @see  Coercion#toString(java.lang.Object, com.aoindustries.util.i18n.BundleLookup.MarkupType)
+	 * @see  Coercion#toString(java.lang.Object)
 	 */
 	public ChainWriter encodeJavaScriptStringInXhtml(Object value) throws IOException {
 		// Two stage encoding:
@@ -697,6 +698,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	/**
 	 * @deprecated  Please use writeHtmlColor instead.
 	 */
+	@Deprecated
 	public ChainWriter printHTMLColor(int color) throws IOException {
 		return writeHtmlColor(color);
 	}
@@ -731,6 +733,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	/**
 	 * @deprecated  Please use writeHtmlImagePreloadJavaScript instead.
 	 */
+	@Deprecated
 	public ChainWriter printImagePreloadJS(String url) throws IOException {
 		return writeHtmlImagePreloadJavaScript(url);
 	}
@@ -798,7 +801,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Writes to the internal <code>PrintWriter</code>.
 	 *
 	 * @deprecated
-	 * @see  #writeDateJavaScript(long)
+	 * @see  #writeDateJavaScript(java.util.Date, com.aoindustries.util.Sequence, java.lang.Appendable)
 	 */
 	@Deprecated
 	public ChainWriter printDateJS(long date, Sequence sequence, Appendable scriptOut) throws IOException {
@@ -810,7 +813,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * if the date is <code>null</code>.
 	 * Writes to the internal <code>PrintWriter</code>.
 	 *
-	 * @see  #writeDateJavaScript(long,Appendable)
+	 * @see  #writeDateJavaScript(java.util.Date, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
 	 */
 	public ChainWriter writeDateJavaScript(Date date, Sequence sequence, Appendable scriptOut) throws IOException {
 		writeDateJavaScript(date, sequence, out, scriptOut);
@@ -881,7 +884,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Writes to the internal <code>PrintWriter</code>.
 	 *
 	 * @deprecated
-	 * @see #writeDateTimeJavaScript(long)
+	 * @see #writeDateTimeJavaScript(java.util.Date, com.aoindustries.util.Sequence, java.lang.Appendable)
 	 */
 	@Deprecated
 	public ChainWriter printDateTimeJS(long date, Sequence sequence, Appendable scriptOut) throws IOException {
@@ -892,7 +895,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Writes a JavaScript script tag that shows a date and time in the user's locale.  Prints <code>&amp;#160;</code>
 	 * if the date is <code>null</code>.
 	 * Writes to the internal <code>PrintWriter</code>.
-	 * @see #writeDateTimeJavaScript(long, Appendable)
+	 * @see #writeDateTimeJavaScript(java.util.Date, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
 	 */
 	public ChainWriter writeDateTimeJavaScript(Date date, Sequence sequence, Appendable scriptOut) throws IOException {
 		writeDateTimeJavaScript(date, sequence, out, scriptOut);
@@ -956,7 +959,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Writes to the internal <code>PrintWriter</code>.
 	 *
 	 * @deprecated
-	 * @see #writeTimeJavaScript(long)
+	 * @see #writeTimeJavaScript(java.util.Date, com.aoindustries.util.Sequence, java.lang.Appendable)
 	 */
 	@Deprecated
 	public ChainWriter printTimeJS(long date, Sequence sequence, Appendable scriptOut) throws IOException {
@@ -968,7 +971,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * if the date is <code>null</code>.
 	 * Writes to the internal <code>PrintWriter</code>.
 	 *
-	 * @see #writeTimeJavaScript(long,Appendable)
+	 * @see #writeTimeJavaScript(java.util.Date, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
 	 */
 	public ChainWriter writeTimeJavaScript(Date date, Sequence sequence, Appendable scriptOut) throws IOException {
 		writeTimeJavaScript(date, sequence, out, scriptOut);
