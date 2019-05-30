@@ -32,15 +32,6 @@ import com.aoindustries.util.i18n.MarkupType;
 public enum MediaType {
 
 	/**
-	 * Arbitrary 8-bit binary data (<code>application/octet-stream</code>).
-	 * Please note that some conversions of this will possibly lose data, such
-	 * as being contained by XML.  In this case control characters except \t,
-	 * \r, and \n will be discarded.  Consider what to do about character
-	 * encodings before enabling this.
-	 */
-	// DATA("application/octet-stream"),
-
-	/**
 	 * An XHTML 1.0 document (<code>application/xhtml+xml</code>).
 	 */
 	XHTML("application/xhtml+xml") {
@@ -132,7 +123,6 @@ public enum MediaType {
 	 * Any plaintext document comprised of unicode characters (<code>text/plain</code>).
 	 * This is used for any arbitrary, unknown and untrusted data.
 	 */
-	 // @see #DATA
 	TEXT("text/plain") {
 		@Override
 		boolean isUsedFor(String contentType) {
