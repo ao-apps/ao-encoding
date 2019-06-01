@@ -33,20 +33,22 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		title="@{documented.name}"
 		description="@{documented.description}"
 		datePublished="2016-10-16T22:58:00-0500"
-		dateModified="2019-05-31T17:27:36-0500"
+		dateModified="2019-06-01T00:46:53-0500"
 	>
 		<core:child page="changelog.jspx" />
 		<core:child page="apidocs/index.jspx" />
 		<core:child book="/ao-encoding/servlet" page="/index.jspx" />
-		<ao:include
-			page="/ao-badges/badges.inc.jspx"
-			arg.projectStatus="${currentPage.property.projectStatus}"
-			arg.managementStatus="${currentPage.property.managementStatus}"
-			arg.packagingStatus="${currentPage.property.packagingStatus}"
-			arg.javaVersion="${currentPage.property.javaVersion}"
-			arg.semanticVersioning="${currentPage.property.semanticVersioning}"
-			arg.license="${currentPage.property.license}"
-		/>
+		<header>
+			<ao:include
+				page="/ao-badges/badges.inc.jspx"
+				arg.projectStatus="${currentPage.property.projectStatus}"
+				arg.managementStatus="${currentPage.property.managementStatus}"
+				arg.packagingStatus="${currentPage.property.packagingStatus}"
+				arg.javaVersion="${currentPage.property.javaVersion}"
+				arg.semanticVersioning="${currentPage.property.semanticVersioning}"
+				arg.license="${currentPage.property.license}"
+			/>
+		</header>
 		<p>
 			@{documented.description}
 		</p>
