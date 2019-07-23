@@ -756,9 +756,11 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * The provided sequence should start at one for any given HTML page because parts of the
 	 * script will only be written when the sequence is equal to one.
 	 * </p>
+	 *
+	 * @see  SQLUtility#formatDate(long)
 	 */
 	public static void writeDateJavaScript(long date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
-		String dateString = SQLUtility.getDate(date);
+		String dateString = SQLUtility.formatDate(date);
 		long id = sequence.getNextSequenceValue();
 		String idString = Long.toString(id);
 		// Write the element
@@ -805,7 +807,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * script will only be written when the sequence is equal to one.
 	 * </p>
 	 *
-	 * @see  #writeDateJavaScript(long, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatDate(java.lang.Long)
 	 */
 	public static void writeDateJavaScript(Long date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
 		if(date == null) out.append("&#160;");
@@ -825,7 +827,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * script will only be written when the sequence is equal to one.
 	 * </p>
 	 *
-	 * @see  #writeDateJavaScript(long, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatDate(java.util.Date)
 	 */
 	public static void writeDateJavaScript(Date date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
 		if(date == null) out.append("&#160;");
@@ -851,7 +853,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Writes a JavaScript script tag that shows a date in the user's locale.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
-	 * @see  #writeDateJavaScript(long, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatDate(long)
 	 */
 	public ChainWriter writeDateJavaScript(long date, Sequence sequence, Appendable scriptOut) throws IOException {
 		writeDateJavaScript(date, sequence, out, scriptOut);
@@ -863,7 +865,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
-	 * @see  #writeDateJavaScript(java.lang.Long, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatDate(java.lang.Long)
 	 */
 	public ChainWriter writeDateJavaScript(Long date, Sequence sequence, Appendable scriptOut) throws IOException {
 		writeDateJavaScript(date, sequence, out, scriptOut);
@@ -875,7 +877,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
-	 * @see  #writeDateJavaScript(java.util.Date, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatDate(java.util.Date)
 	 */
 	public ChainWriter writeDateJavaScript(Date date, Sequence sequence, Appendable scriptOut) throws IOException {
 		writeDateJavaScript(date, sequence, out, scriptOut);
@@ -893,9 +895,11 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * The provided sequence should start at one for any given HTML page because parts of the
 	 * script will only be written when the sequence is equal to one.
 	 * </p>
+	 *
+	 * @see  SQLUtility#formatDateTime(long)
 	 */
 	public static void writeDateTimeJavaScript(long date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
-		String dateTimeString = SQLUtility.getDateTime(date, false);
+		String dateTimeString = SQLUtility.formatDateTime(date);
 		long id = sequence.getNextSequenceValue();
 		String idString = Long.toString(id);
 		// Write the element
@@ -951,7 +955,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * script will only be written when the sequence is equal to one.
 	 * </p>
 	 *
-	 * @see  #writeDateTimeJavaScript(long, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatDateTime(java.lang.Long)
 	 */
 	public static void writeDateTimeJavaScript(Long date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
 		if(date == null) out.append("&#160;");
@@ -971,7 +975,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * script will only be written when the sequence is equal to one.
 	 * </p>
 	 *
-	 * @see  #writeDateTimeJavaScript(long, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatDateTime(java.util.Date)
 	 */
 	public static void writeDateTimeJavaScript(Date date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
 		if(date == null) out.append("&#160;");
@@ -997,7 +1001,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Writes a JavaScript script tag that shows a date and time in the user's locale.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
-	 * @see #writeDateTimeJavaScript(long, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatDateTime(long)
 	 */
 	public ChainWriter writeDateTimeJavaScript(long date, Sequence sequence, Appendable scriptOut) throws IOException {
 		writeDateTimeJavaScript(date, sequence, out, scriptOut);
@@ -1009,7 +1013,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
-	 * @see #writeDateTimeJavaScript(java.lang.Long, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatDateTime(java.lang.Long)
 	 */
 	public ChainWriter writeDateTimeJavaScript(Long date, Sequence sequence, Appendable scriptOut) throws IOException {
 		writeDateTimeJavaScript(date, sequence, out, scriptOut);
@@ -1021,7 +1025,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
-	 * @see #writeDateTimeJavaScript(java.util.Date, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatDateTime(java.util.Date)
 	 */
 	public ChainWriter writeDateTimeJavaScript(Date date, Sequence sequence, Appendable scriptOut) throws IOException {
 		writeDateTimeJavaScript(date, sequence, out, scriptOut);
@@ -1039,9 +1043,11 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * The provided sequence should start at one for any given HTML page because parts of the
 	 * script will only be written when the sequence is equal to one.
 	 * </p>
+	 *
+	 * @see  SQLUtility#formatTime(long)
 	 */
 	public static void writeTimeJavaScript(long date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
-		String timeString = SQLUtility.getTime(date, false);
+		String timeString = SQLUtility.formatTime(date);
 		long id = sequence.getNextSequenceValue();
 		String idString = Long.toString(id);
 		// Write the element
@@ -1090,7 +1096,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * script will only be written when the sequence is equal to one.
 	 * </p>
 	 *
-	 * @see  #writeTimeJavaScript(long, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatTime(java.lang.Long)
 	 */
 	public static void writeTimeJavaScript(Long date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
 		if(date == null) out.append("&#160;");
@@ -1110,7 +1116,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * script will only be written when the sequence is equal to one.
 	 * </p>
 	 *
-	 * @see  #writeTimeJavaScript(long, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatTime(java.util.Date)
 	 */
 	public static void writeTimeJavaScript(Date date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
 		if(date == null) out.append("&#160;");
@@ -1136,7 +1142,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Writes a JavaScript script tag that a time in the user's locale.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
-	 * @see #writeTimeJavaScript(long, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatTime(long)
 	 */
 	public ChainWriter writeTimeJavaScript(long date, Sequence sequence, Appendable scriptOut) throws IOException {
 		writeTimeJavaScript(date, sequence, out, scriptOut);
@@ -1148,7 +1154,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
-	 * @see #writeTimeJavaScript(java.lang.Long, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatTime(java.lang.Long)
 	 */
 	public ChainWriter writeTimeJavaScript(Long date, Sequence sequence, Appendable scriptOut) throws IOException {
 		writeTimeJavaScript(date, sequence, out, scriptOut);
@@ -1160,7 +1166,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
-	 * @see #writeTimeJavaScript(java.util.Date, com.aoindustries.util.Sequence, java.lang.Appendable, java.lang.Appendable)
+	 * @see  SQLUtility#formatTime(java.util.Date)
 	 */
 	public ChainWriter writeTimeJavaScript(Date date, Sequence sequence, Appendable scriptOut) throws IOException {
 		writeTimeJavaScript(date, sequence, out, scriptOut);
