@@ -26,6 +26,7 @@ import com.aoindustries.io.Writable;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.transform.OutputKeys;
@@ -139,6 +140,9 @@ public final class Coercion  {
 
 	/**
 	 * Coerces an object to a String representation, supporting streaming for specialized types.
+	 * <ol>
+	 * <li>{@link Node} will be output as {@link StandardCharsets#UTF_8}.</li>
+	 * </ol>
 	 */
 	public static void write(Object value, Writer out) throws IOException {
 		if(out instanceof MediaWriter) {
@@ -171,6 +175,7 @@ public final class Coercion  {
 					TransformerFactory transFactory = TransformerFactory.newInstance();
 					Transformer transformer = transFactory.newTransformer();
 					transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+					transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
 					transformer.transform(
 						new DOMSource((Node)value),
 						new StreamResult(unwrap(out))
