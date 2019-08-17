@@ -36,7 +36,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2019-08-12T12:56:39-0500"
+		dateModified="2019-08-17T00:35:00-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -52,15 +52,18 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{documented.scm.url}"
 			>
-				<!-- TODO:
 				<ul>
+					<li>Removed long-deprecated method <code>ChainWriter.printEU(String)</code>.</li>
+					<li>Removed long-deprecated method <code>ChainWriter.printHTMLColor(int)</code>.</li>
+					<li>Removed long-deprecated method <code>ChainWriter.printImagePreloadJS(String)</code>.</li>
+					<!-- TODO:
 					<li>
 						When a value is fastToString, select optimal quoting type based on content, which might be no quotes.
 						Use this capability from ao:out tag in ao-taglib to simplify the output under common cases, while still
 						supporting the full encoding capability.
 					</li>
+					-->
 				</ul>
-				-->
 			</changelog:release>
 		</c:if>
 

@@ -45,7 +45,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Locale;
 
@@ -615,30 +614,6 @@ final public class ChainWriter implements Appendable, Closeable {
 	}
 
 	/**
-	 * Prints a value that may be placed in a URL.
-	 *
-	 * @deprecated  Use URLEncoder instead.
-	 * @see URLEncoder
-	 */
-	@Deprecated
-	public ChainWriter printEU(String value) {
-		int len = value.length();
-		for (int c = 0; c < len; c++) {
-			char ch = value.charAt(c);
-			if (ch == ' ') out.print('+');
-			else {
-				if ((ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) out.print(ch);
-				else {
-					out.print('%');
-					out.print(getHex(ch >>> 4));
-					out.print(getHex(ch));
-				}
-			}
-		}
-		return this;
-	}
-
-	/**
 	 * This is must be used within a {@code E'...'} string.
 	 *
 	 * @see  TextInMysqlEncoder
@@ -695,14 +670,6 @@ final public class ChainWriter implements Appendable, Closeable {
 	}
 
 	/**
-	 * @deprecated  Please use writeHtmlColor instead.
-	 */
-	@Deprecated
-	public ChainWriter printHTMLColor(int color) throws IOException {
-		return writeHtmlColor(color);
-	}
-
-	/**
 	 * Prints a color in HTML format #xxxxxx, where xxxxxx is the hex code.
 	 */
 	public ChainWriter writeHtmlColor(int color) throws IOException {
@@ -727,14 +694,6 @@ final public class ChainWriter implements Appendable, Closeable {
 		encodeJavaScriptInXhtmlAttribute(javascript, out);
 		out.append("\";\n"
 				+ "</script>");
-	}
-
-	/**
-	 * @deprecated  Please use writeHtmlImagePreloadJavaScript instead.
-	 */
-	@Deprecated
-	public ChainWriter printImagePreloadJS(String url) throws IOException {
-		return writeHtmlImagePreloadJavaScript(url);
 	}
 
 	/**
