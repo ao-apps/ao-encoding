@@ -22,8 +22,6 @@
  */
 package com.aoindustries.encoding;
 
-import java.io.UnsupportedEncodingException;
-
 /**
  * The current encoding context may perform URL rewriting.
  *
@@ -34,5 +32,5 @@ public interface EncodingContext {
 	/**
 	 * Encodes a URL for the current encoding context.
 	 */
-	String encodeURL(String url) throws UnsupportedEncodingException;
+	String encodeURL(String url);
 }
