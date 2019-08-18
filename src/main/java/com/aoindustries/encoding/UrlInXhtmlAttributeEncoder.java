@@ -54,9 +54,8 @@ public class UrlInXhtmlAttributeEncoder extends BufferedEncoder {
 
 	@Override
 	protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
-		TextInXhtmlAttributeEncoder.encodeTextInXhtmlAttribute(
-			context.encodeURL(buffer.toString()),
-			out
-		);
+		String encoded = context.encodeURL(buffer.toString());
+		UrlValidator.checkCharacters(encoded, 0, encoded.length());
+		TextInXhtmlAttributeEncoder.encodeTextInXhtmlAttribute(encoded, out);
 	}
 }

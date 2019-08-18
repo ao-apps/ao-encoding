@@ -28,6 +28,9 @@ import java.io.Writer;
 /**
  * Makes sure that all data going through this writer has the correct characters
  * for URI/URL data.
+ * <p>
+ * TODO: Allow RFC 3987, too
+ * </p>
  *
  * @author  AO Industries, Inc.
  */
@@ -35,61 +38,79 @@ public class UrlValidator extends MediaValidator {
 
 	/**
 	 * Checks one character, throws IOException if invalid.
-	 * @see java.net.URLEncoder
-	 * @return <code>true</code> if found the first '?'.
+	 * <p>
+	 * See <a href="https://tools.ietf.org/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
+	 * and <a href="https://tools.ietf.org/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
+	 * </p>
 	 */
-	public static boolean checkCharacter(int c, boolean foundQuestionMark) throws IOException {
-		if(foundQuestionMark) {
-			switch(c) {
-				case '.':
-				case '-':
-				case '*':
-				case '_':
-				case '+': // converted space
-				case '%': // encoded value
-				// Other characters used outside the URL data
-				//case ':':
-				//case '/':
-				//case '@':
-				//case ';':
-				//case '?':
-				// Parameter separators
-				case '=':
-				case '&':
-				// Anchor separator
-				case '#':
-					return true;
-				default:
-					if(
-						(c<'a' || c>'z')
-						&& (c<'A' || c>'Z')
-						&& (c<'0' || c>'9')
-					) throw new IOException(ApplicationResources.accessor.getMessage("UrlValidator.invalidCharacter", Integer.toHexString(c)));
-					return true;
-			}
-		} else {
-			return c=='?';
+	public static void checkCharacter(char c) throws IOException {
+		switch(c) {
+			/*
+			 * Reserved Characters
+			 */
+			// gen-delims
+			case ':' :
+			case '/' :
+			case '?' :
+			case '#' :
+			case '[' :
+			case ']' :
+			case '@' :
+			// sub-delims
+			case '!' :
+			case '$' :
+			case '&' :
+			case '\'' :
+			case '(' :
+			case ')' :
+			case '*' :
+			case '+' :
+			case ',' :
+			case ';' :
+			case '=' :
+
+			/*
+			 * Already percent-encoded
+			 */
+			// 
+			case '%' :
+
+			/*
+			 * Unreserved Characters
+			 */
+			case '-':
+			case '.':
+			case '_':
+			case '~':
+				return;
+			default:
+				if(
+					// ALPHA
+					(c >= 'a' && c <= 'z')
+					|| (c >= 'A' && c <= 'Z')
+					// DIGIT
+					|| (c >= '0' && c <= '9')
+				) {
+					return;
+				}
 		}
+		throw new IOException(ApplicationResources.accessor.getMessage("UrlValidator.invalidCharacter", Integer.toHexString(c)));
 	}
 
 	/**
 	 * Checks a set of characters, throws IOException if invalid
 	 */
-	public static boolean checkCharacters(char[] cbuf, int off, int len, boolean foundQuestionMark) throws IOException {
+	public static void checkCharacters(char[] cbuf, int off, int len) throws IOException {
 		int end = off + len;
-		while(off<end) foundQuestionMark = checkCharacter(cbuf[off++], foundQuestionMark);
-		return foundQuestionMark;
+		while(off < end) checkCharacter(cbuf[off++]);
 	}
 
 	/**
 	 * Checks a set of characters, throws IOException if invalid
 	 */
-	public static boolean checkCharacters(CharSequence str, int off, int end, boolean foundQuestionMark) throws IOException {
-		while(off<end) foundQuestionMark = checkCharacter(str.charAt(off++), foundQuestionMark);
-		return foundQuestionMark;
+	public static void checkCharacters(CharSequence str, int off, int end) throws IOException {
+		while(off < end) checkCharacter(str.charAt(off++));
 	}
-
-	private boolean foundQuestionMark = false;
 
 	protected UrlValidator(Writer out) {
 		super(out);
@@ -98,11 +119,10 @@ public class UrlValidator extends MediaValidator {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType==MediaType.URL
-			|| inputType==MediaType.TEXT        // No validation required
+			inputType == MediaType.URL
+			|| inputType == MediaType.TEXT // No validation required
 		;
 	}
-
 
 	@Override
 	public boolean canSkipValidation(MediaType inputType) {
@@ -116,40 +136,40 @@ public class UrlValidator extends MediaValidator {
 
 	@Override
 	public void write(int c) throws IOException {
-		foundQuestionMark = checkCharacter(c, foundQuestionMark);
+		checkCharacter((char)c);
 		out.write(c);
 	}
 
 	@Override
 	public void write(char[] cbuf, int off, int len) throws IOException {
-		foundQuestionMark = checkCharacters(cbuf, off, len, foundQuestionMark);
+		checkCharacters(cbuf, off, len);
 		out.write(cbuf, off, len);
 	}
 
 	@Override
 	public void write(String str, int off, int len) throws IOException {
-		if(str==null) throw new IllegalArgumentException("str is null");
-		foundQuestionMark = checkCharacters(str, off, off + len, foundQuestionMark);
+		if(str == null) throw new IllegalArgumentException("str is null");
+		checkCharacters(str, off, off + len);
 		out.write(str, off, len);
 	}
 
 	@Override
 	public UrlValidator append(CharSequence csq) throws IOException {
-		foundQuestionMark = checkCharacters(csq, 0, csq.length(), foundQuestionMark);
+		checkCharacters(csq, 0, csq.length());
 		out.append(csq);
 		return this;
 	}
 
 	@Override
 	public UrlValidator append(CharSequence csq, int start, int end) throws IOException {
-		foundQuestionMark = checkCharacters(csq, start, end, foundQuestionMark);
+		checkCharacters(csq, start, end);
 		out.append(csq, start, end);
 		return this;
 	}
 
 	@Override
 	public UrlValidator append(char c) throws IOException {
-		foundQuestionMark = checkCharacter(c, foundQuestionMark);
+		checkCharacter(c);
 		out.append(c);
 		return this;
 	}

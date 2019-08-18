@@ -68,10 +68,9 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
 
 	@Override
 	protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
-		TextInJavaScriptEncoder.encodeTextInJavaScript(
-			context.encodeURL(buffer.toString()),
-			out
-		);
+		String encoded = context.encodeURL(buffer.toString());
+		UrlValidator.checkCharacters(encoded, 0, encoded.length());
+		TextInJavaScriptEncoder.encodeTextInJavaScript(encoded, out);
 		out.append('"');
 	}
 }

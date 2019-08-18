@@ -36,7 +36,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2019-08-17T00:53:33-0500"
+		dateModified="2019-08-18T01:26:14-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -58,6 +58,10 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					<li>Removed long-deprecated method <code>ChainWriter.printImagePreloadJS(String)</code>.</li>
 					<li>During coercion, XML Node will be output as UTF-8.</li>
 					<li><code>EncodingContext.encodeURL(String)</code> no longer throws <code>UnsupportedEncodingException</code>.</li>
+					<li>
+						<code>UrlValidator</code> now validates the entire URL versus
+						<ao:a href="https://tools.ietf.org/html/rfc3986">RFC 3986</ao:a>.
+					</li>
 					<!-- TODO:
 					<li>
 						When a value is fastToString, select optimal quoting type based on content, which might be no quotes.
