@@ -237,6 +237,7 @@ public final class Coercion  {
 						TransformerFactory transFactory = TransformerFactory.newInstance();
 						Transformer transformer = transFactory.newTransformer();
 						transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
 						transformer.transform(
 							new DOMSource((Node)value),
 							new StreamResult(new MediaWriter(encoder, out))
