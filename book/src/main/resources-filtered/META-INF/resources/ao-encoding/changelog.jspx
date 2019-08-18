@@ -36,7 +36,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2019-08-18T01:26:14-0500"
+		dateModified="2019-08-18T03:01:13-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -86,7 +86,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					Added variations of the javascript date and time printing in <code>ChainWriter</code>
 					supporting dates and times represented by <code>long</code> and <code>Long</code>.
 				</li>
-				<li>Updated for compatibility with <core:link book="/aocode-public" page="/changelog.jspx" element="release-notes-3.0.1">aocode-public-3.0.1</core:link>.</li>
+				<li>Updated for compatibility with <core:link book="/aocode-public" page="/changelog.jspx" element="release-notes-3.1.0">aocode-public-3.1.0</core:link>.</li>
 			</ul>
 		</changelog:release>
 
