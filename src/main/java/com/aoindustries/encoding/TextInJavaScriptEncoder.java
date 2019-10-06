@@ -54,6 +54,7 @@ final public class TextInJavaScriptEncoder extends MediaEncoder {
 			// Encode the following as unicode because escape for HTML and XHTML is different
 			case '&': return "\\u0026";
 			case '<': return "\\u003c";
+			// Note: This also prevents the potential closing of CDATA blocks with "]]>" inside strings.
 			case '>': return "\\u003e";
 			default:
 				if(ch<' ') return NewEncodingUtils.getJavaScriptUnicodeEscapeString(ch);
