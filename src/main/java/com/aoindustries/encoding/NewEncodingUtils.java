@@ -77,9 +77,18 @@ public class NewEncodingUtils {
 	}
 
 	/**
-	 * Gets the unicode escape for a JavaScript character or null if may be passed-through without escape.
-	 * @param ch
-	 * @return
+	 * Gets the Unicode escape for a JavaScript character or null if may be passed-through without escape.
+	 * <p>
+	 * Code points outside the BMP (0x10000+) are simply handled as their
+	 * individual surrogates {@code "\\uhhhh\\uhhhh"}-escaped.  This is safe,
+	 * completely interoperable between Java and JavaScript, and works with
+	 * simple one-char-at-a-time streaming implementations.
+	 * </p>
+	 *
+	 * @param ch  The character to encode
+	 *
+	 * @return  the encoded form of the character or {@code null} when no
+	 *          encoding needed
 	 */
 	static String getJavaScriptUnicodeEscapeString(char ch) {
 		int chInt = (int)ch;
