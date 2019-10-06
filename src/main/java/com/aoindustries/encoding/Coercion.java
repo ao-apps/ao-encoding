@@ -65,7 +65,7 @@ public final class Coercion  {
 		// Otherwise, if A is null, then the result is "".
 		if(value == null) return "";
 		// Otherwise, if is a DOM node, serialize the output
-		// Get implemention from other EncodingUtils
+		// Get implementation from other EncodingUtils
 		// Otherwise, if A.toString() throws an exception, then raise an error
 		String str = value.toString();
 		// Otherwise, the result is A.toString();
