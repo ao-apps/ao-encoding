@@ -286,6 +286,40 @@ public final class Coercion  {
 	}
 
 	/**
+	 * Returns the provided value trimmed, or {@code null} if the value is empty after trimming.
+	 *
+	 * @return  The original value, a trimmed version of the value, a trimmed {@link String}
+	 *          representation of the object, or {@code null}.
+	 */
+	public static Object trimNullIfEmpty(Object value) throws IOException {
+		if(value instanceof String) {
+			// If A is a string, then the result is A.
+			String trimmed = ((String)value).trim();
+			return trimmed.isEmpty() ? null : trimmed;
+		} else if(value == null) {
+			// Otherwise, if A is null, then the result is "".
+			return null;
+		} else if(value instanceof Writable) {
+			Writable writable = (Writable)value;
+			if(writable.isFastToString()) {
+				String trimmed = writable.toString().trim();
+				return trimmed.isEmpty() ? null : trimmed;
+			} else {
+				writable = writable.trim();
+				return writable.getLength() == 0 ? null : writable;
+			}
+		} else if(value instanceof Node) {
+			// Otherwise, if is a DOM node, serialize the output
+			return value; // There is a node, is not empty
+		} else {
+			// Otherwise, if A.toString() throws an exception, then raise an error
+			// Otherwise, the result is A.toString();
+			String trimmed = value.toString().trim();
+			return trimmed.isEmpty() ? null : trimmed;
+		}
+	}
+
+	/**
 	 * Returns the provided number or zero if the value is empty.
 	 * 
 	 * @see  #isEmpty(java.lang.Object)
