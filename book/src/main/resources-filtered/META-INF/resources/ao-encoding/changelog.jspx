@@ -36,7 +36,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2019-10-01T21:09:58-0500"
+		dateModified="2019-10-09T03:01:18-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -52,6 +52,12 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{documented.scm.url}"
 			>
+				<ul>
+					<li>
+						New method <ao:a href="apidocs/com/aoindustries/encoding/Coercion.html#trimNullIfEmpty-java.lang.Object-">Coercion.trimNullIfEmpty(Object)</ao:a>
+						that returns the provided value trimmed, or <code>null</code> if the value is empty after trimming.
+					</li>
+				</ul>
 				<!-- TODO:
 				<li>
 					When a value is fastToString, select optimal quoting type based on content, which might be no quotes.
