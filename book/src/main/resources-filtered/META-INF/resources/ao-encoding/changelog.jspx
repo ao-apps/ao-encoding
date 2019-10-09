@@ -36,7 +36,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2019-10-09T05:19:23-0500"
+		dateModified="2019-10-09T06:01:16-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -53,6 +53,10 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				scmUrl="@{documented.scm.url}"
 			>
 				<ul>
+					<li>
+						New method <ao:a href="apidocs/com/aoindustries/encoding/Coercion.html#trim-java.lang.Object-">Coercion.trim(Object)</ao:a>
+						that returns the provided value trimmed.
+					</li>
 					<li>
 						New method <ao:a href="apidocs/com/aoindustries/encoding/Coercion.html#trimNullIfEmpty-java.lang.Object-">Coercion.trimNullIfEmpty(Object)</ao:a>
 						that returns the provided value trimmed, or <code>null</code> if the value is empty after trimming.
