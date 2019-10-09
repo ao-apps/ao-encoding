@@ -286,6 +286,36 @@ public final class Coercion  {
 	}
 
 	/**
+	 * Returns the provided value trimmed.
+	 *
+	 * @return  The original value, a trimmed version of the value, a trimmed {@link String}
+	 *          representation of the object, or {@code null} when the value is {@code null}.
+	 */
+	public static Object trim(Object value) throws IOException {
+		if(value instanceof String) {
+			// If A is a string, then the result is A.
+			return ((String)value).trim();
+		} else if(value == null) {
+			// Otherwise, if A is null, then the result is "".
+			return null;
+		} else if(value instanceof Writable) {
+			Writable writable = (Writable)value;
+			if(writable.isFastToString()) {
+				return writable.toString().trim();
+			} else {
+				return writable.trim();
+			}
+		} else if(value instanceof Node) {
+			// Otherwise, if is a DOM node, serialize the output
+			return value; // There is a node, is not empty
+		} else {
+			// Otherwise, if A.toString() throws an exception, then raise an error
+			// Otherwise, the result is A.toString();
+			return value.toString().trim();
+		}
+	}
+
+	/**
 	 * Returns the provided value trimmed, or {@code null} if the value is empty after trimming.
 	 *
 	 * @return  The original value, a trimmed version of the value, a trimmed {@link String}
