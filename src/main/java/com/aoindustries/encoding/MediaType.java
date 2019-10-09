@@ -80,7 +80,9 @@ public enum MediaType {
 	JAVASCRIPT("text/javascript") {
 		@Override
 		boolean isUsedFor(String contentType) {
-			return "text/javascript".equalsIgnoreCase(contentType);
+			return
+				"text/javascript".equalsIgnoreCase(contentType)
+				|| "application/javascript".equalsIgnoreCase(contentType);
 		}
 
 		@Override
