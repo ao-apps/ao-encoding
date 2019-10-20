@@ -100,7 +100,12 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @param  out        A character-output stream
 	 */
 	public ChainWriter(Writer out) {
-		this(new PrintWriter(out));
+		// If out is a PrintWriter, cast instead of wrapping again
+		this(
+			(out instanceof PrintWriter)
+			? (PrintWriter)out
+			: new PrintWriter(out)
+		);
 	}
 
 	/**
@@ -755,7 +760,7 @@ final public class ChainWriter implements Appendable, Closeable {
 
 	/**
 	 * Writes a JavaScript script tag that shows a date in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
+	 * Prints nothing when the date is {@code null}.
 	 * <p>
 	 * Because this needs to modify the DOM it can lead to poor performance or large data sets.
 	 * To provide more performance options, the JavaScript is written to scriptOut.  This could
@@ -769,13 +774,12 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @see  SQLUtility#formatDate(java.lang.Long)
 	 */
 	public static void writeDateJavaScript(Long date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
-		if(date == null) out.append("&#160;");
-		else writeDateJavaScript(date.longValue(), sequence, out, scriptOut);
+		if(date != null) writeDateJavaScript(date.longValue(), sequence, out, scriptOut);
 	}
 
 	/**
 	 * Writes a JavaScript script tag that shows a date in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
+	 * Prints nothing when the date is {@code null}.
 	 * <p>
 	 * Because this needs to modify the DOM it can lead to poor performance or large data sets.
 	 * To provide more performance options, the JavaScript is written to scriptOut.  This could
@@ -789,13 +793,12 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @see  SQLUtility#formatDate(java.util.Date)
 	 */
 	public static void writeDateJavaScript(Date date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
-		if(date == null) out.append("&#160;");
-		else writeDateJavaScript(date.getTime(), sequence, out, scriptOut);
+		if(date != null) writeDateJavaScript(date.getTime(), sequence, out, scriptOut);
 	}
 
 	/**
 	 * Prints a JavaScript script tag that shows a date in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code -1}.
+	 * Prints nothing when the date is {@code -1}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
 	 * @deprecated
@@ -803,8 +806,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 */
 	@Deprecated
 	public ChainWriter printDateJS(long date, Sequence sequence, Appendable scriptOut) throws IOException {
-		if(date == -1) out.append("&#160;");
-		else writeDateJavaScript(date, sequence, scriptOut);
+		if(date != -1) writeDateJavaScript(date, sequence, scriptOut);
 		return this;
 	}
 
@@ -821,7 +823,7 @@ final public class ChainWriter implements Appendable, Closeable {
 
 	/**
 	 * Writes a JavaScript script tag that shows a date in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
+	 * Prints nothing when the date is {@code null}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
 	 * @see  SQLUtility#formatDate(java.lang.Long)
@@ -833,7 +835,7 @@ final public class ChainWriter implements Appendable, Closeable {
 
 	/**
 	 * Writes a JavaScript script tag that shows a date in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
+	 * Prints nothing when the date is {@code null}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
 	 * @see  SQLUtility#formatDate(java.util.Date)
@@ -903,7 +905,7 @@ final public class ChainWriter implements Appendable, Closeable {
 
 	/**
 	 * Writes a JavaScript script tag that shows a date and time in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
+	 * Prints nothing when the date is {@code null}.
 	 * <p>
 	 * Because this needs to modify the DOM it can lead to poor performance or large data sets.
 	 * To provide more performance options, the JavaScript is written to scriptOut.  This could
@@ -917,13 +919,12 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @see  SQLUtility#formatDateTime(java.lang.Long)
 	 */
 	public static void writeDateTimeJavaScript(Long date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
-		if(date == null) out.append("&#160;");
-		else writeDateTimeJavaScript(date.longValue(), sequence, out, scriptOut);
+		if(date != null) writeDateTimeJavaScript(date.longValue(), sequence, out, scriptOut);
 	}
 
 	/**
 	 * Writes a JavaScript script tag that shows a date and time in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
+	 * Prints nothing when the date is {@code null}.
 	 * <p>
 	 * Because this needs to modify the DOM it can lead to poor performance or large data sets.
 	 * To provide more performance options, the JavaScript is written to scriptOut.  This could
@@ -937,13 +938,12 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @see  SQLUtility#formatDateTime(java.util.Date)
 	 */
 	public static void writeDateTimeJavaScript(Date date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
-		if(date == null) out.append("&#160;");
-		else writeDateTimeJavaScript(date.getTime(), sequence, out, scriptOut);
+		if(date != null) writeDateTimeJavaScript(date.getTime(), sequence, out, scriptOut);
 	}
 
 	/**
 	 * Writes a JavaScript script tag that shows a date and time in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code -1}.
+	 * Prints nothing when the date is {@code -1}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
 	 * @deprecated
@@ -951,8 +951,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 */
 	@Deprecated
 	public ChainWriter printDateTimeJS(long date, Sequence sequence, Appendable scriptOut) throws IOException {
-		if(date == -1) out.append("&#160;");
-		else writeDateTimeJavaScript(date, sequence, scriptOut);
+		if(date != -1) writeDateTimeJavaScript(date, sequence, scriptOut);
 		return this;
 	}
 
@@ -969,7 +968,7 @@ final public class ChainWriter implements Appendable, Closeable {
 
 	/**
 	 * Writes a JavaScript script tag that shows a date and time in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
+	 * Prints nothing when the date is {@code null}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
 	 * @see  SQLUtility#formatDateTime(java.lang.Long)
@@ -981,7 +980,7 @@ final public class ChainWriter implements Appendable, Closeable {
 
 	/**
 	 * Writes a JavaScript script tag that shows a date and time in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
+	 * Prints nothing when the date is {@code null}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
 	 * @see  SQLUtility#formatDateTime(java.util.Date)
@@ -1044,7 +1043,7 @@ final public class ChainWriter implements Appendable, Closeable {
 
 	/**
 	 * Writes a JavaScript script tag that a time in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
+	 * Prints nothing when the date is {@code null}.
 	 * <p>
 	 * Because this needs to modify the DOM it can lead to poor performance or large data sets.
 	 * To provide more performance options, the JavaScript is written to scriptOut.  This could
@@ -1058,13 +1057,12 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @see  SQLUtility#formatTime(java.lang.Long)
 	 */
 	public static void writeTimeJavaScript(Long date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
-		if(date == null) out.append("&#160;");
-		else writeTimeJavaScript(date.longValue(), sequence, out, scriptOut);
+		if(date != null) writeTimeJavaScript(date.longValue(), sequence, out, scriptOut);
 	}
 
 	/**
 	 * Writes a JavaScript script tag that a time in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
+	 * Prints nothing when the date is {@code null}.
 	 * <p>
 	 * Because this needs to modify the DOM it can lead to poor performance or large data sets.
 	 * To provide more performance options, the JavaScript is written to scriptOut.  This could
@@ -1078,13 +1076,12 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @see  SQLUtility#formatTime(java.util.Date)
 	 */
 	public static void writeTimeJavaScript(Date date, Sequence sequence, Appendable out, Appendable scriptOut) throws IOException {
-		if(date == null) out.append("&#160;");
-		else writeTimeJavaScript(date.getTime(), sequence, out, scriptOut);
+		if(date != null) writeTimeJavaScript(date.getTime(), sequence, out, scriptOut);
 	}
 
 	/**
 	 * Writes a JavaScript script tag that a time in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code -1}.
+	 * Prints nothing when the date is {@code -1}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
 	 * @deprecated
@@ -1092,8 +1089,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 */
 	@Deprecated
 	public ChainWriter printTimeJS(long date, Sequence sequence, Appendable scriptOut) throws IOException {
-		if(date == -1) out.append("&#160;");
-		else writeTimeJavaScript(date, sequence, scriptOut);
+		if(date != -1) writeTimeJavaScript(date, sequence, scriptOut);
 		return this;
 	}
 
@@ -1110,7 +1106,7 @@ final public class ChainWriter implements Appendable, Closeable {
 
 	/**
 	 * Writes a JavaScript script tag that a time in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
+	 * Prints nothing when the date is {@code null}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
 	 * @see  SQLUtility#formatTime(java.lang.Long)
@@ -1122,7 +1118,7 @@ final public class ChainWriter implements Appendable, Closeable {
 
 	/**
 	 * Writes a JavaScript script tag that a time in the user's locale.
-	 * Prints <code>&amp;#160;</code> if the date is {@code null}.
+	 * Prints nothing when the date is {@code null}.
 	 * Writes to the internal <code>{@link PrintWriter}</code>.
 	 *
 	 * @see  SQLUtility#formatTime(java.util.Date)
