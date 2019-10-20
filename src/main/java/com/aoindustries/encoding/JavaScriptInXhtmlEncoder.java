@@ -222,7 +222,7 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 
 	@Override
 	public void writeSuffixTo(Appendable out) throws IOException {
-		if(contentType == MediaType.JAVASCRIPT) out.append("  // ]]>\n");
+		if(contentType == MediaType.JAVASCRIPT) out.append("  // ]]>\n"); // TODO: Include \n prefix like newer ScriptTag.java?
 		out.append("</script>");
 	}
 }
