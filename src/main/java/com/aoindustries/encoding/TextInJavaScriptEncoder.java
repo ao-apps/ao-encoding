@@ -91,6 +91,7 @@ final public class TextInJavaScriptEncoder extends MediaEncoder {
 		if(toPrint>0) out.write(cbuf, end-toPrint, toPrint);
 	}
 
+	// TODO: If out is a ValidMediaInput, make sure it is validating our type - here and all encoders
 	public static void encodeTextInJavaScript(CharSequence S, Appendable out) throws IOException {
 		if(S!=null) {
 			encodeTextInJavaScript(S, 0, S.length(), out);

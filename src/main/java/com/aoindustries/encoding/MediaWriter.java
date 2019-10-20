@@ -33,7 +33,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-final public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
+public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 
 	private final MediaEncoder encoder;
 
