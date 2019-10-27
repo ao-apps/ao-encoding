@@ -36,7 +36,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2019-10-25T17:27:14-0500"
+		dateModified="2019-10-27T06:03:09-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -69,6 +69,11 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						no longer writes <![CDATA[&amp;#160;]]> as a placeholder for <code>null</code>
 						values.  This technique was used for ancient browsers that would not display
 						completely empty table cells.  This has not been the case for a long time.
+					</li>
+					<li>JSON doesn't support comments, avoiding bundle lookup markups.</li>
+					<li>
+						Consolidated <code>writeWithMarkup(…)</code> methods into <code>Coercion</code>
+						class directly.
 					</li>
 				</ul>
 			</changelog:release>
