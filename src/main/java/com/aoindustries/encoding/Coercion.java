@@ -23,6 +23,9 @@
 package com.aoindustries.encoding;
 
 import com.aoindustries.io.Writable;
+import com.aoindustries.util.i18n.BundleLookupMarkup;
+import com.aoindustries.util.i18n.BundleLookupThreadContext;
+import com.aoindustries.util.i18n.MarkupType;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Field;
@@ -85,7 +88,7 @@ public final class Coercion  {
 			clazz = Class.forName(BODY_CONTENT_IMPL_CLASS);
 			field = clazz.getDeclaredField(WRITER_FIELD);
 			field.setAccessible(true);
-		} catch(Exception e) {
+		} catch(RuntimeException | ReflectiveOperationException e) {
 			if(logger.isLoggable(Level.INFO)) {
 				logger.log(
 					Level.INFO,
@@ -145,6 +148,7 @@ public final class Coercion  {
 	 * </ol>
 	 */
 	public static void write(Object value, Writer out) throws IOException {
+		assert out != null;
 		if(out instanceof MediaWriter) {
 			// Unwrap media writer and use encoder directly
 			MediaWriter mediaWriter = (MediaWriter)out;
@@ -255,6 +259,83 @@ public final class Coercion  {
 	}
 
 	/**
+	 * Writes a value with markup enabled.
+	 * 
+	 * @see  MarkupType
+	 */
+	public static void write(Object value, MarkupType markupType, Writer out) throws IOException {
+		if(value != null) {
+			if(
+				markupType == null
+				|| markupType == MarkupType.NONE
+				// Avoid intermediate String from Writable
+				|| (
+					value instanceof Writable
+					&& !((Writable)value).isFastToString()
+				)
+			) {
+				write(value, out);
+			} else {
+				String str = toString(value);
+				BundleLookupMarkup lookupMarkup;
+				BundleLookupThreadContext threadContext = BundleLookupThreadContext.getThreadContext(false);
+				if(threadContext!=null) {
+					lookupMarkup = threadContext.getLookupMarkup(str);
+				} else {
+					lookupMarkup = null;
+				}
+				if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(markupType, out);
+				out.write(str);
+				if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(markupType, out);
+			}
+		}
+	}
+
+	/**
+	 * Writes a value with markup enabled using the provided encoder.
+	 *
+	 * @param  encoder  no encoding performed when null
+	 * @param  encoderPrefixSuffix  This includes the encoder {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefix}
+	 *                              and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffix}.
+	 *
+	 * @see  MarkupType
+	 */
+	// TODO: If encoderPrefixSuffix is true in all uses, maybe it should not be optional
+	public static void write(Object value, MarkupType markupType, MediaEncoder encoder, boolean encoderPrefixSuffix, Writer out) throws IOException {
+		if(encoder == null) {
+			write(value, markupType, out);
+		} else if(value != null) {
+			if(
+				markupType == null
+				|| markupType == MarkupType.NONE
+				// Avoid intermediate String from Writable
+				|| (
+					value instanceof Writable
+					&& !((Writable)value).isFastToString()
+				)
+			) {
+				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
+				write(value, encoder, out);
+				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
+			} else {
+				String str = toString(value);
+				BundleLookupMarkup lookupMarkup;
+				BundleLookupThreadContext threadContext = BundleLookupThreadContext.getThreadContext(false);
+				if(threadContext!=null) {
+					lookupMarkup = threadContext.getLookupMarkup(str);
+				} else {
+					lookupMarkup = null;
+				}
+				if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(markupType, encoder, out);
+				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
+				encoder.write(str, out);
+				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
+				if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(markupType, encoder, out);
+			}
+		}
+	}
+
+	/**
 	 * Checks if a value is null or empty.
 	 */
 	public static boolean isEmpty(Object value) throws IOException {
@@ -355,7 +436,12 @@ public final class Coercion  {
 	 * @see  #isEmpty(java.lang.Object)
 	 */
 	public static int zeroIfEmpty(Integer value) throws IOException {
-		return isEmpty(value) ? 0 : value;
+		if(isEmpty(value)) {
+			return 0;
+		} else {
+			assert value != null;
+			return value;
+		}
 	}
 
 	/**
