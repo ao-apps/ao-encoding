@@ -102,7 +102,8 @@ public enum MediaType {
 
 		@Override
 		public MarkupType getMarkupType() {
-			return MarkupType.JAVASCRIPT;
+			// JSON doesn't support comments
+			return MarkupType.NONE;
 		}
 	},
 
@@ -117,7 +118,8 @@ public enum MediaType {
 
 		@Override
 		public MarkupType getMarkupType() {
-			return MarkupType.JAVASCRIPT;
+			// JSON doesn't support comments
+			return MarkupType.NONE;
 		}
 	},
 
