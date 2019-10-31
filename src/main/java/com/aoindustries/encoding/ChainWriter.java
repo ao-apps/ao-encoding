@@ -531,9 +531,7 @@ final public class ChainWriter implements Appendable, Closeable {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XML Attribute
-		textInJavaScriptEncoder.writePrefixTo(javaScriptInXhtmlAttributeWriter);
 		Coercion.write(value, MarkupType.JAVASCRIPT, textInJavaScriptEncoder, true, javaScriptInXhtmlAttributeWriter);
-		textInJavaScriptEncoder.writeSuffixTo(javaScriptInXhtmlAttributeWriter);
 		return this;
 	}
 
@@ -549,9 +547,7 @@ final public class ChainWriter implements Appendable, Closeable {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XHTML
-		textInJavaScriptEncoder.writePrefixTo(javaScriptInXhtmlWriter);
 		Coercion.write(value, MarkupType.JAVASCRIPT, textInJavaScriptEncoder, true, javaScriptInXhtmlWriter);
-		textInJavaScriptEncoder.writeSuffixTo(javaScriptInXhtmlWriter);
 		return this;
 	}
 
