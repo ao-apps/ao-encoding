@@ -358,12 +358,28 @@ public final class Coercion  {
 	}
 
 	/**
-	 * Returns the provided value or null if the value is empty.
+	 * Returns the provided value (possibly converted to a different form, like String) or null if the value is empty.
 	 * 
 	 * @see  #isEmpty(java.lang.Object)
 	 */
-	public static <T> T nullIfEmpty(T value) throws IOException {
-		return isEmpty(value) ? null : value;
+	public static Object nullIfEmpty(Object value) throws IOException {
+		if(value instanceof String) {
+			// If A is a string, then the result is A.
+			return ((String)value).isEmpty() ? null : value;
+		} else if(value == null) {
+			// Otherwise, if A is null, then the result is "".
+			return null;
+		} else if(value instanceof Writable) {
+			return ((Writable)value).getLength() == 0 ? null : value;
+		} else if(value instanceof Node) {
+			// Otherwise, if is a DOM node, serialize the output
+			return value; // There is a node, is not empty
+		} else {
+			// Otherwise, if A.toString() throws an exception, then raise an error
+			// Otherwise, the result is A.toString();
+			String toString = value.toString();
+			return toString.isEmpty() ? null : toString;
+		}
 	}
 
 	/**
