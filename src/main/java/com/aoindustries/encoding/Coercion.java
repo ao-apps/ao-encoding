@@ -23,6 +23,7 @@
 package com.aoindustries.encoding;
 
 import com.aoindustries.io.Writable;
+import com.aoindustries.util.StringUtility;
 import com.aoindustries.util.i18n.BundleLookupMarkup;
 import com.aoindustries.util.i18n.BundleLookupThreadContext;
 import com.aoindustries.util.i18n.MarkupType;
@@ -365,7 +366,7 @@ public final class Coercion  {
 	public static Object nullIfEmpty(Object value) throws IOException {
 		if(value instanceof String) {
 			// If A is a string, then the result is A.
-			return ((String)value).isEmpty() ? null : value;
+			return StringUtility.nullIfEmpty((String)value);
 		} else if(value == null) {
 			// Otherwise, if A is null, then the result is "".
 			return null;
@@ -377,8 +378,7 @@ public final class Coercion  {
 		} else {
 			// Otherwise, if A.toString() throws an exception, then raise an error
 			// Otherwise, the result is A.toString();
-			String toString = value.toString();
-			return toString.isEmpty() ? null : toString;
+			return StringUtility.nullIfEmpty(value.toString());
 		}
 	}
 
