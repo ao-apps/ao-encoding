@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -106,6 +106,12 @@ public class TextInXhtmlEncoder extends MediaEncoder {
 				}
 			}
 			if(toPrint>0) out.append(S, end-toPrint, end);
+		}
+	}
+
+	public static void encodeTextInXhtml(Object value, Appendable out) throws IOException {
+		if(value != null) {
+			encodeTextInXhtml(Coercion.toString(value), out);
 		}
 	}
 	// </editor-fold>

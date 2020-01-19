@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -111,14 +111,32 @@ public class NewEncodingUtils {
 		encodeJavaScriptInXhtml(javascript, out);
 	}
 
+	public static void encodeTextInJavaScriptInXhtml(Object text, Appendable out) throws IOException {
+		StringBuilder javascript = new StringBuilder();
+		encodeTextInJavaScript(text, javascript);
+		encodeJavaScriptInXhtml(javascript, out);
+	}
+
 	public static void encodeTextInJavaScriptInXhtmlAttribute(String text, Appendable out) throws IOException {
 		StringBuilder javascript = new StringBuilder(text.length());
 		encodeTextInJavaScript(text, javascript);
 		encodeJavaScriptInXhtmlAttribute(javascript, out);
 	}
 
+	public static void encodeTextInJavaScriptInXhtmlAttribute(Object text, Appendable out) throws IOException {
+		StringBuilder javascript = new StringBuilder();
+		encodeTextInJavaScript(text, javascript);
+		encodeJavaScriptInXhtmlAttribute(javascript, out);
+	}
+
 	public static String getTextInJavaScriptInXhtmlAttribute(String text) throws IOException {
 		StringBuilder xhtml = new StringBuilder(text.length());
+		encodeTextInJavaScriptInXhtmlAttribute(text, xhtml);
+		return xhtml.toString();
+	}
+
+	public static String getTextInJavaScriptInXhtmlAttribute(Object text) throws IOException {
+		StringBuilder xhtml = new StringBuilder();
 		encodeTextInJavaScriptInXhtmlAttribute(text, xhtml);
 		return xhtml.toString();
 	}
