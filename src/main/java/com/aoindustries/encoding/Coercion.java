@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2013, 2015, 2016, 2017, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,6 +22,7 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.io.AppendableWriter;
 import com.aoindustries.io.Writable;
 import com.aoindustries.util.StringUtility;
 import com.aoindustries.util.i18n.BundleLookupMarkup;
@@ -49,6 +50,9 @@ import org.w3c.dom.Node;
  * </p>
  * <p>
  * TODO: Once no longer used by ChainWriter, this should go to the ao-taglib project.
+ * </p>
+ * <p>
+ * TODO: CharSequence support on Coercion, last just before calling toString.
  * </p>
  *
  * @author  AO Industries, Inc.
@@ -143,7 +147,22 @@ public final class Coercion  {
 	}
 
 	/**
-	 * Coerces an object to a String representation, supporting streaming for specialized types.
+	 * Unwraps an appendable to expose any wrapped appendable.  The wrapped appendable is
+	 * only returned when it is write-through, meaning the wrapper doesn't modify
+	 * the data written, and appends to the wrapped appendable immediately (no buffering).
+	 * <p>
+	 * There is currently no implementation of appendable-specific unwrapping,
+	 * but this is here for consistency with the writer unwrapping.
+	 * </p>
+	 */
+	private static Appendable unwrap(Appendable out) throws IOException {
+		if(out instanceof Writer) return unwrap(out);
+		return out;
+	}
+
+	/**
+	 * Writes an object's String representation,
+	 * supporting streaming for specialized types.
 	 * <ol>
 	 * <li>{@link Node} will be output as {@link StandardCharsets#UTF_8}.</li>
 	 * </ol>
@@ -197,7 +216,8 @@ public final class Coercion  {
 	}
 
 	/**
-	 * Coerces an object to a String representation, supporting streaming for specialized types.
+	 * Writes an object's String representation,
+	 * supporting streaming for specialized types.
 	 * 
 	 * @param  encoder  if null, no encoding is performed - write through
 	 */
@@ -260,7 +280,8 @@ public final class Coercion  {
 	}
 
 	/**
-	 * Writes a value with markup enabled.
+	 * Writes an object's String representation with markup enabled,
+	 * supporting streaming for specialized types.
 	 * 
 	 * @see  MarkupType
 	 */
@@ -293,7 +314,8 @@ public final class Coercion  {
 	}
 
 	/**
-	 * Writes a value with markup enabled using the provided encoder.
+	 * Writes an object's String representation with markup enabled using the provided encoder,
+	 * supporting streaming for specialized types.
 	 *
 	 * @param  encoder  no encoding performed when null
 	 * @param  encoderPrefixSuffix  This includes the encoder {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefix}
@@ -301,7 +323,6 @@ public final class Coercion  {
 	 *
 	 * @see  MarkupType
 	 */
-	// TODO: If encoderPrefixSuffix is true in all uses, maybe it should not be optional
 	public static void write(Object value, MarkupType markupType, MediaEncoder encoder, boolean encoderPrefixSuffix, Writer out) throws IOException {
 		if(encoder == null) {
 			write(value, markupType, out);
@@ -330,6 +351,203 @@ public final class Coercion  {
 				if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(markupType, encoder, out);
 				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
 				encoder.write(str, out);
+				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
+				if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(markupType, encoder, out);
+			}
+		}
+	}
+
+	/**
+	 * Appends an object's String representation,
+	 * supporting streaming for specialized types.
+	 * <ol>
+	 * <li>{@link Node} will be output as {@link StandardCharsets#UTF_8}.</li>
+	 * </ol>
+	 */
+	public static void append(Object value, Appendable out) throws IOException {
+		assert out != null;
+		if(out instanceof Writer) {
+			write(value, (Writer)out);
+		} else {
+			if(value instanceof String) {
+				// If A is a string, then the result is A.
+				out.append((String)value);
+			} else if(value == null) {
+				// Otherwise, if A is null, then the result is "".
+				// Write nothing
+			} else if(value instanceof Writable) {
+				Writable writable = (Writable)value;
+				if(writable.isFastToString()) {
+					out.append(writable.toString());
+				} else {
+					// Avoid intermediate String from Writable
+					writable.appendTo(unwrap(out));
+				}
+			} else if(value instanceof Node) {
+				// Otherwise, if is a DOM node, serialize the output
+				try {
+					// Can use thread-local or pooled transformers if performance is ever an issue
+					TransformerFactory transFactory = TransformerFactory.newInstance();
+					Transformer transformer = transFactory.newTransformer();
+					transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+					transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
+					transformer.transform(
+						new DOMSource((Node)value),
+						new StreamResult(AppendableWriter.wrap(unwrap(out)))
+					);
+				} catch(TransformerException e) {
+					throw new IOException(e);
+				}
+			} else {
+				// Otherwise, if A.toString() throws an exception, then raise an error
+				// Otherwise, the result is A.toString();
+				out.append(value.toString());
+			}
+		}
+	}
+
+	/**
+	 * Appends an object's String representation,
+	 * supporting streaming for specialized types.
+	 * 
+	 * @param  encoder  if null, no encoding is performed - write through
+	 */
+	public static void append(Object value, MediaEncoder encoder, Appendable out) throws IOException {
+		if(encoder==null) {
+			append(value, out);
+		} else if(out instanceof Writer) {
+			write(value, encoder, (Writer)out);
+		} else {
+			// Otherwise, if A is null, then the result is "".
+			// Write nothing
+			if(value != null) {
+				// Unwrap out to avoid unnecessary validation of known valid output
+				while(true) {
+					out = unwrap(out);
+					if(out instanceof MediaValidator) {
+						MediaValidator validator = (MediaValidator)out;
+						if(validator.canSkipValidation(encoder.getValidMediaOutputType())) {
+							// Can skip validation, write directly to the wrapped output through the encoder
+							out = validator.getOut();
+						} else {
+							break;
+						}
+					} else {
+						break;
+					}
+				}
+				// Write through the given encoder
+				if(value instanceof String) {
+					// If A is a string, then the result is A.
+					encoder.append((String)value, out);
+				} else if(value instanceof Writable) {
+					Writable writable = (Writable)value;
+					if(writable.isFastToString()) {
+						encoder.append(writable.toString(), out);
+					} else {
+						// Avoid intermediate String from Writable
+						writable.appendTo(encoder, out);
+					}
+				} else if(value instanceof Node) {
+					// Otherwise, if is a DOM node, serialize the output
+					try {
+						// Can use thread-local or pooled transformers if performance is ever an issue
+						TransformerFactory transFactory = TransformerFactory.newInstance();
+						Transformer transformer = transFactory.newTransformer();
+						transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
+						transformer.transform(
+							new DOMSource((Node)value),
+							new StreamResult(new MediaWriter(encoder, AppendableWriter.wrap(out)))
+						);
+					} catch(TransformerException e) {
+						throw new IOException(e);
+					}
+				} else {
+					// Otherwise, if A.toString() throws an exception, then raise an error
+					// Otherwise, the result is A.toString();
+					encoder.append(value.toString(), out);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Appends an object's String representation with markup enabled,
+	 * supporting streaming for specialized types.
+	 * 
+	 * @see  MarkupType
+	 */
+	public static void append(Object value, MarkupType markupType, Appendable out) throws IOException {
+		if(value != null) {
+			if(out instanceof Writer) {
+				write(value, markupType, (Writer)out);
+			} else if(
+				markupType == null
+				|| markupType == MarkupType.NONE
+				// Avoid intermediate String from Writable
+				|| (
+					value instanceof Writable
+					&& !((Writable)value).isFastToString()
+				)
+			) {
+				append(value, out);
+			} else {
+				String str = toString(value);
+				BundleLookupMarkup lookupMarkup;
+				BundleLookupThreadContext threadContext = BundleLookupThreadContext.getThreadContext(false);
+				if(threadContext!=null) {
+					lookupMarkup = threadContext.getLookupMarkup(str);
+				} else {
+					lookupMarkup = null;
+				}
+				if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(markupType, out);
+				out.append(str);
+				if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(markupType, out);
+			}
+		}
+	}
+
+	/**
+	 * Appends an object's String representation with markup enabled using the provided encoder,
+	 * supporting streaming for specialized types.
+	 *
+	 * @param  encoder  no encoding performed when null
+	 * @param  encoderPrefixSuffix  This includes the encoder {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefix}
+	 *                              and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffix}.
+	 *
+	 * @see  MarkupType
+	 */
+	public static void append(Object value, MarkupType markupType, MediaEncoder encoder, boolean encoderPrefixSuffix, Appendable out) throws IOException {
+		if(encoder == null) {
+			append(value, markupType, out);
+		} else if(value != null) {
+			if(out instanceof Writer) {
+				write(value, markupType, encoder, encoderPrefixSuffix, (Writer)out);
+			} else if(
+				markupType == null
+				|| markupType == MarkupType.NONE
+				// Avoid intermediate String from Writable
+				|| (
+					value instanceof Writable
+					&& !((Writable)value).isFastToString()
+				)
+			) {
+				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
+				append(value, encoder, out);
+				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
+			} else {
+				String str = toString(value);
+				BundleLookupMarkup lookupMarkup;
+				BundleLookupThreadContext threadContext = BundleLookupThreadContext.getThreadContext(false);
+				if(threadContext!=null) {
+					lookupMarkup = threadContext.getLookupMarkup(str);
+				} else {
+					lookupMarkup = null;
+				}
+				if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(markupType, encoder, out);
+				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
+				encoder.append(str, out);
 				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
 				if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(markupType, encoder, out);
 			}

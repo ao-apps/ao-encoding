@@ -204,9 +204,7 @@ public class TextInShEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInSh(Object value, Appendable out) throws IOException {
-		if(value != null) {
-			encodeTextInSh(Coercion.toString(value), out);
-		}
+		Coercion.append(value, textInShEncoder, out);
 	}
 	// </editor-fold>
 
