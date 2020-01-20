@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -92,7 +92,11 @@ final public class ChainWriter implements Appendable, Closeable {
 	}
 
 	/**
-	 * Create a new PrintWriter, without automatic line flushing.
+	 * Create a new PrintWriter, if needed, without automatic line flushing.
+	 * <p>
+	 * When {@code out} is already a {@link PrintWriter}, it is used directly,
+	 * regardless of {@code autoFlush} settings.
+	 * </p>
 	 *
 	 * @param  out        A character-output stream
 	 */
@@ -106,14 +110,22 @@ final public class ChainWriter implements Appendable, Closeable {
 	}
 
 	/**
-	 * Create a new PrintWriter.
+	 * Create a new PrintWriter, if needed.
+	 * <p>
+	 * When {@code out} is already a {@link PrintWriter}, it is used directly,
+	 * regardless of {@code autoFlush} settings.
+	 * </p>
 	 *
 	 * @param  out        A character-output stream
 	 * @param  autoFlush  A boolean; if true, the println() methods will flush
 	 *                    the output buffer
 	 */
 	public ChainWriter(Writer out, boolean autoFlush) {
-		this(new PrintWriter(out, autoFlush));
+		this(
+			(out instanceof PrintWriter)
+			? (PrintWriter)out
+			: new PrintWriter(out, autoFlush)
+		);
 	}
 
 	public PrintWriter getPrintWriter() {
