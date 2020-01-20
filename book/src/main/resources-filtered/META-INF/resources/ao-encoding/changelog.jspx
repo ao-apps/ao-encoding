@@ -36,7 +36,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2020-01-19T22:10:28-0600"
+		dateModified="2020-01-19T22:38:01-0600"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -78,6 +78,10 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					</li>
 					<li>New static encoding methods for writing <code>Object</code> via <code>Coercion.toString(Object)</code>.</li>
 					<li>Implemented <code>Coercion.append(…)</code> methods for working with <code>Appendable</code>.</li>
+					<li>
+						<code>ChainWriter</code> will never wrap a <code>PrintWriter</code> with another <code>PrintWriter</code>,
+						even when <code>autoFlush</code> settings do not match.
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
