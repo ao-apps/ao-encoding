@@ -118,9 +118,7 @@ final public class TextInJavaScriptEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInJavaScript(Object value, Appendable out) throws IOException {
-		if(value != null) {
-			encodeTextInJavaScript(Coercion.toString(value), out);
-		}
+		Coercion.append(value, textInJavaScriptEncoder, out);
 	}
 	// </editor-fold>
 

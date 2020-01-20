@@ -116,9 +116,7 @@ public class TextInMysqlEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInMysql(Object value, Appendable out) throws IOException {
-		if(value != null) {
-			encodeTextInMysql(Coercion.toString(value), out);
-		}
+		Coercion.append(value, textInMysqlEncoder, out);
 	}
 	// </editor-fold>
 

@@ -110,9 +110,7 @@ public class TextInXhtmlEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInXhtml(Object value, Appendable out) throws IOException {
-		if(value != null) {
-			encodeTextInXhtml(Coercion.toString(value), out);
-		}
+		Coercion.append(value, textInXhtmlEncoder, out);
 	}
 	// </editor-fold>
 

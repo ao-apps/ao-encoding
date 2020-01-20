@@ -131,9 +131,7 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	}
 
 	public static void encodeJavaScriptInXhtml(Object value, Appendable out) throws IOException {
-		if(value != null) {
-			encodeJavaScriptInXhtml(Coercion.toString(value), out);
-		}
+		Coercion.append(value, javaScriptInXhtmlEncoder, out);
 	}
 	// </editor-fold>
 

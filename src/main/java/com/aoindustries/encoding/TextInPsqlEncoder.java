@@ -193,9 +193,7 @@ public class TextInPsqlEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInPsql(Object value, Appendable out) throws IOException {
-		if(value != null) {
-			encodeTextInPsql(Coercion.toString(value), out);
-		}
+		Coercion.append(value, textInPsqlEncoder, out);
 	}
 	// </editor-fold>
 
