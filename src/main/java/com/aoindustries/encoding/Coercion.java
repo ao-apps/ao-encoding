@@ -51,9 +51,6 @@ import org.w3c.dom.Node;
  * <p>
  * TODO: Once no longer used by ChainWriter, this should go to the ao-taglib project.
  * </p>
- * <p>
- * TODO: CharSequence support on Coercion, last just before calling toString.
- * </p>
  *
  * @author  AO Industries, Inc.
  */
@@ -182,6 +179,9 @@ public final class Coercion  {
 					// Avoid intermediate String from Writable
 					writable.writeTo(unwrap(out));
 				}
+			} else if(value instanceof CharSequence) {
+				// Otherwise, support CharSequence
+				out.append((CharSequence)value);
 			} else if(value instanceof Node) {
 				// Otherwise, if is a DOM node, serialize the output
 				try {
@@ -246,6 +246,9 @@ public final class Coercion  {
 						// Avoid intermediate String from Writable
 						writable.writeTo(encoder, out);
 					}
+				} else if(value instanceof CharSequence) {
+					// Otherwise, support CharSequence
+					encoder.append((CharSequence)value, out);
 				} else if(value instanceof Node) {
 					// Otherwise, if is a DOM node, serialize the output
 					try {
@@ -375,6 +378,9 @@ public final class Coercion  {
 					// Avoid intermediate String from Writable
 					writable.appendTo(unwrap(out));
 				}
+			} else if(value instanceof CharSequence) {
+				// Otherwise, support CharSequence
+				out.append((CharSequence)value);
 			} else if(value instanceof Node) {
 				// Otherwise, if is a DOM node, serialize the output
 				try {
@@ -441,6 +447,9 @@ public final class Coercion  {
 						// Avoid intermediate String from Writable
 						writable.appendTo(encoder, out);
 					}
+				} else if(value instanceof CharSequence) {
+					// Otherwise, support CharSequence
+					encoder.append((CharSequence)value, out);
 				} else if(value instanceof Node) {
 					// Otherwise, if is a DOM node, serialize the output
 					try {
@@ -560,6 +569,9 @@ public final class Coercion  {
 		} else if(value instanceof Writable) {
 			// Otherwise, if is a Writable, support optimizations
 			return ((Writable)value).getLength() == 0;
+		} else if(value instanceof CharSequence) {
+			// Otherwise, support CharSequence
+			return ((CharSequence)value).length() == 0;
 		} else if(value instanceof Node) {
 			// Otherwise, if is a DOM node, serialize the output
 			return false; // There is a node, is not empty
@@ -585,6 +597,9 @@ public final class Coercion  {
 		} else if(value instanceof Writable) {
 			// Otherwise, if is a Writable, support optimizations
 			return ((Writable)value).getLength() == 0 ? null : value;
+		} else if(value instanceof CharSequence) {
+			// Otherwise, support CharSequence
+			return ((CharSequence)value).length() == 0 ? null : value;
 		} else if(value instanceof Node) {
 			// Otherwise, if is a DOM node, serialize the output
 			return value; // There is a node, is not empty
@@ -596,7 +611,7 @@ public final class Coercion  {
 	}
 
 	/**
-	 * Returns the provided value trimmed.
+	 * Returns the provided value trimmed, as per rules of {@link StringUtility#isWhitespace(int)}.
 	 *
 	 * @return  The original value, a trimmed version of the value, a trimmed {@link String}
 	 *          representation of the object, or {@code null} when the value is {@code null}.
@@ -604,7 +619,7 @@ public final class Coercion  {
 	public static Object trim(Object value) throws IOException {
 		if(value instanceof String) {
 			// If A is a string, then the result is A.
-			return ((String)value).trim();
+			return StringUtility.trim((String)value);
 		} else if(value == null) {
 			// Otherwise, if A is null, then the result is "".
 			return null;
@@ -612,22 +627,26 @@ public final class Coercion  {
 			// Otherwise, if is a Writable, support optimizations
 			Writable writable = (Writable)value;
 			if(writable.isFastToString()) {
-				return writable.toString().trim();
+				return StringUtility.trim(writable.toString());
 			} else {
 				return writable.trim();
 			}
+		} else if(value instanceof CharSequence) {
+			// Otherwise, support CharSequence
+			return StringUtility.trim((CharSequence)value);
 		} else if(value instanceof Node) {
 			// Otherwise, if is a DOM node, serialize the output
 			return value; // There is a node, is not empty
 		} else {
 			// Otherwise, if A.toString() throws an exception, then raise an error
 			// Otherwise, the result is A.toString();
-			return value.toString().trim();
+			return StringUtility.trim(value.toString());
 		}
 	}
 
 	/**
-	 * Returns the provided value trimmed, or {@code null} if the value is empty after trimming.
+	 * Returns the provided value trimmed, as per rules of {@link StringUtility#isWhitespace(int)},
+	 * or {@code null} if the value is empty after trimming.
 	 *
 	 * @return  The original value, a trimmed version of the value, a trimmed {@link String}
 	 *          representation of the object, or {@code null}.
@@ -635,8 +654,7 @@ public final class Coercion  {
 	public static Object trimNullIfEmpty(Object value) throws IOException {
 		if(value instanceof String) {
 			// If A is a string, then the result is A.
-			String trimmed = ((String)value).trim();
-			return trimmed.isEmpty() ? null : trimmed;
+			return StringUtility.trimNullIfEmpty((String)value);
 		} else if(value == null) {
 			// Otherwise, if A is null, then the result is "".
 			return null;
@@ -644,20 +662,21 @@ public final class Coercion  {
 			// Otherwise, if is a Writable, support optimizations
 			Writable writable = (Writable)value;
 			if(writable.isFastToString()) {
-				String trimmed = writable.toString().trim();
-				return trimmed.isEmpty() ? null : trimmed;
+				return StringUtility.trimNullIfEmpty(writable.toString());
 			} else {
 				writable = writable.trim();
 				return writable.getLength() == 0 ? null : writable;
 			}
+		} else if(value instanceof CharSequence) {
+			// Otherwise, support CharSequence
+			return StringUtility.trimNullIfEmpty((CharSequence)value);
 		} else if(value instanceof Node) {
 			// Otherwise, if is a DOM node, serialize the output
 			return value; // There is a node, is not empty
 		} else {
 			// Otherwise, if A.toString() throws an exception, then raise an error
 			// Otherwise, the result is A.toString();
-			String trimmed = value.toString().trim();
-			return trimmed.isEmpty() ? null : trimmed;
+			return StringUtility.trimNullIfEmpty(value.toString());
 		}
 	}
 

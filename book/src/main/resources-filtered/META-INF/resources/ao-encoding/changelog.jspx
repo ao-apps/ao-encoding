@@ -36,7 +36,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2020-01-19T22:38:01-0600"
+		dateModified="2020-01-22T07:07:29-0600"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -81,6 +81,13 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					<li>
 						<code>ChainWriter</code> will never wrap a <code>PrintWriter</code> with another <code>PrintWriter</code>,
 						even when <code>autoFlush</code> settings do not match.
+					</li>
+					<li>Added <code>Coercion</code> support for <ao:a rel="nofollow" href="@{javac.link.javaApi}java/lang/CharSequence.html">CharSequence</ao:a>.</li>
+					<li>
+						<code>Coercion</code> now trims <code>String</code> and <code>CharSequence</code> based on
+						code points, with a value considered whitespace when it is either
+						<code>&lt;= ' '</code> (for compatibility with <code>String.trim()</code>)
+						or <code>Character.isWhitespace(int)</code>.
 					</li>
 				</ul>
 			</changelog:release>
