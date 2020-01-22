@@ -67,18 +67,7 @@ public final class Coercion  {
 	@SuppressWarnings("deprecation")
 	public static String toString(Object value) {
 		return com.aoindustries.util.EncodingUtils.toString(value);
-		/* Code will move here once encodingutils no longer used
-		// If A is a string, then the result is A.
-		if(value instanceof String) return (String)value;
-		// Otherwise, if A is null, then the result is "".
-		if(value == null) return "";
-		// Otherwise, if is a DOM node, serialize the output
-		// Get implementation from other EncodingUtils
-		// Otherwise, if A.toString() throws an exception, then raise an error
-		String str = value.toString();
-		// Otherwise, the result is A.toString();
-		return str;
-		*/
+		/* TODO: Code will move here once encodingutils no longer used */
 	}
 
 	private static final String BODY_CONTENT_IMPL_CLASS = "org.apache.jasper.runtime.BodyContentImpl";
@@ -185,6 +174,7 @@ public final class Coercion  {
 				// Otherwise, if A is null, then the result is "".
 				// Write nothing
 			} else if(value instanceof Writable) {
+				// Otherwise, if is a Writable, support optimizations
 				Writable writable = (Writable)value;
 				if(writable.isFastToString()) {
 					out.write(writable.toString());
@@ -248,6 +238,7 @@ public final class Coercion  {
 					// If A is a string, then the result is A.
 					encoder.write((String)value, out);
 				} else if(value instanceof Writable) {
+					// Otherwise, if is a Writable, support optimizations
 					Writable writable = (Writable)value;
 					if(writable.isFastToString()) {
 						encoder.write(writable.toString(), out);
@@ -376,6 +367,7 @@ public final class Coercion  {
 				// Otherwise, if A is null, then the result is "".
 				// Write nothing
 			} else if(value instanceof Writable) {
+				// Otherwise, if is a Writable, support optimizations
 				Writable writable = (Writable)value;
 				if(writable.isFastToString()) {
 					out.append(writable.toString());
@@ -441,6 +433,7 @@ public final class Coercion  {
 					// If A is a string, then the result is A.
 					encoder.append((String)value, out);
 				} else if(value instanceof Writable) {
+					// Otherwise, if is a Writable, support optimizations
 					Writable writable = (Writable)value;
 					if(writable.isFastToString()) {
 						encoder.append(writable.toString(), out);
@@ -565,6 +558,7 @@ public final class Coercion  {
 			// Otherwise, if A is null, then the result is "".
 			return true;
 		} else if(value instanceof Writable) {
+			// Otherwise, if is a Writable, support optimizations
 			return ((Writable)value).getLength() == 0;
 		} else if(value instanceof Node) {
 			// Otherwise, if is a DOM node, serialize the output
@@ -589,6 +583,7 @@ public final class Coercion  {
 			// Otherwise, if A is null, then the result is "".
 			return null;
 		} else if(value instanceof Writable) {
+			// Otherwise, if is a Writable, support optimizations
 			return ((Writable)value).getLength() == 0 ? null : value;
 		} else if(value instanceof Node) {
 			// Otherwise, if is a DOM node, serialize the output
@@ -614,6 +609,7 @@ public final class Coercion  {
 			// Otherwise, if A is null, then the result is "".
 			return null;
 		} else if(value instanceof Writable) {
+			// Otherwise, if is a Writable, support optimizations
 			Writable writable = (Writable)value;
 			if(writable.isFastToString()) {
 				return writable.toString().trim();
@@ -645,6 +641,7 @@ public final class Coercion  {
 			// Otherwise, if A is null, then the result is "".
 			return null;
 		} else if(value instanceof Writable) {
+			// Otherwise, if is a Writable, support optimizations
 			Writable writable = (Writable)value;
 			if(writable.isFastToString()) {
 				String trimmed = writable.toString().trim();
