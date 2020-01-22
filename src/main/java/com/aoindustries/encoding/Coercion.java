@@ -34,6 +34,7 @@ import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.Segment;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -182,6 +183,9 @@ public final class Coercion  {
 			} else if(value instanceof CharSequence) {
 				// Otherwise, support CharSequence
 				out.append((CharSequence)value);
+			} else if(value instanceof char[]) {
+				// Otherwise, support char[]
+				out.write((char[])value);
 			} else if(value instanceof Node) {
 				// Otherwise, if is a DOM node, serialize the output
 				try {
@@ -249,6 +253,9 @@ public final class Coercion  {
 				} else if(value instanceof CharSequence) {
 					// Otherwise, support CharSequence
 					encoder.append((CharSequence)value, out);
+				} else if(value instanceof char[]) {
+					// Otherwise, support char[]
+					encoder.write((char[])value, out);
 				} else if(value instanceof Node) {
 					// Otherwise, if is a DOM node, serialize the output
 					try {
@@ -291,6 +298,9 @@ public final class Coercion  {
 					value instanceof Writable
 					&& !((Writable)value).isFastToString()
 				)
+				// Other types that will not be converted to String for bundle lookups
+				|| value instanceof char[]
+				|| value instanceof Node
 			) {
 				write(value, out);
 			} else {
@@ -327,6 +337,9 @@ public final class Coercion  {
 					value instanceof Writable
 					&& !((Writable)value).isFastToString()
 				)
+				// Other types that will not be converted to String for bundle lookups
+				|| value instanceof char[]
+				|| value instanceof Node
 			) {
 				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
 				write(value, encoder, out);
@@ -373,6 +386,10 @@ public final class Coercion  {
 			} else if(value instanceof CharSequence) {
 				// Otherwise, support CharSequence
 				out.append((CharSequence)value);
+			} else if(value instanceof char[]) {
+				// Otherwise, support char[]
+				char[] chs = (char[])value;
+				out.append(new Segment(chs, 0, chs.length));
 			} else if(value instanceof Node) {
 				// Otherwise, if is a DOM node, serialize the output
 				try {
@@ -442,6 +459,10 @@ public final class Coercion  {
 				} else if(value instanceof CharSequence) {
 					// Otherwise, support CharSequence
 					encoder.append((CharSequence)value, out);
+				} else if(value instanceof char[]) {
+					// Otherwise, support char[]
+					char[] chs = (char[])value;
+					encoder.append(new Segment(chs, 0, chs.length), out);
 				} else if(value instanceof Node) {
 					// Otherwise, if is a DOM node, serialize the output
 					try {
@@ -486,6 +507,9 @@ public final class Coercion  {
 					value instanceof Writable
 					&& !((Writable)value).isFastToString()
 				)
+				// Other types that will not be converted to String for bundle lookups
+				|| value instanceof char[]
+				|| value instanceof Node
 			) {
 				append(value, out);
 			} else {
@@ -524,6 +548,9 @@ public final class Coercion  {
 					value instanceof Writable
 					&& !((Writable)value).isFastToString()
 				)
+				// Other types that will not be converted to String for bundle lookups
+				|| value instanceof char[]
+				|| value instanceof Node
 			) {
 				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
 				append(value, encoder, out);
@@ -556,6 +583,9 @@ public final class Coercion  {
 		} else if(value instanceof CharSequence) {
 			// Otherwise, support CharSequence
 			return ((CharSequence)value).length() == 0;
+		} else if(value instanceof char[]) {
+			// Otherwise, support char[]
+			return ((char[])value).length == 0;
 		} else if(value instanceof Node) {
 			// Otherwise, if is a DOM node, serialize the output
 			return false; // There is a node, is not empty
@@ -584,6 +614,9 @@ public final class Coercion  {
 		} else if(value instanceof CharSequence) {
 			// Otherwise, support CharSequence
 			return ((CharSequence)value).length() == 0 ? null : value;
+		} else if(value instanceof char[]) {
+			// Otherwise, support char[]
+			return ((char[])value).length == 0 ? null : value;
 		} else if(value instanceof Node) {
 			// Otherwise, if is a DOM node, serialize the output
 			return value; // There is a node, is not empty
@@ -597,8 +630,9 @@ public final class Coercion  {
 	/**
 	 * Returns the provided value trimmed, as per rules of {@link StringUtility#isWhitespace(int)}.
 	 *
-	 * @return  The original value, a trimmed version of the value, a trimmed {@link String}
-	 *          representation of the object, or {@code null} when the value is {@code null}.
+	 * @return  The original value, a trimmed version of the value (possibly of a different type),
+	 *          a trimmed {@link String} representation of the object,
+	 *          or {@code null} when the value is {@code null}.
 	 */
 	public static Object trim(Object value) throws IOException {
 		if(value instanceof String) {
@@ -618,6 +652,10 @@ public final class Coercion  {
 		} else if(value instanceof CharSequence) {
 			// Otherwise, support CharSequence
 			return StringUtility.trim((CharSequence)value);
+		} else if(value instanceof char[]) {
+			// Otherwise, support char[]
+			char[] chs = (char[])value;
+			return StringUtility.trim(new Segment(chs, 0, chs.length));
 		} else if(value instanceof Node) {
 			// Otherwise, if is a DOM node, serialize the output
 			return value; // There is a node, is not empty
@@ -632,8 +670,9 @@ public final class Coercion  {
 	 * Returns the provided value trimmed, as per rules of {@link StringUtility#isWhitespace(int)},
 	 * or {@code null} if the value is empty after trimming.
 	 *
-	 * @return  The original value, a trimmed version of the value, a trimmed {@link String}
-	 *          representation of the object, or {@code null}.
+	 * @return  The original value, a trimmed version of the value (possibly of a different type),
+	 *          a trimmed {@link String} representation of the object,
+	 *          or {@code null} when the value is {@code null}.
 	 */
 	public static Object trimNullIfEmpty(Object value) throws IOException {
 		if(value instanceof String) {
@@ -654,6 +693,10 @@ public final class Coercion  {
 		} else if(value instanceof CharSequence) {
 			// Otherwise, support CharSequence
 			return StringUtility.trimNullIfEmpty((CharSequence)value);
+		} else if(value instanceof char[]) {
+			// Otherwise, support char[]
+			char[] chs = (char[])value;
+			return StringUtility.trimNullIfEmpty(new Segment(chs, 0, chs.length));
 		} else if(value instanceof Node) {
 			// Otherwise, if is a DOM node, serialize the output
 			return value; // There is a node, is not empty
