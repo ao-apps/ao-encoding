@@ -281,9 +281,11 @@ public final class Coercion  {
 	 */
 	public static void write(Object value, MarkupType markupType, Writer out) throws IOException {
 		if(value != null) {
+			BundleLookupThreadContext threadContext;
 			if(
 				markupType == null
 				|| markupType == MarkupType.NONE
+				|| (threadContext = BundleLookupThreadContext.getThreadContext(false)) == null
 				// Avoid intermediate String from Writable
 				|| (
 					value instanceof Writable
@@ -293,16 +295,10 @@ public final class Coercion  {
 				write(value, out);
 			} else {
 				String str = toString(value);
-				BundleLookupMarkup lookupMarkup;
-				BundleLookupThreadContext threadContext = BundleLookupThreadContext.getThreadContext(false);
-				if(threadContext!=null) {
-					lookupMarkup = threadContext.getLookupMarkup(str);
-				} else {
-					lookupMarkup = null;
-				}
-				if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(markupType, out);
+				BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
+				if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, out);
 				out.write(str);
-				if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(markupType, out);
+				if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, out);
 			}
 		}
 	}
@@ -321,32 +317,29 @@ public final class Coercion  {
 		if(encoder == null) {
 			write(value, markupType, out);
 		} else if(value != null) {
+			BundleLookupThreadContext threadContext;
 			if(
 				markupType == null
 				|| markupType == MarkupType.NONE
+				|| (threadContext = BundleLookupThreadContext.getThreadContext(false)) == null
 				// Avoid intermediate String from Writable
 				|| (
 					value instanceof Writable
 					&& !((Writable)value).isFastToString()
 				)
+				// TODO: Short-cut other types? (CharSequence, Node, ...?)
 			) {
 				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
 				write(value, encoder, out);
 				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
 			} else {
 				String str = toString(value);
-				BundleLookupMarkup lookupMarkup;
-				BundleLookupThreadContext threadContext = BundleLookupThreadContext.getThreadContext(false);
-				if(threadContext!=null) {
-					lookupMarkup = threadContext.getLookupMarkup(str);
-				} else {
-					lookupMarkup = null;
-				}
-				if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(markupType, encoder, out);
+				BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
+				if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, encoder, out);
 				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
 				encoder.write(str, out);
 				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
-				if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(markupType, encoder, out);
+				if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, encoder, out);
 			}
 		}
 	}
@@ -482,11 +475,13 @@ public final class Coercion  {
 	 */
 	public static void append(Object value, MarkupType markupType, Appendable out) throws IOException {
 		if(value != null) {
+			BundleLookupThreadContext threadContext;
 			if(out instanceof Writer) {
 				write(value, markupType, (Writer)out);
 			} else if(
 				markupType == null
 				|| markupType == MarkupType.NONE
+				|| (threadContext = BundleLookupThreadContext.getThreadContext(false)) == null
 				// Avoid intermediate String from Writable
 				|| (
 					value instanceof Writable
@@ -496,16 +491,10 @@ public final class Coercion  {
 				append(value, out);
 			} else {
 				String str = toString(value);
-				BundleLookupMarkup lookupMarkup;
-				BundleLookupThreadContext threadContext = BundleLookupThreadContext.getThreadContext(false);
-				if(threadContext!=null) {
-					lookupMarkup = threadContext.getLookupMarkup(str);
-				} else {
-					lookupMarkup = null;
-				}
-				if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(markupType, out);
+				BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
+				if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, out);
 				out.append(str);
-				if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(markupType, out);
+				if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, out);
 			}
 		}
 	}
@@ -524,11 +513,13 @@ public final class Coercion  {
 		if(encoder == null) {
 			append(value, markupType, out);
 		} else if(value != null) {
+			BundleLookupThreadContext threadContext;
 			if(out instanceof Writer) {
 				write(value, markupType, encoder, encoderPrefixSuffix, (Writer)out);
 			} else if(
 				markupType == null
 				|| markupType == MarkupType.NONE
+				|| (threadContext = BundleLookupThreadContext.getThreadContext(false)) == null
 				// Avoid intermediate String from Writable
 				|| (
 					value instanceof Writable
@@ -540,18 +531,12 @@ public final class Coercion  {
 				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
 			} else {
 				String str = toString(value);
-				BundleLookupMarkup lookupMarkup;
-				BundleLookupThreadContext threadContext = BundleLookupThreadContext.getThreadContext(false);
-				if(threadContext!=null) {
-					lookupMarkup = threadContext.getLookupMarkup(str);
-				} else {
-					lookupMarkup = null;
-				}
-				if(lookupMarkup!=null) lookupMarkup.appendPrefixTo(markupType, encoder, out);
+				BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
+				if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, encoder, out);
 				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
 				encoder.append(str, out);
 				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
-				if(lookupMarkup!=null) lookupMarkup.appendSuffixTo(markupType, encoder, out);
+				if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, encoder, out);
 			}
 		}
 	}
