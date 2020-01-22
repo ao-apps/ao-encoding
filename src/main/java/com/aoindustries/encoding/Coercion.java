@@ -327,7 +327,6 @@ public final class Coercion  {
 					value instanceof Writable
 					&& !((Writable)value).isFastToString()
 				)
-				// TODO: Short-cut other types? (CharSequence, Node, ...?)
 			) {
 				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
 				write(value, encoder, out);
