@@ -38,9 +38,6 @@ public class NewEncodingUtils {
 	private NewEncodingUtils() {
 	}
 
-	static final String EOL = System.getProperty("line.separator");
-	static final String BR_EOL = "<br />"+EOL; // TODO: HTML/XHTML serialization
-
 	static final char[] hexChars={'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 	static char getHex(int value) {
 		return hexChars[value & 15];
