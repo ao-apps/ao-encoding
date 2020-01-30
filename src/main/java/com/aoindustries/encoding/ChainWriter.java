@@ -499,8 +499,8 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @see  #encodeXhtml(java.lang.Object)
 	 */
 	@Deprecated
-	public ChainWriter encodeHtml(Object value) throws IOException {
-		com.aoindustries.util.EncodingUtils.encodeHtml(value, true, true, out);
+	public ChainWriter encodeHtml(Object value, boolean isXhtml) throws IOException {
+		com.aoindustries.util.EncodingUtils.encodeHtml(value, true, true, out, isXhtml);
 		return this;
 	}
 
@@ -515,8 +515,8 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @see  #encodeXhtml(java.lang.Object)
 	 */
 	@Deprecated
-	public ChainWriter encodeHtml(Object value, boolean make_br, boolean make_nbsp) throws IOException {
-		com.aoindustries.util.EncodingUtils.encodeHtml(value, make_br, make_nbsp, out);
+	public ChainWriter encodeHtml(Object value, boolean make_br, boolean make_nbsp, boolean isXhtml) throws IOException {
+		com.aoindustries.util.EncodingUtils.encodeHtml(value, make_br, make_nbsp, out, isXhtml);
 		return this;
 	}
 
