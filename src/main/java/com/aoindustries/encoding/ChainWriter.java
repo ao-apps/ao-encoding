@@ -22,7 +22,6 @@
  */
 package com.aoindustries.encoding;
 
-import static com.aoindustries.encoding.JavaScriptInXhtmlAttributeEncoder.encodeJavaScriptInXhtmlAttribute;
 import static com.aoindustries.encoding.JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder;
 import static com.aoindustries.encoding.JavaScriptInXhtmlEncoder.encodeJavaScriptInXhtml;
 import static com.aoindustries.encoding.JavaScriptInXhtmlEncoder.javaScriptInXhtmlEncoder;
@@ -627,33 +626,6 @@ final public class ChainWriter implements Appendable, Closeable {
 	 */
 	public ChainWriter writeHtmlColor(int color) throws IOException {
 		writeHtmlColor(color, out);
-		return this;
-	}
-
-	/**
-	 * Prints a JavaScript script that will preload the image at the provided URL.
-	 *
-	 * @param url This should be the URL-encoded URL, but with only a standalone ampersand (&amp;) as parameter separator
-	 *             (not &amp;amp;)
-	 */
-	public static void writeHtmlImagePreloadJavaScript(String url, Appendable out) throws IOException {
-		out.append("<script type='text/javascript'>\n"
-				+ "  var img=new Image();\n"
-				+ "  img.src=\"");
-		// Escape for javascript
-		StringBuilder javascript = new StringBuilder(url.length());
-		encodeTextInJavaScript(url, javascript);
-		// Encode for XML attribute
-		encodeJavaScriptInXhtmlAttribute(javascript, out);
-		out.append("\";\n"
-				+ "</script>");
-	}
-
-	/**
-	 * Prints a JavaScript script that will preload the image at the provided URL.
-	 */
-	public ChainWriter writeHtmlImagePreloadJavaScript(String url) throws IOException {
-		writeHtmlImagePreloadJavaScript(url, out);
 		return this;
 	}
 

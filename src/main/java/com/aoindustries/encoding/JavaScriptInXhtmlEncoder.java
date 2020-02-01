@@ -171,6 +171,8 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 		return MediaType.XHTML;
 	}
 
+	// TODO: Skip type when doctype is known to be HTML 5 and is a default content type (like ao-fluent-html)
+	// TODO: Skip CDATA when serialization is not XML (like ao-fluent-html)
 	@Override
 	public void writePrefixTo(Appendable out) throws IOException {
 		out.append("<script type=\"");
