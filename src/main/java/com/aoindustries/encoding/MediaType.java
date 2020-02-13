@@ -37,6 +37,7 @@ public enum MediaType {
 	 */
 	XHTML(ContentType.XHTML) {
 		@Override
+		@SuppressWarnings("deprecation")
 		boolean isUsedFor(String contentType) {
 			return
 				ContentType.XHTML.equalsIgnoreCase(contentType)
@@ -81,6 +82,7 @@ public enum MediaType {
 	// TODO: Use new value instead as default type
 	JAVASCRIPT(ContentType.JAVASCRIPT) {
 		@Override
+		@SuppressWarnings("deprecation")
 		boolean isUsedFor(String contentType) {
 			return
 				ContentType.JAVASCRIPT.equalsIgnoreCase(contentType)
