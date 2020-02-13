@@ -84,6 +84,7 @@ final public class ChainWriter implements Appendable, Closeable {
 		this(new PrintWriter(out, autoFlush));
 	}
 
+	@SuppressWarnings("deprecation")
 	public ChainWriter(PrintWriter out) {
 		this.out=out;
 		javaScriptInXhtmlAttributeWriter = new MediaWriter(javaScriptInXhtmlAttributeEncoder, out);

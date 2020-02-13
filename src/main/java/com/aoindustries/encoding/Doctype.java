@@ -70,6 +70,7 @@ public enum Doctype {
 			}
 		}
 		@Override
+		@SuppressWarnings("deprecation")
 		public String getScriptType() {
 			return " type=\"" + ContentType.JAVASCRIPT_OLD + '"';
 		}
