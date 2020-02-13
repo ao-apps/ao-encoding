@@ -199,9 +199,8 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 			doCdata = false;
 		}
 		out.append('>');
-		if(doCdata) {
-			out.append("//<![CDATA[");
-		}
+		if(doCdata) out.append("//<![CDATA[");
+		out.append('\n');
 	}
 
 	@Override
@@ -251,6 +250,7 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 
 	@Override
 	public void writeSuffixTo(Appendable out) throws IOException {
+		out.append('\n');
 		if(
 			contentType == MediaType.JAVASCRIPT
 			&& getSerialization() == Serialization.XML
