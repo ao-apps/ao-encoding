@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,6 +22,7 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.io.ContentType;
 import com.aoindustries.util.i18n.MarkupType;
 
 /**
@@ -32,17 +33,17 @@ import com.aoindustries.util.i18n.MarkupType;
 public enum MediaType {
 
 	/**
-	 * An XHTML 1.0 document (<code>application/xhtml+xml</code>).
+	 * An (X)HTML document (<code>application/xhtml+xml</code>).
 	 */
-	XHTML("application/xhtml+xml") {
+	XHTML(ContentType.XHTML) {
 		@Override
 		boolean isUsedFor(String contentType) {
 			return
-				"application/xhtml+xml".equalsIgnoreCase(contentType)
-				|| "text/html".equalsIgnoreCase(contentType)
+				ContentType.XHTML.equalsIgnoreCase(contentType)
+				|| ContentType.HTML.equalsIgnoreCase(contentType)
 				// Also use this type for general purpose XML documents
-				|| "application/xml".equalsIgnoreCase(contentType)
-				|| "text/xml".equalsIgnoreCase(contentType)
+				|| ContentType.XML.equalsIgnoreCase(contentType)
+				|| ContentType.XML_OLD.equalsIgnoreCase(contentType)
 			;
 		}
 
@@ -57,10 +58,10 @@ public enum MediaType {
 	 * media type and is only used during internal conversions.  The final output
 	 * should not be this type.
 	 */
-	XHTML_ATTRIBUTE("application/xhtml+xml+attribute") {
+	XHTML_ATTRIBUTE(ContentType.XHTML_ATTRIBUTE) {
 		@Override
 		boolean isUsedFor(String contentType) {
-			return "application/xhtml+xml+attribute".equalsIgnoreCase(contentType);
+			return ContentType.XHTML_ATTRIBUTE.equalsIgnoreCase(contentType);
 		}
 
 		@Override
@@ -72,17 +73,20 @@ public enum MediaType {
 	/**
 	 * An HTML document (<code>text/html</code>).
 	 */
-	// HTML("text/html"),
+	// HTML(ContentType.HTML),
 
 	/**
-	 * A JavaScript script (<code>text/javascript</code>).
+	 * A JavaScript script (<code>application/javascript</code>).
 	 */
-	JAVASCRIPT("text/javascript") {
+	// TODO: Use new value instead as default type
+	JAVASCRIPT(ContentType.JAVASCRIPT) {
 		@Override
 		boolean isUsedFor(String contentType) {
 			return
-				"text/javascript".equalsIgnoreCase(contentType)
-				|| "application/javascript".equalsIgnoreCase(contentType);
+				ContentType.JAVASCRIPT.equalsIgnoreCase(contentType)
+				|| ContentType.JAVASCRIPT_OLD.equalsIgnoreCase(contentType)
+				|| ContentType.ECMASCRIPT.equalsIgnoreCase(contentType)
+				|| ContentType.ECMASCRIPT_OLD.equalsIgnoreCase(contentType);
 		}
 
 		@Override
@@ -94,10 +98,10 @@ public enum MediaType {
 	/**
 	 * A JSON script (<code>application/json</code>).
 	 */
-	JSON("application/json") {
+	JSON(ContentType.JSON) {
 		@Override
 		boolean isUsedFor(String contentType) {
-			return "application/json".equalsIgnoreCase(contentType);
+			return ContentType.JSON.equalsIgnoreCase(contentType);
 		}
 
 		@Override
@@ -110,10 +114,10 @@ public enum MediaType {
 	/**
 	 * A JSON linked data script (<code>application/ld+json</code>).
 	 */
-	LD_JSON("application/ld+json") {
+	LD_JSON(ContentType.LD_JSON) {
 		@Override
 		boolean isUsedFor(String contentType) {
-			return "application/ld+json".equalsIgnoreCase(contentType);
+			return ContentType.LD_JSON.equalsIgnoreCase(contentType);
 		}
 
 		@Override
@@ -127,10 +131,10 @@ public enum MediaType {
 	 * Any plaintext document comprised of unicode characters (<code>text/plain</code>).
 	 * This is used for any arbitrary, unknown and untrusted data.
 	 */
-	TEXT("text/plain") {
+	TEXT(ContentType.TEXT) {
 		@Override
 		boolean isUsedFor(String contentType) {
-			return "text/plain".equalsIgnoreCase(contentType);
+			return ContentType.TEXT.equalsIgnoreCase(contentType);
 		}
 
 		@Override
@@ -142,10 +146,10 @@ public enum MediaType {
 	/**
 	 * A URL-encoded, &amp; (not &amp;amp;) separated URL.
 	 */
-	URL("text/url") {
+	URL(ContentType.URL) {
 		@Override
 		boolean isUsedFor(String contentType) {
-			return "text/url".equalsIgnoreCase(contentType);
+			return ContentType.URL.equalsIgnoreCase(contentType);
 		}
 
 		@Override
@@ -157,10 +161,10 @@ public enum MediaType {
 	/**
 	 * A Bourne shell script (<code>text/x-sh</code>).
 	 */
-	SH("text/x-sh") {
+	SH(ContentType.SH) {
 		@Override
 		boolean isUsedFor(String contentType) {
-			return "text/x-sh".equalsIgnoreCase(contentType);
+			return ContentType.SH.equalsIgnoreCase(contentType);
 		}
 
 		@Override
@@ -172,10 +176,10 @@ public enum MediaType {
 	/**
 	 * The MySQL <code>mysql</code> command line (<code>text/x-mysql</code>).
 	 */
-	MYSQL("text/x-mysql") {
+	MYSQL(ContentType.MYSQL) {
 		@Override
 		boolean isUsedFor(String contentType) {
-			return "text/x-mysql".equalsIgnoreCase(contentType);
+			return ContentType.MYSQL.equalsIgnoreCase(contentType);
 		}
 
 		@Override
@@ -187,10 +191,10 @@ public enum MediaType {
 	/**
 	 * The PostgreSQL <code>psql</code> command line (<code>text/x-psql</code>).
 	 */
-	PSQL("text/x-psql") {
+	PSQL(ContentType.PSQL) {
 		@Override
 		boolean isUsedFor(String contentType) {
-			return "text/x-psql".equalsIgnoreCase(contentType);
+			return ContentType.PSQL.equalsIgnoreCase(contentType);
 		}
 
 		@Override
