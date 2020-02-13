@@ -36,7 +36,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2020-02-01T11:53:13-0600"
+		dateModified="2020-02-13T10:04:56-0600"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -96,6 +96,13 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						<code>ChainWriter.writeHtmlImagePreloadJavaScript(…)</code> moved to new <code>ao-fluent-html</code> project
 						at <code>ImagePreload.writeImagePreloadScript(…)</code>.
 					</li>
+					<li>
+						New enums for encoding context: <code>Doctype</code> and <code>Serialization</code>,
+						which can be used to affect the encoding based on context.
+					</li>
+					<li>JavaScript default type changed from <code>text/javascript</code> to <code>application/javascript</code>.</li>
+					<li>JavaScript encoder now uses context to determine both type and when to use CDATA.</li>
+					<li>EncodingContext is now optional, with default behaviors defined.</li>
 				</ul>
 			</changelog:release>
 		</c:if>

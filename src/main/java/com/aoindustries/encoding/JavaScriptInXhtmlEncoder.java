@@ -136,24 +136,30 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	// </editor-fold>
 
 	/**
-	 * Singleton instance intended for static import for text/javascript.
+	 * Singleton instance intended for static import for application/javascript.
+	 *
+	 * @deprecated  This singleton does not have any context so assumes
+	 *              {@link EncodingContext#DEFAULT_DOCTYPE} and {@link EncodingContext#DEFAULT_SERIALIZATION}.
 	 */
-	public static final JavaScriptInXhtmlEncoder javaScriptInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JAVASCRIPT);
+	@Deprecated
+	public static final JavaScriptInXhtmlEncoder javaScriptInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JAVASCRIPT, null);
 
 	/**
 	 * Singleton instance intended for static import for application/json.
 	 */
-	public static final JavaScriptInXhtmlEncoder jsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JSON);
+	public static final JavaScriptInXhtmlEncoder jsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JSON, null);
 
 	/**
 	 * Singleton instance intended for static import for application/ld+json.
 	 */
-	public static final JavaScriptInXhtmlEncoder ldJsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.LD_JSON);
+	public static final JavaScriptInXhtmlEncoder ldJsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.LD_JSON, null);
 
 	private final MediaType contentType;
+	private final EncodingContext context;
 
-	private JavaScriptInXhtmlEncoder(MediaType contentType) {
+	JavaScriptInXhtmlEncoder(MediaType contentType, EncodingContext context) {
 		this.contentType = contentType;
+		this.context = context;
 	}
 
 	@Override
@@ -171,14 +177,31 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 		return MediaType.XHTML;
 	}
 
-	// TODO: Skip type when doctype is known to be HTML 5 and is a default content type (like ao-fluent-html)
-	// TODO: Skip CDATA when serialization is not XML (like ao-fluent-html)
+	private Doctype getDoctype() {
+		return (context == null) ? EncodingContext.DEFAULT_DOCTYPE : context.getDoctype();
+	}
+
+	private Serialization getSerialization() {
+		return (context == null) ? EncodingContext.DEFAULT_SERIALIZATION : context.getSerialization();
+	}
+
 	@Override
 	public void writePrefixTo(Appendable out) throws IOException {
-		out.append("<script type=\"");
-		encodeTextInXhtmlAttribute(contentType.getContentType(), out);
-		out.append("\">\n");
-		if(contentType == MediaType.JAVASCRIPT) out.append("  // <![CDATA[\n");
+		out.append("<script");
+		boolean doCdata;
+		if(contentType == MediaType.JAVASCRIPT) {
+			getDoctype().scriptType(out);
+			doCdata = getSerialization() == Serialization.XML;
+		} else {
+			out.append(" type=\"");
+			encodeTextInXhtmlAttribute(contentType.getContentType(), out);
+			out.append('"');
+			doCdata = false;
+		}
+		out.append('>');
+		if(doCdata) {
+			out.append("//<![CDATA[");
+		}
 	}
 
 	@Override
@@ -228,7 +251,12 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 
 	@Override
 	public void writeSuffixTo(Appendable out) throws IOException {
-		if(contentType == MediaType.JAVASCRIPT) out.append("  // ]]>\n"); // TODO: Include \n prefix like newer ScriptTag.java?
+		if(
+			contentType == MediaType.JAVASCRIPT
+			&& getSerialization() == Serialization.XML
+		) {
+			out.append("//]]>");
+		}
 		out.append("</script>");
 	}
 }

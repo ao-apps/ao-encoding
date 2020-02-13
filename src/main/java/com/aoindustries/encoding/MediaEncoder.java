@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -49,7 +49,9 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 	 * When no encoder is returned, it is necessary to use a separate validator
 	 * if character validation is required.
 	 *
-	 * @param  context  Only required when contentType is MediaType.URL
+	 * @param  context  Only used when contentType is {@link MediaType#JAVASCRIPT} or {@link MediaType#URL}.
+	 *                  In any event, is optional, however not providing may result in URLs not encoded, or
+	 *                  assumptions of {@link EncodingContext#DEFAULT_DOCTYPE} and {@link EncodingContext#DEFAULT_SERIALIZATION}.
 	 *
 	 * @return the encoder or <code>null</code> if no encoding is necessary
 	 *
@@ -65,7 +67,7 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 					case JSON :
 					case LD_JSON :         return null;
 					case TEXT :            return null;
-					case XHTML :           encoder = JavaScriptInXhtmlEncoder.javaScriptInXhtmlEncoder; break;
+					case XHTML :           encoder = new JavaScriptInXhtmlEncoder(contentType, context); break;
 					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
 					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
 				}

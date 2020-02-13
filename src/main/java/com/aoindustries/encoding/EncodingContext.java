@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -30,6 +30,18 @@ package com.aoindustries.encoding;
 public interface EncodingContext {
 
 	/**
+	 * The default doctype for older implementations that do not set any.
+	 * Also used when there is no context available.
+	 */
+	Doctype DEFAULT_DOCTYPE = Doctype.HTML5;
+
+	/**
+	 * The default serialization for older implementations that do not set any.
+	 * Also used when there is no context available.
+	 */
+	Serialization DEFAULT_SERIALIZATION = Serialization.XML;
+
+	/**
 	 * Encodes a URL for the current encoding context.
 	 * The resulting URL must be valid <a href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>.
 	 * <p>
@@ -37,4 +49,18 @@ public interface EncodingContext {
 	 * </p>
 	 */
 	String encodeURL(String url);
+
+	/**
+	 * The current doctype.
+	 */
+	default Doctype getDoctype() {
+		return DEFAULT_DOCTYPE;
+	}
+
+	/**
+	 * The current serialization.
+	 */
+	default Serialization getSerialization() {
+		return DEFAULT_SERIALIZATION;
+	}
 }
