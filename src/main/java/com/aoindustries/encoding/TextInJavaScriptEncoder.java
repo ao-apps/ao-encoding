@@ -123,7 +123,7 @@ final public class TextInJavaScriptEncoder extends MediaEncoder {
 	// </editor-fold>
 
 	/**
-	 * Singleton instance intended for static import for text/javascript.
+	 * Singleton instance intended for static import for application/javascript.
 	 */
 	public static final TextInJavaScriptEncoder textInJavaScriptEncoder = new TextInJavaScriptEncoder(MediaType.JAVASCRIPT);
 
