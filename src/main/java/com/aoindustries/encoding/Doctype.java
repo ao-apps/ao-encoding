@@ -56,6 +56,10 @@ public enum Doctype {
 			// Do nothing
 			return this;
 		}
+		@Override
+		public boolean supportsIRI() {
+			return true;
+		}
 	},
 	STRICT {
 		@Override
@@ -233,5 +237,13 @@ public enum Doctype {
 	public Doctype styleType(Appendable out) throws IOException {
 		out.append(getStyleType());
 		return this;
+	}
+
+	/**
+	 * Does this doctype support <ao:a href="https://tools.ietf.org/html/rfc3987">RFC 3987 IRI</ao:a>
+	 * Unicode format URLs?
+	 */
+	public boolean supportsIRI() {
+		return false;
 	}
 }
