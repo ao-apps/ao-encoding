@@ -347,11 +347,11 @@ public final class Coercion  {
 			} else {
 				String str = toString(value);
 				BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
-				if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, encoder, out);
+				if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, out);
 				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
 				encoder.write(str, out);
 				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
-				if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, encoder, out);
+				if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, out);
 			}
 		}
 	}
@@ -558,11 +558,11 @@ public final class Coercion  {
 			} else {
 				String str = toString(value);
 				BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
-				if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, encoder, out);
+				if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, out);
 				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
 				encoder.append(str, out);
 				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
-				if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, encoder, out);
+				if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, out);
 			}
 		}
 	}
