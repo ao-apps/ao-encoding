@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2020-02-13T10:04:56-0600"
+		dateModified="2020-03-03T10:35:29-0600"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -88,7 +88,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					<li>
 						<code>Coercion</code> now trims <code>String</code> and <code>CharSequence</code> based on
 						code points, with a value considered whitespace when it is either
-						<code>&lt;= ' '</code> (for compatibility with <code>String.trim()</code>)
+						<code>&lt;= '\u0020'</code> (for compatibility with <code>String.trim()</code>)
 						or <code>Character.isWhitespace(int)</code>.
 					</li>
 					<li>Avoiding unnecessary coercion to <code>String</code> when there is no active in-context translation.</li>
@@ -103,7 +103,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					</li>
 					<li>JavaScript default type changed from <code>text/javascript</code> to <code>application/javascript</code>.</li>
 					<li>JavaScript encoder now uses context to determine both type and when to use CDATA.</li>
-					<li>EncodingContext is now optional, with default behaviors defined.</li>
+					<li><code>EncodingContext</code> is now optional, with default behaviors defined.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
