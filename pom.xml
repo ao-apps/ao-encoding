@@ -46,15 +46,15 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 	</properties>
 
 	<name>AO Encoding</name>
-	<url>https://aoindustries.com/${project.artifactId}/</url>
+	<url>https://aoindustries.com/ao-encoding/</url>
 	<description>High performance streaming character encoding.</description>
 	<inceptionYear>2009</inceptionYear>
 
 	<scm>
 		<!-- Can't inherit due to multi-module -->
-		<connection>scm:git:git://github.com/aoindustries/${project.artifactId}.git</connection>
-		<developerConnection>scm:git:git@github.com:aoindustries/${project.artifactId}.git</developerConnection>
-		<url>https://github.com/aoindustries/${project.artifactId}</url>
+		<connection>scm:git:git://github.com/aoindustries/ao-encoding.git</connection>
+		<developerConnection>scm:git:git@github.com:aoindustries/ao-encoding.git</developerConnection>
+		<url>https://github.com/aoindustries/ao-encoding</url>
 		<tag>HEAD</tag>
 	</scm>
 
