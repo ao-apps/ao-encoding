@@ -22,6 +22,7 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.collections.EnumerationIterator;
 import com.aoindustries.io.ContentType;
 import com.aoindustries.lang.Strings;
 import java.io.IOException;
@@ -162,22 +163,8 @@ public enum Serialization {
 	}
 
 	public static Serialization select(Enumeration<? extends String> acceptHeaderValues) {
-		// TODO: commons-collections EnumerationIterator?  Worth adding dependency for one method?
 		return select(
-			new Iterator<String>() {
-				@Override
-				public boolean hasNext() {
-					return acceptHeaderValues.hasMoreElements();
-				}
-				@Override
-				public String next() {
-					return acceptHeaderValues.nextElement();
-				}
-				@Override
-				public void remove() {
-					throw new UnsupportedOperationException();
-				}
-			}
+			new EnumerationIterator<>(acceptHeaderValues)
 		);
 	}
 }
