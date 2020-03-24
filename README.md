@@ -27,7 +27,7 @@ High performance streaming character encoding.
 * [Project Home](https://aoindustries.com/ao-encoding/)
 * [Changelog](https://aoindustries.com/ao-encoding/changelog)
 * [API Docs](https://aoindustries.com/ao-encoding/apidocs/)
-* [Maven Central Repository](https://search.maven.org/#search%7Cgav%7C1%7Cg:%22com.aoindustries%22%20AND%20a:%22ao-encoding%22)
+* [Maven Central Repository](https://search.maven.org/artifact/com.aoindustries/ao-encoding)
 * [GitHub](https://github.com/aoindustries/ao-encoding)
 
 ## Modules
