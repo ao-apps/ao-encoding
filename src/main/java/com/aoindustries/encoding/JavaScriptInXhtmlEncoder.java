@@ -59,7 +59,6 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 			// This didn't work as hoped, just don't use "]]>" in scripts!
 			// Note: TextInJavaScriptEncoder always encodes the ">", so dynamic values
 			//       in JavaScript strings will never have "]]>".
-			// TODO: Find a better way that is both HTML and XHTML compatible.
 			// case ']' : return "\\u005d";
 			// Commented-out because now using CDATA
 			// case '<': return "&lt;";
