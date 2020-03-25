@@ -44,14 +44,9 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Node;
 
 /**
- * <p>
  * Coerces objects to String compatible with JSP Expression Language (JSP EL)
  * and the Java Standard Taglib (JSTL).  Also adds support for seamless output
  * of XML DOM nodes.
- * </p>
- * <p>
- * TODO: Once no longer used by ChainWriter, this should go to the ao-taglib project.
- * </p>
  *
  * @author  AO Industries, Inc.
  */
