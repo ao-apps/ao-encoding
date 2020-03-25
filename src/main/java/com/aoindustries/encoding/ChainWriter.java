@@ -25,7 +25,6 @@ package com.aoindustries.encoding;
 import static com.aoindustries.encoding.JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder;
 import static com.aoindustries.encoding.JavaScriptInXhtmlEncoder.encodeJavaScriptInXhtml;
 import static com.aoindustries.encoding.JavaScriptInXhtmlEncoder.javaScriptInXhtmlEncoder;
-import static com.aoindustries.encoding.TextInJavaScriptEncoder.encodeTextInJavaScript;
 import static com.aoindustries.encoding.TextInJavaScriptEncoder.textInJavaScriptEncoder;
 import static com.aoindustries.encoding.TextInMysqlEncoder.textInMysqlEncoder;
 import static com.aoindustries.encoding.TextInPsqlEncoder.textInPsqlEncoder;
@@ -470,21 +469,23 @@ final public class ChainWriter implements Appendable, Closeable {
 
 	// <editor-fold defaultstate="collapsed" desc="Encoding Methods">
 	/**
-	 * @see  TextInXhtmlAttributeEncoder
-	 *
 	 * @param  value  the value to be encoded
+	 *
+	 * @see  TextInXhtmlAttributeEncoder
+	 * @see  Coercion#write(java.lang.Object, com.aoindustries.encoding.MediaEncoder, java.io.Writer)
 	 */
-	public ChainWriter encodeXmlAttribute(Object value) throws IOException {
+	public ChainWriter textInXmlAttribute(Object value) throws IOException {
 		Coercion.write(value, textInXhtmlAttributeEncoder, out);
 		return this;
 	}
 
 	/**
-	 * @see  TextInXhtmlEncoder
-	 *
 	 * @param  value  the value to be encoded
+	 *
+	 * @see  TextInXhtmlEncoder
+	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
 	 */
-	public ChainWriter encodeXhtml(Object value) throws IOException {
+	public ChainWriter textInXhtml(Object value) throws IOException {
 		Coercion.write(value, MarkupType.XHTML, textInXhtmlEncoder, false, out);
 		return this;
 	}
@@ -495,8 +496,9 @@ final public class ChainWriter implements Appendable, Closeable {
 	 *
 	 * @param value the string to be escaped.
 	 *
+	 * @see  #textInXhtml(java.lang.Object)
+	 *
 	 * @deprecated  the effects of makeBr and makeNbsp should be handled by CSS white-space property.
-	 * @see  #encodeXhtml(java.lang.Object)
 	 */
 	@Deprecated
 	public ChainWriter encodeHtml(Object value, boolean isXhtml) throws IOException {
@@ -511,8 +513,9 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @param make_br  will write &lt;br /&gt; tags for every newline character
 	 * @param make_nbsp  will write &amp;#160; for a space when another space follows
 	 *
+	 * @see  #textInXhtml(java.lang.Object)
+	 *
 	 * @deprecated  the effects of makeBr and makeNbsp should be handled by CSS white-space property.
-	 * @see  #encodeXhtml(java.lang.Object)
 	 */
 	@Deprecated
 	public ChainWriter encodeHtml(Object value, boolean make_br, boolean make_nbsp, boolean isXhtml) throws IOException {
@@ -521,25 +524,34 @@ final public class ChainWriter implements Appendable, Closeable {
 	}
 
 	/**
-	 * @see TextInJavaScriptEncoder#encodeTextInJavaScript(java.lang.CharSequence, java.lang.Appendable)
+	 * Encodes a javascript string.
+	 * Quotes ({@code "…"}) are added around the string.
+	 * Also, if the string is translated, comments will be added giving the
+	 * translation lookup id to aid in translation of server-translated values.
+	 * 
+	 * @param  value  the value to be encoded
 	 *
-	 * @deprecated
+	 * @see  TextInJavaScriptEncoder
+	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
 	 */
-	@Deprecated
-	public ChainWriter encodeJavaScriptString(String S) throws IOException {
-		encodeTextInJavaScript(S, out);
+	public ChainWriter textInJavaScript(Object value) throws IOException {
+		Coercion.write(value, MarkupType.JAVASCRIPT, textInJavaScriptEncoder, true, out);
 		return this;
 	}
 
 	/**
-	 * Encodes a javascript string for use in an XML attribute context.  Quotes
-	 * are added around the string.  Also, if the string is translated, comments
-	 * will be added giving the translation lookup id to aid in translation of
-	 * server-translated values in JavaScript.
+	 * Encodes a javascript string for use in an XML attribute context.
+	 * Quotes ({@code "…"}) are added around the string.
+	 * Also, if the string is translated, comments will be added giving the
+	 * translation lookup id to aid in translation of server-translated values.
 	 * 
-	 * @see  Coercion#toString(java.lang.Object)
+	 * @param  value  the value to be encoded
+	 *
+	 * @see  TextInJavaScriptEncoder
+	 * @see  JavaScriptInXhtmlAttributeEncoder
+	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
 	 */
-	public ChainWriter encodeJavaScriptStringInXmlAttribute(Object value) throws IOException {
+	public ChainWriter textInJavaScriptInXmlAttribute(Object value) throws IOException {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XML Attribute
@@ -548,14 +560,18 @@ final public class ChainWriter implements Appendable, Closeable {
 	}
 
 	/**
-	 * Encodes a javascript string for use in an XML body CDATA context.  Quotes
-	 * are added around the string.  Also, if the string is translated, comments
-	 * will be added giving the translation lookup id to aid in translation of
-	 * server-translated values in JavaScript.
+	 * Encodes a javascript string for use in an XML body CDATA context.
+	 * Quotes ({@code "…"}) are added around the string.
+	 * Also, if the string is translated, comments will be added giving the
+	 * translation lookup id to aid in translation of server-translated values.
 	 * 
-	 * @see  Coercion#toString(java.lang.Object)
+	 * @param  value  the value to be encoded
+	 *
+	 * @see  TextInJavaScriptEncoder
+	 * @see  JavaScriptInXhtmlEncoder
+	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
 	 */
-	public ChainWriter encodeJavaScriptStringInXhtml(Object value) throws IOException {
+	public ChainWriter textInJavaScriptInXhtml(Object value) throws IOException {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XHTML
@@ -564,41 +580,50 @@ final public class ChainWriter implements Appendable, Closeable {
 	}
 
 	/**
-	 * This is must be used within a {@code E'...'} string.
+	 * Encodes a MySQL string.
+	 * {@code E'…'} quotes are added around the string.
+	 * Also, if the string is translated, comments will be added giving the
+	 * translation lookup id to aid in translation of server-translated values.
+	 * 
+	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInMysqlEncoder
-	 *
-	 * @param  value  the value to be encoded
+	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
 	 */
-	// TODO: Add E'...' here and support markup
-	public ChainWriter encodeMysql(Object value) throws IOException {
-		Coercion.write(value, textInMysqlEncoder, out);
+	public ChainWriter textInMysql(Object value) throws IOException {
+		Coercion.write(value, MarkupType.MYSQL, textInMysqlEncoder, true, out);
 		return this;
 	}
 
 	/**
-	 * This is must be used within a {@code E'...'} string.
+	 * Encodes a psql string.
+	 * {@code E'…'} quotes are added around the string.
+	 * Also, if the string is translated, comments will be added giving the
+	 * translation lookup id to aid in translation of server-translated values.
+	 * 
+	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInPsqlEncoder
-	 *
-	 * @param  value  the value to be encoded
+	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
 	 */
-	// TODO: Add E'...' here and support markup
-	public ChainWriter encodePsql(Object value) throws IOException {
-		Coercion.write(value, textInPsqlEncoder, out);
+	public ChainWriter textInPsql(Object value) throws IOException {
+		Coercion.write(value, MarkupType.PSQL, textInPsqlEncoder, true, out);
 		return this;
 	}
 
 	/**
-	 * This is must be used within a {@code $'...'} string.
+	 * Encodes a sh string.
+	 * {@code $'…'} quotes are added around the string.
+	 * Also, if the string is translated, comments will be added giving the
+	 * translation lookup id to aid in translation of server-translated values.
+	 * 
+	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInShEncoder
-	 *
-	 * @param  value  the value to be encoded
+	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
 	 */
-	// TODO: Add $'...' here and support markup
-	public ChainWriter encodeSh(Object value) throws IOException {
-		Coercion.write(value, textInShEncoder, out);
+	public ChainWriter textInSh(Object value) throws IOException {
+		Coercion.write(value, MarkupType.SH, textInShEncoder, true, out);
 		return this;
 	}
 	// </editor-fold>

@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2020-03-07T06:01:29-0600"
+		dateModified="2020-03-25T18:51:38-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -108,6 +108,19 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					<li>JavaScript default type changed from <code>text/javascript</code> to <code>application/javascript</code>.</li>
 					<li>JavaScript encoder now uses context to determine both type and when to use CDATA.</li>
 					<li><code>EncodingContext</code> is now optional, with default behaviors defined.</li>
+					<li>
+						<p>
+							Renamed <code>ChainWriter.encode*(Object)</code> methods to
+							<code>ChainWriter.textIn*(Obect)</code>.
+						</p>
+						<p>
+							Also, all implementations add encoder prefixes and suffixes
+							where appropriate, such as double quotes around text in JavaScript.
+						</p>
+						<p>
+							Furthermore, all implementations perform translation markup.
+						</p>
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
