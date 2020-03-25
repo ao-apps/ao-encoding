@@ -104,9 +104,9 @@ public enum Serialization {
 		if(acceptHeaderValues != null) {
 			while(acceptHeaderValues.hasNext()) {
 				hasAcceptHeader = true;
-				for(String value : Strings.splitString(acceptHeaderValues.next(), ',')) {
+				for(String value : Strings.split(acceptHeaderValues.next(), ',')) {
 					value = value.trim();
-					List<String> params = Strings.splitString(value, ';');
+					List<String> params = Strings.split(value, ';');
 					int paramsSize = params.size();
 					if(paramsSize > 0) {
 						String acceptType = params.get(0).trim();
