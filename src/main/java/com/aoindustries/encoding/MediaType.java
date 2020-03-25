@@ -79,7 +79,6 @@ public enum MediaType {
 	/**
 	 * A JavaScript script (<code>application/javascript</code>).
 	 */
-	// TODO: Use new value instead as default type
 	JAVASCRIPT(ContentType.JAVASCRIPT) {
 		@Override
 		@SuppressWarnings("deprecation")
