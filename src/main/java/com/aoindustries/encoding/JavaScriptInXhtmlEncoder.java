@@ -77,6 +77,7 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	}
 
 	public static void encodeJavaScriptInXhtml(char ch, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.XHTML);
 		String escaped = getEscapedCharacter(ch);
 		if(escaped!=null) out.append(escaped);
 		else out.append(ch);
@@ -87,6 +88,7 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	}
 
 	public static void encodeJavaScriptInXhtml(char[] cbuf, int start, int len, Writer out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.XHTML);
 		int end = start+len;
 		int toPrint = 0;
 		for (int c = start; c < end; c++) {
@@ -107,10 +109,13 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	public static void encodeJavaScriptInXhtml(CharSequence S, Appendable out) throws IOException {
 		if(S!=null) {
 			encodeJavaScriptInXhtml(S, 0, S.length(), out);
+		} else {
+			assert Assertions.isValidating(out, MediaType.XHTML);
 		}
 	}
 
 	public static void encodeJavaScriptInXhtml(CharSequence S, int start, int end, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.XHTML);
 		if(S!=null) {
 			int toPrint = 0;
 			for (int c = start; c < end; c++) {
@@ -186,6 +191,7 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 
 	@Override
 	public void writePrefixTo(Appendable out) throws IOException {
+		super.writePrefixTo(out);
 		out.append("<script");
 		boolean doCdata;
 		if(contentType == MediaType.JAVASCRIPT) {
@@ -249,6 +255,7 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 
 	@Override
 	public void writeSuffixTo(Appendable out) throws IOException {
+		super.writeSuffixTo(out);
 		out.append('\n');
 		if(
 			contentType == MediaType.JAVASCRIPT

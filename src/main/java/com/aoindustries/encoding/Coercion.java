@@ -214,6 +214,7 @@ public final class Coercion  {
 		if(encoder==null) {
 			write(value, out);
 		} else {
+			assert Assertions.isValidating(out, encoder.getValidMediaOutputType());
 			// Otherwise, if A is null, then the result is "".
 			// Write nothing
 			if(value != null) {
@@ -321,32 +322,35 @@ public final class Coercion  {
 	public static void write(Object value, MarkupType markupType, MediaEncoder encoder, boolean encoderPrefixSuffix, Writer out) throws IOException {
 		if(encoder == null) {
 			write(value, markupType, out);
-		} else if(value != null) {
-			BundleLookupThreadContext threadContext;
-			if(
-				markupType == null
-				|| markupType == MarkupType.NONE
-				|| (threadContext = BundleLookupThreadContext.getThreadContext(false)) == null
-				// Avoid intermediate String from Writable
-				|| (
-					value instanceof Writable
-					&& !((Writable)value).isFastToString()
-				)
-				// Other types that will not be converted to String for bundle lookups
-				|| value instanceof char[]
-				|| value instanceof Node
-			) {
-				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
-				write(value, encoder, out);
-				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
-			} else {
-				String str = toString(value);
-				BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
-				if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, out);
-				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
-				encoder.write(str, out);
-				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
-				if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, out);
+		} else {
+			assert Assertions.isValidating(out, encoder.getValidMediaOutputType());
+			if(value != null) {
+				BundleLookupThreadContext threadContext;
+				if(
+					markupType == null
+					|| markupType == MarkupType.NONE
+					|| (threadContext = BundleLookupThreadContext.getThreadContext(false)) == null
+					// Avoid intermediate String from Writable
+					|| (
+						value instanceof Writable
+						&& !((Writable)value).isFastToString()
+					)
+					// Other types that will not be converted to String for bundle lookups
+					|| value instanceof char[]
+					|| value instanceof Node
+				) {
+					if(encoderPrefixSuffix) encoder.writePrefixTo(out);
+					write(value, encoder, out);
+					if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
+				} else {
+					String str = toString(value);
+					BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
+					if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, out);
+					if(encoderPrefixSuffix) encoder.writePrefixTo(out);
+					encoder.write(str, out);
+					if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
+					if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, out);
+				}
 			}
 		}
 	}
@@ -420,6 +424,7 @@ public final class Coercion  {
 		} else if(out instanceof Writer) {
 			write(value, encoder, (Writer)out);
 		} else {
+			assert Assertions.isValidating(out, encoder.getValidMediaOutputType());
 			// Otherwise, if A is null, then the result is "".
 			// Write nothing
 			if(value != null) {
@@ -530,34 +535,37 @@ public final class Coercion  {
 	public static void append(Object value, MarkupType markupType, MediaEncoder encoder, boolean encoderPrefixSuffix, Appendable out) throws IOException {
 		if(encoder == null) {
 			append(value, markupType, out);
-		} else if(value != null) {
-			BundleLookupThreadContext threadContext;
-			if(out instanceof Writer) {
-				write(value, markupType, encoder, encoderPrefixSuffix, (Writer)out);
-			} else if(
-				markupType == null
-				|| markupType == MarkupType.NONE
-				|| (threadContext = BundleLookupThreadContext.getThreadContext(false)) == null
-				// Avoid intermediate String from Writable
-				|| (
-					value instanceof Writable
-					&& !((Writable)value).isFastToString()
-				)
-				// Other types that will not be converted to String for bundle lookups
-				|| value instanceof char[]
-				|| value instanceof Node
-			) {
-				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
-				append(value, encoder, out);
-				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
-			} else {
-				String str = toString(value);
-				BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
-				if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, out);
-				if(encoderPrefixSuffix) encoder.writePrefixTo(out);
-				encoder.append(str, out);
-				if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
-				if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, out);
+		} else {
+			assert Assertions.isValidating(out, encoder.getValidMediaOutputType());
+			if(value != null) {
+				BundleLookupThreadContext threadContext;
+				if(out instanceof Writer) {
+					write(value, markupType, encoder, encoderPrefixSuffix, (Writer)out);
+				} else if(
+					markupType == null
+					|| markupType == MarkupType.NONE
+					|| (threadContext = BundleLookupThreadContext.getThreadContext(false)) == null
+					// Avoid intermediate String from Writable
+					|| (
+						value instanceof Writable
+						&& !((Writable)value).isFastToString()
+					)
+					// Other types that will not be converted to String for bundle lookups
+					|| value instanceof char[]
+					|| value instanceof Node
+				) {
+					if(encoderPrefixSuffix) encoder.writePrefixTo(out);
+					append(value, encoder, out);
+					if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
+				} else {
+					String str = toString(value);
+					BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
+					if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, out);
+					if(encoderPrefixSuffix) encoder.writePrefixTo(out);
+					encoder.append(str, out);
+					if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
+					if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, out);
+				}
 			}
 		}
 	}

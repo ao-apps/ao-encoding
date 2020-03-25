@@ -140,6 +140,7 @@ public class TextInPsqlEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInPsql(char ch, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.PSQL);
 		String escaped = getEscapedCharacter(ch);
 		if(escaped != null) out.append(escaped);
 		else out.append(ch);
@@ -150,6 +151,7 @@ public class TextInPsqlEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInPsql(char[] cbuf, int start, int len, Writer out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.PSQL);
 		int end = start + len;
 		int toPrint = 0;
 		for (int c = start; c < end; c++) {
@@ -170,10 +172,13 @@ public class TextInPsqlEncoder extends MediaEncoder {
 	public static void encodeTextInPsql(CharSequence S, Appendable out) throws IOException {
 		if(S != null) {
 			encodeTextInPsql(S, 0, S.length(), out);
+		} else {
+			assert Assertions.isValidating(out, MediaType.PSQL);
 		}
 	}
 
 	public static void encodeTextInPsql(CharSequence S, int start, int end, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.PSQL);
 		if(S != null) {
 			int toPrint = 0;
 			for (int c = start; c < end; c++) {
@@ -217,6 +222,7 @@ public class TextInPsqlEncoder extends MediaEncoder {
 
 	@Override
 	public void writePrefixTo(Appendable out) throws IOException {
+		super.writePrefixTo(out);
 		out.append("E'");
 	}
 
@@ -267,6 +273,7 @@ public class TextInPsqlEncoder extends MediaEncoder {
 
 	@Override
 	public void writeSuffixTo(Appendable out) throws IOException {
+		super.writeSuffixTo(out);
 		out.append('\'');
 	}
 }

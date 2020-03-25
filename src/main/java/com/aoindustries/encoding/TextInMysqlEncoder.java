@@ -63,6 +63,7 @@ public class TextInMysqlEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInMysql(char ch, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.MYSQL);
 		String escaped = getEscapedCharacter(ch);
 		if(escaped != null) out.append(escaped);
 		else out.append(ch);
@@ -73,6 +74,7 @@ public class TextInMysqlEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInMysql(char[] cbuf, int start, int len, Writer out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.MYSQL);
 		int end = start + len;
 		int toPrint = 0;
 		for (int c = start; c < end; c++) {
@@ -93,10 +95,13 @@ public class TextInMysqlEncoder extends MediaEncoder {
 	public static void encodeTextInMysql(CharSequence S, Appendable out) throws IOException {
 		if(S != null) {
 			encodeTextInMysql(S, 0, S.length(), out);
+		} else {
+			assert Assertions.isValidating(out, MediaType.MYSQL);
 		}
 	}
 
 	public static void encodeTextInMysql(CharSequence S, int start, int end, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.MYSQL);
 		if(S != null) {
 			int toPrint = 0;
 			for (int c = start; c < end; c++) {
@@ -140,6 +145,7 @@ public class TextInMysqlEncoder extends MediaEncoder {
 
 	@Override
 	public void writePrefixTo(Appendable out) throws IOException {
+		super.writePrefixTo(out);
 		out.append("E'");
 	}
 
@@ -190,6 +196,7 @@ public class TextInMysqlEncoder extends MediaEncoder {
 
 	@Override
 	public void writeSuffixTo(Appendable out) throws IOException {
+		super.writeSuffixTo(out);
 		out.append('\'');
 	}
 }

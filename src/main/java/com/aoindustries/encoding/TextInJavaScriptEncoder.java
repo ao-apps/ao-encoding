@@ -64,6 +64,7 @@ final public class TextInJavaScriptEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInJavaScript(char ch, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.JAVASCRIPT);
 		String escaped = getEscapedCharacter(ch);
 		if(escaped!=null) out.append(escaped);
 		else out.append(ch);
@@ -74,6 +75,7 @@ final public class TextInJavaScriptEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInJavaScript(char[] cbuf, int start, int len, Writer out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.JAVASCRIPT);
 		int end = start+len;
 		int toPrint = 0;
 		for (int c = start; c < end; c++) {
@@ -91,14 +93,16 @@ final public class TextInJavaScriptEncoder extends MediaEncoder {
 		if(toPrint>0) out.write(cbuf, end-toPrint, toPrint);
 	}
 
-	// TODO: If out is a ValidMediaInput, make sure it is validating our type - here and all encoders
 	public static void encodeTextInJavaScript(CharSequence S, Appendable out) throws IOException {
 		if(S!=null) {
 			encodeTextInJavaScript(S, 0, S.length(), out);
+		} else {
+			assert Assertions.isValidating(out, MediaType.JAVASCRIPT);
 		}
 	}
 
 	public static void encodeTextInJavaScript(CharSequence S, int start, int end, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.JAVASCRIPT);
 		if(S!=null) {
 			int toPrint = 0;
 			for (int c = start; c < end; c++) {
@@ -157,6 +161,7 @@ final public class TextInJavaScriptEncoder extends MediaEncoder {
 
 	@Override
 	public void writePrefixTo(Appendable out) throws IOException {
+		super.writePrefixTo(out);
 		out.append('"');
 	}
 
@@ -207,6 +212,7 @@ final public class TextInJavaScriptEncoder extends MediaEncoder {
 
 	@Override
 	public void writeSuffixTo(Appendable out) throws IOException {
+		super.writeSuffixTo(out);
 		out.append('"');
 	}
 }

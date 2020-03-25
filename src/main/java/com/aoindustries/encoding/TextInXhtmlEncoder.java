@@ -57,6 +57,7 @@ public class TextInXhtmlEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInXhtml(char ch, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.XHTML);
 		String escaped = getEscapedCharacter(ch);
 		if(escaped!=null) out.append(escaped);
 		else out.append(ch);
@@ -67,6 +68,7 @@ public class TextInXhtmlEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInXhtml(char[] cbuf, int start, int len, Writer out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.XHTML);
 		int end = start+len;
 		int toPrint = 0;
 		for (int c = start; c < end; c++) {
@@ -87,10 +89,13 @@ public class TextInXhtmlEncoder extends MediaEncoder {
 	public static void encodeTextInXhtml(CharSequence S, Appendable out) throws IOException {
 		if(S!=null) {
 			encodeTextInXhtml(S, 0, S.length(), out);
+		} else {
+			assert Assertions.isValidating(out, MediaType.XHTML);
 		}
 	}
 
 	public static void encodeTextInXhtml(CharSequence S, int start, int end, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.XHTML);
 		if(S!=null) {
 			int toPrint = 0;
 			for (int c = start; c < end; c++) {

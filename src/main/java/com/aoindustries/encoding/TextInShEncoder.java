@@ -151,6 +151,7 @@ public class TextInShEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInSh(char ch, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.SH);
 		String escaped = getEscapedCharacter(ch);
 		if(escaped != null) out.append(escaped);
 		else out.append(ch);
@@ -161,6 +162,7 @@ public class TextInShEncoder extends MediaEncoder {
 	}
 
 	public static void encodeTextInSh(char[] cbuf, int start, int len, Writer out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.SH);
 		int end = start + len;
 		int toPrint = 0;
 		for (int c = start; c < end; c++) {
@@ -186,6 +188,7 @@ public class TextInShEncoder extends MediaEncoder {
 
 	public static void encodeTextInSh(CharSequence S, int start, int end, Appendable out) throws IOException {
 		if(S != null) {
+			assert Assertions.isValidating(out, MediaType.SH);
 			int toPrint = 0;
 			for (int c = start; c < end; c++) {
 				String escaped = getEscapedCharacter(S.charAt(c));
@@ -228,6 +231,7 @@ public class TextInShEncoder extends MediaEncoder {
 
 	@Override
 	public void writePrefixTo(Appendable out) throws IOException {
+		super.writePrefixTo(out);
 		out.append("$'");
 	}
 
@@ -278,6 +282,7 @@ public class TextInShEncoder extends MediaEncoder {
 
 	@Override
 	public void writeSuffixTo(Appendable out) throws IOException {
+		super.writeSuffixTo(out);
 		out.append('\'');
 	}
 }

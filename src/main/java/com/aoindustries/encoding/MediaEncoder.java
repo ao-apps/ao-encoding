@@ -170,11 +170,12 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 	/**
 	 * {@inheritDoc}
 	 * <p>
-	 * This default implementation does nothing.
+	 * This default implementation validates media types in assertion but writes nothing.
 	 * </p>
 	 */
 	@Override
 	public void writePrefixTo(Appendable out) throws IOException {
+		assert Assertions.isValidating(out, getValidMediaOutputType());
 	}
 
 	@Override
@@ -204,10 +205,11 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 	/**
 	 * {@inheritDoc}
 	 * <p>
-	 * This default implementation does nothing.
+	 * This default implementation validates media types in assertion but writes nothing.
 	 * </p>
 	 */
 	@Override
 	public void writeSuffixTo(Appendable out) throws IOException {
+		assert Assertions.isValidating(out, getValidMediaOutputType());
 	}
 }

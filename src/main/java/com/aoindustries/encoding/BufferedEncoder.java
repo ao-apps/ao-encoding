@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2013, 2015, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -43,45 +43,53 @@ abstract public class BufferedEncoder extends MediaEncoder {
 
 	@Override
 	final public void write(int c, Writer out) {
+		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append((char)c);
 	}
 
 	@Override
 	final public void write(char cbuf[], Writer out) {
+		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append(cbuf);
 	}
 
 	@Override
 	final public void write(char[] cbuf, int off, int len, Writer out) {
+		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append(cbuf, off, len);
 	}
 
 	@Override
 	final public void write(String str, Writer out) {
+		assert Assertions.isValidating(out, getValidMediaOutputType());
 		if(str==null) throw new IllegalArgumentException("str is null");
 		buffer.append(str);
 	}
 
 	@Override
 	final public void write(String str, int off, int len, Writer out) {
+		assert Assertions.isValidating(out, getValidMediaOutputType());
 		if(str==null) throw new IllegalArgumentException("str is null");
 		buffer.append(str, off, off+len);
 	}
 
 	@Override
 	final public BufferedEncoder append(char c, Appendable out) {
+		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append(c);
 		return this;
 	}
 
 	@Override
 	final public BufferedEncoder append(CharSequence csq, Appendable out) {
+		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append(csq);
 		return this;
 	}
 
 	@Override
 	final public BufferedEncoder append(CharSequence csq, int start, int end, Appendable out) {
+		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append(csq, start, end);
 		return this;
 	}
@@ -91,6 +99,7 @@ abstract public class BufferedEncoder extends MediaEncoder {
 	 */
 	@Override
 	final public void writeSuffixTo(Appendable out) throws IOException {
+		super.writeSuffixTo(out);
 		writeSuffix(buffer, out);
 		buffer.setLength(0);
 	}

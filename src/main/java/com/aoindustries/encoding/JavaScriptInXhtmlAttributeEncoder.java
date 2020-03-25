@@ -58,6 +58,7 @@ final public class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
 	}
 
 	public static void encodeJavaScriptInXhtmlAttribute(char ch, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
 		String escaped = getEscapedCharacter(ch);
 		if(escaped!=null) out.append(escaped);
 		else out.append(ch);
@@ -68,6 +69,7 @@ final public class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
 	}
 
 	public static void encodeJavaScriptInXhtmlAttribute(char[] cbuf, int start, int len, Writer out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
 		int end = start+len;
 		int toPrint = 0;
 		for (int c = start; c < end; c++) {
@@ -88,10 +90,13 @@ final public class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
 	public static void encodeJavaScriptInXhtmlAttribute(CharSequence S, Appendable out) throws IOException {
 		if(S!=null) {
 			encodeJavaScriptInXhtmlAttribute(S, 0, S.length(), out);
+		} else {
+			assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
 		}
 	}
 
 	public static void encodeJavaScriptInXhtmlAttribute(CharSequence S, int start, int end, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
 		if(S!=null) {
 			int toPrint = 0;
 			for (int c = start; c < end; c++) {
