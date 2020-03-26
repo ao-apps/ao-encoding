@@ -298,6 +298,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 		};
 	}
 
+	// TODO: A set of out() methods that take MediaType and value
+
 	// TODO: comments
 
 	/**
