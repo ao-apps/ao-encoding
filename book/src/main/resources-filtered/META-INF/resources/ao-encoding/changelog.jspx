@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2020-03-25T18:51:38-05:00"
+		dateModified="2020-03-26T07:08:56-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -111,7 +111,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					<li>
 						<p>
 							Renamed <code>ChainWriter.encode*(Object)</code> methods to
-							<code>ChainWriter.textIn*(Obect)</code>.
+							<code>ChainWriter.textIn*(Object)</code>.
 						</p>
 						<p>
 							Also, all implementations add encoder prefixes and suffixes
@@ -120,6 +120,11 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						<p>
 							Furthermore, all implementations perform translation markup.
 						</p>
+					</li>
+					<li>
+						New methods <code>MediaWriter.text(…)</code> for writing arbitrary
+						textual data with automatic encoding.  Supports encoder prefixes and
+						suffixes as well as in-context translation.
 					</li>
 				</ul>
 			</changelog:release>

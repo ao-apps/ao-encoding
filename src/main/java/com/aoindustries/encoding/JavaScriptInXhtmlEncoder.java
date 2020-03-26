@@ -159,11 +159,16 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	public static final JavaScriptInXhtmlEncoder ldJsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.LD_JSON, null);
 
 	private final MediaType contentType;
-	private final EncodingContext context;
+	private final EncodingContext encodingContext;
 
-	JavaScriptInXhtmlEncoder(MediaType contentType, EncodingContext context) {
+	JavaScriptInXhtmlEncoder(MediaType contentType, EncodingContext encodingContext) {
 		this.contentType = contentType;
-		this.context = context;
+		this.encodingContext = encodingContext;
+	}
+
+	@Override
+	public MediaType getValidMediaInputType() {
+		return contentType;
 	}
 
 	@Override
@@ -177,16 +182,17 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	}
 
 	@Override
+	public boolean canSkipValidation(MediaType inputType) {
+		return
+			inputType==MediaType.JAVASCRIPT
+			|| inputType==MediaType.JSON
+			|| inputType==MediaType.LD_JSON
+		;
+	}
+
+	@Override
 	public MediaType getValidMediaOutputType() {
 		return MediaType.XHTML;
-	}
-
-	private Doctype getDoctype() {
-		return (context == null) ? EncodingContext.DEFAULT_DOCTYPE : context.getDoctype();
-	}
-
-	private Serialization getSerialization() {
-		return (context == null) ? EncodingContext.DEFAULT_SERIALIZATION : context.getSerialization();
 	}
 
 	@Override
@@ -195,8 +201,8 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 		out.append("<script");
 		boolean doCdata;
 		if(contentType == MediaType.JAVASCRIPT) {
-			getDoctype().scriptType(out);
-			doCdata = getSerialization() == Serialization.XML;
+			encodingContext.getDoctype().scriptType(out);
+			doCdata = encodingContext.getSerialization() == Serialization.XML;
 		} else {
 			out.append(" type=\"");
 			encodeTextInXhtmlAttribute(contentType.getContentType(), out);
@@ -259,7 +265,7 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 		out.append('\n');
 		if(
 			contentType == MediaType.JAVASCRIPT
-			&& getSerialization() == Serialization.XML
+			&& encodingContext.getSerialization() == Serialization.XML
 		) {
 			out.append("//]]>");
 		}

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2015, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2015, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,6 +25,7 @@ package com.aoindustries.encoding;
 /**
  * @author  AO Industries, Inc.
  */
+// TODO: Make this be a runtime exception
 public class MediaException extends Exception {
 
 	private static final long serialVersionUID = 7504967502925628639L;

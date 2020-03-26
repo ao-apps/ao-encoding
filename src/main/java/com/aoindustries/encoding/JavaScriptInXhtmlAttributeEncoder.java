@@ -126,10 +126,24 @@ final public class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
 	public static final JavaScriptInXhtmlAttributeEncoder javaScriptInXhtmlAttributeEncoder = new JavaScriptInXhtmlAttributeEncoder();
 
 	@Override
+	public MediaType getValidMediaInputType() {
+		return MediaType.JAVASCRIPT;
+	}
+
+	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
 			inputType==MediaType.JAVASCRIPT
 			|| inputType==MediaType.TEXT  // No validation required
+		;
+	}
+
+	@Override
+	public boolean canSkipValidation(MediaType inputType) {
+		return
+			inputType==MediaType.JAVASCRIPT
+			|| inputType==MediaType.JSON
+			|| inputType==MediaType.LD_JSON
 		;
 	}
 

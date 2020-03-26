@@ -32,11 +32,16 @@ import java.io.IOException;
  */
 public class UrlInXhtmlAttributeEncoder extends BufferedEncoder {
 
-	private final EncodingContext context;
+	private final EncodingContext encodingContext;
 
-	public UrlInXhtmlAttributeEncoder(EncodingContext context) {
+	public UrlInXhtmlAttributeEncoder(EncodingContext encodingContext) {
 		super(128);
-		this.context = context;
+		this.encodingContext = encodingContext;
+	}
+
+	@Override
+	public MediaType getValidMediaInputType() {
+		return MediaType.URL;
 	}
 
 	@Override
@@ -48,6 +53,11 @@ public class UrlInXhtmlAttributeEncoder extends BufferedEncoder {
 	}
 
 	@Override
+	public boolean canSkipValidation(MediaType inputType) {
+		return inputType == MediaType.URL;
+	}
+
+	@Override
 	public MediaType getValidMediaOutputType() {
 		return MediaType.XHTML_ATTRIBUTE;
 	}
@@ -55,7 +65,7 @@ public class UrlInXhtmlAttributeEncoder extends BufferedEncoder {
 	@Override
 	protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
 		String url = buffer.toString();
-		String encoded = (context == null) ? url : context.encodeURL(url);
+		String encoded = (encodingContext == null) ? url : encodingContext.encodeURL(url);
 		UrlValidator.checkCharacters(encoded, 0, encoded.length());
 		TextInXhtmlAttributeEncoder.encodeTextInXhtmlAttribute(encoded, out);
 	}

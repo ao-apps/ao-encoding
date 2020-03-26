@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -82,12 +82,6 @@ abstract public class MediaValidator extends FilterWriter implements ValidMediaF
 	public Writer getOut() {
 		return out;
 	}
-
-	/**
-	 * Checks if validation may be skipped when the data being written to this
-	 * validator is already known to be valid with the given media type.
-	 */
-	abstract public boolean canSkipValidation(MediaType inputType);
 
 	/**
 	 * The default implementation of this append method in Writer converts

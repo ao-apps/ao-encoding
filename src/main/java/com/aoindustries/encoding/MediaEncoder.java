@@ -23,6 +23,7 @@
 package com.aoindustries.encoding;
 
 import com.aoindustries.io.Encoder;
+import com.aoindustries.lang.NullArgumentException;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -49,16 +50,15 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 	 * When no encoder is returned, it is necessary to use a separate validator
 	 * if character validation is required.
 	 *
-	 * @param  context  Only used when contentType is {@link MediaType#JAVASCRIPT} or {@link MediaType#URL}.
-	 *                  In any event, is optional, however not providing may result in URLs not encoded, or
-	 *                  assumptions of {@link EncodingContext#DEFAULT_DOCTYPE} and {@link EncodingContext#DEFAULT_SERIALIZATION}.
+	 * @param  encodingContext  Required encoding context
 	 *
 	 * @return the encoder or <code>null</code> if no encoding is necessary
 	 *
 	 * @exception MediaException when unable to encode the content into the container
 	 *                           either because it is impossible or not yet implemented.
 	 */
-	public static MediaEncoder getInstance(EncodingContext context, MediaType contentType, MediaType containerType) throws MediaException {
+	public static MediaEncoder getInstance(EncodingContext encodingContext, MediaType contentType, MediaType containerType) throws MediaException {
+		NullArgumentException.checkNotNull(encodingContext, "encodingContext");
 		final MediaEncoder encoder;
 		switch(contentType) {
 			case JAVASCRIPT :
@@ -67,7 +67,7 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 					case JSON :
 					case LD_JSON :         return null;
 					case TEXT :            return null;
-					case XHTML :           encoder = new JavaScriptInXhtmlEncoder(contentType, context); break;
+					case XHTML :           encoder = new JavaScriptInXhtmlEncoder(contentType, encodingContext); break;
 					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
 					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
 				}
@@ -133,11 +133,11 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 				switch(containerType) {
 					case JAVASCRIPT :
 					case JSON :
-					case LD_JSON :         encoder = new UrlInJavaScriptEncoder(containerType, context); break;
+					case LD_JSON :         encoder = new UrlInJavaScriptEncoder(containerType, encodingContext); break;
 					case TEXT :            return null;
 					case URL :             return null;
-					case XHTML :           encoder = new UrlInXhtmlEncoder(context); break;
-					case XHTML_ATTRIBUTE : encoder = new UrlInXhtmlAttributeEncoder(context); break;
+					case XHTML :           encoder = new UrlInXhtmlEncoder(encodingContext); break;
+					case XHTML_ATTRIBUTE : encoder = new UrlInXhtmlAttributeEncoder(encodingContext); break;
 					default :              throw new MediaException(ApplicationResources.accessor.getMessage("MediaWriter.unableToFindEncoder", contentType.getContentType(), containerType.getContentType()));
 				}
 				break;

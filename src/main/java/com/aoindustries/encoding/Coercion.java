@@ -262,7 +262,7 @@ public final class Coercion  {
 						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
 						transformer.transform(
 							new DOMSource((Node)value),
-							new StreamResult(new MediaWriter(encoder, out))
+							new StreamResult(new MediaWriter(EncodingContext.XML, encoder, out))
 						);
 					} catch(TransformerException e) {
 						throw new IOException(e);
@@ -473,7 +473,7 @@ public final class Coercion  {
 						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
 						transformer.transform(
 							new DOMSource((Node)value),
-							new StreamResult(new MediaWriter(encoder, AppendableWriter.wrap(out)))
+							new StreamResult(new MediaWriter(EncodingContext.XML, encoder, AppendableWriter.wrap(out)))
 						);
 					} catch(TransformerException e) {
 						throw new IOException(e);

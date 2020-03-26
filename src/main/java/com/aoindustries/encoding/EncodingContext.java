@@ -31,15 +31,50 @@ public interface EncodingContext {
 
 	/**
 	 * The default doctype for older implementations that do not set any.
-	 * Also used when there is no context available.
 	 */
+	// TODO: Move to Doctype.DEFAULT?
 	Doctype DEFAULT_DOCTYPE = Doctype.HTML5;
 
 	/**
 	 * The default serialization for older implementations that do not set any.
-	 * Also used when there is no context available.
 	 */
+	// TODO: Move to Serialization.DEFAULT?
 	Serialization DEFAULT_SERIALIZATION = Serialization.XML;
+
+	/**
+	 * Default encoding context.
+	 * Also used when there is no context available.
+	 *
+	 * @see  #DEFAULT_DOCTYPE
+	 * @see  #DEFAULT_SERIALIZATION
+	 */
+	EncodingContext DEFAULT = new EncodingContext() {};
+
+	/**
+	 * Encoding context for XML always.
+	 *
+	 * @see  #DEFAULT_DOCTYPE
+	 * @see  Serialization#XML
+	 */
+	EncodingContext XML = new EncodingContext() {
+		@Override
+		public Serialization getSerialization() {
+			return Serialization.XML;
+		}
+	};
+
+	/**
+	 * Encoding context for SGML always.
+	 *
+	 * @see  #DEFAULT_DOCTYPE
+	 * @see  Serialization#SGML
+	 */
+	EncodingContext SGML = new EncodingContext() {
+		@Override
+		public Serialization getSerialization() {
+			return Serialization.SGML;
+		}
+	};
 
 	/**
 	 * Encodes a URL for the current encoding context.
@@ -47,11 +82,19 @@ public interface EncodingContext {
 	 * <p>
 	 * TODO: Allow RFC 3987, too
 	 * </p>
+	 * <p>
+	 * Defaults to performing no encoding.
+	 * </p>
 	 */
-	String encodeURL(String url);
+	default String encodeURL(String url) {
+		return url;
+	}
 
 	/**
 	 * The current doctype.
+	 * <p>
+	 * Defaults to {@link #DEFAULT_DOCTYPE}.
+	 * </p>
 	 */
 	default Doctype getDoctype() {
 		return DEFAULT_DOCTYPE;
@@ -59,6 +102,9 @@ public interface EncodingContext {
 
 	/**
 	 * The current serialization.
+	 * <p>
+	 * Defaults to {@link #DEFAULT_SERIALIZATION}.
+	 * </p>
 	 */
 	default Serialization getSerialization() {
 		return DEFAULT_SERIALIZATION;

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2015, 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,29 +22,12 @@
  */
 package com.aoindustries.encoding;
 
+import java.io.IOException;
+
 /**
- * Indicates that the object validates its input for the provided type.
- * If invalid characters are received it will throw an appropriate exception.
- * When the input is already being validated against equal or more restrictive
- * filtering, the redundant validation is not performed.
- *
  * @author  AO Industries, Inc.
  */
-public interface ValidMediaInput {
-
-	/**
-	 * Gets the input type.
-	 */
-	MediaType getValidMediaInputType();
-
-	/**
-	 * Checks if this is validating the provided type.
-	 */
-	boolean isValidatingMediaInputType(MediaType inputType);
-
-	/**
-	 * Checks if validation may be skipped when the data being written to this
-	 * validator is already known to be valid with the given media type.
-	 */
-	boolean canSkipValidation(MediaType inputType);
+@FunctionalInterface
+public interface Supplier<V,Ex extends Throwable> {
+	V get() throws IOException, Ex;
 }

@@ -32,6 +32,7 @@ import static com.aoindustries.encoding.TextInShEncoder.textInShEncoder;
 import static com.aoindustries.encoding.TextInXhtmlAttributeEncoder.textInXhtmlAttributeEncoder;
 import static com.aoindustries.encoding.TextInXhtmlEncoder.encodeTextInXhtml;
 import static com.aoindustries.encoding.TextInXhtmlEncoder.textInXhtmlEncoder;
+import com.aoindustries.lang.NullArgumentException;
 import com.aoindustries.sql.SQLUtility;
 import com.aoindustries.util.Sequence;
 import com.aoindustries.util.i18n.MarkupType;
@@ -44,7 +45,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * A chain writer encapsulates a <code>{@link PrintWriter}</code> and returns the <code>{@link ChainWriter}</code>
+ * A chain writer encapsulates a {@link PrintWriter} and returns the {@link ChainWriter}
  * instance on most methods.  This gives the ability to call code like
  * {@code out.print("Hi ").print(name).print('!');}
  *
@@ -53,6 +54,7 @@ import java.util.Locale;
 final public class ChainWriter implements Appendable, Closeable {
 
 	// <editor-fold defaultstate="collapsed" desc="PrintWriter wrapping">
+	private final EncodingContext encodingContext;
 	private final PrintWriter out;
 	private final MediaWriter javaScriptInXhtmlAttributeWriter;
 	private final MediaWriter javaScriptInXhtmlWriter;
@@ -65,8 +67,18 @@ final public class ChainWriter implements Appendable, Closeable {
 	 *
 	 * @param  out        An output stream
 	 */
+	public ChainWriter(EncodingContext encodingContext, OutputStream out) {
+		this(encodingContext, new PrintWriter(out));
+	}
+
+	/**
+	 * @see  EncodingContext#DEFAULT
+	 *
+	 * @deprecated  Please use {@link #ChainWriter(com.aoindustries.encoding.EncodingContext, java.io.OutputStream)}
+	 */
+	@Deprecated
 	public ChainWriter(OutputStream out) {
-		this(new PrintWriter(out));
+		this(EncodingContext.DEFAULT, out);
 	}
 
 	/**
@@ -79,15 +91,36 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @param  autoFlush  A boolean; if true, the println() methods will flush
 	 *                    the output buffer
 	 */
+	public ChainWriter(EncodingContext encodingContext, OutputStream out, boolean autoFlush) {
+		this(encodingContext, new PrintWriter(out, autoFlush));
+	}
+
+	/**
+	 * @see  EncodingContext#DEFAULT
+	 *
+	 * @deprecated  Please use {@link #ChainWriter(com.aoindustries.encoding.EncodingContext, java.io.OutputStream, boolean)}
+	 */
+	@Deprecated
 	public ChainWriter(OutputStream out, boolean autoFlush) {
-		this(new PrintWriter(out, autoFlush));
+		this(EncodingContext.DEFAULT, out, autoFlush);
 	}
 
 	@SuppressWarnings("deprecation")
+	public ChainWriter(EncodingContext encodingContext, PrintWriter out) {
+		this.encodingContext = NullArgumentException.checkNotNull(encodingContext, "encodingContext");
+		this.out = out;
+		javaScriptInXhtmlAttributeWriter = new MediaWriter(encodingContext, javaScriptInXhtmlAttributeEncoder, out);
+		javaScriptInXhtmlWriter = new MediaWriter(encodingContext, javaScriptInXhtmlEncoder, out);
+	}
+
+	/**
+	 * @see  EncodingContext#DEFAULT
+	 *
+	 * @deprecated  Please use {@link #ChainWriter(com.aoindustries.encoding.EncodingContext, java.io.PrintWriter)}
+	 */
+	@Deprecated
 	public ChainWriter(PrintWriter out) {
-		this.out=out;
-		javaScriptInXhtmlAttributeWriter = new MediaWriter(javaScriptInXhtmlAttributeEncoder, out);
-		javaScriptInXhtmlWriter = new MediaWriter(javaScriptInXhtmlEncoder, out);
+		this(EncodingContext.DEFAULT, out);
 	}
 
 	/**
@@ -99,13 +132,24 @@ final public class ChainWriter implements Appendable, Closeable {
 	 *
 	 * @param  out        A character-output stream
 	 */
-	public ChainWriter(Writer out) {
+	public ChainWriter(EncodingContext encodingContext, Writer out) {
 		// If out is a PrintWriter, cast instead of wrapping again
 		this(
+			encodingContext,
 			(out instanceof PrintWriter)
 			? (PrintWriter)out
 			: new PrintWriter(out)
 		);
+	}
+
+	/**
+	 * @see  EncodingContext#DEFAULT
+	 *
+	 * @deprecated  Please use {@link #ChainWriter(com.aoindustries.encoding.EncodingContext, java.io.Writer)}
+	 */
+	@Deprecated
+	public ChainWriter(Writer out) {
+		this(EncodingContext.DEFAULT, out);
 	}
 
 	/**
@@ -119,12 +163,27 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @param  autoFlush  A boolean; if true, the println() methods will flush
 	 *                    the output buffer
 	 */
-	public ChainWriter(Writer out, boolean autoFlush) {
+	public ChainWriter(EncodingContext encodingContext, Writer out, boolean autoFlush) {
 		this(
+			encodingContext,
 			(out instanceof PrintWriter)
 			? (PrintWriter)out
 			: new PrintWriter(out, autoFlush)
 		);
+	}
+
+	/**
+	 * @see  EncodingContext#DEFAULT
+	 *
+	 * @deprecated  Please use {@link #ChainWriter(com.aoindustries.encoding.EncodingContext, java.io.Writer, boolean)}
+	 */
+	@Deprecated
+	public ChainWriter(Writer out, boolean autoFlush) {
+		this(EncodingContext.DEFAULT, out, autoFlush);
+	}
+
+	public EncodingContext getEncodingContext() {
+		return encodingContext;
 	}
 
 	public PrintWriter getPrintWriter() {

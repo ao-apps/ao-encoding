@@ -33,9 +33,9 @@ import java.io.IOException;
 public class UrlInJavaScriptEncoder extends BufferedEncoder {
 
 	private final MediaType outputType;
-	private final EncodingContext context;
+	private final EncodingContext encodingContext;
 
-	UrlInJavaScriptEncoder(MediaType outputType, EncodingContext context) {
+	UrlInJavaScriptEncoder(MediaType outputType, EncodingContext encodingContext) {
 		super(128);
 		if(
 			outputType != MediaType.JAVASCRIPT
@@ -45,7 +45,12 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
 			throw new IllegalArgumentException("Unsupported output type: " + outputType);
 		}
 		this.outputType = outputType;
-		this.context = context;
+		this.encodingContext = encodingContext;
+	}
+
+	@Override
+	public MediaType getValidMediaInputType() {
+		return MediaType.URL;
 	}
 
 	@Override
@@ -54,6 +59,11 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
 			inputType==MediaType.URL
 			|| inputType==MediaType.TEXT        // No validation required
 		;
+	}
+
+	@Override
+	public boolean canSkipValidation(MediaType inputType) {
+		return inputType == MediaType.URL;
 	}
 
 	@Override
@@ -70,7 +80,7 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
 	@Override
 	protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
 		String url = buffer.toString();
-		String encoded = (context == null) ? url : context.encodeURL(url);
+		String encoded = (encodingContext == null) ? url : encodingContext.encodeURL(url);
 		UrlValidator.checkCharacters(encoded, 0, encoded.length());
 		TextInJavaScriptEncoder.encodeTextInJavaScript(encoded, out);
 		out.append('"');

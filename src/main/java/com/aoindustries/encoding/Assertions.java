@@ -32,7 +32,7 @@ import java.io.Writer;
 final class Assertions  {
 
 	static boolean isValidating(ValidMediaInput out, MediaType mediaType) {
-		return out.isValidatingMediaInputType(mediaType);
+		return out.canSkipValidation(mediaType) || out.isValidatingMediaInputType(mediaType);
 	}
 
 	static boolean isValidating(Appendable out, MediaType mediaType) {
