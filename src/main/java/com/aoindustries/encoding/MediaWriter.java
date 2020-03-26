@@ -26,6 +26,7 @@ import com.aoindustries.exception.WrappedException;
 import com.aoindustries.io.EncoderWriter;
 import com.aoindustries.lang.NullArgumentException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 /**
@@ -57,14 +58,10 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 		return encoder;
 	}
 
-	private MediaWriter getTextWriter() {
+	private MediaWriter getTextWriter() throws UnsupportedEncodingException {
 		if(textWriter == null) {
-			try {
-				MediaEncoder textEncoder = MediaEncoder.getInstance(encodingContext, MediaType.TEXT, encoder.getValidMediaInputType());
-				textWriter = (textEncoder == null) ? this : new MediaWriter(encodingContext, textEncoder, this);
-			} catch(MediaException e) {
-				throw new WrappedException(e);
-			}
+			MediaEncoder textEncoder = MediaEncoder.getInstance(encodingContext, MediaType.TEXT, encoder.getValidMediaInputType());
+			textWriter = (textEncoder == null) ? this : new MediaWriter(encodingContext, textEncoder, this);
 		}
 		return textWriter;
 	}

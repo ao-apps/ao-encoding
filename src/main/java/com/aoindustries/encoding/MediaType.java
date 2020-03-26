@@ -23,7 +23,9 @@
 package com.aoindustries.encoding;
 
 import com.aoindustries.io.ContentType;
+import com.aoindustries.io.LocalizedUnsupportedEncodingException;
 import com.aoindustries.util.i18n.MarkupType;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Supported content types.
@@ -241,12 +243,12 @@ public enum MediaType {
 	/**
 	 * Gets the media type for the provided textual content type.
 	 */
-	public static MediaType getMediaTypeForContentType(final String fullContentType) throws MediaException {
+	public static MediaType getMediaTypeForContentType(final String fullContentType) throws UnsupportedEncodingException {
 		int semiPos = fullContentType.indexOf(';');
 		String contentType = ((semiPos==-1) ? fullContentType : fullContentType.substring(0, semiPos)).trim();
 		for(MediaType value : values) {
 			if(value.isUsedFor(contentType)) return value;
 		}
-		throw new MediaException(ApplicationResources.accessor.getMessage("MediaType.getMediaType.unknownType", fullContentType));
+		throw new LocalizedUnsupportedEncodingException(ApplicationResources.accessor, "MediaType.getMediaType.unknownType", fullContentType);
 	}
 }

@@ -22,8 +22,10 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.io.LocalizedUnsupportedEncodingException;
 import java.io.FilterWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 /**
@@ -37,9 +39,9 @@ abstract public class MediaValidator extends FilterWriter implements ValidMediaF
 	 * Gets the media validator for the given type.  If the given writer is
 	 * already validator for the requested type, will return the provided writer.
 	 *
-	 * @exception MediaException when unable to find an appropriate validator.
+	 * @exception UnsupportedEncodingException when unable to find an appropriate validator.
 	 */
-	public static MediaValidator getMediaValidator(MediaType contentType, Writer out) throws MediaException {
+	public static MediaValidator getMediaValidator(MediaType contentType, Writer out) throws UnsupportedEncodingException {
 		// If the existing out is already validating for this type, use it.
 		// This occurs when one validation validates to a set of characters that are a subset of the requested validator.
 		// For example, a URL is always valid TEXT.
@@ -68,7 +70,7 @@ abstract public class MediaValidator extends FilterWriter implements ValidMediaF
 			case XHTML_ATTRIBUTE:
 				return new XhtmlAttributeValidator(out);
 			default:
-				throw new MediaException(ApplicationResources.accessor.getMessage("MediaValidator.unableToFindValidator", contentType.getContentType()));
+				throw new LocalizedUnsupportedEncodingException(ApplicationResources.accessor, "MediaValidator.unableToFindValidator", contentType.getContentType());
 		}
 	}
 
