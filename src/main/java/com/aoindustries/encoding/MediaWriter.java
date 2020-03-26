@@ -305,7 +305,6 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	 * This is {@code '\n'} on all platforms.  If a different newline is required,
 	 * such as {@code "\r\n"} for email, filter the output.
 	 */
-	// TODO: Is nl() appropriate here?
 	public MediaWriter nl() throws IOException {
 		write('\n');
 		return this;
