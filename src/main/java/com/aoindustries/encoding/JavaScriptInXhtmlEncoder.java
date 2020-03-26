@@ -72,7 +72,7 @@ final public class JavaScriptInXhtmlEncoder extends MediaEncoder {
 				return null;
 			default:
 				// Escape using JavaScript unicode escape when needed.
-				return NewEncodingUtils.getJavaScriptUnicodeEscapeString(ch);
+				return JavaScript.getUnicodeEscapeString(ch);
 		}
 	}
 

@@ -57,7 +57,7 @@ final public class TextInJavaScriptEncoder extends MediaEncoder {
 			// Note: This also prevents the potential closing of scripts with "</script>" or CDATA blocks with "]]>" inside strings.
 			case '>': return "\\u003e";
 			default:
-				if(ch<' ') return NewEncodingUtils.getJavaScriptUnicodeEscapeString(ch);
+				if(ch<' ') return JavaScript.getUnicodeEscapeString(ch);
 				// No conversion necessary
 				return null;
 		}

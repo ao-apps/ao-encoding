@@ -22,24 +22,18 @@
  */
 package com.aoindustries.encoding;
 
-import static com.aoindustries.encoding.JavaScriptInXhtmlAttributeEncoder.encodeJavaScriptInXhtmlAttribute;
-import static com.aoindustries.encoding.JavaScriptInXhtmlEncoder.encodeJavaScriptInXhtml;
-import static com.aoindustries.encoding.TextInJavaScriptEncoder.encodeTextInJavaScript;
-import java.io.IOException;
-
 /**
- * Encoding helper utilities.
- * TODO: Rename to EncodingUtils once com.aoindustries.util.EncodingUtils has been eliminated.
+ * Utilities helping JavaScript encoder implementations.
  *
  * @author  AO Industries, Inc.
  */
-public class NewEncodingUtils {
+class JavaScript {
 
-	private NewEncodingUtils() {
+	private JavaScript() {
 	}
 
-	static final char[] hexChars={'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-	static char getHex(int value) {
+	private static final char[] hexChars={'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+	private static char getHex(int value) {
 		return hexChars[value & 15];
 	}
 
@@ -87,7 +81,7 @@ public class NewEncodingUtils {
 	 * @return  the encoded form of the character or {@code null} when no
 	 *          encoding needed
 	 */
-	static String getJavaScriptUnicodeEscapeString(char ch) {
+	static String getUnicodeEscapeString(char ch) {
 		int chInt = (int)ch;
 		if(chInt>=ENCODE_RANGE_1_START && chInt<ENCODE_RANGE_1_END) {
 			return javaScriptUnicodeEscapeStrings1[chInt - ENCODE_RANGE_1_START];
@@ -100,41 +94,5 @@ public class NewEncodingUtils {
 		}
 		// No encoding needed
 		return null;
-	}
-
-	public static void encodeTextInJavaScriptInXhtml(String text, Appendable out) throws IOException {
-		StringBuilder javascript = new StringBuilder(text.length());
-		encodeTextInJavaScript(text, javascript);
-		encodeJavaScriptInXhtml(javascript, out);
-	}
-
-	public static void encodeTextInJavaScriptInXhtml(Object text, Appendable out) throws IOException {
-		StringBuilder javascript = new StringBuilder();
-		encodeTextInJavaScript(text, javascript);
-		encodeJavaScriptInXhtml(javascript, out);
-	}
-
-	public static void encodeTextInJavaScriptInXhtmlAttribute(String text, Appendable out) throws IOException {
-		StringBuilder javascript = new StringBuilder(text.length());
-		encodeTextInJavaScript(text, javascript);
-		encodeJavaScriptInXhtmlAttribute(javascript, out);
-	}
-
-	public static void encodeTextInJavaScriptInXhtmlAttribute(Object text, Appendable out) throws IOException {
-		StringBuilder javascript = new StringBuilder();
-		encodeTextInJavaScript(text, javascript);
-		encodeJavaScriptInXhtmlAttribute(javascript, out);
-	}
-
-	public static String getTextInJavaScriptInXhtmlAttribute(String text) throws IOException {
-		StringBuilder xhtml = new StringBuilder(text.length());
-		encodeTextInJavaScriptInXhtmlAttribute(text, xhtml);
-		return xhtml.toString();
-	}
-
-	public static String getTextInJavaScriptInXhtmlAttribute(Object text) throws IOException {
-		StringBuilder xhtml = new StringBuilder();
-		encodeTextInJavaScriptInXhtmlAttribute(text, xhtml);
-		return xhtml.toString();
 	}
 }

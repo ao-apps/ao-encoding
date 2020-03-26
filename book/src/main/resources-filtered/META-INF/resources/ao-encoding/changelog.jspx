@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2020-03-26T14:50:02-05:00"
+		dateModified="2020-03-26T16:38:06-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -130,6 +130,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						Removed <code>MediaException</code>, using
 						<ao:a rel="nofollow" href="@{javadoc.link.javase}java/io/UnsupportedEncodingException.html">UnsupportedEncodingException</ao:a> instead.
 					</li>
+					<li>Completely removed <code>NewEncodingUtils</code>.</li>
 				</ul>
 			</changelog:release>
 		</c:if>

@@ -53,7 +53,7 @@ final public class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
 			case '\t': return "&#x9;";
 			default:
 				// Escape using JavaScript unicode escape when needed
-				return NewEncodingUtils.getJavaScriptUnicodeEscapeString(ch);
+				return JavaScript.getUnicodeEscapeString(ch);
 		}
 	}
 
