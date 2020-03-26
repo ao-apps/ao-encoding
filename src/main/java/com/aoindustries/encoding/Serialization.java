@@ -67,6 +67,13 @@ public enum Serialization {
 	};
 
 	/**
+	 * The default serialization for older implementations that do not set any.
+	 *
+	 * @see  #XML
+	 */
+	public static final Serialization DEFAULT = Serialization.XML;
+
+	/**
 	 * Gets the content-type header to use for this serialization.
 	 */
 	abstract public String getContentType();

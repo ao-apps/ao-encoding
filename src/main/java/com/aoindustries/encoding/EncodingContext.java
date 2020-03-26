@@ -30,30 +30,18 @@ package com.aoindustries.encoding;
 public interface EncodingContext {
 
 	/**
-	 * The default doctype for older implementations that do not set any.
-	 */
-	// TODO: Move to Doctype.DEFAULT?
-	Doctype DEFAULT_DOCTYPE = Doctype.HTML5;
-
-	/**
-	 * The default serialization for older implementations that do not set any.
-	 */
-	// TODO: Move to Serialization.DEFAULT?
-	Serialization DEFAULT_SERIALIZATION = Serialization.XML;
-
-	/**
 	 * Default encoding context.
 	 * Also used when there is no context available.
 	 *
-	 * @see  #DEFAULT_DOCTYPE
-	 * @see  #DEFAULT_SERIALIZATION
+	 * @see  Doctype#DEFAULT
+	 * @see  Serialization#DEFAULT
 	 */
 	EncodingContext DEFAULT = new EncodingContext() {};
 
 	/**
 	 * Encoding context for XML always.
 	 *
-	 * @see  #DEFAULT_DOCTYPE
+	 * @see  Doctype#DEFAULT
 	 * @see  Serialization#XML
 	 */
 	EncodingContext XML = new EncodingContext() {
@@ -66,7 +54,7 @@ public interface EncodingContext {
 	/**
 	 * Encoding context for SGML always.
 	 *
-	 * @see  #DEFAULT_DOCTYPE
+	 * @see  Doctype#DEFAULT
 	 * @see  Serialization#SGML
 	 */
 	EncodingContext SGML = new EncodingContext() {
@@ -93,20 +81,20 @@ public interface EncodingContext {
 	/**
 	 * The current doctype.
 	 * <p>
-	 * Defaults to {@link #DEFAULT_DOCTYPE}.
+	 * Defaults to {@link Doctype#DEFAULT}.
 	 * </p>
 	 */
 	default Doctype getDoctype() {
-		return DEFAULT_DOCTYPE;
+		return Doctype.DEFAULT;
 	}
 
 	/**
 	 * The current serialization.
 	 * <p>
-	 * Defaults to {@link #DEFAULT_SERIALIZATION}.
+	 * Defaults to {@link Serialization#DEFAULT}.
 	 * </p>
 	 */
 	default Serialization getSerialization() {
-		return DEFAULT_SERIALIZATION;
+		return Serialization.DEFAULT;
 	}
 }

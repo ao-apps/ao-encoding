@@ -175,6 +175,13 @@ public enum Doctype {
 		}
 	};
 
+	/**
+	 * The default doctype for older implementations that do not set any.
+	 *
+	 * @see  #HTML5
+	 */
+	public static final Doctype DEFAULT = Doctype.HTML5;
+
 	private static boolean isUTF8(String documentEncoding) {
 		return
 			StandardCharsets.UTF_8.name().equalsIgnoreCase(documentEncoding)
