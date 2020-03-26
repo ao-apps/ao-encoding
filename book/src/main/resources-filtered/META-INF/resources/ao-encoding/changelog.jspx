@@ -54,86 +54,98 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				scmUrl="@{project.scm.url}"
 			>
 				<!-- TODO:
-				<li>
-					When a value is fastToString, select optimal quoting type based on content, which might be no quotes.
-					Use this capability from ao:out tag in ao-taglib to simplify the output under common cases, while still
-					supporting the full encoding capability.
-				</li>
-				-->
 				<ul>
-					<li>Minimum Java version changed from 1.7 to 1.8.</li>
 					<li>
-						Reduced use of property substitutions in <code>pom.xml</code>.
-						This is to help 3rd-party parsers that fail to perform full Maven-compatible substitutions.
+						When a value is fastToString, select optimal quoting type based on content, which might be no quotes.
+						Use this capability from ao:out tag in ao-taglib to simplify the output under common cases, while still
+						supporting the full encoding capability.
 					</li>
-					<li>
-						Now outputting HTML or XHTML based on the current response content type.
-						This should eliminate validator warnings when used as HTML.
-					</li>
-					<li>
-						<ao:a href="apidocs/com/aoindustries/encoding/ChainWriter.html">ChainWriter</ao:a>
-						no longer writes <![CDATA[&amp;#160;]]> as a placeholder for <code>null</code>
-						values.  This technique was used for ancient browsers that would not display
-						completely empty table cells.  This has not been the case for a long time.
-					</li>
-					<li>JSON doesn't support comments, avoiding bundle lookup markups.</li>
-					<li>
-						Consolidated <code>writeWithMarkup(…)</code> methods into <code>Coercion</code>
-						class directly.
-					</li>
-					<li>New static encoding methods for writing <code>Object</code> via <code>Coercion.toString(Object)</code>.</li>
-					<li>Implemented <code>Coercion.append(…)</code> methods for working with <code>Appendable</code>.</li>
-					<li>
-						<code>ChainWriter</code> will never wrap a <code>PrintWriter</code> with another <code>PrintWriter</code>,
-						even when <code>autoFlush</code> settings do not match.
-					</li>
-					<li>Added <code>Coercion</code> support for <ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/CharSequence.html">CharSequence</ao:a>.</li>
-					<li>Added <code>Coercion</code> support for <code>char[]</code>.</li>
-					<li>
-						<code>Coercion</code> now trims <code>String</code> and <code>CharSequence</code> based on
-						code points, with a value considered whitespace when it is either
-						<code>&lt;= '\u0020'</code> (for compatibility with <code>String.trim()</code>)
-						or <code>Character.isWhitespace(int)</code>.
-					</li>
-					<li>Avoiding unnecessary coercion to <code>String</code> when there is no active in-context translation.</li>
-					<li><code>ChainWriter.encodeHtml(…)</code> (deprecated) now require additional <code>isXhtml</code> flag.</li>
-					<li>
-						<code>ChainWriter.writeHtmlImagePreloadJavaScript(…)</code> moved to new <code>ao-fluent-html</code> project
-						at <code>ImagePreload.writeImagePreloadScript(…)</code>.
-					</li>
-					<li>
-						New enums for encoding context: <code>Doctype</code> and <code>Serialization</code>,
-						which can be used to affect the encoding based on context.
-					</li>
-					<li>JavaScript default type changed from <code>text/javascript</code> to <code>application/javascript</code>.</li>
-					<li>JavaScript encoder now uses context to determine both type and when to use CDATA.</li>
-					<li><code>EncodingContext</code> is now optional, with default behaviors defined.</li>
-					<li>
-						<p>
-							Renamed <code>ChainWriter.encode*(Object)</code> methods to
-							<code>ChainWriter.textIn*(Object)</code>.
-						</p>
-						<p>
-							Also, all implementations add encoder prefixes and suffixes
-							where appropriate, such as double quotes around text in JavaScript.
-						</p>
-						<p>
-							Furthermore, all implementations perform translation markup.
-						</p>
-					</li>
-					<li>
-						New methods <code>MediaWriter.text(…)</code> for writing arbitrary
-						textual data with automatic encoding.  Supports encoder prefixes and
-						suffixes as well as in-context translation.
-					</li>
-					<li>
-						Removed <code>MediaException</code>, using
-						<ao:a rel="nofollow" href="@{javadoc.link.javase}java/io/UnsupportedEncodingException.html">UnsupportedEncodingException</ao:a> instead.
-					</li>
-					<li>Completely removed <code>NewEncodingUtils</code>.</li>
 				</ul>
+				-->
 			</changelog:release>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="3.0.0"
+			datePublished="2020-03-26T17:15:43-05:00"
+			groupId="@{project.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{project.scm.url}"
+		>
+			<ul>
+				<li>Minimum Java version changed from 1.7 to 1.8.</li>
+				<li>
+					Reduced use of property substitutions in <code>pom.xml</code>.
+					This is to help 3rd-party parsers that fail to perform full Maven-compatible substitutions.
+				</li>
+				<li>
+					Now outputting HTML or XHTML based on the current response content type.
+					This should eliminate validator warnings when used as HTML.
+				</li>
+				<li>
+					<ao:a href="apidocs/com/aoindustries/encoding/ChainWriter.html">ChainWriter</ao:a>
+					no longer writes <![CDATA[&amp;#160;]]> as a placeholder for <code>null</code>
+					values.  This technique was used for ancient browsers that would not display
+					completely empty table cells.  This has not been the case for a long time.
+				</li>
+				<li>JSON doesn't support comments, avoiding bundle lookup markups.</li>
+				<li>
+					Consolidated <code>writeWithMarkup(…)</code> methods into <code>Coercion</code>
+					class directly.
+				</li>
+				<li>New static encoding methods for writing <code>Object</code> via <code>Coercion.toString(Object)</code>.</li>
+				<li>Implemented <code>Coercion.append(…)</code> methods for working with <code>Appendable</code>.</li>
+				<li>
+					<code>ChainWriter</code> will never wrap a <code>PrintWriter</code> with another <code>PrintWriter</code>,
+					even when <code>autoFlush</code> settings do not match.
+				</li>
+				<li>Added <code>Coercion</code> support for <ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/CharSequence.html">CharSequence</ao:a>.</li>
+				<li>Added <code>Coercion</code> support for <code>char[]</code>.</li>
+				<li>
+					<code>Coercion</code> now trims <code>String</code> and <code>CharSequence</code> based on
+					code points, with a value considered whitespace when it is either
+					<code>&lt;= '\u0020'</code> (for compatibility with <code>String.trim()</code>)
+					or <code>Character.isWhitespace(int)</code>.
+				</li>
+				<li>Avoiding unnecessary coercion to <code>String</code> when there is no active in-context translation.</li>
+				<li><code>ChainWriter.encodeHtml(…)</code> (deprecated) now require additional <code>isXhtml</code> flag.</li>
+				<li>
+					<code>ChainWriter.writeHtmlImagePreloadJavaScript(…)</code> moved to new <code>ao-fluent-html</code> project
+					at <code>ImagePreload.writeImagePreloadScript(…)</code>.
+				</li>
+				<li>
+					New enums for encoding context: <code>Doctype</code> and <code>Serialization</code>,
+					which can be used to affect the encoding based on context.
+				</li>
+				<li>JavaScript default type changed from <code>text/javascript</code> to <code>application/javascript</code>.</li>
+				<li>JavaScript encoder now uses context to determine both type and when to use CDATA.</li>
+				<li><code>EncodingContext</code> is now optional, with default behaviors defined.</li>
+				<li>
+					<p>
+						Renamed <code>ChainWriter.encode*(Object)</code> methods to
+						<code>ChainWriter.textIn*(Object)</code>.
+					</p>
+					<p>
+						Also, all implementations add encoder prefixes and suffixes
+						where appropriate, such as double quotes around text in JavaScript.
+					</p>
+					<p>
+						Furthermore, all implementations perform translation markup.
+					</p>
+				</li>
+				<li>
+					New methods <code>MediaWriter.text(…)</code> for writing arbitrary
+					textual data with automatic encoding.  Supports encoder prefixes and
+					suffixes as well as in-context translation.
+				</li>
+				<li>
+					Removed <code>MediaException</code>, using
+					<ao:a rel="nofollow" href="@{javadoc.link.javase}java/io/UnsupportedEncodingException.html">UnsupportedEncodingException</ao:a> instead.
+				</li>
+				<li>Completely removed <code>NewEncodingUtils</code>.</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
