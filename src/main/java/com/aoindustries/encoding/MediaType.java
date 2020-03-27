@@ -32,6 +32,7 @@ import java.io.UnsupportedEncodingException;
  *
  * @author  AO Industries, Inc.
  */
+// TODO: Add toString method of the contentType
 public enum MediaType {
 
 	/**
