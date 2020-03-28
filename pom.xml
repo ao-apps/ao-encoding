@@ -54,6 +54,11 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		<tag>HEAD</tag>
 	</scm>
 
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/aoindustries/ao-encoding/issues</url>
+	</issueManagement>
+
 	<profiles>
 		<profile>
 			<id>release</id>
