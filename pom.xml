@@ -47,7 +47,6 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 	<inceptionYear>2009</inceptionYear>
 
 	<scm>
-		<!-- Can't inherit due to multi-module -->
 		<connection>scm:git:git://github.com/aoindustries/ao-encoding.git</connection>
 		<developerConnection>scm:git:git@github.com:aoindustries/ao-encoding.git</developerConnection>
 		<url>https://github.com/aoindustries/ao-encoding</url>
