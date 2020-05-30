@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2020-03-26T16:38:06-05:00"
+		dateModified="2020-05-30T01:03:45-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -105,7 +105,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				<li>
 					<code>Coercion</code> now trims <code>String</code> and <code>CharSequence</code> based on
 					code points, with a value considered whitespace when it is either
-					<code>&lt;= '\u0020'</code> (for compatibility with <code>String.trim()</code>)
+					<code><![CDATA[&lt;= '\u0020']]></code> (for compatibility with <code>String.trim()</code>)
 					or <code>Character.isWhitespace(int)</code>.
 				</li>
 				<li>Avoiding unnecessary coercion to <code>String</code> when there is no active in-context translation.</li>
