@@ -104,10 +104,13 @@ public final class Coercion  {
 	 * more efficiently write their contents to recognized writer implementations.
 	 */
 	private static Writer unwrap(Writer out) throws IOException {
+		// Note: bodyContentImplClass will be null when direct access disabled
+		if(bodyContentImplClass == null) {
+			return out;
+		}
 		while(true) {
 			Class<? extends Writer> outClass = out.getClass();
-			// Note: bodyContentImplClass will be null when direct access disabled
-			if(outClass==bodyContentImplClass) {
+			if(outClass == bodyContentImplClass) {
 				try {
 					Writer writer = (Writer)writerField.get(out);
 					// When the writer field is non-null, BodyContent is pass-through and we may safely directly access the wrapped writer.
