@@ -687,6 +687,7 @@ public final class Coercion  {
 		} else if(value == null) {
 			// Otherwise, if A is null, then the result is "".
 			return null;
+		// TODO: MediaWritable in all Coercion places?
 		} else if(value instanceof Writable) {
 			// Otherwise, if is a Writable, support optimizations
 			Writable writable = (Writable)value;
