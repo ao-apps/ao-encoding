@@ -53,14 +53,18 @@ public class MysqlValidator extends MediaValidator {
 	 */
 	public static void checkCharacters(char[] cbuf, int off, int len) throws IOException {
 		int end = off + len;
-		while(off < end) checkCharacter(cbuf[off++]);
+		while(off < end) {
+			checkCharacter(cbuf[off++]);
+		}
 	}
 
 	/**
 	 * Checks a set of characters, throws IOException if invalid
 	 */
 	public static void checkCharacters(CharSequence str, int off, int end) throws IOException {
-		while(off < end) checkCharacter(str.charAt(off++));
+		while(off < end) {
+			checkCharacter(str.charAt(off++));
+		}
 	}
 
 	protected MysqlValidator(Writer out) {

@@ -182,6 +182,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	 *
 	 * @return  {@code this} writer
 	 */
+	@SuppressWarnings("UseSpecificCatch")
 	public MediaWriter text(Object text) throws IOException {
 		while(text instanceof Supplier<?,?>) {
 			try {

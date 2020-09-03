@@ -44,6 +44,7 @@ public interface EncodingContext {
 	 * @see  Doctype#DEFAULT
 	 * @see  Serialization#XML
 	 */
+	@SuppressWarnings("Convert2Lambda") // Cannot actually convert to Lambda, despite NetBeans 12.0 suggesting
 	EncodingContext XML = new EncodingContext() {
 		@Override
 		public Serialization getSerialization() {
@@ -57,6 +58,7 @@ public interface EncodingContext {
 	 * @see  Doctype#DEFAULT
 	 * @see  Serialization#SGML
 	 */
+	@SuppressWarnings("Convert2Lambda") // Cannot actually convert to Lambda, despite NetBeans 12.0 suggesting
 	EncodingContext SGML = new EncodingContext() {
 		@Override
 		public Serialization getSerialization() {

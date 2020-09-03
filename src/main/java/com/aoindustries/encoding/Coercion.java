@@ -519,6 +519,7 @@ public final class Coercion  {
 				String str = toString(value);
 				BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
 				if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, out);
+				assert out != null;
 				out.append(str);
 				if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, out);
 			}
