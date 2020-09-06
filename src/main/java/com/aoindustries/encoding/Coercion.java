@@ -50,6 +50,7 @@ import org.w3c.dom.Node;
  *
  * @author  AO Industries, Inc.
  */
+@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 public final class Coercion  {
 
 	private static final Logger logger = Logger.getLogger(Coercion.class.getName());
@@ -75,14 +76,16 @@ public final class Coercion  {
 			clazz = Class.forName(BODY_CONTENT_IMPL_CLASS);
 			field = clazz.getDeclaredField(WRITER_FIELD);
 			field.setAccessible(true);
-		} catch(RuntimeException | ReflectiveOperationException e) {
+		} catch(ThreadDeath td) {
+			throw td;
+		} catch(Throwable t) {
 			if(logger.isLoggable(Level.INFO)) {
 				logger.log(
 					Level.INFO,
 					"Cannot get direct access to the "+BODY_CONTENT_IMPL_CLASS+"."+WRITER_FIELD+" field.  "
 					+ "Unwrapping of BodyContent disabled.  "
 					+ "The system will behave correctly, but some optimizations are disabled.",
-					e
+					t
 				);
 			}
 			clazz = null;
