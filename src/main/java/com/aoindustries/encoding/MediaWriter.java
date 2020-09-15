@@ -22,9 +22,9 @@
  */
 package com.aoindustries.encoding;
 
-import com.aoindustries.exception.WrappedException;
 import com.aoindustries.io.EncoderWriter;
 import com.aoindustries.lang.NullArgumentException;
+import com.aoindustries.lang.Throwables;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -187,10 +187,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 		while(text instanceof Supplier<?,?>) {
 			try {
 				text = ((Supplier<?,?>)text).get();
-			} catch(Error | RuntimeException | IOException e) {
-				throw e;
 			} catch(Throwable t) {
-				throw new WrappedException(t);
+				throw Throwables.wrap(t, IOException.class, IOException::new);
 			}
 		}
 		if(text instanceof char[]) {
@@ -199,10 +197,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 		if(text instanceof MediaWritable) {
 			try {
 				return text((MediaWritable<?>)text);
-			} catch(Error | RuntimeException | IOException e) {
-				throw e;
 			} catch(Throwable t) {
-				throw new WrappedException(t);
+				throw Throwables.wrap(t, IOException.class, IOException::new);
 			}
 		}
 		// Allow text markup from translations
