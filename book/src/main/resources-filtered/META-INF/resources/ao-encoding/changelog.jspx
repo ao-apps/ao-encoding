@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2020-05-30T01:03:45-05:00"
+		dateModified="2020-11-03T02:48:28-06:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -53,15 +53,35 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
 			>
-				<!-- TODO:
 				<ul>
+					<li>
+						<p>
+							Moved a few date/time methods from <ao:a href="apidocs/com/aoindustries/encoding/ChainWriter.html">ChainWriter</ao:a>
+							to <core:link book="/aoweb-struts/core" page="/index.jspx" />.  This avoids adding a dependency
+							on the new <core:link book="/ao-sql" page="/index.jspx" /> project that has been
+							split from <core:link book="/ao-lang" page="/index.jspx" />
+							and <core:link book="/aocode-public" page="/index.jspx" />:
+						</p>
+						<ol>
+							<li>Moved <code>ChainWriter.writeDateJavaScript(…)</code> to <code>DateTag</code>.</li>
+							<li>Moved <code>ChainWriter.writeDateTimeJavaScript(…)</code> to <code>DateTimeTag</code>.</li>
+							<li>Moved <code>ChainWriter.writeTimeJavaScript(…)</code> to <code>TimeTag</code>.</li>
+						</ol>
+						<p>
+							Although technically a breaking change, we are only incrementing the minor version number.
+							This is legacy code that is not central to this encoding API and is not widely used.
+							In fact, <ao:a href="apidocs/com/aoindustries/encoding/ChainWriter.html">ChainWriter</ao:a>
+							should probably not be part of this API at all, but it has no better home at this time.
+						</p>
+					</li>
+					<!-- TODO:
 					<li>
 						When a value is fastToString, select optimal quoting type based on content, which might be no quotes.
 						Use this capability from ao:out tag in ao-taglib to simplify the output under common cases, while still
 						supporting the full encoding capability.
 					</li>
+					-->
 				</ul>
-				-->
 			</changelog:release>
 		</c:if>
 
