@@ -37,6 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			<h2 style="margin-top: 0em">Modules</h2>
 			<ul>
 				<li><a target="${javadoc.target}" href="https://aoindustries.com/ao-encoding/servlet/">AO Encoding Servlet</a></li>
+				<li><a target="${javadoc.target}" href="https://aoindustries.com/ao-encoding/taglib/">AO Encoding Taglib</a></li>
 			</ul>
 		</div>]]></javadoc.modules>
 	</properties>

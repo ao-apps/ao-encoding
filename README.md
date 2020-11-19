@@ -32,6 +32,7 @@ High performance streaming character encoding.
 
 ## Modules
 * [AO Encoding Servlet](https://github.com/aoindustries/ao-encoding-servlet)
+* [AO Encoding Taglib](https://github.com/aoindustries/ao-encoding-taglib)
 
 ## Contact Us
 For questions or support, please [contact us](https://aoindustries.com/contact):

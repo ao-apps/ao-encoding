@@ -34,11 +34,12 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		title="@{documented.name}"
 		description="@{documented.description}"
 		datePublished="2016-10-16T22:58:00-0500"
-		dateModified="2020-03-24T14:01:33-05:00"
+		dateModified="2020-11-19T01:45:35-06:00"
 	>
 		<core:child page="changelog.jspx" />
 		<core:child page="apidocs/index.jspx" />
 		<core:child book="/ao-encoding/servlet" page="/index.jspx" />
+		<core:child book="/ao-encoding/taglib" page="/index.jspx" />
 		<header>
 			<ao:include
 				page="/ao-badges/badges.inc.jspx"
@@ -65,6 +66,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		<section:section label="Modules">
 			<ul>
 				<li><core:link book="/ao-encoding/servlet" page="/index.jspx" /></li>
+				<li><core:link book="/ao-encoding/taglib" page="/index.jspx" /></li>
 			</ul>
 		</section:section>
 	</core:page>
