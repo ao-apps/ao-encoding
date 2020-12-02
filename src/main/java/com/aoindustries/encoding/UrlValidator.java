@@ -22,6 +22,8 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.io.LocalizedIOException;
+import com.aoindustries.util.i18n.Resources;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -35,6 +37,8 @@ import java.io.Writer;
  * @author  AO Industries, Inc.
  */
 public class UrlValidator extends MediaValidator {
+
+	private static final Resources RESOURCES = Resources.getResources(UrlValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.
@@ -94,7 +98,7 @@ public class UrlValidator extends MediaValidator {
 					return;
 				}
 		}
-		throw new IOException(ApplicationResources.accessor.getMessage("UrlValidator.invalidCharacter", Integer.toHexString(c)));
+		throw new LocalizedIOException(RESOURCES, "UrlValidator.invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**

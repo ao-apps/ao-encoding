@@ -22,6 +22,8 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.io.LocalizedIOException;
+import com.aoindustries.util.i18n.Resources;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -31,6 +33,8 @@ import java.io.Writer;
  * @author  AO Industries, Inc.
  */
 public class MysqlValidator extends MediaValidator {
+
+	private static final Resources RESOURCES = Resources.getResources(MysqlValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.
@@ -45,7 +49,7 @@ public class MysqlValidator extends MediaValidator {
 			&& c != '\n'
 			// 7F to 9F - control characters
 			&& (c < 0xA0 || c > 0xFFFD)
-		) throw new IOException(ApplicationResources.accessor.getMessage("MysqlValidator.invalidCharacter", Integer.toHexString(c)));
+		) throw new LocalizedIOException(RESOURCES, "MysqlValidator.invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**

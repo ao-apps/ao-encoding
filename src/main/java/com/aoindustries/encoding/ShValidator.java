@@ -22,6 +22,8 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.io.LocalizedIOException;
+import com.aoindustries.util.i18n.Resources;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -39,6 +41,8 @@ import java.io.Writer;
  */
 public class ShValidator extends MediaValidator {
 
+	private static final Resources RESOURCES = Resources.getResources(ShValidator.class);
+
 	/**
 	 * Checks one character, throws IOException if invalid.
 	 * <p>
@@ -52,7 +56,7 @@ public class ShValidator extends MediaValidator {
 			&& c != '\n'
 			// 7F to 9F - control characters
 			&& (c < 0xA0 || c > 0xFFFD)
-		) throw new IOException(ApplicationResources.accessor.getMessage("ShValidator.invalidCharacter", Integer.toHexString(c)));
+		) throw new LocalizedIOException(RESOURCES, "ShValidator.invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**

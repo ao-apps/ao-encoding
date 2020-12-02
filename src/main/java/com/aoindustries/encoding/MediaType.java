@@ -25,6 +25,7 @@ package com.aoindustries.encoding;
 import com.aoindustries.io.ContentType;
 import com.aoindustries.io.LocalizedUnsupportedEncodingException;
 import com.aoindustries.util.i18n.MarkupType;
+import com.aoindustries.util.i18n.Resources;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -207,6 +208,8 @@ public enum MediaType {
 		}
 	};
 
+	private static final Resources RESOURCES = Resources.getResources(MediaType.class);
+
 	private final String contentType;
 
 	private MediaType(String contentType) {
@@ -250,6 +253,6 @@ public enum MediaType {
 		for(MediaType value : values) {
 			if(value.isUsedFor(contentType)) return value;
 		}
-		throw new LocalizedUnsupportedEncodingException(ApplicationResources.accessor, "MediaType.getMediaType.unknownType", fullContentType);
+		throw new LocalizedUnsupportedEncodingException(RESOURCES, "MediaType.getMediaType.unknownType", fullContentType);
 	}
 }

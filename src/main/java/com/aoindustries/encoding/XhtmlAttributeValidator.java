@@ -22,6 +22,8 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.io.LocalizedIOException;
+import com.aoindustries.util.i18n.Resources;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -37,6 +39,8 @@ import java.io.Writer;
  * @author  AO Industries, Inc.
  */
 public class XhtmlAttributeValidator extends MediaValidator {
+
+	private static final Resources RESOURCES = Resources.getResources(XhtmlAttributeValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.
@@ -56,7 +60,7 @@ public class XhtmlAttributeValidator extends MediaValidator {
 				//&& (c < 0x10000 || c > 0x10FFFF)
 				&& (c < Character.MIN_HIGH_SURROGATE || c > Character.MAX_LOW_SURROGATE)
 			)
-		) throw new IOException(ApplicationResources.accessor.getMessage("XhtmlAttributeValidator.invalidCharacter", Integer.toHexString(c)));
+		) throw new LocalizedIOException(RESOURCES, "XhtmlAttributeValidator.invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**
