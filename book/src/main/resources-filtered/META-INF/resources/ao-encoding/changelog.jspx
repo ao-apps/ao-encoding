@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2020-12-01T13:17:45-06:00"
+		dateModified="2020-12-02T11:55:06-06:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-encoding:pom.version}" />
@@ -57,6 +57,32 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					<li>
 						Split development-only classes into a new sub-project in <code>devel/</code>.  This
 						sub-project is used development only and is never deployed to artifact repositories.
+					</li>
+					<li>
+						<p>
+							Reverted a previous change made on 2020-03-01 that was released in version 3.0.0 on 2020-03-26.
+							Encoding of in-context translation lookup markups is required after all.
+						</p>
+						<p>
+							One example is the lookup IDs added inside alt attributes like
+							<code><![CDATA[alt="&amp;lt;##&amp;lt;value&amp;gt;##&amp;gt;"]]></code>.  With this bug, this was
+							incorrectly written as <code><![CDATA[alt="&lt;##&lt;value&gt;##&gt;"]]></code>, which fails
+							XML validation.
+						</p>
+						<p>
+							This bug is unlikely to affect production systems for two reasons:
+						</p>
+						<ol>
+							<li>
+								Lookup markups are only performed when in-context translations are enabled, which is only
+								when in development mode.
+							</li>
+							<li>
+								Most production sites are served in SGML mode, where browsers will handle the incorrect
+								HTML formatting.  XML mode is used in development specifically for this stricter
+								validation.
+							</li>
+						</ol>
 					</li>
 				</ul>
 				<!-- TODO:
