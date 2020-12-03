@@ -22,8 +22,8 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.i18n.Resources;
 import com.aoindustries.io.LocalizedUnsupportedEncodingException;
-import com.aoindustries.util.i18n.Resources;
 import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -36,7 +36,7 @@ import java.io.Writer;
  */
 abstract public class MediaValidator extends FilterWriter implements ValidMediaFilter {
 
-	private static final Resources RESOURCES = Resources.getResources(MediaValidator.class);
+	private static final Resources RESOURCES = Resources.getResources(MediaValidator.class.getPackage());
 
 	/**
 	 * Gets the media validator for the given type.  If the given writer is

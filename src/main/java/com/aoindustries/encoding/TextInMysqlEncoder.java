@@ -22,8 +22,8 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.i18n.Resources;
 import com.aoindustries.io.LocalizedIOException;
-import com.aoindustries.util.i18n.Resources;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -35,7 +35,7 @@ import java.io.Writer;
  */
 public class TextInMysqlEncoder extends MediaEncoder {
 
-	private static final Resources RESOURCES = Resources.getResources(TextInMysqlEncoder.class);
+	private static final Resources RESOURCES = Resources.getResources(TextInMysqlEncoder.class.getPackage());
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	/**

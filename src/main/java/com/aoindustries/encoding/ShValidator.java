@@ -22,8 +22,8 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.i18n.Resources;
 import com.aoindustries.io.LocalizedIOException;
-import com.aoindustries.util.i18n.Resources;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -41,7 +41,7 @@ import java.io.Writer;
  */
 public class ShValidator extends MediaValidator {
 
-	private static final Resources RESOURCES = Resources.getResources(ShValidator.class);
+	private static final Resources RESOURCES = Resources.getResources(ShValidator.class.getPackage());
 
 	/**
 	 * Checks one character, throws IOException if invalid.

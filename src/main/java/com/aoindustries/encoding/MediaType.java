@@ -22,10 +22,10 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.i18n.Resources;
 import com.aoindustries.io.ContentType;
 import com.aoindustries.io.LocalizedUnsupportedEncodingException;
 import com.aoindustries.util.i18n.MarkupType;
-import com.aoindustries.util.i18n.Resources;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -208,7 +208,7 @@ public enum MediaType {
 		}
 	};
 
-	private static final Resources RESOURCES = Resources.getResources(MediaType.class);
+	private static final Resources RESOURCES = Resources.getResources(MediaType.class.getPackage());
 
 	private final String contentType;
 

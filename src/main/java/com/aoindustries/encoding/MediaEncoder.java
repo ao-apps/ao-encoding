@@ -22,10 +22,10 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.i18n.Resources;
 import com.aoindustries.io.Encoder;
 import com.aoindustries.io.LocalizedUnsupportedEncodingException;
 import com.aoindustries.lang.NullArgumentException;
-import com.aoindustries.util.i18n.Resources;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -46,7 +46,7 @@ import java.io.Writer;
  */
 abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 
-	private static final Resources RESOURCES = Resources.getResources(MediaEncoder.class);
+	private static final Resources RESOURCES = Resources.getResources(MediaEncoder.class.getPackage());
 
 	/**
 	 * Gets the media encoder for the requested types or <code>null</code> if
