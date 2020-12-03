@@ -319,13 +319,32 @@ public final class Coercion  {
 	 * Writes an object's String representation with markup enabled using the provided encoder,
 	 * supporting streaming for specialized types.
 	 *
+	 * @param  encodeLookupMarkup  <p>Does the lookup markup need to be encoded?</p>
+	 *                             <p>When {@code encodeLookupMarkup = true}:</p>
+	 *                             <ol>
+	 *                               <li>Write markup prefix without encoding</li>
+	 *                               <li>Write any encoder prefix</li>
+	 *                               <li>Write value with encoding</li>
+	 *                               <li>Write any encoder suffix</li>
+	 *                               <li>Write markup suffix without encoding</li>
+	 *                             </ol>
+	 *                             <p>When {@code encodeLookupMarkup = false}:</p>
+	 *                             <ol>
+	 *                               <li>Write any encoder prefix</li>
+	 *                               <li>Write markup prefix with encoding</li>
+	 *                               <li>Write value with encoding</li>
+	 *                               <li>Write markup suffix with encoding</li>
+	 *                               <li>Write any encoder suffix</li>
+	 *                             </ol>
+	 *
 	 * @param  encoder  no encoding performed when null
+	 *
 	 * @param  encoderPrefixSuffix  This includes the encoder {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefix}
 	 *                              and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffix}.
 	 *
 	 * @see  MarkupType
 	 */
-	public static void write(Object value, MarkupType markupType, MediaEncoder encoder, boolean encoderPrefixSuffix, Writer out) throws IOException {
+	public static void write(Object value, MarkupType markupType, boolean encodeLookupMarkup, MediaEncoder encoder, boolean encoderPrefixSuffix, Writer out) throws IOException {
 		if(encoder == null) {
 			write(value, markupType, out);
 		} else {
@@ -351,14 +370,29 @@ public final class Coercion  {
 				} else {
 					String str = toString(value);
 					BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
-					if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, encoder, out);
+					if(lookupMarkup != null && !encodeLookupMarkup) lookupMarkup.appendPrefixTo(markupType, out);
 					if(encoderPrefixSuffix) encoder.writePrefixTo(out);
+					if(lookupMarkup != null && encodeLookupMarkup) lookupMarkup.appendPrefixTo(markupType, encoder, out);
 					encoder.write(str, out);
+					if(lookupMarkup != null && encodeLookupMarkup) lookupMarkup.appendSuffixTo(markupType, encoder, out);
 					if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
-					if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, encoder, out);
+					if(lookupMarkup != null && !encodeLookupMarkup) lookupMarkup.appendSuffixTo(markupType, out);
 				}
 			}
 		}
+	}
+
+	/**
+	 * @deprecated  Lookup markup may conditionally need to be encoded based on markup type and context.  Please use
+	 *              {@link #write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, boolean, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)}
+	 *              while determining whether the lookup markup should be written through the encoder.
+	 *              <p>
+	 *              This method defaults to {@code encodeLookupMarkup = false} for compatibility with the previous release.
+	 *              </p>
+	 */
+	@Deprecated
+	public static void write(Object value, MarkupType markupType, MediaEncoder encoder, boolean encoderPrefixSuffix, Writer out) throws IOException {
+		write(value, markupType, false, encoder, encoderPrefixSuffix, out);
 	}
 
 	/**
@@ -533,13 +567,32 @@ public final class Coercion  {
 	 * Appends an object's String representation with markup enabled using the provided encoder,
 	 * supporting streaming for specialized types.
 	 *
+	 * @param  encodeLookupMarkup  <p>Does the lookup markup need to be encoded?</p>
+	 *                             <p>When {@code encodeLookupMarkup = true}:</p>
+	 *                             <ol>
+	 *                               <li>Write markup prefix without encoding</li>
+	 *                               <li>Write any encoder prefix</li>
+	 *                               <li>Write value with encoding</li>
+	 *                               <li>Write any encoder suffix</li>
+	 *                               <li>Write markup suffix without encoding</li>
+	 *                             </ol>
+	 *                             <p>When {@code encodeLookupMarkup = false}:</p>
+	 *                             <ol>
+	 *                               <li>Write any encoder prefix</li>
+	 *                               <li>Write markup prefix with encoding</li>
+	 *                               <li>Write value with encoding</li>
+	 *                               <li>Write markup suffix with encoding</li>
+	 *                               <li>Write any encoder suffix</li>
+	 *                             </ol>
+	 *
 	 * @param  encoder  no encoding performed when null
+	 *
 	 * @param  encoderPrefixSuffix  This includes the encoder {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefix}
 	 *                              and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffix}.
 	 *
 	 * @see  MarkupType
 	 */
-	public static void append(Object value, MarkupType markupType, MediaEncoder encoder, boolean encoderPrefixSuffix, Appendable out) throws IOException {
+	public static void append(Object value, MarkupType markupType, boolean encodeLookupMarkup, MediaEncoder encoder, boolean encoderPrefixSuffix, Appendable out) throws IOException {
 		if(encoder == null) {
 			append(value, markupType, out);
 		} else {
@@ -547,7 +600,7 @@ public final class Coercion  {
 			if(value != null) {
 				BundleLookupThreadContext threadContext;
 				if(out instanceof Writer) {
-					write(value, markupType, encoder, encoderPrefixSuffix, (Writer)out);
+					write(value, markupType, encodeLookupMarkup, encoder, encoderPrefixSuffix, (Writer)out);
 				} else if(
 					markupType == null
 					|| markupType == MarkupType.NONE
@@ -567,14 +620,29 @@ public final class Coercion  {
 				} else {
 					String str = toString(value);
 					BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
-					if(lookupMarkup != null) lookupMarkup.appendPrefixTo(markupType, encoder, out);
+					if(lookupMarkup != null && !encodeLookupMarkup) lookupMarkup.appendPrefixTo(markupType, out);
 					if(encoderPrefixSuffix) encoder.writePrefixTo(out);
+					if(lookupMarkup != null && encodeLookupMarkup) lookupMarkup.appendPrefixTo(markupType, encoder, out);
 					encoder.append(str, out);
+					if(lookupMarkup != null && encodeLookupMarkup) lookupMarkup.appendSuffixTo(markupType, encoder, out);
 					if(encoderPrefixSuffix) encoder.writeSuffixTo(out);
-					if(lookupMarkup != null) lookupMarkup.appendSuffixTo(markupType, encoder, out);
+					if(lookupMarkup != null && !encodeLookupMarkup) lookupMarkup.appendSuffixTo(markupType, out);
 				}
 			}
 		}
+	}
+
+	/**
+	 * @deprecated  Lookup markup may conditionally need to be encoded based on markup type and context.  Please use
+	 *              {@link #append(java.lang.Object, com.aoindustries.util.i18n.MarkupType, boolean, com.aoindustries.encoding.MediaEncoder, boolean, java.lang.Appendable)}
+	 *              while determining whether the lookup markup should be written through the encoder.
+	 *              <p>
+	 *              This method defaults to {@code encodeLookupMarkup = false} for compatibility with the previous release.
+	 *              </p>
+	 */
+	@Deprecated
+	public static void append(Object value, MarkupType markupType, MediaEncoder encoder, boolean encoderPrefixSuffix, Appendable out) throws IOException {
+		append(value, markupType, false, encoder, encoderPrefixSuffix, out);
 	}
 
 	/**

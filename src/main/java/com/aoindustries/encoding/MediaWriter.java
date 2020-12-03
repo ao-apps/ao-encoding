@@ -208,6 +208,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 			Coercion.write(
 				text,
 				MediaType.TEXT.getMarkupType(),
+				false, // Should this be true?
 				encoder,
 				false,
 				out
@@ -217,6 +218,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 			Coercion.write(
 				text,
 				encoder.getValidMediaInputType().getMarkupType(),
+				false,
 				tw.encoder,
 				true,
 				this
