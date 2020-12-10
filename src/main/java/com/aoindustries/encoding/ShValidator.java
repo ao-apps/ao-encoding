@@ -41,7 +41,7 @@ import java.io.Writer;
  */
 public class ShValidator extends MediaValidator {
 
-	private static final Resources RESOURCES = Resources.getResources(ShValidator.class.getPackage());
+	static final Resources RESOURCES = Resources.getResources(ShValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.
@@ -56,7 +56,7 @@ public class ShValidator extends MediaValidator {
 			&& c != '\n'
 			// 7F to 9F - control characters
 			&& (c < 0xA0 || c > 0xFFFD)
-		) throw new LocalizedIOException(RESOURCES, "ShValidator.invalidCharacter", Integer.toHexString(c));
+		) throw new LocalizedIOException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**

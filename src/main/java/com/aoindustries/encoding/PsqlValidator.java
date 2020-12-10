@@ -34,7 +34,7 @@ import java.io.Writer;
  */
 public class PsqlValidator extends MediaValidator {
 
-	private static final Resources RESOURCES = Resources.getResources(PsqlValidator.class.getPackage());
+	static final Resources RESOURCES = Resources.getResources(PsqlValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.
@@ -49,7 +49,7 @@ public class PsqlValidator extends MediaValidator {
 			&& c != '\n'
 			// 7F to 9F - control characters
 			&& (c < 0xA0 || c > 0xFFFD)
-		) throw new LocalizedIOException(RESOURCES, "PsqlValidator.invalidCharacter", Integer.toHexString(c));
+		) throw new LocalizedIOException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**

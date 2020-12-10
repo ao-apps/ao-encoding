@@ -208,7 +208,7 @@ public enum MediaType {
 		}
 	};
 
-	private static final Resources RESOURCES = Resources.getResources(MediaType.class.getPackage());
+	private static final Resources RESOURCES = Resources.getResources(MediaType.class);
 
 	private final String contentType;
 
@@ -253,6 +253,6 @@ public enum MediaType {
 		for(MediaType value : values) {
 			if(value.isUsedFor(contentType)) return value;
 		}
-		throw new LocalizedUnsupportedEncodingException(RESOURCES, "MediaType.getMediaType.unknownType", fullContentType);
+		throw new LocalizedUnsupportedEncodingException(RESOURCES, "getMediaType.unknownType", fullContentType);
 	}
 }

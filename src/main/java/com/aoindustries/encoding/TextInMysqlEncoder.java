@@ -22,7 +22,6 @@
  */
 package com.aoindustries.encoding;
 
-import com.aoindustries.i18n.Resources;
 import com.aoindustries.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
@@ -34,8 +33,6 @@ import java.io.Writer;
  * @author  AO Industries, Inc.
  */
 public class TextInMysqlEncoder extends MediaEncoder {
-
-	private static final Resources RESOURCES = Resources.getResources(TextInMysqlEncoder.class.getPackage());
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	/**
@@ -63,7 +60,7 @@ public class TextInMysqlEncoder extends MediaEncoder {
 			(c >= 0x20 && c <= 0x7E) // common case first
 			|| (c >= 0xA0 && c <= 0xFFFD)
 		) return null;
-		throw new LocalizedIOException(RESOURCES, "MysqlValidator.invalidCharacter", Integer.toHexString(c));
+		throw new LocalizedIOException(MysqlValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	public static void encodeTextInMysql(char ch, Appendable out) throws IOException {

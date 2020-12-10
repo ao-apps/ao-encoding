@@ -36,7 +36,7 @@ import java.io.Writer;
  */
 abstract public class MediaValidator extends FilterWriter implements ValidMediaFilter {
 
-	private static final Resources RESOURCES = Resources.getResources(MediaValidator.class.getPackage());
+	private static final Resources RESOURCES = Resources.getResources(MediaValidator.class);
 
 	/**
 	 * Gets the media validator for the given type.  If the given writer is
@@ -73,7 +73,7 @@ abstract public class MediaValidator extends FilterWriter implements ValidMediaF
 			case XHTML_ATTRIBUTE:
 				return new XhtmlAttributeValidator(out);
 			default:
-				throw new LocalizedUnsupportedEncodingException(RESOURCES, "MediaValidator.unableToFindValidator", contentType.getContentType());
+				throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindValidator", contentType.getContentType());
 		}
 	}
 

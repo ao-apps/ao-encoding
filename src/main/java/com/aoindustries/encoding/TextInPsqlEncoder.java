@@ -22,7 +22,6 @@
  */
 package com.aoindustries.encoding;
 
-import com.aoindustries.i18n.Resources;
 import com.aoindustries.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
@@ -34,8 +33,6 @@ import java.io.Writer;
  * @author  AO Industries, Inc.
  */
 public class TextInPsqlEncoder extends MediaEncoder {
-
-	private static final Resources RESOURCES = Resources.getResources(TextInPsqlEncoder.class.getPackage());
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	/**
@@ -140,7 +137,7 @@ public class TextInPsqlEncoder extends MediaEncoder {
 		if(c == 0xFFFE) return "\\uFFFE";
 		if(c == 0xFFFF) return "\\uFFFF";
 		assert c == 0 : "The only character not supported is NULL (\\x00), got " + Integer.toHexString(c);
-		throw new LocalizedIOException(RESOURCES, "PsqlValidator.invalidCharacter", Integer.toHexString(c));
+		throw new LocalizedIOException(PsqlValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	public static void encodeTextInPsql(char ch, Appendable out) throws IOException {

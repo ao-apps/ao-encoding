@@ -38,7 +38,7 @@ import java.io.Writer;
  */
 public class UrlValidator extends MediaValidator {
 
-	private static final Resources RESOURCES = Resources.getResources(UrlValidator.class.getPackage());
+	private static final Resources RESOURCES = Resources.getResources(UrlValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.
@@ -98,7 +98,7 @@ public class UrlValidator extends MediaValidator {
 					return;
 				}
 		}
-		throw new LocalizedIOException(RESOURCES, "UrlValidator.invalidCharacter", Integer.toHexString(c));
+		throw new LocalizedIOException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**
