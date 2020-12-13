@@ -294,7 +294,7 @@ public final class Coercion  {
 			if(
 				markupType == null
 				|| markupType == MarkupType.NONE
-				|| (threadContext = BundleLookupThreadContext.getThreadContext(false)) == null
+				|| (threadContext = BundleLookupThreadContext.getThreadContext()) == null
 				// Avoid intermediate String from Writable
 				|| (
 					value instanceof Writable
@@ -354,7 +354,7 @@ public final class Coercion  {
 				if(
 					markupType == null
 					|| markupType == MarkupType.NONE
-					|| (threadContext = BundleLookupThreadContext.getThreadContext(false)) == null
+					|| (threadContext = BundleLookupThreadContext.getThreadContext()) == null
 					// Avoid intermediate String from Writable
 					|| (
 						value instanceof Writable
@@ -541,7 +541,7 @@ public final class Coercion  {
 			} else if(
 				markupType == null
 				|| markupType == MarkupType.NONE
-				|| (threadContext = BundleLookupThreadContext.getThreadContext(false)) == null
+				|| (threadContext = BundleLookupThreadContext.getThreadContext()) == null
 				// Avoid intermediate String from Writable
 				|| (
 					value instanceof Writable
@@ -604,7 +604,7 @@ public final class Coercion  {
 				} else if(
 					markupType == null
 					|| markupType == MarkupType.NONE
-					|| (threadContext = BundleLookupThreadContext.getThreadContext(false)) == null
+					|| (threadContext = BundleLookupThreadContext.getThreadContext()) == null
 					// Avoid intermediate String from Writable
 					|| (
 						value instanceof Writable
