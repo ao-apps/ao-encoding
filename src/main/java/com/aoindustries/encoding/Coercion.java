@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2013, 2015, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -50,6 +50,7 @@ import org.w3c.dom.Node;
  *
  * @author  AO Industries, Inc.
  */
+// TODO: Add Coercion support for Optional
 @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 public final class Coercion  {
 
