@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2013, 2015, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -103,11 +103,6 @@ public class XhtmlAttributeValidator extends MediaValidator {
 	@Override
 	public boolean canSkipValidation(MediaType inputType) {
 		return inputType == MediaType.XHTML_ATTRIBUTE;
-	}
-
-	@Override
-	public MediaType getValidMediaOutputType() {
-		return MediaType.XHTML_ATTRIBUTE;
 	}
 
 	@Override
