@@ -29,7 +29,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		<relativePath>../../ao-oss-parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.aoindustries</groupId><artifactId>ao-encoding-devel</artifactId><version>3.2.1-POST-SNAPSHOT</version>
+	<groupId>com.aoindustries</groupId><artifactId>ao-encoding-devel</artifactId><version>3.3.0-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<name>AO Encoding Devel</name>

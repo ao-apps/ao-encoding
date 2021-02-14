@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2013, 2015, 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,6 +25,7 @@ package com.aoindustries.encoding;
 import com.aoindustries.io.EncoderWriter;
 import com.aoindustries.lang.NullArgumentException;
 import com.aoindustries.lang.Throwables;
+import com.aoindustries.util.i18n.MarkupCoercion;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -205,7 +206,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 		MediaWriter tw = getTextWriter();
 		if(tw == this) {
 			// Already in a textual context
-			Coercion.write(
+			MarkupCoercion.write(
 				text,
 				MediaType.TEXT.getMarkupType(),
 				false, // Should this be true?
@@ -215,7 +216,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 			);
 		} else {
 			// Text within a non-textual context
-			Coercion.write(
+			MarkupCoercion.write(
 				text,
 				encoder.getValidMediaInputType().getMarkupType(),
 				false,

@@ -23,11 +23,15 @@
 package com.aoindustries.encoding;
 
 import com.aoindustries.i18n.Resources;
+import com.aoindustries.io.Encoder;
 import com.aoindustries.io.LocalizedUnsupportedEncodingException;
+import com.aoindustries.lang.Coercion;
 import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Verify that the data passing through this filter is valid for the provided media type.
@@ -35,6 +39,8 @@ import java.io.Writer;
  * @author  AO Industries, Inc.
  */
 abstract public class MediaValidator extends FilterWriter implements ValidMediaFilter {
+
+	private static final Logger logger = Logger.getLogger(MediaValidator.class.getName());
 
 	private static final Resources RESOURCES = Resources.getResources(MediaValidator.class);
 
@@ -129,5 +135,29 @@ abstract public class MediaValidator extends FilterWriter implements ValidMediaF
 	public MediaValidator append(char c) throws IOException {
 		out.append(c);
 		return this;
+	}
+
+	static {
+		// Unwrap out to avoid unnecessary validation of known valid output
+		Coercion.registerOptimizer((Writer out, Encoder encoder) -> {
+			if(encoder instanceof MediaEncoder) {
+				MediaEncoder mediaEncoder = (MediaEncoder)encoder;
+				assert Assertions.isValidating(out, mediaEncoder.getValidMediaOutputType());
+				if(out instanceof MediaValidator) {
+					MediaValidator validator = (MediaValidator)out;
+					if(validator.canSkipValidation(mediaEncoder.getValidMediaOutputType())) {
+						// Can skip validation, write directly to the wrapped output through the encoder
+						if(logger.isLoggable(Level.FINER)) {
+							logger.finer(
+								"Skipping validation of " + mediaEncoder.getValidMediaOutputType()
+								+ " into " + validator.getValidMediaInputType()
+							);
+						}
+						return validator.getOut();
+					}
+				}
+			}
+			return out;
+		});
 	}
 }

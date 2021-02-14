@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2021-01-02T14:19:55-06:00"
+		dateModified="2021-02-14T06:37:27-06:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -47,6 +47,20 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
 			>
+				<ul>
+					<li>
+						<code>Coercion</code> moved out of this project:
+						<ol>
+							<li>Non-localized parts of moved to <core:link book="/ao-lang" page="/index.jspx" />.</li>
+							<li>
+								Localized parts moved to <core:link book="/aocode-public" page="/index.jspx" /> and
+								renamed to <code>MarkupCoercion</code>.
+							</li>
+							<li>New pluggable <code>CoercionOptimizer</code> to allow this decoupling.</li>
+							<li>Servlet-specific optimizations moved to <core:link book="/ao-servlet-util" page="/index.jspx" />.</li>
+						</ol>
+					</li>
+				</ul>
 				<!-- TODO:
 				<ul>
 					<li>

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -30,7 +30,9 @@ import static com.aoindustries.encoding.TextInPsqlEncoder.textInPsqlEncoder;
 import static com.aoindustries.encoding.TextInShEncoder.textInShEncoder;
 import static com.aoindustries.encoding.TextInXhtmlAttributeEncoder.textInXhtmlAttributeEncoder;
 import static com.aoindustries.encoding.TextInXhtmlEncoder.textInXhtmlEncoder;
+import com.aoindustries.lang.Coercion;
 import com.aoindustries.lang.NullArgumentException;
+import com.aoindustries.util.i18n.MarkupCoercion;
 import com.aoindustries.util.i18n.MarkupType;
 import java.io.Closeable;
 import java.io.IOException;
@@ -526,7 +528,7 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInXhtmlAttributeEncoder
-	 * @see  Coercion#write(java.lang.Object, com.aoindustries.encoding.MediaEncoder, java.io.Writer)
+	 * @see  Coercion#write(java.lang.Object, com.aoindustries.io.Encoder, java.io.Writer)
 	 */
 	public ChainWriter textInXmlAttribute(Object value) throws IOException {
 		Coercion.write(value, textInXhtmlAttributeEncoder, out);
@@ -537,10 +539,10 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInXhtmlEncoder
-	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, boolean, com.aoindustries.io.Encoder, boolean, java.io.Writer)
 	 */
 	public ChainWriter textInXhtml(Object value) throws IOException {
-		Coercion.write(value, MarkupType.XHTML, false, textInXhtmlEncoder, false, out);
+		MarkupCoercion.write(value, MarkupType.XHTML, false, textInXhtmlEncoder, false, out);
 		return this;
 	}
 
@@ -586,10 +588,10 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInJavaScriptEncoder
-	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, boolean, com.aoindustries.io.Encoder, boolean, java.io.Writer)
 	 */
 	public ChainWriter textInJavaScript(Object value) throws IOException {
-		Coercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, out);
+		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, out);
 		return this;
 	}
 
@@ -603,13 +605,13 @@ final public class ChainWriter implements Appendable, Closeable {
 	 *
 	 * @see  TextInJavaScriptEncoder
 	 * @see  JavaScriptInXhtmlAttributeEncoder
-	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, boolean, com.aoindustries.io.Encoder, boolean, java.io.Writer)
 	 */
 	public ChainWriter textInJavaScriptInXmlAttribute(Object value) throws IOException {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XML Attribute
-		Coercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, javaScriptInXhtmlAttributeWriter);
+		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, javaScriptInXhtmlAttributeWriter);
 		return this;
 	}
 
@@ -623,13 +625,13 @@ final public class ChainWriter implements Appendable, Closeable {
 	 *
 	 * @see  TextInJavaScriptEncoder
 	 * @see  JavaScriptInXhtmlEncoder
-	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, boolean, com.aoindustries.io.Encoder, boolean, java.io.Writer)
 	 */
 	public ChainWriter textInJavaScriptInXhtml(Object value) throws IOException {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XHTML
-		Coercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, javaScriptInXhtmlWriter);
+		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, javaScriptInXhtmlWriter);
 		return this;
 	}
 
@@ -642,10 +644,10 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInMysqlEncoder
-	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, boolean, com.aoindustries.io.Encoder, boolean, java.io.Writer)
 	 */
 	public ChainWriter textInMysql(Object value) throws IOException {
-		Coercion.write(value, MarkupType.MYSQL, false, textInMysqlEncoder, true, out);
+		MarkupCoercion.write(value, MarkupType.MYSQL, false, textInMysqlEncoder, true, out);
 		return this;
 	}
 
@@ -658,10 +660,10 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInPsqlEncoder
-	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, boolean, com.aoindustries.io.Encoder, boolean, java.io.Writer)
 	 */
 	public ChainWriter textInPsql(Object value) throws IOException {
-		Coercion.write(value, MarkupType.PSQL, false, textInPsqlEncoder, true, out);
+		MarkupCoercion.write(value, MarkupType.PSQL, false, textInPsqlEncoder, true, out);
 		return this;
 	}
 
@@ -674,10 +676,10 @@ final public class ChainWriter implements Appendable, Closeable {
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInShEncoder
-	 * @see  Coercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, com.aoindustries.encoding.MediaEncoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoindustries.util.i18n.MarkupType, boolean, com.aoindustries.io.Encoder, boolean, java.io.Writer)
 	 */
 	public ChainWriter textInSh(Object value) throws IOException {
-		Coercion.write(value, MarkupType.SH, false, textInShEncoder, true, out);
+		MarkupCoercion.write(value, MarkupType.SH, false, textInShEncoder, true, out);
 		return this;
 	}
 	// </editor-fold>

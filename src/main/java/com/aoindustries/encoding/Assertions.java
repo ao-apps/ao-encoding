@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2020  AO Industries, Inc.
+ * Copyright (C) 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,7 +31,7 @@ import java.io.Writer;
  */
 final class Assertions  {
 
-	static boolean isValidating(ValidMediaInput out, MediaType mediaType) {
+	private static boolean isValidating(ValidMediaInput out, MediaType mediaType) {
 		return out.canSkipValidation(mediaType) || out.isValidatingMediaInputType(mediaType);
 	}
 

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,6 +23,7 @@
 package com.aoindustries.encoding;
 
 import com.aoindustries.io.LocalizedIOException;
+import com.aoindustries.lang.Coercion;
 import java.io.IOException;
 import java.io.Writer;
 
