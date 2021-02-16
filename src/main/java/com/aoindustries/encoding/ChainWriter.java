@@ -199,7 +199,6 @@ final public class ChainWriter implements Appendable, Closeable {
 	* </p>
 	 */
 	public ChainWriter flush() throws IOException {
-		//out.flush();
 		if(out.checkError()) throw new IOException("Error occured on underlying PrintWriter");
 		return this;
 	}
