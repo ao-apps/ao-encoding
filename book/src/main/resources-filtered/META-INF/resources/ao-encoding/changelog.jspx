@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2021-02-21T02:24:54-06:00"
+		dateModified="2021-02-21T03:18:48-06:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -47,11 +47,6 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
 			>
-				<ul>
-					<li>
-						Deprecated <code>Supplier</code> in favor of new <code>IOSupplierE</code>.
-					</li>
-				</ul>
 				<!-- TODO:
 				<ul>
 					<li>
@@ -63,6 +58,19 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				-->
 			</changelog:release>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="3.4.0"
+			datePublished="2021-02-21T03:18:48-06:00"
+			groupId="@{project.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{project.scm.url}"
+		>
+			<ul>
+				<li>Deprecated <code>Supplier</code> in favor of new <code>IOSupplierE</code>.</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
