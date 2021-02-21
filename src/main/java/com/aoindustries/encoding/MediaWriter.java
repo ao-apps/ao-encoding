@@ -23,6 +23,7 @@
 package com.aoindustries.encoding;
 
 import com.aoindustries.io.EncoderWriter;
+import com.aoindustries.io.function.IOSupplierE;
 import com.aoindustries.lang.NullArgumentException;
 import com.aoindustries.lang.Throwables;
 import com.aoindustries.util.i18n.MarkupCoercion;
@@ -185,9 +186,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	 */
 	@SuppressWarnings("UseSpecificCatch")
 	public MediaWriter text(Object text) throws IOException {
-		while(text instanceof Supplier<?,?>) {
+		while(text instanceof IOSupplierE<?,?>) {
 			try {
-				text = ((Supplier<?,?>)text).get();
+				text = ((IOSupplierE<?,?>)text).get();
 			} catch(Throwable t) {
 				throw Throwables.wrap(t, IOException.class, IOException::new);
 			}
@@ -241,7 +242,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	 *
 	 * @return  {@code this} writer
 	 */
-	public <Ex extends Throwable> MediaWriter text(Supplier<?,Ex> text) throws IOException, Ex {
+	public <Ex extends Throwable> MediaWriter text(IOSupplierE<?,Ex> text) throws IOException, Ex {
 		return text((text == null) ? null : text.get());
 	}
 

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,12 +22,17 @@
  */
 package com.aoindustries.encoding;
 
+import com.aoindustries.io.function.IOSupplierE;
 import java.io.IOException;
 
 /**
  * @author  AO Industries, Inc.
+ *
+ * @deprecated  Please use {@link IOSupplierE} instead.
  */
 @FunctionalInterface
-public interface Supplier<V,Ex extends Throwable> {
+@Deprecated
+public interface Supplier<V, Ex extends Throwable> extends IOSupplierE<V, Ex> {
+	@Override
 	V get() throws IOException, Ex;
 }
