@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -36,7 +36,7 @@ public enum Doctype {
 	HTML5 {
 		@Override
 		public String getDoctype(Serialization serialization) {
-			return "<!DOCTYPE html>\n";
+			return "<!DOCTYPE html>" + MediaWriter.NL;
 		}
 		@Override
 		public String getScriptType() {
@@ -66,9 +66,9 @@ public enum Doctype {
 		public String getDoctype(Serialization serialization) {
 			switch(serialization) {
 				case SGML:
-					return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n";
+					return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">" + MediaWriter.NL;
 				case XML:
-					return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
+					return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">" + MediaWriter.NL;
 				default:
 					throw new AssertionError();
 			}
@@ -88,9 +88,9 @@ public enum Doctype {
 		public String getDoctype(Serialization serialization) {
 			switch(serialization) {
 				case SGML:
-					return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n";
+					return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">" + MediaWriter.NL;
 				case XML:
-					return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
+					return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" + MediaWriter.NL;
 				default:
 					throw new AssertionError();
 			}
@@ -117,9 +117,9 @@ public enum Doctype {
 		public String getDoctype(Serialization serialization) {
 			switch(serialization) {
 				case SGML:
-					return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">\n";
+					return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">" + MediaWriter.NL;
 				case XML:
-					return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Frameset//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\">\n";
+					return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Frameset//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\">" + MediaWriter.NL;
 				default:
 					throw new AssertionError();
 			}
@@ -202,7 +202,7 @@ public enum Doctype {
 		if(serialization == Serialization.XML && !isUTF8(documentEncoding)) {
 			out.append("<?xml version=\"1.0\" encoding=\"");
 			encodeTextInXhtmlAttribute(documentEncoding, out);
-			out.append("\"?>\n");
+			out.append("\"?>" + MediaWriter.NL);
 		}
 		return this;
 	}

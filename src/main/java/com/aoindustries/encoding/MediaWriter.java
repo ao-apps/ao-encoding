@@ -30,6 +30,7 @@ import com.aoindustries.util.i18n.MarkupCoercion;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.Arrays;
 
 /**
  * Streaming versions of media encoders.
@@ -38,12 +39,12 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
+public class MediaWriter extends EncoderWriter implements ValidMediaFilter, TextWriter<MediaWriter> {
 
 	private final EncodingContext encodingContext;
 	private final MediaEncoder encoder;
 
-	private MediaWriter textWriter;
+	protected MediaWriter textWriter;
 
 	public MediaWriter(EncodingContext encodingContext, MediaEncoder encoder, Writer out) {
 		super(encoder, out);
@@ -60,7 +61,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 		return encoder;
 	}
 
-	private MediaWriter getTextWriter() throws UnsupportedEncodingException {
+	protected MediaWriter getTextWriter() throws UnsupportedEncodingException {
 		if(textWriter == null) {
 			MediaEncoder textEncoder = MediaEncoder.getInstance(encodingContext, MediaType.TEXT, encoder.getValidMediaInputType());
 			textWriter = (textEncoder == null) ? this : new MediaWriter(encodingContext, textEncoder, this);
@@ -107,7 +108,124 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	}
 
 	/**
-	 * Writes the given text with proper encoding.
+	 * Is indenting enabled?
+	 */
+	// Matches Document.indent
+	private boolean indent;
+
+	/**
+	 * Current indentation level.
+	 */
+	// Matches Document.depth
+	private int depth;
+
+	// Matches Document.START_NL_LENGTH
+	private static final int START_NL_LENGTH = 8;
+
+	/**
+	 * Newline combined with any number of {@link #INDENT} characters.
+	 * Doubled in size as-needed.
+	 */
+	// Matches Document.nlAndIndent
+	private String nlAndIndent = new String(new char[] {
+		NL,     INDENT, INDENT, INDENT,
+		INDENT, INDENT, INDENT, INDENT
+	});
+	{
+		assert nlAndIndent.length() == START_NL_LENGTH : "Starts at length " + START_NL_LENGTH;
+	}
+
+	// Matches Document.nl()
+	@Override
+	public MediaWriter nl() throws IOException {
+		return nl(0);
+	}
+
+	// Matches Document.nl(int)
+	@Override
+	public MediaWriter nl(int depthOffset) throws IOException {
+		if(getIndent()) {
+			int d = getDepth();
+			assert d >= 0;
+			d += depthOffset
+				// Make room for the beginning newline
+				+ 1; 
+			if(d > 1) {
+				String ni = nlAndIndent;
+				int niLen = ni.length();
+				// Expand in size as-needed
+				if(d > niLen) {
+					do {
+						int bigger = niLen << 1;
+						if(bigger < niLen) throw new ArithmeticException("integer overflow");
+						niLen = bigger;
+					} while(d > niLen);
+					char[] newChars = new char[niLen];
+					newChars[0] = MediaWriter.NL;
+					Arrays.fill(newChars, 1, niLen, MediaWriter.INDENT);
+					nlAndIndent = ni = new String(newChars);
+				}
+				out.write(ni, 0, d);
+			} else {
+				out.write(MediaWriter.NL);
+			}
+		} else {
+			out.write(MediaWriter.NL);
+		}
+		return this;
+	}
+
+	// Matches Document.getIndent()
+	@Override
+	public boolean getIndent() {
+		return indent;
+	}
+
+	// Matches Document.setIndent(int)
+	@Override
+	public MediaWriter setIndent(boolean indent) {
+		this.indent = indent;
+		return this;
+	}
+
+	// Matches Document.getDepth()
+	@Override
+	public int getDepth() {
+		return depth;
+	}
+
+	// Matches Document.setDepth(int)
+	@Override
+	public MediaWriter setDepth(int depth) {
+		if(depth < 0) throw new IllegalArgumentException("depth < 0: " + depth);
+		this.depth = depth;
+		return this;
+	}
+
+	// Matches Document.incDepth()
+	@Override
+	public MediaWriter incDepth() {
+		if(getIndent()) {
+			int d = ++depth;
+			if(d < 0) depth = Integer.MAX_VALUE;
+		}
+		assert depth >= 0;
+		return this;
+	}
+
+	// Matches Document.decDepth()
+	@Override
+	public MediaWriter decDepth() {
+		if(getIndent()) {
+			int d = --depth;
+			if(d < 0) depth = 0;
+		}
+		assert depth >= 0;
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
@@ -115,9 +233,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	 * <p>
 	 * Does not perform any translation markups.
 	 * </p>
-	 *
-	 * @return  {@code this} writer
 	 */
+	@Override
 	public MediaWriter text(char ch) throws IOException {
 		MediaWriter tw = getTextWriter();
 		if(tw != this) textWriter.encoder.writePrefixTo(this);
@@ -129,7 +246,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	// TODO: codePoint?
 
 	/**
-	 * Writes the given text with proper encoding.
+	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
@@ -137,9 +254,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	 * <p>
 	 * Does not perform any translation markups.
 	 * </p>
-	 *
-	 * @return  {@code this} writer
 	 */
+	@Override
 	public MediaWriter text(char[] cbuf) throws IOException {
 		MediaWriter tw = getTextWriter();
 		if(tw != this) textWriter.encoder.writePrefixTo(this);
@@ -149,7 +265,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	}
 
 	/**
-	 * Writes the given text with proper encoding.
+	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
@@ -157,9 +273,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	 * <p>
 	 * Does not perform any translation markups.
 	 * </p>
-	 *
-	 * @return  {@code this} writer
 	 */
+	@Override
 	public MediaWriter text(char[] cbuf, int offset, int len) throws IOException {
 		MediaWriter tw = getTextWriter();
 		if(tw != this) textWriter.encoder.writePrefixTo(this);
@@ -172,7 +287,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	// TODO: text(CharSequence, int, int)?
 
 	/**
-	 * Writes the given text with proper encoding.
+	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
@@ -181,9 +296,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	 * If the string is translated, comments will be added giving the
 	 * translation lookup id to aid in translation of server-translated values.
 	 * </p>
-	 *
-	 * @return  {@code this} writer
 	 */
+	@Override
 	@SuppressWarnings("UseSpecificCatch")
 	public MediaWriter text(Object text) throws IOException {
 		while(text instanceof IOSupplierE<?,?>) {
@@ -230,7 +344,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	}
 
 	/**
-	 * Writes the given text with proper encoding.
+	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
@@ -239,15 +353,14 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	 * If the string is translated, comments will be added giving the
 	 * translation lookup id to aid in translation of server-translated values.
 	 * </p>
-	 *
-	 * @return  {@code this} writer
 	 */
+	@Override
 	public <Ex extends Throwable> MediaWriter text(IOSupplierE<?,Ex> text) throws IOException, Ex {
 		return text((text == null) ? null : text.get());
 	}
 
 	/**
-	 * Writes the given text with proper encoding.
+	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
@@ -255,9 +368,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	 * <p>
 	 * Does not perform any translation markups.
 	 * </p>
-	 *
-	 * @return  {@code this} writer
 	 */
+	@Override
 	public <Ex extends Throwable> MediaWriter text(MediaWritable<Ex> text) throws IOException, Ex {
 		try (MediaWriter tw = text()) {
 			if(text != null) {
@@ -268,8 +380,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	}
 
 	/**
-	 * Writes the given text with proper encoding.
-	 * This is well suited for use in a try-with-resources block.
+	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
@@ -277,10 +388,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 	 * <p>
 	 * Does not perform any translation markups.
 	 * </p>
-	 *
-	 * @return  A new writer that may be used for arbitrary text.
-	 *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable)}.
 	 */
+	@Override
 	public MediaWriter text() throws IOException {
 		MediaWriter tw = getTextWriter();
 		if(tw != this) textWriter.encoder.writePrefixTo(this);
@@ -302,12 +411,4 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter {
 
 	// TODO: comments
 
-	/**
-	 * This is {@code '\n'} on all platforms.  If a different newline is required,
-	 * such as {@code "\r\n"} for email, filter the output.
-	 */
-	public MediaWriter nl() throws IOException {
-		write('\n');
-		return this;
-	}
 }
