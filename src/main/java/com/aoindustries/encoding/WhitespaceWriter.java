@@ -48,6 +48,21 @@ public interface WhitespaceWriter<C> {
 	char INDENT = '\t';
 
 	/**
+	 * Writes a newline.
+	 * <p>
+	 * This is {@code '\n'} on all platforms.  If a different newline is required,
+	 * such as {@code "\r\n"} for email, filter the output.
+	 * </p>
+	 *
+	 * @return  {@code this} writer
+	 *
+	 * @see  #NL
+	 * @see  #nli()
+	 * @see  #nli(int)
+	 */
+	C nl() throws IOException;
+
+	/**
 	 * Writes a newline, followed by current indentation when {@linkplain #getIndent() indentation enabled}.
 	 * <p>
 	 * This is {@code '\n'} on all platforms.  If a different newline is required,
@@ -56,13 +71,14 @@ public interface WhitespaceWriter<C> {
 	 *
 	 * @return  {@code this} writer
 	 *
-	 * @see  #nl(int)
-	 * @see  #NL
+	 * @see  #nli(int)
+	 * @see  #nl()
+	 * @see  #indent()
 	 * @see  #getIndent()
 	 * @see  #setIndent(boolean)
 	 */
-	default C nl() throws IOException {
-		return nl(0);
+	default C nli() throws IOException {
+		return nli(0);
 	}
 
 	/**
@@ -77,12 +93,45 @@ public interface WhitespaceWriter<C> {
 	 *
 	 * @return  {@code this} writer
 	 *
+	 * @see  #nli()
 	 * @see  #nl()
-	 * @see  #NL
+	 * @see  #indent(int)
 	 * @see  #getIndent()
 	 * @see  #setIndent(boolean)
 	 */
-	C nl(int depthOffset) throws IOException;
+	default C nli(int depthOffset) throws IOException {
+		nl();
+		return indent(depthOffset);
+	}
+
+	/**
+	 * Writes the current indentation when {@linkplain #getIndent() indentation enabled}.
+	 *
+	 * @see  #indent(int)
+	 * @see  #INDENT
+	 * @see  #nli()
+	 * @see  #getIndent()
+	 * @see  #setIndent(boolean)
+	 */
+	default C indent() throws IOException {
+		return indent(0);
+	}
+
+	/**
+	 * Writes the current indentation with a depth offset when {@linkplain #getIndent() indentation enabled}.
+	 *
+	 * @param  depthOffset  A value added to the current indentation depth.
+	 *                      For example, pass {@code -1} when performing a newline before a closing tag or ending curly brace.
+	 *
+	 * @return  {@code this} writer
+	 *
+	 * @see  #indent()
+	 * @see  #INDENT
+	 * @see  #nli(int)
+	 * @see  #getIndent()
+	 * @see  #setIndent(boolean)
+	 */
+	C indent(int depthOffset) throws IOException;
 
 	/**
 	 * Gets if indentation is currently enabled, off by default.

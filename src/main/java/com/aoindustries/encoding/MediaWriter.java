@@ -119,31 +119,51 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	// Matches Document.depth
 	private int depth;
 
-	// Matches Document.START_NL_LENGTH
-	private static final int START_NL_LENGTH = 8;
+	// Matches Document.START_NLI_LENGTH
+	private static final int START_NLI_LENGTH = 8;
 
 	/**
 	 * Newline combined with any number of {@link #INDENT} characters.
 	 * Doubled in size as-needed.
 	 */
-	// Matches Document.nlAndIndent
-	private String nlAndIndent = new String(new char[] {
+	// Matches Document.nliChars
+	private String nliChars = new String(new char[] {
 		NL,     INDENT, INDENT, INDENT,
 		INDENT, INDENT, INDENT, INDENT
 	});
 	{
-		assert nlAndIndent.length() == START_NL_LENGTH : "Starts at length " + START_NL_LENGTH;
+		assert nliChars.length() == START_NLI_LENGTH : "Starts at length " + START_NLI_LENGTH;
+	}
+
+	/**
+	 * Any number of {@link #INDENT} characters.
+	 * Doubled in size as-needed.
+	 */
+	// Matches MediaWriter.indentChars
+	private String indentChars = new String(new char[] {
+		INDENT, INDENT, INDENT, INDENT,
+		INDENT, INDENT, INDENT, INDENT
+	});
+	{
+		assert nliChars.length() == START_NLI_LENGTH : "Starts at length " + START_NLI_LENGTH;
 	}
 
 	// Matches Document.nl()
 	@Override
 	public MediaWriter nl() throws IOException {
-		return nl(0);
+		out.write(NL);
+		return this;
 	}
 
-	// Matches Document.nl(int)
+	// Matches Document.nli()
 	@Override
-	public MediaWriter nl(int depthOffset) throws IOException {
+	public MediaWriter nli() throws IOException {
+		return nli(0);
+	}
+
+	// Matches Document.nli(int)
+	@Override
+	public MediaWriter nli(int depthOffset) throws IOException {
 		if(getIndent()) {
 			int d = getDepth();
 			assert d >= 0;
@@ -151,26 +171,61 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 				// Make room for the beginning newline
 				+ 1; 
 			if(d > 1) {
-				String ni = nlAndIndent;
-				int niLen = ni.length();
+				String nli = nliChars;
+				int nliLen = nli.length();
 				// Expand in size as-needed
-				if(d > niLen) {
+				if(d > nliLen) {
 					do {
-						int bigger = niLen << 1;
-						if(bigger < niLen) throw new ArithmeticException("integer overflow");
-						niLen = bigger;
-					} while(d > niLen);
-					char[] newChars = new char[niLen];
-					newChars[0] = MediaWriter.NL;
-					Arrays.fill(newChars, 1, niLen, MediaWriter.INDENT);
-					nlAndIndent = ni = new String(newChars);
+						int bigger = nliLen << 1;
+						if(bigger < nliLen) throw new ArithmeticException("integer overflow");
+						nliLen = bigger;
+					} while(d > nliLen);
+					char[] newChars = new char[nliLen];
+					newChars[0] = NL;
+					Arrays.fill(newChars, 1, nliLen, INDENT);
+					nliChars = nli = new String(newChars);
 				}
-				out.write(ni, 0, d);
+				out.write(nli, 0, d);
 			} else {
-				out.write(MediaWriter.NL);
+				out.write(NL);
 			}
 		} else {
-			out.write(MediaWriter.NL);
+			out.write(NL);
+		}
+		return this;
+	}
+
+	// Matches Document.indent()
+	@Override
+	public MediaWriter indent() throws IOException {
+		return indent(0);
+	}
+
+	// Matches Document.indent(int)
+	@Override
+	public MediaWriter indent(int depthOffset) throws IOException {
+		if(getIndent()) {
+			int d = getDepth();
+			assert d >= 0;
+			d += depthOffset;
+			if(d > 1) {
+				String i = indentChars;
+				int iLen = i.length();
+				// Expand in size as-needed
+				if(d > iLen) {
+					do {
+						int bigger = iLen << 1;
+						if(bigger < iLen) throw new ArithmeticException("integer overflow");
+						iLen = bigger;
+					} while(d > iLen);
+					char[] newChars = new char[iLen];
+					Arrays.fill(newChars, 0, iLen, INDENT);
+					indentChars = i = new String(newChars);
+				}
+				out.write(i, 0, d);
+			} else if(d == 1) {
+				out.write(INDENT);
+			}
 		}
 		return this;
 	}
