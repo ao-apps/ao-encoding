@@ -29,7 +29,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		<relativePath>../../ao-oss-parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.aoindustries</groupId><artifactId>ao-encoding-book</artifactId><version>3.5.1-SNAPSHOT</version>
+	<groupId>com.aoindustries</groupId><artifactId>ao-encoding-book</artifactId><version>3.5.1</version>
 	<packaging>bundle</packaging>
 
 	<properties>
@@ -73,7 +73,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		<connection>scm:git:git://github.com/aoindustries/ao-encoding.git</connection>
 		<developerConnection>scm:git:git@github.com:aoindustries/ao-encoding.git</developerConnection>
 		<url>https://github.com/aoindustries/ao-encoding</url>
-		<tag>HEAD</tag>
+		<tag>ao-encoding-book-3.5.1</tag>
 	</scm>
 
 	<issueManagement>
