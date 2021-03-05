@@ -35,6 +35,35 @@ import java.io.IOException;
 public interface TextWriter<C extends TextWriter<C>> extends WhitespaceWriter<C> {
 
 	/**
+	 * The character used for non-breaking space, which is {@code '\u00A0'}.
+	 */
+	char NBSP = '\u00A0';
+
+	/**
+	 * Writes one non-breaking space character.
+	 *
+	 * @return  {@code this} writer
+	 *
+	 * @see  #nbsp(int)
+	 * @see  #NBSP
+	 */
+	default C nbsp() throws IOException {
+		return nbsp(1);
+	}
+
+	/**
+	 * Writes the given number of non-breaking space characters.
+	 *
+	 * @param  count  When {@code count <= 0}, nothing is written.
+	 *
+	 * @return  {@code this} writer
+	 *
+	 * @see  #nbsp()
+	 * @see  #NBSP
+	 */
+	C nbsp(int count) throws IOException;
+
+	/**
 	 * Writes the given text with proper encoding.
 	 *
 	 * @return  {@code this} writer

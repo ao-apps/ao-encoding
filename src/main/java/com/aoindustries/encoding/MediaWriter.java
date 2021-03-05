@@ -30,7 +30,6 @@ import com.aoindustries.util.i18n.MarkupCoercion;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.util.Arrays;
 
 /**
  * Streaming versions of media encoders.
@@ -119,39 +118,10 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	// Matches Document.depth
 	private int depth;
 
-	// Matches Document.START_NLI_LENGTH
-	private static final int START_NLI_LENGTH = 8;
-
-	/**
-	 * Newline combined with any number of {@link #INDENT} characters.
-	 * Doubled in size as-needed.
-	 */
-	// Matches Document.nliChars
-	private String nliChars = new String(new char[] {
-		NL,     INDENT, INDENT, INDENT,
-		INDENT, INDENT, INDENT, INDENT
-	});
-	{
-		assert nliChars.length() == START_NLI_LENGTH : "Starts at length " + START_NLI_LENGTH;
-	}
-
-	/**
-	 * Any number of {@link #INDENT} characters.
-	 * Doubled in size as-needed.
-	 */
-	// Matches MediaWriter.indentChars
-	private String indentChars = new String(new char[] {
-		INDENT, INDENT, INDENT, INDENT,
-		INDENT, INDENT, INDENT, INDENT
-	});
-	{
-		assert nliChars.length() == START_NLI_LENGTH : "Starts at length " + START_NLI_LENGTH;
-	}
-
 	// Matches Document.nl()
 	@Override
 	public MediaWriter nl() throws IOException {
-		out.write(NL);
+		out.append(NL);
 		return this;
 	}
 
@@ -165,32 +135,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter nli(int depthOffset) throws IOException {
 		if(getIndent()) {
-			int d = getDepth();
-			assert d >= 0;
-			d += depthOffset
-				// Make room for the beginning newline
-				+ 1; 
-			if(d > 1) {
-				String nli = nliChars;
-				int nliLen = nli.length();
-				// Expand in size as-needed
-				if(d > nliLen) {
-					do {
-						int bigger = nliLen << 1;
-						if(bigger < nliLen) throw new ArithmeticException("integer overflow");
-						nliLen = bigger;
-					} while(d > nliLen);
-					char[] newChars = new char[nliLen];
-					newChars[0] = NL;
-					Arrays.fill(newChars, 1, nliLen, INDENT);
-					nliChars = nli = new String(newChars);
-				}
-				out.write(nli, 0, d);
-			} else {
-				out.write(NL);
-			}
+			WriterUtil.nli(out, getDepth() + depthOffset);
 		} else {
-			out.write(NL);
+			out.append(NL);
 		}
 		return this;
 	}
@@ -205,27 +152,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter indent(int depthOffset) throws IOException {
 		if(getIndent()) {
-			int d = getDepth();
-			assert d >= 0;
-			d += depthOffset;
-			if(d > 1) {
-				String i = indentChars;
-				int iLen = i.length();
-				// Expand in size as-needed
-				if(d > iLen) {
-					do {
-						int bigger = iLen << 1;
-						if(bigger < iLen) throw new ArithmeticException("integer overflow");
-						iLen = bigger;
-					} while(d > iLen);
-					char[] newChars = new char[iLen];
-					Arrays.fill(newChars, 0, iLen, INDENT);
-					indentChars = i = new String(newChars);
-				}
-				out.write(i, 0, d);
-			} else if(d == 1) {
-				out.write(INDENT);
-			}
+			WriterUtil.indent(out, getDepth() + depthOffset);
 		}
 		return this;
 	}
@@ -276,6 +203,58 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 			if(d < 0) depth = 0;
 		}
 		assert depth >= 0;
+		return this;
+	}
+
+	// Matches Document.sp()
+	@Override
+	public MediaWriter sp() throws IOException {
+		out.append(SPACE);
+		return this;
+	}
+
+	// Matches Document.sp(int)
+	@Override
+	public MediaWriter sp(int count) throws IOException {
+		WriterUtil.sp(out, count);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * </p>
+	 * <p>
+	 * Does not perform any translation markups.
+	 * </p>
+	 */
+	@Override
+	public MediaWriter nbsp() throws IOException {
+		MediaWriter tw = getTextWriter();
+		if(tw != this) textWriter.encoder.writePrefixTo(this);
+		tw.append(NBSP);
+		if(tw != this) textWriter.encoder.writeSuffixTo(this);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * </p>
+	 * <p>
+	 * Does not perform any translation markups.
+	 * </p>
+	 */
+	@Override
+	public MediaWriter nbsp(int count) throws IOException {
+		MediaWriter tw = getTextWriter();
+		if(tw != this) textWriter.encoder.writePrefixTo(this);
+		WriterUtil.nbsp(tw, count);
+		if(tw != this) textWriter.encoder.writeSuffixTo(this);
 		return this;
 	}
 

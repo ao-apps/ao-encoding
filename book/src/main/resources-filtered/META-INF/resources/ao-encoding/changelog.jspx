@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2021-03-04T02:37:19-06:00"
+		dateModified="2021-03-05T01:09:42-06:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -47,6 +47,22 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
 			>
+				<ul>
+					<li>
+						Added space-writing methods <code>WhitespaceWriter.sp(…)</code>, which support writing any
+						number of ASCII spaces while possibly bypassing character validation and/or encoding in some
+						contexts.
+					</li>
+					<li>
+						Added non-breaking-space-writing methods <code>TextWriter.nbsp(…)</code>, which support writing any
+						number of non-breaking spaces while possibly bypassing character validation and/or encoding in some
+						contexts.
+					</li>
+					<li>
+						Strings for writing whitespace are now public, static, fixed size, and reused.
+						The previous implementation would dynamically allocate larger strings without any limit to size.
+					</li>
+				</ul>
 				<!-- TODO:
 				<ul>
 					<li>

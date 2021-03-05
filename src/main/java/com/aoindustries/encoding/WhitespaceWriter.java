@@ -48,6 +48,11 @@ public interface WhitespaceWriter<C> {
 	char INDENT = '\t';
 
 	/**
+	 * The character used for space, which is {@code ' '}.
+	 */
+	char SPACE = ' ';
+
+	/**
 	 * Writes a newline.
 	 * <p>
 	 * This is {@code '\n'} on all platforms.  If a different newline is required,
@@ -107,6 +112,8 @@ public interface WhitespaceWriter<C> {
 	/**
 	 * Writes the current indentation when {@linkplain #getIndent() indentation enabled}.
 	 *
+	 * @return  {@code this} writer
+	 *
 	 * @see  #indent(int)
 	 * @see  #INDENT
 	 * @see  #nli()
@@ -140,6 +147,8 @@ public interface WhitespaceWriter<C> {
 
 	/**
 	 * Enables or disabled indentation.
+	 *
+	 * @return  {@code this} writer
 	 */
 	C setIndent(boolean indent);
 
@@ -152,16 +161,46 @@ public interface WhitespaceWriter<C> {
 
 	/**
 	 * Sets the indentation depth.
+	 *
+	 * @return  {@code this} writer
 	 */
 	C setDepth(int depth);
 
 	/**
 	 * Increments the indentation depth, if enabled.
+	 *
+	 * @return  {@code this} writer
 	 */
 	C incDepth();
 
 	/**
 	 * Decrements the indentation depth, if enabled.
+	 *
+	 * @return  {@code this} writer
 	 */
 	C decDepth();
+
+	/**
+	 * Writes one space character.
+	 *
+	 * @return  {@code this} writer
+	 *
+	 * @see  #sp(int)
+	 * @see  #SPACE
+	 */
+	default C sp() throws IOException {
+		return sp(1);
+	}
+
+	/**
+	 * Writes the given number of space characters.
+	 *
+	 * @param  count  When {@code count <= 0}, nothing is written.
+	 *
+	 * @return  {@code this} writer
+	 *
+	 * @see  #sp()
+	 * @see  #SPACE
+	 */
+	C sp(int count) throws IOException;
 }

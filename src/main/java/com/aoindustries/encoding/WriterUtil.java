@@ -1,0 +1,171 @@
+/*
+ * ao-encoding - High performance streaming character encoding.
+ * Copyright (C) 2021  AO Industries, Inc.
+ *     support@aoindustries.com
+ *     7262 Bull Pen Cir
+ *     Mobile, AL 36695
+ *
+ * This file is part of ao-encoding.
+ *
+ * ao-encoding is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ao-encoding is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with ao-encoding.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.aoindustries.encoding;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Arrays;
+
+/**
+ * Helpers for implementing {@link WhitespaceWriter}.
+ * 
+ * @see  WhitespaceWriter
+ *
+ * @author  AO Industries, Inc.
+ */
+public class WriterUtil {
+
+	private WriterUtil() {}
+
+	/**
+	 * The number of characters written per block.
+	 */
+	public static final int BLOCK_SIZE = 4096;
+
+	/**
+	 * {@link WhitespaceWriter#NL} combined with {@link WhitespaceWriter#INDENT} characters.
+	 */
+	public static final String NLI_CHARS;
+	static {
+		char[] ch = new char[BLOCK_SIZE];
+		ch[0] = WhitespaceWriter.NL;
+		Arrays.fill(ch, 1, BLOCK_SIZE, WhitespaceWriter.INDENT);
+		NLI_CHARS = new String(ch);
+	}
+
+	/**
+	 * {@link WhitespaceWriter#INDENT} characters.
+	 */
+	public static final String INDENT_CHARS;
+	static {
+		char[] ch = new char[BLOCK_SIZE];
+		Arrays.fill(ch, 0, BLOCK_SIZE, WhitespaceWriter.INDENT);
+		INDENT_CHARS = new String(ch);
+	}
+
+	/**
+	 * {@link WhitespaceWriter#SPACE} characters.
+	 */
+	public static final String SPACE_CHARS;
+	static {
+		char[] ch = new char[BLOCK_SIZE];
+		Arrays.fill(ch, 0, BLOCK_SIZE, WhitespaceWriter.SPACE);
+		SPACE_CHARS = new String(ch);
+	}
+
+	/**
+	 * {@link TextWriter#NBSP} characters.
+	 */
+	public static final String NBSP_CHARS;
+	static {
+		char[] ch = new char[BLOCK_SIZE];
+		Arrays.fill(ch, 0, BLOCK_SIZE, TextWriter.NBSP);
+		NBSP_CHARS = new String(ch);
+	}
+
+	/**
+	 * Writes a {@link WhitespaceWriter#NL} followed by any number of {@link WhitespaceWriter#INDENT}.
+	 *
+	 * @see WhitespaceWriter#nli(int)
+	 */
+	public static void nli(Writer out, int indent) throws IOException {
+		if(indent > 0) {
+			int count = indent + 1; // Add one for the initial newline
+			int block = Math.min(count, BLOCK_SIZE);
+			assert block > 1;
+			out.write(NLI_CHARS, 0, block);
+			count -= block;
+			assert count >= 0;
+			while(count > 0) {
+				if(count == 1) {
+					out.append(WhitespaceWriter.INDENT);
+					break;
+				} else {
+					block = Math.min(count, BLOCK_SIZE);
+					out.write(INDENT_CHARS, 0, block);
+					count -= block;
+					assert count >= 0;
+				}
+			}
+		} else {
+			out.append(WhitespaceWriter.NL);
+		}
+	}
+
+	/**
+	 * Writes any number of {@link WhitespaceWriter#INDENT}.
+	 *
+	 * @see WhitespaceWriter#indent(int)
+	 */
+	public static void indent(Writer out, int count) throws IOException {
+		while(count > 0) {
+			if(count == 1) {
+				out.append(WhitespaceWriter.INDENT);
+				break;
+			} else {
+				int block = Math.min(count, BLOCK_SIZE);
+				out.write(INDENT_CHARS, 0, block);
+				count -= block;
+				assert count >= 0;
+			}
+		}
+	}
+
+	/**
+	 * Writes any number of {@link WhitespaceWriter#SPACE}.
+	 *
+	 * @see WhitespaceWriter#sp(int)
+	 */
+	public static void sp(Writer out, int count) throws IOException {
+		while(count > 0) {
+			if(count == 1) {
+				out.append(WhitespaceWriter.SPACE);
+				break;
+			} else {
+				int block = Math.min(count, BLOCK_SIZE);
+				out.write(SPACE_CHARS, 0, block);
+				count -= block;
+				assert count >= 0;
+			}
+		}
+	}
+
+	/**
+	 * Writes any number of {@link TextWriter#NBSP}.
+	 *
+	 * @see TextWriter#nbsp(int)
+	 */
+	public static void nbsp(Writer out, int count) throws IOException {
+		while(count > 0) {
+			if(count == 1) {
+				out.append(TextWriter.NBSP);
+				break;
+			} else {
+				int block = Math.min(count, BLOCK_SIZE);
+				out.write(NBSP_CHARS, 0, block);
+				count -= block;
+				assert count >= 0;
+			}
+		}
+	}
+}
