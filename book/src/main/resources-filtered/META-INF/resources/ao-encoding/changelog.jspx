@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2021-02-28T16:12:50-06:00"
+		dateModified="2021-03-04T02:37:19-06:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -114,7 +114,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				<li>
 					<code>Coercion</code> moved out of this project:
 					<ol>
-						<li>Non-localized parts of moved to <core:link book="/ao-lang" page="/index.jspx" />.</li>
+						<li>Non-localized parts moved to <core:link book="/ao-lang" page="/index.jspx" />.</li>
 						<li>
 							Localized parts moved to <core:link book="/aocode-public" page="/index.jspx" /> and
 							renamed to <code>MarkupCoercion</code>.
