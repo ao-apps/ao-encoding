@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2021-03-05T04:12:56-06:00"
+		dateModified="2021-03-07T06:04:18-06:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -47,6 +47,10 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
 			>
+				<ul>
+					<li><code>Doctype.xmlDeclaration(…)</code> now returns a boolean whether written.</li>
+					<li><code>Doctype.doctype(…)</code> now returns a boolean whether written.</li>
+				</ul>
 				<!-- TODO:
 				<ul>
 					<li>

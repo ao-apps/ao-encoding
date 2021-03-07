@@ -36,7 +36,7 @@ public enum Doctype {
 	HTML5 {
 		@Override
 		public String getDoctype(Serialization serialization) {
-			return "<!DOCTYPE html>" + MediaWriter.NL;
+			return "<!DOCTYPE html>" + WhitespaceWriter.NL;
 		}
 		@Override
 		public String getScriptType() {
@@ -66,9 +66,9 @@ public enum Doctype {
 		public String getDoctype(Serialization serialization) {
 			switch(serialization) {
 				case SGML:
-					return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">" + MediaWriter.NL;
+					return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">" + WhitespaceWriter.NL;
 				case XML:
-					return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">" + MediaWriter.NL;
+					return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">" + WhitespaceWriter.NL;
 				default:
 					throw new AssertionError();
 			}
@@ -88,9 +88,9 @@ public enum Doctype {
 		public String getDoctype(Serialization serialization) {
 			switch(serialization) {
 				case SGML:
-					return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">" + MediaWriter.NL;
+					return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">" + WhitespaceWriter.NL;
 				case XML:
-					return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" + MediaWriter.NL;
+					return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" + WhitespaceWriter.NL;
 				default:
 					throw new AssertionError();
 			}
@@ -117,9 +117,9 @@ public enum Doctype {
 		public String getDoctype(Serialization serialization) {
 			switch(serialization) {
 				case SGML:
-					return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">" + MediaWriter.NL;
+					return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">" + WhitespaceWriter.NL;
 				case XML:
-					return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Frameset//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\">" + MediaWriter.NL;
+					return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Frameset//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\">" + WhitespaceWriter.NL;
 				default:
 					throw new AssertionError();
 			}
@@ -147,18 +147,18 @@ public enum Doctype {
 			return "";
 		}
 		@Override
-		public Doctype xmlDeclaration(Serialization serialization, String documentEncoding, Appendable out) {
+		public boolean xmlDeclaration(Serialization serialization, String documentEncoding, Appendable out) {
 			// Do nothing
-			return this;
+			return false;
 		}
 		@Override
 		public String getDoctype(Serialization serialization) {
 			return "";
 		}
 		@Override
-		public Doctype doctype(Serialization serialization, Appendable out) throws IOException {
+		public boolean doctype(Serialization serialization, Appendable out) throws IOException {
 			// Do nothing
-			return this;
+			return false;
 		}
 		@Override
 		public String getScriptType() {
@@ -198,13 +198,18 @@ public enum Doctype {
 		}
 	}
 
-	public Doctype xmlDeclaration(Serialization serialization, String documentEncoding, Appendable out) throws IOException {
+	/**
+	 * @return  {@code true} when declaration written (including trailing {@link WhitespaceWriter#NL})
+	 */
+	public boolean xmlDeclaration(Serialization serialization, String documentEncoding, Appendable out) throws IOException {
 		if(serialization == Serialization.XML && !isUTF8(documentEncoding)) {
 			out.append("<?xml version=\"1.0\" encoding=\"");
 			encodeTextInXhtmlAttribute(documentEncoding, out);
-			out.append("\"?>" + MediaWriter.NL);
+			out.append("\"?>" + WhitespaceWriter.NL);
+			return true;
+		} else {
+			return false;
 		}
-		return this;
 	}
 
 	/**
@@ -214,14 +219,24 @@ public enum Doctype {
 
 	/**
 	 * Appends the <a href="https://www.w3schools.com/tags/tag_doctype.asp">HTML doctype declaration</a> line, if any.
+	 *
+	 * @return  {@code true} when doctype written (including trailing {@link WhitespaceWriter#NL})
 	 */
-	public Doctype doctype(Serialization serialization, Appendable out) throws IOException {
-		out.append(getDoctype(serialization));
-		return this;
+	public boolean doctype(Serialization serialization, Appendable out) throws IOException {
+		String doctype = getDoctype(serialization);
+		if(doctype.isEmpty()) {
+			return false;
+		} else {
+			assert doctype.charAt(doctype.length() - 1) == WhitespaceWriter.NL;
+			out.append(doctype);
+			return true;
+		}
 	}
 
 	/**
 	 * Gets the default script type/language attribute, if any.
+	 *
+	 * @return  The attribute, starting with a space, or {@code ""} for none.
 	 */
 	abstract public String getScriptType();
 
@@ -235,6 +250,8 @@ public enum Doctype {
 
 	/**
 	 * Gets the default style type attribute, if any.
+	 *
+	 * @return  The attribute, starting with a space, or {@code ""} for none.
 	 */
 	abstract public String getStyleType();
 
