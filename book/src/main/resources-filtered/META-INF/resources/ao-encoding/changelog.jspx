@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2021-03-08T06:04:51-06:00"
+		dateModified="2021-03-08T16:23:19-06:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -63,7 +63,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						<code>null</code>, and will simply perform no write.
 					</li>
 					<li>
-						<code>TextWriter.text(Object)</code> now supports <code>Writable</code> that is <code>isFastToString()</code>,
+						<code>TextWriter.text(Object)</code> now supports <code>Writable</code> that <code>isFastToString()</code>,
 						which allows for both optimizations and access to characters for automatic newline and indentation.
 					</li>
 				</ul>
