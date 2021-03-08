@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2021-03-07T06:04:18-06:00"
+		dateModified="2021-03-08T06:04:51-06:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -50,6 +50,18 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				<ul>
 					<li><code>Doctype.xmlDeclaration(…)</code> now returns a boolean whether written.</li>
 					<li><code>Doctype.doctype(…)</code> now returns a boolean whether written.</li>
+					<li>
+						Added <code>TextWriter.text(CharSequence)</code> and <code>TextWriter.text(CharSequence,int,int)</code>,
+						which allow for both optimizations and access to characters for automatic newline and indentation.
+					</li>
+					<li>
+						Added support for <code>Optional</code> to <code>TextWriter.text(Object)</code>.
+						This allows access to characters for automatic newline and indentation.
+					</li>
+					<li>
+						<code>TextWriter.text(char[])</code> and <code>TextWriter.text(char[],int,int)</code> now accept
+						<code>null</code>, and will simply perform no write.
+					</li>
 				</ul>
 				<!-- TODO:
 				<ul>

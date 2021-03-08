@@ -86,8 +86,19 @@ public interface TextWriter<C extends TextWriter<C>> extends WhitespaceWriter<C>
 	 */
 	C text(char[] cbuf, int offset, int len) throws IOException;
 
-	// TODO: text(CharSequence)?
-	// TODO: text(CharSequence, int, int)?
+	/**
+	 * Writes the given text with proper encoding.
+	 *
+	 * @return  {@code this} writer
+	 */
+	C text(CharSequence csq) throws IOException;
+
+	/**
+	 * Writes the given text with proper encoding.
+	 *
+	 * @return  {@code this} writer
+	 */
+	C text(CharSequence csq, int start, int end) throws IOException;
 
 	/**
 	 * Writes the given text with proper encoding.

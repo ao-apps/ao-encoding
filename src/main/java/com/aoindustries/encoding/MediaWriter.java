@@ -30,6 +30,7 @@ import com.aoindustries.util.i18n.MarkupCoercion;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.Optional;
 
 /**
  * Streaming versions of media encoders.
@@ -293,7 +294,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	public MediaWriter text(char[] cbuf) throws IOException {
 		MediaWriter tw = getTextWriter();
 		if(tw != this) textWriter.encoder.writePrefixTo(this);
-		tw.write(cbuf);
+		if(cbuf != null) tw.write(cbuf);
 		if(tw != this) textWriter.encoder.writeSuffixTo(this);
 		return this;
 	}
@@ -312,13 +313,48 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	public MediaWriter text(char[] cbuf, int offset, int len) throws IOException {
 		MediaWriter tw = getTextWriter();
 		if(tw != this) textWriter.encoder.writePrefixTo(this);
-		tw.write(cbuf, offset, len);
+		if(cbuf != null) tw.write(cbuf, offset, len);
 		if(tw != this) textWriter.encoder.writeSuffixTo(this);
 		return this;
 	}
 
-	// TODO: text(CharSequence)?
-	// TODO: text(CharSequence, int, int)?
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * </p>
+	 * <p>
+	 * Does not perform any translation markups.
+	 * </p>
+	 */
+	@Override
+	public MediaWriter text(CharSequence csq) throws IOException {
+		MediaWriter tw = getTextWriter();
+		if(tw != this) textWriter.encoder.writePrefixTo(this);
+		if(csq != null) tw.append(csq);
+		if(tw != this) textWriter.encoder.writeSuffixTo(this);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * </p>
+	 * <p>
+	 * Does not perform any translation markups.
+	 * </p>
+	 */
+	@Override
+	public MediaWriter text(CharSequence csq, int start, int end) throws IOException {
+		MediaWriter tw = getTextWriter();
+		if(tw != this) textWriter.encoder.writePrefixTo(this);
+		if(csq != null) tw.append(csq, start, end);
+		if(tw != this) textWriter.encoder.writeSuffixTo(this);
+		return this;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -334,6 +370,10 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	@SuppressWarnings("UseSpecificCatch")
 	public MediaWriter text(Object text) throws IOException {
+		// Support Optional
+		while(text instanceof Optional) {
+			text = ((Optional<?>)text).orElse(null);
+		}
 		while(text instanceof IOSupplierE<?,?>) {
 			try {
 				text = ((IOSupplierE<?,?>)text).get();
@@ -343,6 +383,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		}
 		if(text instanceof char[]) {
 			return text((char[])text);
+		}
+		if(text instanceof CharSequence) {
+			return text((CharSequence)text);
 		}
 		if(text instanceof MediaWritable) {
 			try {
