@@ -62,6 +62,10 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						<code>TextWriter.text(char[])</code> and <code>TextWriter.text(char[],int,int)</code> now accept
 						<code>null</code>, and will simply perform no write.
 					</li>
+					<li>
+						<code>TextWriter.text(Object)</code> now supports <code>Writable</code> that is <code>isFastToString()</code>,
+						which allows for both optimizations and access to characters for automatic newline and indentation.
+					</li>
 				</ul>
 				<!-- TODO:
 				<ul>

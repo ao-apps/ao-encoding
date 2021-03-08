@@ -23,6 +23,7 @@
 package com.aoindustries.encoding;
 
 import com.aoindustries.io.EncoderWriter;
+import com.aoindustries.io.Writable;
 import com.aoindustries.io.function.IOSupplierE;
 import com.aoindustries.lang.NullArgumentException;
 import com.aoindustries.lang.Throwables;
@@ -386,6 +387,12 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		}
 		if(text instanceof CharSequence) {
 			return text((CharSequence)text);
+		}
+		if(text instanceof Writable) {
+			Writable writable = (Writable)text;
+			if(writable.isFastToString()) {
+				return text(writable.toString());
+			}
 		}
 		if(text instanceof MediaWritable) {
 			try {
