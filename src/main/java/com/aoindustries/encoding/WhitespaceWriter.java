@@ -25,7 +25,7 @@ package com.aoindustries.encoding;
 import java.io.IOException;
 
 /**
- * See <a href="https://html.spec.whatwg.org/#content-models:space-characters">3.2.5 Content models / ASCII whitespace</a>.
+ * See <a href="https://html.spec.whatwg.org/multipage/dom.html#content-models:space-characters">3.2.5 Content models / ASCII whitespace</a>.
  *
  * @param  <C>  The current type of writer.
  *
