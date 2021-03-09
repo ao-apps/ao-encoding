@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-0500"
-		dateModified="2021-03-08T16:23:19-06:00"
+		dateModified="2021-03-08T22:44:48-06:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -66,6 +66,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						<code>TextWriter.text(Object)</code> now supports <code>Writable</code> that <code>isFastToString()</code>,
 						which allows for both optimizations and access to characters for automatic newline and indentation.
 					</li>
+					<li><code>MediaType.toString()</code> now returns the content type.</li>
 				</ul>
 				<!-- TODO:
 				<ul>
