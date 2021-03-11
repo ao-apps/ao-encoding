@@ -25,6 +25,8 @@ package com.aoindustries.encoding;
 import java.io.IOException;
 
 /**
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @author  AO Industries,Inc.
  */
 @FunctionalInterface

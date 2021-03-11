@@ -110,12 +110,16 @@ public interface TextWriter<C extends TextWriter<C>> extends WhitespaceWriter<C>
 	/**
 	 * Writes the given text with proper encoding.
 	 *
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
+	 *
 	 * @return  {@code this} writer
 	 */
 	<Ex extends Throwable> C text(IOSupplierE<?, Ex> text) throws IOException, Ex;
 
 	/**
 	 * Writes the given text with proper encoding.
+	 *
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
 	 *
 	 * @return  {@code this} writer
 	 */

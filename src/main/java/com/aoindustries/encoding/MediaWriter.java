@@ -111,29 +111,29 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	/**
 	 * Is indenting enabled?
 	 */
-	// Matches Document.indent
+	// Matches AnyDocument.indent
 	private boolean indent;
 
 	/**
 	 * Current indentation level.
 	 */
-	// Matches Document.depth
+	// Matches AnyDocument.depth
 	private int depth;
 
-	// Matches Document.nl()
+	// Matches AnyDocument.nl()
 	@Override
 	public MediaWriter nl() throws IOException {
 		out.append(NL);
 		return this;
 	}
 
-	// Matches Document.nli()
+	// Matches AnyDocument.nli()
 	@Override
 	public MediaWriter nli() throws IOException {
 		return nli(0);
 	}
 
-	// Matches Document.nli(int)
+	// Matches AnyDocument.nli(int)
 	@Override
 	public MediaWriter nli(int depthOffset) throws IOException {
 		if(getIndent()) {
@@ -144,13 +144,13 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		return this;
 	}
 
-	// Matches Document.indent()
+	// Matches AnyDocument.indent()
 	@Override
 	public MediaWriter indent() throws IOException {
 		return indent(0);
 	}
 
-	// Matches Document.indent(int)
+	// Matches AnyDocument.indent(int)
 	@Override
 	public MediaWriter indent(int depthOffset) throws IOException {
 		if(getIndent()) {
@@ -159,26 +159,26 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		return this;
 	}
 
-	// Matches Document.getIndent()
+	// Matches AnyDocument.getIndent()
 	@Override
 	public boolean getIndent() {
 		return indent;
 	}
 
-	// Matches Document.setIndent(int)
+	// Matches AnyDocument.setIndent(int)
 	@Override
 	public MediaWriter setIndent(boolean indent) {
 		this.indent = indent;
 		return this;
 	}
 
-	// Matches Document.getDepth()
+	// Matches AnyDocument.getDepth()
 	@Override
 	public int getDepth() {
 		return depth;
 	}
 
-	// Matches Document.setDepth(int)
+	// Matches AnyDocument.setDepth(int)
 	@Override
 	public MediaWriter setDepth(int depth) {
 		if(depth < 0) throw new IllegalArgumentException("depth < 0: " + depth);
@@ -186,7 +186,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		return this;
 	}
 
-	// Matches Document.incDepth()
+	// Matches AnyDocument.incDepth()
 	@Override
 	public MediaWriter incDepth() {
 		if(getIndent()) {
@@ -197,7 +197,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		return this;
 	}
 
-	// Matches Document.decDepth()
+	// Matches AnyDocument.decDepth()
 	@Override
 	public MediaWriter decDepth() {
 		if(getIndent()) {
@@ -208,14 +208,14 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		return this;
 	}
 
-	// Matches Document.sp()
+	// Matches AnyDocument.sp()
 	@Override
 	public MediaWriter sp() throws IOException {
 		out.append(SPACE);
 		return this;
 	}
 
-	// Matches Document.sp(int)
+	// Matches AnyDocument.sp(int)
 	@Override
 	public MediaWriter sp(int count) throws IOException {
 		WriterUtil.sp(out, count);
@@ -375,9 +375,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		while(text instanceof Optional) {
 			text = ((Optional<?>)text).orElse(null);
 		}
-		while(text instanceof IOSupplierE<?,?>) {
+		while(text instanceof IOSupplierE<?, ?>) {
 			try {
-				text = ((IOSupplierE<?,?>)text).get();
+				text = ((IOSupplierE<?, ?>)text).get();
 			} catch(Throwable t) {
 				throw Throwables.wrap(t, IOException.class, IOException::new);
 			}
@@ -437,9 +437,11 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * If the string is translated, comments will be added giving the
 	 * translation lookup id to aid in translation of server-translated values.
 	 * </p>
+	 *
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
 	 */
 	@Override
-	public <Ex extends Throwable> MediaWriter text(IOSupplierE<?,Ex> text) throws IOException, Ex {
+	public <Ex extends Throwable> MediaWriter text(IOSupplierE<?, Ex> text) throws IOException, Ex {
 		return text((text == null) ? null : text.get());
 	}
 
@@ -452,6 +454,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * <p>
 	 * Does not perform any translation markups.
 	 * </p>
+	 *
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
 	 */
 	@Override
 	public <Ex extends Throwable> MediaWriter text(MediaWritable<Ex> text) throws IOException, Ex {

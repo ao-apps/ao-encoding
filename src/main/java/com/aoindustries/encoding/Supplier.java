@@ -26,6 +26,8 @@ import com.aoindustries.io.function.IOSupplierE;
 import java.io.IOException;
 
 /**
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @author  AO Industries, Inc.
  *
  * @deprecated  Please use {@link IOSupplierE} instead.
