@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2021-03-08T23:14:05-06:00"
+		dateModified="2021-05-25T18:54:28-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -47,15 +47,16 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
 			>
-				<!-- TODO:
 				<ul>
+					<li>Updated dependencies.</li>
+					<!-- TODO:
 					<li>
 						When a value is fastToString, select optimal quoting type based on content, which might be no quotes.
 						Use this capability from ao:out tag in ao-taglib to simplify the output under common cases, while still
 						supporting the full encoding capability.
 					</li>
+					-->
 				</ul>
-				-->
 			</changelog:release>
 		</c:if>
 
