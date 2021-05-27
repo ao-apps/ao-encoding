@@ -33,6 +33,13 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 	<packaging>bundle</packaging>
 
 	<properties>
+		<!-- Java 1.8 -->
+		<javase.version>1.8</javase.version>
+		<javase.release>8</javase.release>
+		<javadoc.link.javase>${javadoc.link.javase.8}</javadoc.link.javase>
+		<!-- This must be set in your ~/.m2/settings.xml when building with JDK < 9 -->
+		<javase.bootclasspath>${javase.bootclasspath.8}</javase.bootclasspath>
+
 		<javadoc.modules><![CDATA[<div style="float:left; margin: 0 1em">
 			<h2 style="margin-top: 0em">Modules</h2>
 			<ul>
