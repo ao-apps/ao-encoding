@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -39,7 +39,7 @@ public final class ApplicationResources extends EditableResourceBundle {
 	);
 
 	static File getSourceFile(String filename) {
-		return new File(System.getProperty("user.home") + "/maven2/ao/ao-encoding/src/main/resources/com/aoindustries/encoding", filename);
+		return new File(System.getProperty("user.home") + "/maven2/ao/oss/encoding/src/main/resources/com/aoindustries/encoding", filename);
 	}
 
 	public ApplicationResources() {

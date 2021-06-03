@@ -22,7 +22,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 -->
 <jsp:root
-	xmlns:ao="https://aoindustries.com/ao-taglib/"
+	xmlns:ao="https://oss.aoapps.com/taglib/"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:changelog="https://semanticcms.com/changelog/taglib/"
 	xmlns:core="https://semanticcms.com/core/taglib/"
@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2021-05-25T18:54:28-05:00"
+		dateModified="2021-05-31T01:04:26-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -45,10 +45,11 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				version="@{project.version}"
 				groupId="@{project.groupId}"
 				artifactId="@{documented.artifactId}"
+				repository="https://s01.oss.sonatype.org/content/repositories/snapshots/"
 				scmUrl="@{project.scm.url}"
 			>
 				<ul>
-					<li>Updated dependencies.</li>
+					<li>Maven artifact relocated from <code>com.aoindustries:ao-encoding</code> to <code>com.aoapps:ao-encoding</code>.</li>
 					<!-- TODO:
 					<li>
 						When a value is fastToString, select optimal quoting type based on content, which might be no quotes.
@@ -64,7 +65,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="4.0.0"
 			datePublished="2021-03-08T23:14:05-06:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -95,7 +96,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="3.6.0"
 			datePublished="2021-03-05T04:12:56-06:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -121,7 +122,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="3.5.1"
 			datePublished="2021-02-28T16:12:50-06:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -138,7 +139,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="3.5.0"
 			datePublished="2021-02-25T11:58:29-06:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -151,7 +152,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="3.4.0"
 			datePublished="2021-02-21T03:18:48-06:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -164,7 +165,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="3.3.0"
 			datePublished="2021-02-14T07:22:49-06:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -172,13 +173,13 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				<li>
 					<code>Coercion</code> moved out of this project:
 					<ol>
-						<li>Non-localized parts moved to <core:link book="/ao-lang" page="/index.jspx" />.</li>
+						<li>Non-localized parts moved to <core:link book="/lang" page="/index.jspx" />.</li>
 						<li>
-							Localized parts moved to <core:link book="/aocode-public" page="/index.jspx" /> and
+							Localized parts moved to <core:link book="/hodgepodge" page="/index.jspx" /> and
 							renamed to <code>MarkupCoercion</code>.
 						</li>
 						<li>New pluggable <code>CoercionOptimizer</code> to allow this decoupling.</li>
-						<li>Servlet-specific optimizations moved to <core:link book="/ao-servlet-util" page="/index.jspx" />.</li>
+						<li>Servlet-specific optimizations moved to <core:link book="/servlet-util" page="/index.jspx" />.</li>
 					</ol>
 				</li>
 			</ul>
@@ -188,7 +189,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="3.2.1"
 			datePublished="2020-12-13T02:06:30-06:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -201,7 +202,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="3.2.0"
 			datePublished="2020-12-05T11:53:06-06:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -243,7 +244,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="3.1.0"
 			datePublished="2020-11-17T22:25:27-06:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -251,10 +252,10 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				<li>
 					<p>
 						Moved a few date/time methods from <ao:a href="apidocs/com/aoindustries/encoding/ChainWriter.html">ChainWriter</ao:a>
-						to <core:link book="/aoweb-struts/core" page="/index.jspx" />.  This avoids adding a dependency
-						on the new <core:link book="/ao-sql" page="/index.jspx" /> project that has been
-						split from <core:link book="/ao-lang" page="/index.jspx" />
-						and <core:link book="/aocode-public" page="/index.jspx" />:
+						to <ao:a href="https://aoindustries.com/aoweb-struts/core/">AOWeb Struts Core</ao:a>.  This avoids adding a dependency
+						on the new <core:link book="/sql" page="/index.jspx" /> project that has been
+						split from <core:link book="/lang" page="/index.jspx" />
+						and <core:link book="/hodgepodge" page="/index.jspx" />:
 					</p>
 					<ol>
 						<li>Moved <code>ChainWriter.writeDateJavaScript(…)</code> to <code>DateTag</code>.</li>
@@ -275,7 +276,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="3.0.0"
 			datePublished="2020-03-26T17:15:43-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -357,7 +358,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="2.1.0"
 			datePublished="2019-10-10T14:28:40-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -378,7 +379,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="2.0.0"
 			datePublished="2019-10-01T21:09:58-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -399,7 +400,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.8.0"
 			datePublished="2019-08-11T12:44:31-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -408,7 +409,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					Added variations of the javascript date and time printing in <code>ChainWriter</code>
 					supporting dates and times represented by <code>long</code> and <code>Long</code>.
 				</li>
-				<li>Updated for compatibility with <core:link book="/aocode-public" page="/changelog.jspx" element="release-notes-3.1.0">aocode-public-3.1.0</core:link>.</li>
+				<li>Updated for compatibility with <core:link book="/hodgepodge" page="/changelog.jspx" element="release-notes-3.1.0">aocode-public-3.1.0</core:link>.</li>
 			</ul>
 		</changelog:release>
 
@@ -416,7 +417,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.7.1"
 			datePublished="2019-06-19T06:31:51-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -434,7 +435,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.7.0"
 			datePublished="2019-04-19T02:16:34-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -451,7 +452,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.6.0"
 			datePublished="2017-07-19T19:53:00-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -480,12 +481,12 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.5.1"
 			datePublished="2016-11-15T11:19:36-06:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
 			<ul>
-				<li>New <core:link book="/ao-oss-parent" page="/index.jspx" /> POM to simplify <code>pom.xml</code> files.</li>
+				<li>New <core:link book="/parent" page="/index.jspx" /> POM to simplify <code>pom.xml</code> files.</li>
 				<li>Project documentation moved to per-project book in <ao:a href="https://semanticcms.com/">SemanticCMS</ao:a> format.</li>
 				<li>Added changelog as top-level project link.</li>
 				<li>Added support for XML DOM Node in toString type coercion.</li>
@@ -496,7 +497,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.5.0"
 			datePublished="2016-10-20T15:53:00-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -511,7 +512,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.4.1"
 			datePublished="2016-10-11T21:28:00-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -524,7 +525,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.4.0"
 			datePublished="2016-10-04T19:39:00-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -540,7 +541,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.3.1"
 			datePublished="2016-09-02T16:33:00-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -553,7 +554,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.3"
 			datePublished="2016-08-28T20:23:00-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -566,7 +567,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.2"
 			datePublished="2016-08-19T14:12:00-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -579,7 +580,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.1"
 			datePublished="2016-08-07T23:21:00-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>
@@ -592,7 +593,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			projectName="@{documented.name}"
 			version="1.0"
 			datePublished="2016-08-05T16:14:00-05:00"
-			groupId="@{project.groupId}"
+			groupId="com.aoindustries"
 			artifactId="@{documented.artifactId}"
 			scmUrl="@{project.scm.url}"
 		>

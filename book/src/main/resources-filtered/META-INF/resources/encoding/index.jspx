@@ -22,7 +22,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 -->
 <jsp:root
-	xmlns:ao="https://aoindustries.com/ao-taglib/"
+	xmlns:ao="https://oss.aoapps.com/taglib/"
 	xmlns:core="https://semanticcms.com/core/taglib/"
 	xmlns:jsp="http://java.sun.com/JSP/Page"
 	xmlns:section="https://semanticcms.com/section/taglib/"
@@ -34,12 +34,12 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		title="@{documented.name}"
 		description="@{documented.description}"
 		datePublished="2016-10-16T22:58:00-05:00"
-		dateModified="2020-11-19T01:45:35-06:00"
+		dateModified="2021-05-31T01:25:50-05:00"
 	>
 		<core:child page="changelog.jspx" />
 		<core:child page="apidocs/index.jspx" />
-		<core:child book="/ao-encoding/servlet" page="/index.jspx" />
-		<core:child book="/ao-encoding/taglib" page="/index.jspx" />
+		<core:child book="/encoding/servlet" page="/index.jspx" />
+		<core:child book="/encoding/taglib" page="/index.jspx" />
 		<header>
 			<ao:include
 				page="/ao-badges/badges.inc.jspx"
@@ -65,8 +65,8 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		</section:nav>
 		<section:section label="Modules">
 			<ul>
-				<li><core:link book="/ao-encoding/servlet" page="/index.jspx" /></li>
-				<li><core:link book="/ao-encoding/taglib" page="/index.jspx" /></li>
+				<li><core:link book="/encoding/servlet" page="/index.jspx" /></li>
+				<li><core:link book="/encoding/taglib" page="/index.jspx" /></li>
 			</ul>
 		</section:section>
 	</core:page>
