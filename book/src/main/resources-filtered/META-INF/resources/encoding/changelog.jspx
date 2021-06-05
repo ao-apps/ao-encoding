@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2021-05-31T01:04:26-05:00"
+		dateModified="2021-06-03T22:53:21-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -50,6 +50,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			>
 				<ul>
 					<li>Maven artifact relocated from <code>com.aoindustries:ao-encoding</code> to <code>com.aoapps:ao-encoding</code>.</li>
+					<li>Package renamed from <code>com.aoindustries.encoding</code> to <code>com.aoapps.encoding</code>.</li>
 					<!-- TODO:
 					<li>
 						When a value is fastToString, select optimal quoting type based on content, which might be no quotes.
@@ -251,7 +252,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 			<ul>
 				<li>
 					<p>
-						Moved a few date/time methods from <ao:a href="apidocs/com/aoindustries/encoding/ChainWriter.html">ChainWriter</ao:a>
+						Moved a few date/time methods from <ao:a href="apidocs/com/aoapps/encoding/ChainWriter.html">ChainWriter</ao:a>
 						to <ao:a href="https://aoindustries.com/aoweb-struts/core/">AOWeb Struts Core</ao:a>.  This avoids adding a dependency
 						on the new <core:link book="/sql" page="/index.jspx" /> project that has been
 						split from <core:link book="/lang" page="/index.jspx" />
@@ -265,7 +266,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					<p>
 						Although technically a breaking change, we are only incrementing the minor version number.
 						This is legacy code that is not central to this encoding API and is not widely used.
-						In fact, <ao:a href="apidocs/com/aoindustries/encoding/ChainWriter.html">ChainWriter</ao:a>
+						In fact, <ao:a href="apidocs/com/aoapps/encoding/ChainWriter.html">ChainWriter</ao:a>
 						should probably not be part of this API at all, but it has no better home at this time.
 					</p>
 				</li>
@@ -291,7 +292,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 					This should eliminate validator warnings when used as HTML.
 				</li>
 				<li>
-					<ao:a href="apidocs/com/aoindustries/encoding/ChainWriter.html">ChainWriter</ao:a>
+					<ao:a href="apidocs/com/aoapps/encoding/ChainWriter.html">ChainWriter</ao:a>
 					no longer writes <![CDATA[&amp;#160;]]> as a placeholder for <code>null</code>
 					values.  This technique was used for ancient browsers that would not display
 					completely empty table cells.  This has not been the case for a long time.
@@ -364,11 +365,11 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		>
 			<ul>
 				<li>
-					New method <ao:a href="apidocs/com/aoindustries/encoding/Coercion.html#trim-java.lang.Object-">Coercion.trim(Object)</ao:a>
+					New method <ao:a href="apidocs/com/aoapps/encoding/Coercion.html#trim-java.lang.Object-">Coercion.trim(Object)</ao:a>
 					that returns the provided value trimmed.
 				</li>
 				<li>
-					New method <ao:a href="apidocs/com/aoindustries/encoding/Coercion.html#trimNullIfEmpty-java.lang.Object-">Coercion.trimNullIfEmpty(Object)</ao:a>
+					New method <ao:a href="apidocs/com/aoapps/encoding/Coercion.html#trimNullIfEmpty-java.lang.Object-">Coercion.trimNullIfEmpty(Object)</ao:a>
 					that returns the provided value trimmed, or <code>null</code> if the value is empty after trimming.
 				</li>
 				<li>Added <code>application/javascript</code> as an alias for <code>text/javascript</code>.</li>
