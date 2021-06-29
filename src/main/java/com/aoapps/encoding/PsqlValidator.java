@@ -26,6 +26,7 @@ import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ResourceBundle;
 
 /**
  * This implementation is based on <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
@@ -34,7 +35,7 @@ import java.io.Writer;
  */
 public class PsqlValidator extends MediaValidator {
 
-	static final Resources RESOURCES = Resources.getResources(PsqlValidator.class);
+	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, PsqlValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.

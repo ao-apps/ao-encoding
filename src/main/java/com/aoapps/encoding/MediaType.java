@@ -27,6 +27,7 @@ import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.ContentType;
 import com.aoapps.lang.io.LocalizedUnsupportedEncodingException;
 import java.io.UnsupportedEncodingException;
+import java.util.ResourceBundle;
 
 /**
  * Supported content types.
@@ -207,7 +208,7 @@ public enum MediaType {
 		}
 	};
 
-	private static final Resources RESOURCES = Resources.getResources(MediaType.class);
+	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MediaType.class);
 
 	private final String contentType;
 
@@ -223,7 +224,7 @@ public enum MediaType {
 		return getContentType();
 	}
 
-	
+
 	abstract boolean isUsedFor(String contentType);
 
 	/**
@@ -242,7 +243,7 @@ public enum MediaType {
 
 	/**
 	 * Gets the media type for the given name using case-insensitive matching.
-	 * 
+	 *
 	 * @return  the <code>MediaType</code> or <code>null</code> if not found.
 	 */
 	public static MediaType getMediaTypeByName(String name) {

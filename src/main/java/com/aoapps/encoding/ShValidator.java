@@ -26,6 +26,7 @@ import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ResourceBundle;
 
 /**
  * Although shell scripts can potentially parse and execute with lots of unprintable and binary values,
@@ -41,7 +42,7 @@ import java.io.Writer;
  */
 public class ShValidator extends MediaValidator {
 
-	static final Resources RESOURCES = Resources.getResources(ShValidator.class);
+	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ShValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.

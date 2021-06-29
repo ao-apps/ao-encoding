@@ -26,6 +26,7 @@ import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ResourceBundle;
 
 /**
  * This implementation is based on <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
@@ -34,7 +35,7 @@ import java.io.Writer;
  */
 public class MysqlValidator extends MediaValidator {
 
-	static final Resources RESOURCES = Resources.getResources(MysqlValidator.class);
+	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MysqlValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.

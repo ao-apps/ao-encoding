@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-encoding.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.encoding;
+package com.aoapps.encoding.i18n;
 
 import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
 import java.util.Locale;

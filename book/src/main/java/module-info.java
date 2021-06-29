@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,29 +20,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-encoding.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.encoding;
-
-import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
-import com.aoapps.hodgepodge.i18n.EditableResourceBundleSet;
-import java.io.File;
-import java.util.Locale;
-
-/**
- * @author  AO Industries, Inc.
- */
-public final class ApplicationResources extends EditableResourceBundle {
-
-	static final EditableResourceBundleSet bundleSet = new EditableResourceBundleSet(
-		ApplicationResources.class,
-		Locale.ROOT,
-		Locale.JAPANESE
-	);
-
-	static File getSourceFile(String filename) {
-		return new File(System.getProperty("user.home") + "/maven2/ao/oss/encoding/src/main/resources/com/aoapps/encoding", filename);
-	}
-
-	public ApplicationResources() {
-		super(Locale.ROOT, bundleSet, getSourceFile("ApplicationResources.properties"));
-	}
+module com.aoapps.encoding.book {
+	// Direct
+	requires com.aoapps.badges; // <groupId>com.aoapps</groupId><artifactId>ao-badges</artifactId>
+	requires com.aoapps.taglib; // <groupId>com.aoapps</groupId><artifactId>ao-taglib</artifactId>
+	requires com.semanticcms.changelog.taglib; // <groupId>com.semanticcms</groupId><artifactId>semanticcms-changelog-taglib</artifactId>
+	requires com.semanticcms.core.taglib; // <groupId>com.semanticcms</groupId><artifactId>semanticcms-core-taglib</artifactId>
+	requires com.semanticcms.section.taglib; // <groupId>com.semanticcms</groupId><artifactId>semanticcms-section-taglib</artifactId>
+	requires taglibs.standard.spec; // <groupId>org.apache.taglibs</groupId><artifactId>taglibs-standard-spec</artifactId>
 }

@@ -29,6 +29,7 @@ import com.aoapps.lang.io.LocalizedUnsupportedEncodingException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.ResourceBundle;
 
 /**
  * <p>
@@ -46,7 +47,7 @@ import java.io.Writer;
  */
 abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 
-	private static final Resources RESOURCES = Resources.getResources(MediaEncoder.class);
+	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MediaEncoder.class);
 
 	/**
 	 * Gets the media encoder for the requested types or <code>null</code> if

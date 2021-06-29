@@ -26,6 +26,7 @@ import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ResourceBundle;
 
 /**
  * Makes sure that all data going through this writer has the correct characters
@@ -38,7 +39,7 @@ import java.io.Writer;
  */
 public class UrlValidator extends MediaValidator {
 
-	private static final Resources RESOURCES = Resources.getResources(UrlValidator.class);
+	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, UrlValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.
@@ -76,7 +77,7 @@ public class UrlValidator extends MediaValidator {
 			/*
 			 * Already percent-encoded
 			 */
-			// 
+			//
 			case '%' :
 
 			/*

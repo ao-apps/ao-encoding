@@ -30,6 +30,7 @@ import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,7 +43,7 @@ abstract public class MediaValidator extends FilterWriter implements ValidMediaF
 
 	private static final Logger logger = Logger.getLogger(MediaValidator.class.getName());
 
-	private static final Resources RESOURCES = Resources.getResources(MediaValidator.class);
+	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MediaValidator.class);
 
 	/**
 	 * Gets the media validator for the given type.  If the given writer is

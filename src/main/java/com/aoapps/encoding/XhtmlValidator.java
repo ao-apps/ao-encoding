@@ -26,6 +26,7 @@ import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ResourceBundle;
 
 /**
  * <p>
@@ -40,7 +41,7 @@ import java.io.Writer;
  */
 public class XhtmlValidator extends MediaValidator {
 
-	private static final Resources RESOURCES = Resources.getResources(XhtmlValidator.class);
+	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, XhtmlValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.
