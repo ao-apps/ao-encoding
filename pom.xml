@@ -50,7 +50,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				<li><a target="${javadoc.target}" href="https://oss.aoapps.com/encoding/taglib/">AO Encoding Taglib</a></li>
 			</ul>
 		</div>]]></javadoc.modules>
-		<!-- SonarCloud.io -->
+		<!-- SonarQube -->
 		<sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
 		<sonar.organization>aoindustries</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
