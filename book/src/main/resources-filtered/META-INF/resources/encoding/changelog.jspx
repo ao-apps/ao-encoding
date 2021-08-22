@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2021-07-04T12:01:13-05:00"
+		dateModified="2021-08-22T09:46:18-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -49,6 +49,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				scmUrl="@{project.scm.url}"
 			>
 				<ul>
+					<li>Fixed NPE in streaming text encoding in <code>MediaWriter</code>.</li>
 					<!-- TODO:
 					<li>
 						When a value is fastToString, select optimal quoting type based on content, which might be no quotes.

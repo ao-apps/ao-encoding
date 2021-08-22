@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * Streaming versions of media encoders.
- * 
+ *
  * @see  MediaEncoder
  *
  * @author  AO Industries, Inc.
@@ -235,9 +235,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter nbsp() throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) textWriter.encoder.writePrefixTo(this);
+		if(tw != this) tw.encoder.writePrefixTo(this);
 		tw.append(NBSP);
-		if(tw != this) textWriter.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this);
 		return this;
 	}
 
@@ -254,9 +254,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter nbsp(int count) throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) textWriter.encoder.writePrefixTo(this);
+		if(tw != this) tw.encoder.writePrefixTo(this);
 		WriterUtil.nbsp(tw, count);
-		if(tw != this) textWriter.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this);
 		return this;
 	}
 
@@ -273,9 +273,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter text(char ch) throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) textWriter.encoder.writePrefixTo(this);
+		if(tw != this) tw.encoder.writePrefixTo(this);
 		tw.append(ch);
-		if(tw != this) textWriter.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this);
 		return this;
 	}
 
@@ -294,9 +294,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter text(char[] cbuf) throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) textWriter.encoder.writePrefixTo(this);
+		if(tw != this) tw.encoder.writePrefixTo(this);
 		if(cbuf != null) tw.write(cbuf);
-		if(tw != this) textWriter.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this);
 		return this;
 	}
 
@@ -313,9 +313,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter text(char[] cbuf, int offset, int len) throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) textWriter.encoder.writePrefixTo(this);
+		if(tw != this) tw.encoder.writePrefixTo(this);
 		if(cbuf != null) tw.write(cbuf, offset, len);
-		if(tw != this) textWriter.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this);
 		return this;
 	}
 
@@ -332,9 +332,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter text(CharSequence csq) throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) textWriter.encoder.writePrefixTo(this);
+		if(tw != this) tw.encoder.writePrefixTo(this);
 		if(csq != null) tw.append(csq);
-		if(tw != this) textWriter.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this);
 		return this;
 	}
 
@@ -351,9 +351,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter text(CharSequence csq, int start, int end) throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) textWriter.encoder.writePrefixTo(this);
+		if(tw != this) tw.encoder.writePrefixTo(this);
 		if(csq != null) tw.append(csq, start, end);
-		if(tw != this) textWriter.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this);
 		return this;
 	}
 
@@ -480,7 +480,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter text() throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) textWriter.encoder.writePrefixTo(this);
+		if(tw != this) tw.encoder.writePrefixTo(this);
 		return new MediaWriter(
 			tw.encodingContext,
 			tw.encoder,
@@ -488,7 +488,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		) {
 			@Override
 			public void close() throws IOException {
-				if(tw != this) textWriter.encoder.writeSuffixTo(this);
+				if(tw != this) tw.encoder.writeSuffixTo(this);
 			}
 		};
 	}
