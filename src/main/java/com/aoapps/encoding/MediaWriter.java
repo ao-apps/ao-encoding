@@ -123,7 +123,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	// Matches AnyDocument.nl()
 	@Override
 	public MediaWriter nl() throws IOException {
-		out.append(NL);
+		encoder.append(NL, out);
 		return this;
 	}
 
@@ -137,9 +137,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter nli(int depthOffset) throws IOException {
 		if(getIndent()) {
-			WriterUtil.nli(out, getDepth() + depthOffset);
+			WriterUtil.nli(encoder, out, getDepth() + depthOffset);
 		} else {
-			out.append(NL);
+			encoder.append(NL, out);
 		}
 		return this;
 	}
@@ -154,7 +154,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter indent(int depthOffset) throws IOException {
 		if(getIndent()) {
-			WriterUtil.indent(out, getDepth() + depthOffset);
+			WriterUtil.indent(encoder, out, getDepth() + depthOffset);
 		}
 		return this;
 	}
@@ -211,14 +211,14 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	// Matches AnyDocument.sp()
 	@Override
 	public MediaWriter sp() throws IOException {
-		out.append(SPACE);
+		encoder.append(SPACE, out);
 		return this;
 	}
 
 	// Matches AnyDocument.sp(int)
 	@Override
 	public MediaWriter sp(int count) throws IOException {
-		WriterUtil.sp(out, count);
+		WriterUtil.sp(encoder, out, count);
 		return this;
 	}
 

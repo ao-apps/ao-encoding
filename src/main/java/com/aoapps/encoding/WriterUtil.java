@@ -22,13 +22,14 @@
  */
 package com.aoapps.encoding;
 
+import com.aoapps.lang.io.Encoder;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Arrays;
 
 /**
  * Helpers for implementing {@link WhitespaceWriter}.
- * 
+ *
  * @see  WhitespaceWriter
  *
  * @author  AO Industries, Inc.
@@ -113,6 +114,36 @@ public class WriterUtil {
 	}
 
 	/**
+	 * Writes a {@link WhitespaceWriter#NL} followed by any number of {@link WhitespaceWriter#INDENT}
+	 * through the given encoder.
+	 *
+	 * @see WhitespaceWriter#nli(int)
+	 */
+	public static void nli(Encoder encoder, Writer out, int indent) throws IOException {
+		if(indent > 0) {
+			int count = indent + 1; // Add one for the initial newline
+			int block = Math.min(count, BLOCK_SIZE);
+			assert block > 1;
+			encoder.write(NLI_CHARS, 0, block, out);
+			count -= block;
+			assert count >= 0;
+			while(count > 0) {
+				if(count == 1) {
+					encoder.append(WhitespaceWriter.INDENT, out);
+					break;
+				} else {
+					block = Math.min(count, BLOCK_SIZE);
+					encoder.write(INDENT_CHARS, 0, block, out);
+					count -= block;
+					assert count >= 0;
+				}
+			}
+		} else {
+			encoder.append(WhitespaceWriter.NL, out);
+		}
+	}
+
+	/**
 	 * Writes any number of {@link WhitespaceWriter#INDENT}.
 	 *
 	 * @see WhitespaceWriter#indent(int)
@@ -125,6 +156,26 @@ public class WriterUtil {
 			} else {
 				int block = Math.min(count, BLOCK_SIZE);
 				out.write(INDENT_CHARS, 0, block);
+				count -= block;
+				assert count >= 0;
+			}
+		}
+	}
+
+	/**
+	 * Writes any number of {@link WhitespaceWriter#INDENT}
+	 * through the given encoder.
+	 *
+	 * @see WhitespaceWriter#indent(int)
+	 */
+	public static void indent(Encoder encoder, Writer out, int count) throws IOException {
+		while(count > 0) {
+			if(count == 1) {
+				encoder.append(WhitespaceWriter.INDENT, out);
+				break;
+			} else {
+				int block = Math.min(count, BLOCK_SIZE);
+				encoder.write(INDENT_CHARS, 0, block, out);
 				count -= block;
 				assert count >= 0;
 			}
@@ -151,6 +202,26 @@ public class WriterUtil {
 	}
 
 	/**
+	 * Writes any number of {@link WhitespaceWriter#SPACE}
+	 * through the given encoder.
+	 *
+	 * @see WhitespaceWriter#sp(int)
+	 */
+	public static void sp(Encoder encoder, Writer out, int count) throws IOException {
+		while(count > 0) {
+			if(count == 1) {
+				encoder.append(WhitespaceWriter.SPACE, out);
+				break;
+			} else {
+				int block = Math.min(count, BLOCK_SIZE);
+				encoder.write(SPACE_CHARS, 0, block, out);
+				count -= block;
+				assert count >= 0;
+			}
+		}
+	}
+
+	/**
 	 * Writes any number of {@link TextWriter#NBSP}.
 	 *
 	 * @see TextWriter#nbsp(int)
@@ -163,6 +234,26 @@ public class WriterUtil {
 			} else {
 				int block = Math.min(count, BLOCK_SIZE);
 				out.write(NBSP_CHARS, 0, block);
+				count -= block;
+				assert count >= 0;
+			}
+		}
+	}
+
+	/**
+	 * Writes any number of {@link TextWriter#NBSP}
+	 * through the given encoder.
+	 *
+	 * @see TextWriter#nbsp(int)
+	 */
+	public static void nbsp(Encoder encoder, Writer out, int count) throws IOException {
+		while(count > 0) {
+			if(count == 1) {
+				encoder.append(TextWriter.NBSP, out);
+				break;
+			} else {
+				int block = Math.min(count, BLOCK_SIZE);
+				encoder.write(NBSP_CHARS, 0, block, out);
 				count -= block;
 				assert count >= 0;
 			}

@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2021-08-22T10:49:36-05:00"
+		dateModified="2021-09-04T01:52:15-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -56,6 +56,10 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						supporting the full encoding capability.
 					</li>
 					-->
+					<li>
+						<code>MediaWriter</code> now correctly runs newlines, indents, and spaces through the encoder.
+						Previously, it was bypassing the encoder and writing directly.
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
