@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2021-09-04T02:01:12-05:00"
+		dateModified="2021-09-09T01:33:34-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -295,7 +295,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				<li>
 					<p>
 						Moved a few date/time methods from <ao:a href="apidocs/com.aoapps.encoding/com/aoapps/encoding/ChainWriter.html">ChainWriter</ao:a>
-						to <ao:a href="https://aoindustries.com/aoweb-struts/core/">AOWeb Struts Core</ao:a>.  This avoids adding a dependency
+						to <ao:a href="https://aoindustries.com/aoweb-struts/">AOWeb Struts</ao:a>.  This avoids adding a dependency
 						on the new <core:link book="/sql" page="/index.jspx" /> project that has been
 						split from <core:link book="/lang" page="/index.jspx" />
 						and <core:link book="/hodgepodge" page="/index.jspx" />:
