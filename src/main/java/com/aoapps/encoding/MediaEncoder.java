@@ -47,7 +47,7 @@ import java.util.ResourceBundle;
  */
 abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 
-	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MediaEncoder.class);
+	private static final Resources RESOURCES = Resources.getResources(MediaEncoder.class, ResourceBundle::getBundle);
 
 	/**
 	 * Gets the media encoder for the requested types or <code>null</code> if

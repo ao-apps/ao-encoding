@@ -41,7 +41,7 @@ import java.util.ResourceBundle;
  */
 public class XhtmlAttributeValidator extends MediaValidator {
 
-	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, XhtmlAttributeValidator.class);
+	private static final Resources RESOURCES = Resources.getResources(XhtmlAttributeValidator.class, ResourceBundle::getBundle);
 
 	/**
 	 * Checks one character, throws IOException if invalid.
