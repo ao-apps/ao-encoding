@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
  */
 public class ShValidator extends MediaValidator {
 
-	static final Resources RESOURCES = Resources.getResources(ShValidator.class, ResourceBundle::getBundle);
+	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ShValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.

@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  */
 public class MysqlValidator extends MediaValidator {
 
-	static final Resources RESOURCES = Resources.getResources(MysqlValidator.class, ResourceBundle::getBundle);
+	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MysqlValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.

@@ -208,7 +208,7 @@ public enum MediaType {
 		}
 	};
 
-	private static final Resources RESOURCES = Resources.getResources(MediaType.class, ResourceBundle::getBundle);
+	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MediaType.class);
 
 	private final String contentType;
 

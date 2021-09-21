@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  */
 public class PsqlValidator extends MediaValidator {
 
-	static final Resources RESOURCES = Resources.getResources(PsqlValidator.class, ResourceBundle::getBundle);
+	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, PsqlValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.

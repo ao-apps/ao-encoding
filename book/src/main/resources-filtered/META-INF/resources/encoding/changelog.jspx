@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2021-09-18T16:04:54-05:00"
+		dateModified="2021-09-09T01:33:34-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -56,7 +56,6 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						supporting the full encoding capability.
 					</li>
 					-->
-					<li>Updated dependencies.</li>
 				</ul>
 			</changelog:release>
 		</c:if>

@@ -39,7 +39,7 @@ import java.util.ResourceBundle;
  */
 public class UrlValidator extends MediaValidator {
 
-	private static final Resources RESOURCES = Resources.getResources(UrlValidator.class, ResourceBundle::getBundle);
+	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, UrlValidator.class);
 
 	/**
 	 * Checks one character, throws IOException if invalid.

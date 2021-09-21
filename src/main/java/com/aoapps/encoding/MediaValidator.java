@@ -43,7 +43,7 @@ abstract public class MediaValidator extends FilterWriter implements ValidMediaF
 
 	private static final Logger logger = Logger.getLogger(MediaValidator.class.getName());
 
-	private static final Resources RESOURCES = Resources.getResources(MediaValidator.class, ResourceBundle::getBundle);
+	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MediaValidator.class);
 
 	/**
 	 * Gets the media validator for the given type.  If the given writer is
