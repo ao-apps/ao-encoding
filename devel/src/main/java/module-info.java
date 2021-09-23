@@ -24,4 +24,6 @@ module com.aoapps.encoding.devel {
 	exports com.aoapps.encoding.i18n;
 	// Direct
 	requires com.aoapps.hodgepodge; // <groupId>com.aoapps</groupId><artifactId>ao-hodgepodge</artifactId>
+	// Java SE
+	requires java.logging;
 }
