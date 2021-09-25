@@ -22,6 +22,7 @@
  */
 package com.aoapps.encoding;
 
+import com.aoapps.lang.Strings;
 import java.io.IOException;
 
 /**
@@ -79,7 +80,7 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
 
 	@Override
 	protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
-		String url = buffer.toString();
+		String url = Strings.trim(buffer).toString();
 		String encoded = (encodingContext == null) ? url : encodingContext.encodeURL(url);
 		UrlValidator.checkCharacters(encoded, 0, encoded.length());
 		TextInJavaScriptEncoder.encodeTextInJavaScript(encoded, out);

@@ -48,6 +48,13 @@ abstract public class MediaValidator extends FilterWriter implements ValidMediaF
 	/**
 	 * Gets the media validator for the given type.  If the given writer is
 	 * already validator for the requested type, will return the provided writer.
+	 * <p>
+	 * When the returned {@code validator != out}, {@link #validate()} must be called to finalize the validation.
+	 * When the returned {@code validator == out}, {@link #validate()} should not be called, since the provided writer
+	 * will finalize the validation within its proper scope.
+	 * </p>
+	 *
+	 * @return  A new validator or <code>out</code> when the given writer is already a validator for the requested type.
 	 *
 	 * @exception UnsupportedEncodingException when unable to find an appropriate validator.
 	 */
@@ -136,6 +143,14 @@ abstract public class MediaValidator extends FilterWriter implements ValidMediaF
 	public MediaValidator append(char c) throws IOException {
 		out.append(c);
 		return this;
+	}
+
+	/**
+	 * Performs final validation and resets the validator for reuse.
+	 */
+	@SuppressWarnings("NoopMethodInAbstractClass")
+	public void validate() throws IOException {
+		// Nothing to do since nothing buffered and everything already validated
 	}
 
 	static {

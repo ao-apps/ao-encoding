@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2021-09-09T01:33:34-05:00"
+		dateModified="2021-09-25T02:39:59-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -56,6 +56,12 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						supporting the full encoding capability.
 					</li>
 					-->
+					<li>
+						New <code>BufferedValidator</code> that buffers all writes for a single final validation.
+						This allows manipulation of the buffered content before validation, such as trimming URLs.
+					</li>
+					<li>MediaValidators must now have <code>validate()</code> called when validation is completed.</li>
+					<li>URL encoders and validators now trim the URL before validation.</li>
 				</ul>
 			</changelog:release>
 		</c:if>

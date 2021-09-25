@@ -22,6 +22,7 @@
  */
 package com.aoapps.encoding;
 
+import com.aoapps.lang.Strings;
 import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
@@ -37,7 +38,7 @@ import java.util.ResourceBundle;
  *
  * @author  AO Industries, Inc.
  */
-public class UrlValidator extends MediaValidator {
+public class UrlValidator extends BufferedValidator {
 
 	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, UrlValidator.class);
 
@@ -122,7 +123,7 @@ public class UrlValidator extends MediaValidator {
 	}
 
 	protected UrlValidator(Writer out) {
-		super(out);
+		super(out, 128);
 	}
 
 	@Override
@@ -144,42 +145,9 @@ public class UrlValidator extends MediaValidator {
 	}
 
 	@Override
-	public void write(int c) throws IOException {
-		checkCharacter((char)c);
-		out.write(c);
-	}
-
-	@Override
-	public void write(char[] cbuf, int off, int len) throws IOException {
-		checkCharacters(cbuf, off, len);
-		out.write(cbuf, off, len);
-	}
-
-	@Override
-	public void write(String str, int off, int len) throws IOException {
-		if(str == null) throw new IllegalArgumentException("str is null");
-		checkCharacters(str, off, off + len);
-		out.write(str, off, len);
-	}
-
-	@Override
-	public UrlValidator append(CharSequence csq) throws IOException {
-		checkCharacters(csq, 0, csq.length());
-		out.append(csq);
-		return this;
-	}
-
-	@Override
-	public UrlValidator append(CharSequence csq, int start, int end) throws IOException {
-		checkCharacters(csq, start, end);
-		out.append(csq, start, end);
-		return this;
-	}
-
-	@Override
-	public UrlValidator append(char c) throws IOException {
-		checkCharacter(c);
-		out.append(c);
-		return this;
+	protected void validate(StringBuilder buffer) throws IOException {
+		String url = Strings.trim(buffer).toString();
+		checkCharacters(url, 0, url.length());
+		out.write(url);
 	}
 }
