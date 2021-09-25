@@ -82,6 +82,20 @@ public class UrlValidator extends BufferedValidator {
 			case '%' :
 
 			/*
+			 * IRI-only US-ASCII
+			 */
+			case '<' :
+			case '>' :
+			case '"' :
+			case ' ' :
+			case '{' :
+			case '}' :
+			case '|' :
+			case '\\' :
+			case '^' :
+			case '`' :
+
+			/*
 			 * Unreserved Characters
 			 */
 			case '-':
@@ -96,6 +110,8 @@ public class UrlValidator extends BufferedValidator {
 					|| (c >= 'A' && c <= 'Z')
 					// DIGIT
 					|| (c >= '0' && c <= '9')
+					// IRI
+					|| c >= 128
 				) {
 					return;
 				}

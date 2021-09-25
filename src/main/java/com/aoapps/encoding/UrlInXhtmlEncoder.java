@@ -66,8 +66,14 @@ public class UrlInXhtmlEncoder extends BufferedEncoder {
 	@Override
 	protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
 		String url = Strings.trim(buffer).toString();
-		String encoded = (encodingContext == null) ? url : encodingContext.encodeURL(url);
-		UrlValidator.checkCharacters(encoded, 0, encoded.length());
+		UrlValidator.checkCharacters(url, 0, url.length());
+		String encoded;
+		if(encodingContext != null) {
+			encoded = encodingContext.encodeURL(url);
+			UrlValidator.checkCharacters(encoded, 0, encoded.length());
+		} else {
+			encoded = url;
+		}
 		TextInXhtmlEncoder.encodeTextInXhtml(encoded, out);
 	}
 }
