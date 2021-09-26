@@ -68,10 +68,8 @@ public interface EncodingContext {
 
 	/**
 	 * Encodes a URL for the current encoding context.
-	 * The resulting URL must be valid <a href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>.
-	 * <p>
-	 * TODO: Allow RFC 3987, too
-	 * </p>
+	 * The resulting URL must be valid <a href="https://tools.ietf.org/html/rfc3986">RFC 3986 URI</a> or
+	 * <a href="https://tools.ietf.org/html/rfc3987">RFC 3987 IRI</a>.
 	 * <p>
 	 * Defaults to performing no encoding.
 	 * </p>
