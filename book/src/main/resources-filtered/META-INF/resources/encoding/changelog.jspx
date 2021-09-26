@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2021-09-25T03:26:20-05:00"
+		dateModified="2021-09-25T21:23:40-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -56,20 +56,32 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 						supporting the full encoding capability.
 					</li>
 					-->
-					<li>
-						New <code>BufferedValidator</code> that buffers all writes for a single final validation.
-						This allows manipulation of the buffered content before validation, such as trimming URLs.
-					</li>
-					<li>MediaValidators must now have <code>validate()</code> called when validation is completed.</li>
-					<li>URL encoders and validators now trim the URL before validation.</li>
-					<li>
-						URL encoders and validators now support both
-						<ao:a href="https://tools.ietf.org/html/rfc3986">RFC 3986 URI</ao:a>
-						and <ao:a href="https://tools.ietf.org/html/rfc3987">RFC 3987 IRI</ao:a>.
-					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="6.0.0"
+			datePublished="2021-09-25T21:23:40-05:00"
+			groupId="@{project.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{project.scm.url}"
+		>
+			<ul>
+				<li>
+					New <code>BufferedValidator</code> that buffers all writes for a single final validation.
+					This allows manipulation of the buffered content before validation, such as trimming URLs.
+				</li>
+				<li>MediaValidators must now have <code>validate()</code> called when validation is completed.</li>
+				<li>URL encoders and validators now trim the URL before validation.</li>
+				<li>
+					URL encoders and validators now support both
+					<ao:a href="https://tools.ietf.org/html/rfc3986">RFC 3986 URI</ao:a>
+					and <ao:a href="https://tools.ietf.org/html/rfc3987">RFC 3987 IRI</ao:a>.
+				</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
