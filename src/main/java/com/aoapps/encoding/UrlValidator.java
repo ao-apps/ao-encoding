@@ -31,8 +31,8 @@ import java.util.ResourceBundle;
 
 /**
  * Makes sure that all data going through this writer has the correct characters
- * for URI/URL data.  The URL must be valid <a href="https://tools.ietf.org/html/rfc3986">RFC 3986 URI</a> or
- * <a href="https://tools.ietf.org/html/rfc3987">RFC 3987 IRI</a>.
+ * for URI/URL data.  The URL must be valid <a href="https://datatracker.ietf.org/doc/html/rfc3986">RFC 3986 URI</a> or
+ * <a href="https://datatracker.ietf.org/doc/html/rfc3987">RFC 3987 IRI</a>.
  *
  * @author  AO Industries, Inc.
  */
@@ -43,8 +43,8 @@ public class UrlValidator extends BufferedValidator {
 	/**
 	 * Checks one character, throws IOException if invalid.
 	 * <p>
-	 * See <a href="https://tools.ietf.org/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
-	 * and <a href="https://tools.ietf.org/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
+	 * See <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
+	 * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
 	 * </p>
 	 */
 	public static void checkCharacter(char c) throws IOException {

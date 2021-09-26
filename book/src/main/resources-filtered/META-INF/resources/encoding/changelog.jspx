@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2021-09-25T21:23:40-05:00"
+		dateModified="2021-09-25T23:27:50-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -77,8 +77,8 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				<li>URL encoders and validators now trim the URL before validation.</li>
 				<li>
 					URL encoders and validators now support both
-					<ao:a href="https://tools.ietf.org/html/rfc3986">RFC 3986 URI</ao:a>
-					and <ao:a href="https://tools.ietf.org/html/rfc3987">RFC 3987 IRI</ao:a>.
+					<ao:a href="https://datatracker.ietf.org/doc/html/rfc3986">RFC 3986 URI</ao:a>
+					and <ao:a href="https://datatracker.ietf.org/doc/html/rfc3987">RFC 3987 IRI</ao:a>.
 				</li>
 			</ul>
 		</changelog:release>
@@ -457,7 +457,7 @@ along with ao-encoding.  If not, see <http://www.gnu.org/licenses />.
 				<li><code>EncodingContext.encodeURL(String)</code> no longer throws <code>UnsupportedEncodingException</code>.</li>
 				<li>
 					<code>UrlValidator</code> now validates the entire URL versus
-					<ao:a href="https://tools.ietf.org/html/rfc3986">RFC 3986</ao:a>.
+					<ao:a href="https://datatracker.ietf.org/doc/html/rfc3986">RFC 3986</ao:a>.
 				</li>
 			</ul>
 		</changelog:release>

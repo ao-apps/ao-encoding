@@ -264,7 +264,7 @@ public enum Doctype {
 	}
 
 	/**
-	 * Does this doctype support <a href="https://tools.ietf.org/html/rfc3987">RFC 3987 IRI</a>
+	 * Does this doctype support <a href="https://datatracker.ietf.org/doc/html/rfc3987">RFC 3987 IRI</a>
 	 * Unicode format URLs?
 	 */
 	public boolean supportsIRI() {
