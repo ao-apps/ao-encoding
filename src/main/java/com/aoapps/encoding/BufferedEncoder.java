@@ -30,7 +30,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-abstract public class BufferedEncoder extends MediaEncoder {
+public abstract class BufferedEncoder extends MediaEncoder {
 
 	/**
 	 * Buffers all contents to pass to writeSuffix.
@@ -42,53 +42,53 @@ abstract public class BufferedEncoder extends MediaEncoder {
 	}
 
 	@Override
-	final public void write(int c, Writer out) {
+	public final void write(int c, Writer out) {
 		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append((char)c);
 	}
 
 	@Override
-	final public void write(char cbuf[], Writer out) {
+	public final void write(char cbuf[], Writer out) {
 		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append(cbuf);
 	}
 
 	@Override
-	final public void write(char[] cbuf, int off, int len, Writer out) {
+	public final void write(char[] cbuf, int off, int len, Writer out) {
 		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append(cbuf, off, len);
 	}
 
 	@Override
-	final public void write(String str, Writer out) {
+	public final void write(String str, Writer out) {
 		assert Assertions.isValidating(out, getValidMediaOutputType());
 		if(str==null) throw new IllegalArgumentException("str is null");
 		buffer.append(str);
 	}
 
 	@Override
-	final public void write(String str, int off, int len, Writer out) {
+	public final void write(String str, int off, int len, Writer out) {
 		assert Assertions.isValidating(out, getValidMediaOutputType());
 		if(str==null) throw new IllegalArgumentException("str is null");
 		buffer.append(str, off, off+len);
 	}
 
 	@Override
-	final public BufferedEncoder append(char c, Appendable out) {
+	public final BufferedEncoder append(char c, Appendable out) {
 		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append(c);
 		return this;
 	}
 
 	@Override
-	final public BufferedEncoder append(CharSequence csq, Appendable out) {
+	public final BufferedEncoder append(CharSequence csq, Appendable out) {
 		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append(csq);
 		return this;
 	}
 
 	@Override
-	final public BufferedEncoder append(CharSequence csq, int start, int end, Appendable out) {
+	public final BufferedEncoder append(CharSequence csq, int start, int end, Appendable out) {
 		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append(csq, start, end);
 		return this;
@@ -98,11 +98,11 @@ abstract public class BufferedEncoder extends MediaEncoder {
 	 * Writes the suffix and clears the buffer for reuse.
 	 */
 	@Override
-	final public void writeSuffixTo(Appendable out) throws IOException {
+	public final void writeSuffixTo(Appendable out) throws IOException {
 		super.writeSuffixTo(out);
 		writeSuffix(buffer, out);
 		buffer.setLength(0);
 	}
 
-	abstract protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException;
+	protected abstract void writeSuffix(StringBuilder buffer, Appendable out) throws IOException;
 }

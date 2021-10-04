@@ -32,7 +32,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-final public class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
+public final class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	/**

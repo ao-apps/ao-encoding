@@ -45,7 +45,7 @@ import java.util.ResourceBundle;
  *
  * @author  AO Industries, Inc.
  */
-abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
+public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 
 	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MediaEncoder.class);
 
@@ -185,28 +185,28 @@ abstract public class MediaEncoder implements Encoder, ValidMediaFilter {
 	}
 
 	@Override
-	abstract public void write(int c, Writer out) throws IOException;
+	public abstract void write(int c, Writer out) throws IOException;
 
 	@Override
-	abstract public void write(char cbuf[], Writer out) throws IOException;
+	public abstract void write(char cbuf[], Writer out) throws IOException;
 
 	@Override
-	abstract public void write(char cbuf[], int off, int len, Writer out) throws IOException;
+	public abstract void write(char cbuf[], int off, int len, Writer out) throws IOException;
 
 	@Override
-	abstract public void write(String str, Writer out) throws IOException;
+	public abstract void write(String str, Writer out) throws IOException;
 
 	@Override
-	abstract public void write(String str, int off, int len, Writer out) throws IOException;
+	public abstract void write(String str, int off, int len, Writer out) throws IOException;
 
 	@Override
-	abstract public MediaEncoder append(char c, Appendable out) throws IOException;
+	public abstract MediaEncoder append(char c, Appendable out) throws IOException;
 
 	@Override
-	abstract public MediaEncoder append(CharSequence csq, Appendable out) throws IOException;
+	public abstract MediaEncoder append(CharSequence csq, Appendable out) throws IOException;
 
 	@Override
-	abstract public MediaEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException;
+	public abstract MediaEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException;
 
 	/**
 	 * {@inheritDoc}

@@ -76,12 +76,12 @@ public enum Serialization {
 	/**
 	 * Gets the content-type header to use for this serialization.
 	 */
-	abstract public String getContentType();
+	public abstract String getContentType();
 
 	/**
 	 * Gets the self-closing tag characters.
 	 */
-	abstract public String getSelfClose();
+	public abstract String getSelfClose();
 
 	/**
 	 * Appends the self-closing tag characters.

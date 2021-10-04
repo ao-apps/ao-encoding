@@ -48,7 +48,7 @@ import java.util.Locale;
  *
  * @author  AO Industries, Inc.
  */
-final public class ChainWriter implements Appendable, Closeable {
+public final class ChainWriter implements Appendable, Closeable {
 
 	// <editor-fold defaultstate="collapsed" desc="PrintWriter wrapping">
 	private final EncodingContext encodingContext;

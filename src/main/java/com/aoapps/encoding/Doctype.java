@@ -238,7 +238,7 @@ public enum Doctype {
 	 *
 	 * @return  The attribute, starting with a space, or {@code ""} for none.
 	 */
-	abstract public String getScriptType();
+	public abstract String getScriptType();
 
 	/**
 	 * Appends the default script type/language attribute, if any.
@@ -253,7 +253,7 @@ public enum Doctype {
 	 *
 	 * @return  The attribute, starting with a space, or {@code ""} for none.
 	 */
-	abstract public String getStyleType();
+	public abstract String getStyleType();
 
 	/**
 	 * Appends the default style type attribute, if any.

@@ -39,7 +39,7 @@ import java.util.logging.Logger;
  *
  * @author  AO Industries, Inc.
  */
-abstract public class MediaValidator extends FilterWriter implements ValidMediaFilter {
+public abstract class MediaValidator extends FilterWriter implements ValidMediaFilter {
 
 	private static final Logger logger = Logger.getLogger(MediaValidator.class.getName());
 
@@ -101,7 +101,7 @@ abstract public class MediaValidator extends FilterWriter implements ValidMediaF
 	 * @return  The result of {@link #getValidMediaInputType()}
 	 */
 	@Override
-	final public MediaType getValidMediaOutputType() {
+	public final MediaType getValidMediaOutputType() {
 		return getValidMediaInputType();
 	}
 

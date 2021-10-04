@@ -30,7 +30,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-abstract public class BufferedValidator extends MediaValidator {
+public abstract class BufferedValidator extends MediaValidator {
 
 	/**
 	 * Buffers all contents to pass to validate.
@@ -43,46 +43,46 @@ abstract public class BufferedValidator extends MediaValidator {
 	}
 
 	@Override
-	final public void write(int c) {
+	public final void write(int c) {
 		buffer.append((char)c);
 	}
 
 	@Override
-	final public void write(char cbuf[]) {
+	public final void write(char cbuf[]) {
 		buffer.append(cbuf);
 	}
 
 	@Override
-	final public void write(char[] cbuf, int off, int len) {
+	public final void write(char[] cbuf, int off, int len) {
 		buffer.append(cbuf, off, len);
 	}
 
 	@Override
-	final public void write(String str) {
+	public final void write(String str) {
 		if(str==null) throw new IllegalArgumentException("str is null");
 		buffer.append(str);
 	}
 
 	@Override
-	final public void write(String str, int off, int len) {
+	public final void write(String str, int off, int len) {
 		if(str==null) throw new IllegalArgumentException("str is null");
 		buffer.append(str, off, off+len);
 	}
 
 	@Override
-	final public BufferedValidator append(char c) {
+	public final BufferedValidator append(char c) {
 		buffer.append(c);
 		return this;
 	}
 
 	@Override
-	final public BufferedValidator append(CharSequence csq) {
+	public final BufferedValidator append(CharSequence csq) {
 		buffer.append(csq);
 		return this;
 	}
 
 	@Override
-	final public BufferedValidator append(CharSequence csq, int start, int end) {
+	public final BufferedValidator append(CharSequence csq, int start, int end) {
 		buffer.append(csq, start, end);
 		return this;
 	}
@@ -91,10 +91,10 @@ abstract public class BufferedValidator extends MediaValidator {
 	 * Performs final validation and clears the buffer for reuse.
 	 */
 	@Override
-	final public void validate() throws IOException {
+	public final void validate() throws IOException {
 		validate(buffer);
 		buffer.setLength(0);
 	}
 
-	abstract protected void validate(StringBuilder buffer) throws IOException;
+	protected abstract void validate(StringBuilder buffer) throws IOException;
 }
