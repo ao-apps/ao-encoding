@@ -244,7 +244,7 @@ public class TextInPsqlEncoder extends MediaEncoder {
 	}
 
 	@Override
-	public void write(char cbuf[], Writer out) throws IOException {
+	public void write(char[] cbuf, Writer out) throws IOException {
 		encodeTextInPsql(cbuf, out);
 	}
 

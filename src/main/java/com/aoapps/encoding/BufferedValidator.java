@@ -48,7 +48,7 @@ public abstract class BufferedValidator extends MediaValidator {
 	}
 
 	@Override
-	public final void write(char cbuf[]) {
+	public final void write(char[] cbuf) {
 		buffer.append(cbuf);
 	}
 

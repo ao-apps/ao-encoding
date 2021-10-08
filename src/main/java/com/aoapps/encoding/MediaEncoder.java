@@ -188,10 +188,10 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 	public abstract void write(int c, Writer out) throws IOException;
 
 	@Override
-	public abstract void write(char cbuf[], Writer out) throws IOException;
+	public abstract void write(char[] cbuf, Writer out) throws IOException;
 
 	@Override
-	public abstract void write(char cbuf[], int off, int len, Writer out) throws IOException;
+	public abstract void write(char[] cbuf, int off, int len, Writer out) throws IOException;
 
 	@Override
 	public abstract void write(String str, Writer out) throws IOException;

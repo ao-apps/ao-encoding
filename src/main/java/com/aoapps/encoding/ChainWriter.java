@@ -224,7 +224,7 @@ public final class ChainWriter implements Appendable, Closeable {
 	}
 
 	/** Write a portion of an array of characters. */
-	public ChainWriter write(char buf[], int off, int len) {
+	public ChainWriter write(char[] buf, int off, int len) {
 		out.write(buf, off, len);
 		return this;
 	}
@@ -233,7 +233,7 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * Write an array of characters.  This method cannot be inherited from the
 	 * Writer class because it must suppress I/O exceptions.
 	 */
-	public ChainWriter write(char buf[]) {
+	public ChainWriter write(char[] buf) {
 		out.write(buf);
 		return this;
 	}
@@ -348,7 +348,7 @@ public final class ChainWriter implements Appendable, Closeable {
 	 *
 	 * @throws  NullPointerException  If <code>s</code> is {@code null}
 	 */
-	public ChainWriter print(char s[]) {
+	public ChainWriter print(char[] s) {
 		out.print(s);
 		return this;
 	}
@@ -458,7 +458,7 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * behaves as though it invokes <code>{@link #print(char[])}</code> and then
 	 * <code>{@link #println()}</code>.
 	 */
-	public ChainWriter println(char x[]) {
+	public ChainWriter println(char[] x) {
 		out.println(x);
 		return this;
 	}
@@ -583,7 +583,7 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * Quotes ({@code "…"}) are added around the string.
 	 * Also, if the string is translated, comments will be added giving the
 	 * translation lookup id to aid in translation of server-translated values.
-	 * 
+	 *
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInJavaScriptEncoder
@@ -599,7 +599,7 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * Quotes ({@code "…"}) are added around the string.
 	 * Also, if the string is translated, comments will be added giving the
 	 * translation lookup id to aid in translation of server-translated values.
-	 * 
+	 *
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInJavaScriptEncoder
@@ -619,7 +619,7 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * Quotes ({@code "…"}) are added around the string.
 	 * Also, if the string is translated, comments will be added giving the
 	 * translation lookup id to aid in translation of server-translated values.
-	 * 
+	 *
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInJavaScriptEncoder
@@ -639,7 +639,7 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * {@code E'…'} quotes are added around the string.
 	 * Also, if the string is translated, comments will be added giving the
 	 * translation lookup id to aid in translation of server-translated values.
-	 * 
+	 *
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInMysqlEncoder
@@ -655,7 +655,7 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * {@code E'…'} quotes are added around the string.
 	 * Also, if the string is translated, comments will be added giving the
 	 * translation lookup id to aid in translation of server-translated values.
-	 * 
+	 *
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInPsqlEncoder
@@ -671,7 +671,7 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * {@code $'…'} quotes are added around the string.
 	 * Also, if the string is translated, comments will be added giving the
 	 * translation lookup id to aid in translation of server-translated values.
-	 * 
+	 *
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInShEncoder

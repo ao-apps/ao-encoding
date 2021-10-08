@@ -48,7 +48,7 @@ public abstract class BufferedEncoder extends MediaEncoder {
 	}
 
 	@Override
-	public final void write(char cbuf[], Writer out) {
+	public final void write(char[] cbuf, Writer out) {
 		assert Assertions.isValidating(out, getValidMediaOutputType());
 		buffer.append(cbuf);
 	}

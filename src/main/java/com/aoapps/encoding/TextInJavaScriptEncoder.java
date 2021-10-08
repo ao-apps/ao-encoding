@@ -182,7 +182,7 @@ public final class TextInJavaScriptEncoder extends MediaEncoder {
 	}
 
 	@Override
-	public void write(char cbuf[], Writer out) throws IOException {
+	public void write(char[] cbuf, Writer out) throws IOException {
 		encodeTextInJavaScript(cbuf, out);
 	}
 

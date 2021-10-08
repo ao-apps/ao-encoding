@@ -159,7 +159,7 @@ public final class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
 	}
 
 	@Override
-	public void write(char cbuf[], Writer out) throws IOException {
+	public void write(char[] cbuf, Writer out) throws IOException {
 		encodeJavaScriptInXhtmlAttribute(cbuf, out);
 	}
 

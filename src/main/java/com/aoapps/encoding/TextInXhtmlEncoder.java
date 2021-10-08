@@ -156,7 +156,7 @@ public class TextInXhtmlEncoder extends MediaEncoder {
 	}
 
 	@Override
-	public void write(char cbuf[], Writer out) throws IOException {
+	public void write(char[] cbuf, Writer out) throws IOException {
 		encodeTextInXhtml(cbuf, out);
 	}
 
