@@ -94,23 +94,23 @@ public class TextInMysqlEncoder extends MediaEncoder {
 		if(toPrint > 0) out.write(cbuf, end - toPrint, toPrint);
 	}
 
-	public static void encodeTextInMysql(CharSequence S, Appendable out) throws IOException {
-		if(S != null) {
-			encodeTextInMysql(S, 0, S.length(), out);
+	public static void encodeTextInMysql(CharSequence cs, Appendable out) throws IOException {
+		if(cs != null) {
+			encodeTextInMysql(cs, 0, cs.length(), out);
 		} else {
 			assert Assertions.isValidating(out, MediaType.MYSQL);
 		}
 	}
 
-	public static void encodeTextInMysql(CharSequence S, int start, int end, Appendable out) throws IOException {
+	public static void encodeTextInMysql(CharSequence cs, int start, int end, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.MYSQL);
-		if(S != null) {
+		if(cs != null) {
 			int toPrint = 0;
 			for (int c = start; c < end; c++) {
-				String escaped = getEscapedCharacter(S.charAt(c));
+				String escaped = getEscapedCharacter(cs.charAt(c));
 				if(escaped != null) {
 					if(toPrint > 0) {
-						out.append(S, c - toPrint, c);
+						out.append(cs, c - toPrint, c);
 						toPrint = 0;
 					}
 					out.append(escaped);
@@ -118,7 +118,7 @@ public class TextInMysqlEncoder extends MediaEncoder {
 					toPrint++;
 				}
 			}
-			if(toPrint > 0) out.append(S, end - toPrint, end);
+			if(toPrint > 0) out.append(cs, end - toPrint, end);
 		}
 	}
 

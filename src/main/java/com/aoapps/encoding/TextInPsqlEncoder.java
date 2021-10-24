@@ -171,23 +171,23 @@ public class TextInPsqlEncoder extends MediaEncoder {
 		if(toPrint > 0) out.write(cbuf, end - toPrint, toPrint);
 	}
 
-	public static void encodeTextInPsql(CharSequence S, Appendable out) throws IOException {
-		if(S != null) {
-			encodeTextInPsql(S, 0, S.length(), out);
+	public static void encodeTextInPsql(CharSequence cs, Appendable out) throws IOException {
+		if(cs != null) {
+			encodeTextInPsql(cs, 0, cs.length(), out);
 		} else {
 			assert Assertions.isValidating(out, MediaType.PSQL);
 		}
 	}
 
-	public static void encodeTextInPsql(CharSequence S, int start, int end, Appendable out) throws IOException {
+	public static void encodeTextInPsql(CharSequence cs, int start, int end, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.PSQL);
-		if(S != null) {
+		if(cs != null) {
 			int toPrint = 0;
 			for (int c = start; c < end; c++) {
-				String escaped = getEscapedCharacter(S.charAt(c));
+				String escaped = getEscapedCharacter(cs.charAt(c));
 				if(escaped != null) {
 					if(toPrint > 0) {
-						out.append(S, c - toPrint, c);
+						out.append(cs, c - toPrint, c);
 						toPrint = 0;
 					}
 					out.append(escaped);
@@ -195,7 +195,7 @@ public class TextInPsqlEncoder extends MediaEncoder {
 					toPrint++;
 				}
 			}
-			if(toPrint > 0) out.append(S, end - toPrint, end);
+			if(toPrint > 0) out.append(cs, end - toPrint, end);
 		}
 	}
 

@@ -30,7 +30,7 @@ import java.io.Writer;
  * Encodes arbitrary data into XHTML.  Minimal conversion is performed, just
  * encoding of necessary values and throwing an IOException when any character
  * is found that cannot be converted to XHTML entities.
- * 
+ *
  * @author  AO Industries, Inc.
  */
 public class TextInXhtmlEncoder extends MediaEncoder {
@@ -87,31 +87,31 @@ public class TextInXhtmlEncoder extends MediaEncoder {
 		if(toPrint>0) out.write(cbuf, end-toPrint, toPrint);
 	}
 
-	public static void encodeTextInXhtml(CharSequence S, Appendable out) throws IOException {
-		if(S!=null) {
-			encodeTextInXhtml(S, 0, S.length(), out);
+	public static void encodeTextInXhtml(CharSequence cs, Appendable out) throws IOException {
+		if(cs != null) {
+			encodeTextInXhtml(cs, 0, cs.length(), out);
 		} else {
 			assert Assertions.isValidating(out, MediaType.XHTML);
 		}
 	}
 
-	public static void encodeTextInXhtml(CharSequence S, int start, int end, Appendable out) throws IOException {
+	public static void encodeTextInXhtml(CharSequence cs, int start, int end, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML);
-		if(S!=null) {
+		if(cs != null) {
 			int toPrint = 0;
 			for (int c = start; c < end; c++) {
-				String escaped = getEscapedCharacter(S.charAt(c));
-				if(escaped!=null) {
-					if(toPrint>0) {
-						out.append(S, c-toPrint, c);
-						toPrint=0;
+				String escaped = getEscapedCharacter(cs.charAt(c));
+				if(escaped != null) {
+					if(toPrint > 0) {
+						out.append(cs, c - toPrint, c);
+						toPrint = 0;
 					}
 					out.append(escaped);
 				} else {
 					toPrint++;
 				}
 			}
-			if(toPrint>0) out.append(S, end-toPrint, end);
+			if(toPrint > 0) out.append(cs, end - toPrint, end);
 		}
 	}
 

@@ -39,7 +39,7 @@ import java.io.Writer;
  * <a href="http://www.kornshell.org/">ksh</a>, <a href="http://www.zsh.org/">zsh</a>, and some builds of
  * <a href="http://www.in-ulm.de/~mascheck/various/ash/">ash</a>.
  * </p>
- * 
+ *
  * @author  AO Industries, Inc.
  */
 public class TextInShEncoder extends MediaEncoder {
@@ -182,21 +182,21 @@ public class TextInShEncoder extends MediaEncoder {
 		if(toPrint > 0) out.write(cbuf, end - toPrint, toPrint);
 	}
 
-	public static void encodeTextInSh(CharSequence S, Appendable out) throws IOException {
-		if(S != null) {
-			encodeTextInSh(S, 0, S.length(), out);
+	public static void encodeTextInSh(CharSequence cs, Appendable out) throws IOException {
+		if(cs != null) {
+			encodeTextInSh(cs, 0, cs.length(), out);
 		}
 	}
 
-	public static void encodeTextInSh(CharSequence S, int start, int end, Appendable out) throws IOException {
-		if(S != null) {
+	public static void encodeTextInSh(CharSequence cs, int start, int end, Appendable out) throws IOException {
+		if(cs != null) {
 			assert Assertions.isValidating(out, MediaType.SH);
 			int toPrint = 0;
 			for (int c = start; c < end; c++) {
-				String escaped = getEscapedCharacter(S.charAt(c));
+				String escaped = getEscapedCharacter(cs.charAt(c));
 				if(escaped != null) {
 					if(toPrint > 0) {
-						out.append(S, c - toPrint, c);
+						out.append(cs, c - toPrint, c);
 						toPrint = 0;
 					}
 					out.append(escaped);
@@ -204,7 +204,7 @@ public class TextInShEncoder extends MediaEncoder {
 					toPrint++;
 				}
 			}
-			if(toPrint > 0) out.append(S, end - toPrint, end);
+			if(toPrint > 0) out.append(cs, end - toPrint, end);
 		}
 	}
 
