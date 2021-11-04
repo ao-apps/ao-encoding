@@ -82,7 +82,7 @@ class JavaScript {
 	 *          encoding needed
 	 */
 	static String getUnicodeEscapeString(char ch) {
-		int chInt = (int)ch;
+		int chInt = ch;
 		if(chInt>=ENCODE_RANGE_1_START && chInt<ENCODE_RANGE_1_END) {
 			return javaScriptUnicodeEscapeStrings1[chInt - ENCODE_RANGE_1_START];
 		}
