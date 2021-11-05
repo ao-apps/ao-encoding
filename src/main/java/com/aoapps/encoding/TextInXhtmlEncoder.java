@@ -33,7 +33,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public class TextInXhtmlEncoder extends MediaEncoder {
+public final class TextInXhtmlEncoder extends MediaEncoder {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	/**
@@ -126,6 +126,7 @@ public class TextInXhtmlEncoder extends MediaEncoder {
 	public static final TextInXhtmlEncoder textInXhtmlEncoder = new TextInXhtmlEncoder();
 
 	private TextInXhtmlEncoder() {
+		// Do nothing
 	}
 
 	@Override

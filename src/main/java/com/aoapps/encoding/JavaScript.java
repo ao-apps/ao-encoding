@@ -27,10 +27,10 @@ package com.aoapps.encoding;
  *
  * @author  AO Industries, Inc.
  */
-class JavaScript {
+abstract class JavaScript {
 
-	private JavaScript() {
-	}
+	/** Make no instances. */
+	private JavaScript() {throw new AssertionError();}
 
 	private static final char[] hexChars={'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 	private static char getHex(int value) {

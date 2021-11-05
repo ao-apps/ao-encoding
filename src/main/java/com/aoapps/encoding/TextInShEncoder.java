@@ -42,7 +42,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public class TextInShEncoder extends MediaEncoder {
+public final class TextInShEncoder extends MediaEncoder {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	/**
@@ -219,6 +219,7 @@ public class TextInShEncoder extends MediaEncoder {
 	public static final TextInShEncoder textInShEncoder = new TextInShEncoder();
 
 	private TextInShEncoder() {
+		// Do nothing
 	}
 
 	@Override

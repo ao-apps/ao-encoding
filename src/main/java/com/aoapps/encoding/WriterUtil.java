@@ -34,9 +34,10 @@ import java.util.Arrays;
  *
  * @author  AO Industries, Inc.
  */
-public class WriterUtil {
+public abstract class WriterUtil {
 
-	private WriterUtil() {}
+	/** Make no instances. */
+	private WriterUtil() {throw new AssertionError();}
 
 	/**
 	 * The number of characters written per block.

@@ -33,7 +33,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public class TextInPsqlEncoder extends MediaEncoder {
+public final class TextInPsqlEncoder extends MediaEncoder {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	/**
@@ -210,6 +210,7 @@ public class TextInPsqlEncoder extends MediaEncoder {
 	public static final TextInPsqlEncoder textInPsqlEncoder = new TextInPsqlEncoder();
 
 	private TextInPsqlEncoder() {
+		// Do nothing
 	}
 
 	@Override

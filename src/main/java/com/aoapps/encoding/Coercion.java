@@ -31,7 +31,10 @@ import java.io.Writer;
  * @deprecated  Use {@link com.aoapps.lang.Coercion} or {@link MarkupCoercion} instead.
  */
 @Deprecated
-public final class Coercion {
+public abstract class Coercion {
+
+	/** Make no instances. */
+	private Coercion() {throw new AssertionError();}
 
 	/**
 	 * @deprecated  Use {@link com.aoapps.lang.Coercion#toString(java.lang.Object)} instead.
@@ -176,11 +179,5 @@ public final class Coercion {
 	@Deprecated
 	public static int zeroIfEmpty(Integer value) throws IOException {
 		return (value == null) ? 0 : value;
-	}
-
-	/**
-	 * Make no instances.
-	 */
-	private Coercion() {
 	}
 }

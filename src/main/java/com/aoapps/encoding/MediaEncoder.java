@@ -171,6 +171,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 	}
 
 	protected MediaEncoder() {
+		// Do nothing
 	}
 
 	/**

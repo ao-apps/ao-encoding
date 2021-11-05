@@ -29,7 +29,10 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-final class Assertions  {
+abstract class Assertions  {
+
+	/** Make no instances. */
+	private Assertions() {throw new AssertionError();}
 
 	private static boolean isValidating(ValidMediaInput out, MediaType mediaType) {
 		return out.canSkipValidation(mediaType) || out.isValidatingMediaInputType(mediaType);
@@ -41,11 +44,5 @@ final class Assertions  {
 
 	static boolean isValidating(Writer out, MediaType mediaType) {
 		return !(out instanceof ValidMediaInput) || isValidating((ValidMediaInput)out, mediaType);
-	}
-
-	/**
-	 * Make no instances.
-	 */
-	private Assertions() {
 	}
 }
