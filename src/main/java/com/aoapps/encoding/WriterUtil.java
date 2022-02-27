@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2021  AO Industries, Inc.
+ * Copyright (C) 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -34,7 +34,7 @@ import java.util.Arrays;
  *
  * @author  AO Industries, Inc.
  */
-public abstract class WriterUtil {
+public final class WriterUtil {
 
 	/** Make no instances. */
 	private WriterUtil() {throw new AssertionError();}
