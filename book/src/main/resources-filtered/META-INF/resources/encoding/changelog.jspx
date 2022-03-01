@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2022-03-01T07:33:25-06:00"
+		dateModified="2022-03-01T07:40:16-06:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -56,10 +56,22 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 						supporting the full encoding capability.
 					</li>
 					-->
-					<li>Fixed bug in <code>MediaWriter.text()</code> that incorrectly encoded suffix.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="6.0.1"
+			datePublished="2022-03-01T07:40:16-06:00"
+			groupId="@{project.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{project.scm.url}"
+		>
+			<ul>
+				<li>Fixed bug in <code>MediaWriter.text()</code> that incorrectly encoded suffix.</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
