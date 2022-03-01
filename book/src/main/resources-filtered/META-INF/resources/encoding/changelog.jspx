@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-encoding - High performance streaming character encoding.
-Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2021-09-25T23:27:50-05:00"
+		dateModified="2022-03-01T07:33:25-06:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -56,6 +56,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 						supporting the full encoding capability.
 					</li>
 					-->
+					<li>Fixed bug in <code>MediaWriter.text()</code> that incorrectly encoded suffix.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
