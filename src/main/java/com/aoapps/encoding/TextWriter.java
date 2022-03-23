@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2021  AO Industries, Inc.
+ * Copyright (C) 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -70,7 +70,12 @@ public interface TextWriter<C extends TextWriter<C>> extends WhitespaceWriter<C>
 	 */
 	C text(char ch) throws IOException;
 
-	// TODO: codePoint?
+	/**
+	 * Writes the given text with proper encoding.
+	 *
+	 * @return  {@code this} writer
+	 */
+	C text(int codePoint) throws IOException;
 
 	/**
 	 * Writes the given text with proper encoding.

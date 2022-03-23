@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2022-03-23T00:04:39-05:00"
+		dateModified="2022-03-23T13:48:24-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -57,6 +57,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 					</li>
 					-->
 					<li>Added support for <code>java.nio.charset.Charset</code>.</li>
+					<li>Added <code>text(int)</code> methods for code point support.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
