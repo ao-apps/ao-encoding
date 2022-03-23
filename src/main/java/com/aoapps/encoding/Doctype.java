@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -198,6 +198,10 @@ public enum Doctype {
 		}
 	}
 
+	public String getXmlDeclaration(Serialization serialization, Charset documentEncoding) {
+		return getXmlDeclaration(serialization, documentEncoding.name());
+	}
+
 	/**
 	 * @return  {@code true} when declaration written (including trailing {@link WhitespaceWriter#NL})
 	 */
@@ -210,6 +214,13 @@ public enum Doctype {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * @return  {@code true} when declaration written (including trailing {@link WhitespaceWriter#NL})
+	 */
+	public boolean xmlDeclaration(Serialization serialization, Charset documentEncoding, Appendable out) throws IOException {
+		return xmlDeclaration(serialization, documentEncoding.name(), out);
 	}
 
 	/**

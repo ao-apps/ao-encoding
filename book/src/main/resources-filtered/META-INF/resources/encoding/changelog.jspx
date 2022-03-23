@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2022-03-01T07:40:16-06:00"
+		dateModified="2022-03-23T00:04:39-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -56,6 +56,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 						supporting the full encoding capability.
 					</li>
 					-->
+					<li>Added support for <code>java.nio.charset.Charset</code>.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
