@@ -108,6 +108,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		return this;
 	}
 
+	// <editor-fold desc="WhitespaceWriter">
 	/**
 	 * Is indenting enabled?
 	 */
@@ -221,7 +222,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		WriterUtil.sp(encoder, out, count);
 		return this;
 	}
+	// </editor-fold>
 
+	// <editor-fold desc="TextWriter">
 	/**
 	 * {@inheritDoc}
 	 * <p>
@@ -516,6 +519,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 			}
 		};
 	}
+	// </editor-fold>
 
 	// TODO: A set of per-type methods, like xml(), script(), style(), ...
 
