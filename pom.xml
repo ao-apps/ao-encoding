@@ -43,8 +43,8 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 
 		<javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://oss.aoapps.com/">AO OSS</a>
 / <a target="${javadoc.target}" href="${project.url}">Encoding</a>]]></javadoc.breadcrumbs>
-		<javadoc.modules><![CDATA[<div style="float:left; margin: 0 1em">
-			<h2 style="margin-top: 0em">Modules</h2>
+		<javadoc.modules><![CDATA[<div>
+			<h2>Modules</h2>
 			<ul>
 				<li><a target="${javadoc.target}" href="https://oss.aoapps.com/encoding/servlet/">AO Encoding Servlet</a></li>
 				<li><a target="${javadoc.target}" href="https://oss.aoapps.com/encoding/taglib/">AO Encoding Taglib</a></li>
