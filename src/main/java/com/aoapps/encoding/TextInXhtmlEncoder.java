@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -57,6 +57,9 @@ public final class TextInXhtmlEncoder extends MediaEncoder {
 		}
 	}
 
+	/**
+	 * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
+	 */
 	public static void encodeTextInXhtml(char ch, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML);
 		String escaped = getEscapedCharacter(ch);
@@ -64,10 +67,16 @@ public final class TextInXhtmlEncoder extends MediaEncoder {
 		else out.append(ch);
 	}
 
+	/**
+	 * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
+	 */
 	public static void encodeTextInXhtml(char[] cbuf, Writer out) throws IOException {
 		encodeTextInXhtml(cbuf, 0, cbuf.length, out);
 	}
 
+	/**
+	 * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
+	 */
 	public static void encodeTextInXhtml(char[] cbuf, int start, int len, Writer out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML);
 		int end = start+len;
@@ -87,6 +96,9 @@ public final class TextInXhtmlEncoder extends MediaEncoder {
 		if(toPrint>0) out.write(cbuf, end-toPrint, toPrint);
 	}
 
+	/**
+	 * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
+	 */
 	public static void encodeTextInXhtml(CharSequence cs, Appendable out) throws IOException {
 		if(cs != null) {
 			encodeTextInXhtml(cs, 0, cs.length(), out);
@@ -95,6 +107,9 @@ public final class TextInXhtmlEncoder extends MediaEncoder {
 		}
 	}
 
+	/**
+	 * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
+	 */
 	public static void encodeTextInXhtml(CharSequence cs, int start, int end, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML);
 		if(cs != null) {
@@ -115,6 +130,9 @@ public final class TextInXhtmlEncoder extends MediaEncoder {
 		}
 	}
 
+	/**
+	 * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
+	 */
 	public static void encodeTextInXhtml(Object value, Appendable out) throws IOException {
 		Coercion.append(value, textInXhtmlEncoder, out);
 	}

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2018, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -64,6 +64,9 @@ public final class TextInMysqlEncoder extends MediaEncoder {
 		throw new LocalizedIOException(MysqlValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
+	/**
+	 * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
+	 */
 	public static void encodeTextInMysql(char ch, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.MYSQL);
 		String escaped = getEscapedCharacter(ch);
@@ -71,10 +74,16 @@ public final class TextInMysqlEncoder extends MediaEncoder {
 		else out.append(ch);
 	}
 
+	/**
+	 * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
+	 */
 	public static void encodeTextInMysql(char[] cbuf, Writer out) throws IOException {
 		encodeTextInMysql(cbuf, 0, cbuf.length, out);
 	}
 
+	/**
+	 * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
+	 */
 	public static void encodeTextInMysql(char[] cbuf, int start, int len, Writer out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.MYSQL);
 		int end = start + len;
@@ -94,6 +103,9 @@ public final class TextInMysqlEncoder extends MediaEncoder {
 		if(toPrint > 0) out.write(cbuf, end - toPrint, toPrint);
 	}
 
+	/**
+	 * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
+	 */
 	public static void encodeTextInMysql(CharSequence cs, Appendable out) throws IOException {
 		if(cs != null) {
 			encodeTextInMysql(cs, 0, cs.length(), out);
@@ -102,6 +114,9 @@ public final class TextInMysqlEncoder extends MediaEncoder {
 		}
 	}
 
+	/**
+	 * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
+	 */
 	public static void encodeTextInMysql(CharSequence cs, int start, int end, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.MYSQL);
 		if(cs != null) {
@@ -122,6 +137,9 @@ public final class TextInMysqlEncoder extends MediaEncoder {
 		}
 	}
 
+	/**
+	 * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
+	 */
 	public static void encodeTextInMysql(Object value, Appendable out) throws IOException {
 		Coercion.append(value, textInMysqlEncoder, out);
 	}

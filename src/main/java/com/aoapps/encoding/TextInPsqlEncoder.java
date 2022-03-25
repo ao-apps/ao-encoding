@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2018, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -141,6 +141,9 @@ public final class TextInPsqlEncoder extends MediaEncoder {
 		throw new LocalizedIOException(PsqlValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
+	/**
+	 * See <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
+	 */
 	public static void encodeTextInPsql(char ch, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.PSQL);
 		String escaped = getEscapedCharacter(ch);
@@ -148,10 +151,16 @@ public final class TextInPsqlEncoder extends MediaEncoder {
 		else out.append(ch);
 	}
 
+	/**
+	 * See <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
+	 */
 	public static void encodeTextInPsql(char[] cbuf, Writer out) throws IOException {
 		encodeTextInPsql(cbuf, 0, cbuf.length, out);
 	}
 
+	/**
+	 * See <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
+	 */
 	public static void encodeTextInPsql(char[] cbuf, int start, int len, Writer out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.PSQL);
 		int end = start + len;
@@ -171,6 +180,9 @@ public final class TextInPsqlEncoder extends MediaEncoder {
 		if(toPrint > 0) out.write(cbuf, end - toPrint, toPrint);
 	}
 
+	/**
+	 * See <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
+	 */
 	public static void encodeTextInPsql(CharSequence cs, Appendable out) throws IOException {
 		if(cs != null) {
 			encodeTextInPsql(cs, 0, cs.length(), out);
@@ -179,6 +191,9 @@ public final class TextInPsqlEncoder extends MediaEncoder {
 		}
 	}
 
+	/**
+	 * See <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
+	 */
 	public static void encodeTextInPsql(CharSequence cs, int start, int end, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.PSQL);
 		if(cs != null) {
@@ -199,6 +214,9 @@ public final class TextInPsqlEncoder extends MediaEncoder {
 		}
 	}
 
+	/**
+	 * See <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
+	 */
 	public static void encodeTextInPsql(Object value, Appendable out) throws IOException {
 		Coercion.append(value, textInPsqlEncoder, out);
 	}

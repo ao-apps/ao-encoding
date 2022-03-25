@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -45,8 +45,9 @@ public class XhtmlValidator extends MediaValidator {
 
 	/**
 	 * Checks one character, throws IOException if invalid.
-	 *
-	 * <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>
+	 * <p>
+	 * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
+	 * </p>
 	 */
 	public static void checkCharacter(char c) throws IOException {
 		if(
@@ -64,6 +65,9 @@ public class XhtmlValidator extends MediaValidator {
 
 	/**
 	 * Checks a set of characters, throws IOException if invalid
+	 * <p>
+	 * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
+	 * </p>
 	 */
 	public static void checkCharacters(char[] cbuf, int off, int len) throws IOException {
 		int end = off + len;
@@ -74,6 +78,9 @@ public class XhtmlValidator extends MediaValidator {
 
 	/**
 	 * Checks a set of characters, throws IOException if invalid
+	 * <p>
+	 * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
+	 * </p>
 	 */
 	public static void checkCharacters(CharSequence str, int off, int end) throws IOException {
 		while(off < end) {

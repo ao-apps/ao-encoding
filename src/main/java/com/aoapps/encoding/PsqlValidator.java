@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2018, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -55,6 +55,9 @@ public class PsqlValidator extends MediaValidator {
 
 	/**
 	 * Checks a set of characters, throws IOException if invalid
+	 * <p>
+	 * See <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
+	 * </p>
 	 */
 	public static void checkCharacters(char[] cbuf, int off, int len) throws IOException {
 		int end = off + len;
@@ -65,6 +68,9 @@ public class PsqlValidator extends MediaValidator {
 
 	/**
 	 * Checks a set of characters, throws IOException if invalid
+	 * <p>
+	 * See <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
+	 * </p>
 	 */
 	public static void checkCharacters(CharSequence str, int off, int end) throws IOException {
 		while(off < end) {

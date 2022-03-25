@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2018, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -152,6 +152,9 @@ public final class TextInShEncoder extends MediaEncoder {
 		throw new LocalizedIOException(ShValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
+	/**
+	 * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
+	 */
 	public static void encodeTextInSh(char ch, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.SH);
 		String escaped = getEscapedCharacter(ch);
@@ -159,10 +162,16 @@ public final class TextInShEncoder extends MediaEncoder {
 		else out.append(ch);
 	}
 
+	/**
+	 * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
+	 */
 	public static void encodeTextInSh(char[] cbuf, Writer out) throws IOException {
 		encodeTextInSh(cbuf, 0, cbuf.length, out);
 	}
 
+	/**
+	 * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
+	 */
 	public static void encodeTextInSh(char[] cbuf, int start, int len, Writer out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.SH);
 		int end = start + len;
@@ -182,12 +191,18 @@ public final class TextInShEncoder extends MediaEncoder {
 		if(toPrint > 0) out.write(cbuf, end - toPrint, toPrint);
 	}
 
+	/**
+	 * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
+	 */
 	public static void encodeTextInSh(CharSequence cs, Appendable out) throws IOException {
 		if(cs != null) {
 			encodeTextInSh(cs, 0, cs.length(), out);
 		}
 	}
 
+	/**
+	 * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
+	 */
 	public static void encodeTextInSh(CharSequence cs, int start, int end, Appendable out) throws IOException {
 		if(cs != null) {
 			assert Assertions.isValidating(out, MediaType.SH);
@@ -208,6 +223,9 @@ public final class TextInShEncoder extends MediaEncoder {
 		}
 	}
 
+	/**
+	 * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
+	 */
 	public static void encodeTextInSh(Object value, Appendable out) throws IOException {
 		Coercion.append(value, textInShEncoder, out);
 	}
