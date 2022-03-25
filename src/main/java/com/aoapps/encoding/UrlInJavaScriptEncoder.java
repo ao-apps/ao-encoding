@@ -79,13 +79,14 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
 	}
 
 	@Override
+	@SuppressWarnings("StringEquality")
 	protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
 		String url = Strings.trim(buffer).toString();
 		UrlValidator.checkCharacters(url, 0, url.length());
 		String encoded;
 		if(encodingContext != null) {
 			encoded = encodingContext.encodeURL(url);
-			UrlValidator.checkCharacters(encoded, 0, encoded.length());
+			if(encoded != url) UrlValidator.checkCharacters(encoded, 0, encoded.length());
 		} else {
 			encoded = url;
 		}
