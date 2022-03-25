@@ -72,9 +72,9 @@ public class MysqlValidator extends MediaValidator {
 	 * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
 	 * </p>
 	 */
-	public static void checkCharacters(CharSequence str, int off, int end) throws IOException {
-		while(off < end) {
-			checkCharacter(str.charAt(off++));
+	public static void checkCharacters(CharSequence str, int start, int end) throws IOException {
+		while(start < end) {
+			checkCharacter(str.charAt(start++));
 		}
 	}
 

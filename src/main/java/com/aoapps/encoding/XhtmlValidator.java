@@ -77,9 +77,9 @@ public class XhtmlValidator extends MediaValidator {
 	 * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
 	 * </p>
 	 */
-	public static void checkCharacters(CharSequence str, int off, int end) throws IOException {
-		while(off < end) {
-			checkCharacter(str.charAt(off++));
+	public static void checkCharacters(CharSequence str, int start, int end) throws IOException {
+		while(start < end) {
+			checkCharacter(str.charAt(start++));
 		}
 	}
 

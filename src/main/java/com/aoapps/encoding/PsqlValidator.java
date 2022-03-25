@@ -72,9 +72,9 @@ public class PsqlValidator extends MediaValidator {
 	 * See <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
 	 * </p>
 	 */
-	public static void checkCharacters(CharSequence str, int off, int end) throws IOException {
-		while(off < end) {
-			checkCharacter(str.charAt(off++));
+	public static void checkCharacters(CharSequence str, int start, int end) throws IOException {
+		while(start < end) {
+			checkCharacter(str.charAt(start++));
 		}
 	}
 

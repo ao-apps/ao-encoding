@@ -79,9 +79,9 @@ public class ShValidator extends MediaValidator {
 	 * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
 	 * </p>
 	 */
-	public static void checkCharacters(CharSequence str, int off, int end) throws IOException {
-		while(off < end) {
-			checkCharacter(str.charAt(off++));
+	public static void checkCharacters(CharSequence str, int start, int end) throws IOException {
+		while(start < end) {
+			checkCharacter(str.charAt(start++));
 		}
 	}
 

@@ -138,9 +138,9 @@ public class UrlValidator extends BufferedValidator {
 	 * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
 	 * </p>
 	 */
-	public static void checkCharacters(CharSequence str, int off, int end) throws IOException {
-		while(off < end) {
-			checkCharacter(str.charAt(off++));
+	public static void checkCharacters(CharSequence str, int start, int end) throws IOException {
+		while(start < end) {
+			checkCharacter(str.charAt(start++));
 		}
 	}
 
