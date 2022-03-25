@@ -81,11 +81,11 @@ public final class TextInXhtmlAttributeEncoder extends MediaEncoder {
 	/**
 	 * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
 	 */
-	public static void encodeTextInXhtmlAttribute(char[] cbuf, int start, int len, Writer out) throws IOException {
+	public static void encodeTextInXhtmlAttribute(char[] cbuf, int off, int len, Writer out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
-		int end = start+len;
+		int end = off + len;
 		int toPrint = 0;
-		for (int c = start; c < end; c++) {
+		for (int c = off; c < end; c++) {
 			String escaped = getEscapedCharacter(cbuf[c]);
 			if(escaped!=null) {
 				if(toPrint>0) {

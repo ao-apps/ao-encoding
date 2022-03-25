@@ -84,11 +84,11 @@ public final class TextInMysqlEncoder extends MediaEncoder {
 	/**
 	 * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
 	 */
-	public static void encodeTextInMysql(char[] cbuf, int start, int len, Writer out) throws IOException {
+	public static void encodeTextInMysql(char[] cbuf, int off, int len, Writer out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.MYSQL);
-		int end = start + len;
+		int end = off + len;
 		int toPrint = 0;
-		for (int c = start; c < end; c++) {
+		for (int c = off; c < end; c++) {
 			String escaped = getEscapedCharacter(cbuf[c]);
 			if(escaped != null) {
 				if(toPrint > 0) {

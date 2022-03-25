@@ -172,11 +172,11 @@ public final class TextInShEncoder extends MediaEncoder {
 	/**
 	 * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
 	 */
-	public static void encodeTextInSh(char[] cbuf, int start, int len, Writer out) throws IOException {
+	public static void encodeTextInSh(char[] cbuf, int off, int len, Writer out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.SH);
-		int end = start + len;
+		int end = off + len;
 		int toPrint = 0;
-		for (int c = start; c < end; c++) {
+		for (int c = off; c < end; c++) {
 			String escaped = getEscapedCharacter(cbuf[c]);
 			if(escaped != null) {
 				if(toPrint > 0) {
