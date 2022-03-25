@@ -23,6 +23,7 @@
 package com.aoapps.encoding;
 
 import com.aoapps.lang.io.Encoder;
+import com.aoapps.lang.util.BufferManager;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Arrays;
@@ -42,7 +43,7 @@ public final class WriterUtil {
 	/**
 	 * The number of characters written per block.
 	 */
-	public static final int BLOCK_SIZE = 4096;
+	public static final int BLOCK_SIZE = BufferManager.BUFFER_SIZE;
 
 	/**
 	 * {@link WhitespaceWriter#NL} combined with {@link WhitespaceWriter#INDENT} characters.
