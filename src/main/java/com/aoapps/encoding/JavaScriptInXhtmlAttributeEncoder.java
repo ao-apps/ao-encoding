@@ -52,7 +52,6 @@ public final class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
 			case '\r': return "&#xD;";
 			case '\n': return "&#xA;";
 			case '\t': return "&#x9;";
-			// TODO: Backslash needs escaped, too?  Does it depend on SGML versus XML serializations?
 			default:
 				// Escape using JavaScript unicode escape when needed
 				return JavaScript.getUnicodeEscapeString(ch);
