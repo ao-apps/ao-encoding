@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -26,7 +26,7 @@ import com.aoapps.lang.Strings;
 import java.io.IOException;
 
 /**
- * Encodes a URL into an XHTML attribute.  It uses HttpServletRequest.encodeURL to
+ * Encodes a URL into an XHTML attribute.  It {@link EncodingContext#encodeURL(java.lang.String)} to
  * rewrite the URL as needed.
  *
  * @author  AO Industries, Inc.
