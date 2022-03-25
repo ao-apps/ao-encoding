@@ -41,30 +41,27 @@ final class JavaScript {
 	 * The Strings are kept here after first created.
 	 */
 	// 0x0 <= ch < 0x20
-	private static final int ENCODE_RANGE_1_START = 0x0;
 	private static final int ENCODE_RANGE_1_END   = 0x20;
-	private static final String[] javaScriptUnicodeEscapeStrings1 = new String[ENCODE_RANGE_1_END - ENCODE_RANGE_1_START];
+	private static final String[] javaScriptUnicodeEscapeStrings1 = new String[ENCODE_RANGE_1_END];
 	// 0xD800 <= ch < 0xE000
 	private static final int ENCODE_RANGE_2_START = 0xD800;
 	private static final int ENCODE_RANGE_2_END   = 0xE000;
 	private static final String[] javaScriptUnicodeEscapeStrings2 = new String[ENCODE_RANGE_2_END - ENCODE_RANGE_2_START];
 	// 0xFFFE <= ch < 0x10000
-	private static final int ENCODE_RANGE_3_START = 0xFFFE;
-	private static final int ENCODE_RANGE_3_END   = 0x10000;
-	private static final String[] javaScriptUnicodeEscapeStrings3 = new String[ENCODE_RANGE_3_END - ENCODE_RANGE_3_START];
+	private static final String FFFE = "\\ufffe";
+	private static final String FFFF = "\\uffff";
 	static {
-		for(int ch=ENCODE_RANGE_1_START; ch<ENCODE_RANGE_1_END; ch++) {
+		for(int ch = 0; ch < ENCODE_RANGE_1_END; ch++) {
 			// Escape using JavaScript unicode escape.
-			javaScriptUnicodeEscapeStrings1[ch - ENCODE_RANGE_1_START] = "\\u" + getHex(ch>>>12) + getHex(ch>>>8) + getHex(ch>>>4) + getHex(ch);
+			javaScriptUnicodeEscapeStrings1[ch] =
+				("\\u" + getHex(ch >>> 12) + getHex(ch >>> 8) + getHex(ch >>> 4) + getHex(ch)).intern();
 		}
-		for(int ch=ENCODE_RANGE_2_START; ch<ENCODE_RANGE_2_END; ch++) {
+		for(int ch = ENCODE_RANGE_2_START; ch < ENCODE_RANGE_2_END; ch++) {
 			// Escape using JavaScript unicode escape.
-			javaScriptUnicodeEscapeStrings2[ch - ENCODE_RANGE_2_START] = "\\u" + getHex(ch>>>12) + getHex(ch>>>8) + getHex(ch>>>4) + getHex(ch);
+			javaScriptUnicodeEscapeStrings2[ch - ENCODE_RANGE_2_START] =
+				("\\u" + getHex(ch >>> 12) + getHex(ch >>> 8) + getHex(ch >>> 4) + getHex(ch)).intern();
 		}
-		for(int ch=ENCODE_RANGE_3_START; ch<ENCODE_RANGE_3_END; ch++) {
-			// Escape using JavaScript unicode escape.
-			javaScriptUnicodeEscapeStrings3[ch - ENCODE_RANGE_3_START] = "\\u" + getHex(ch>>>12) + getHex(ch>>>8) + getHex(ch>>>4) + getHex(ch);
-		}
+		assert 0xfffe >= ENCODE_RANGE_2_END;
 	}
 
 	/**
@@ -83,14 +80,15 @@ final class JavaScript {
 	 */
 	static String getUnicodeEscapeString(char ch) {
 		int chInt = ch;
-		if(chInt>=ENCODE_RANGE_1_START && chInt<ENCODE_RANGE_1_END) {
-			return javaScriptUnicodeEscapeStrings1[chInt - ENCODE_RANGE_1_START];
+		if(chInt < ENCODE_RANGE_1_END) {
+			return javaScriptUnicodeEscapeStrings1[chInt];
 		}
-		if(chInt>=ENCODE_RANGE_2_START && chInt<ENCODE_RANGE_2_END) {
-			return javaScriptUnicodeEscapeStrings2[chInt - ENCODE_RANGE_2_START];
-		}
-		if(chInt>=ENCODE_RANGE_3_START && chInt<ENCODE_RANGE_3_END) {
-			return javaScriptUnicodeEscapeStrings3[chInt - ENCODE_RANGE_3_START];
+		if(chInt >= ENCODE_RANGE_2_START) {
+			if(chInt < ENCODE_RANGE_2_END) {
+				return javaScriptUnicodeEscapeStrings2[chInt - ENCODE_RANGE_2_START];
+			}
+			if(chInt == 0xfffe) return FFFE;
+			if(chInt == 0xffff) return FFFF;
 		}
 		// No encoding needed
 		return null;
