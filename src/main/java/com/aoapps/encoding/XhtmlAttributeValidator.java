@@ -55,13 +55,8 @@ public class XhtmlAttributeValidator extends MediaValidator {
 			|| c == '>'
 			|| c == '\''
 			|| c == '"'
-			|| (
-				(c < 0x20 || c > 0xD7FF)
-				&& (c < 0xE000 || c > 0xFFFD)
-				// high and low surrogates
-				//&& (c < 0x10000 || c > 0x10FFFF)
-				&& (c < Character.MIN_HIGH_SURROGATE || c > Character.MAX_LOW_SURROGATE)
-			)
+			|| c < 0x20
+			|| c > 0xFFFD
 		) throw new LocalizedIOException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 

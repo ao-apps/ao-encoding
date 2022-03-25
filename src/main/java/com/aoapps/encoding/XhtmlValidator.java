@@ -51,15 +51,10 @@ public class XhtmlValidator extends MediaValidator {
 	 */
 	public static void checkCharacter(char c) throws IOException {
 		if(
-			(c < 0x20 || c > 0xD7FF) // common case first
+			(c < 0x20 || c > 0xFFFD) // common case first
 			&& c != 0x9
 			&& c != 0xA
 			&& c != 0xD
-			&& (c < 0xE000 || c > 0xFFFD)
-			// high and low surrogates
-			//&& (c < 0x10000 || c > 0x10FFFF)
-			&& (c < Character.MIN_HIGH_SURROGATE || c > Character.MAX_LOW_SURROGATE)
-
 		) throw new LocalizedIOException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
