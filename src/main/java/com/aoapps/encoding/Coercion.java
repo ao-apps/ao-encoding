@@ -177,7 +177,7 @@ public final class Coercion {
 	 *              Use inline {@code (value == null) ? 0 : value} instead.
 	 */
 	@Deprecated
-	public static int zeroIfEmpty(Integer value) throws IOException {
+	public static int zeroIfEmpty(Integer value) {
 		return (value == null) ? 0 : value;
 	}
 }
