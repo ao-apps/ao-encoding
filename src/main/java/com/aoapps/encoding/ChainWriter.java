@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -565,16 +565,16 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * Escapes HTML for displaying in browsers and writes to the internal <code>{@link PrintWriter}</code>.
 	 *
 	 * @param value the string to be escaped.
-	 * @param make_br  will write &lt;br /&gt; tags for every newline character
-	 * @param make_nbsp  will write &amp;#160; for a space when another space follows
+	 * @param makeBr  will write &lt;br /&gt; tags for every newline character
+	 * @param makeNbsp  will write &amp;#160; for a space when another space follows
 	 *
 	 * @see  #textInXhtml(java.lang.Object)
 	 *
 	 * @deprecated  the effects of makeBr and makeNbsp should be handled by CSS white-space property.
 	 */
 	@Deprecated
-	public ChainWriter encodeHtml(Object value, boolean make_br, boolean make_nbsp, boolean isXhtml) throws IOException {
-		com.aoapps.hodgepodge.util.EncodingUtils.encodeHtml(value, make_br, make_nbsp, out, isXhtml);
+	public ChainWriter encodeHtml(Object value, boolean makeBr, boolean makeNbsp, boolean isXhtml) throws IOException {
+		com.aoapps.hodgepodge.util.EncodingUtils.encodeHtml(value, makeBr, makeNbsp, out, isXhtml);
 		return this;
 	}
 
