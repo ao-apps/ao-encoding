@@ -23,7 +23,6 @@
 package com.aoapps.encoding;
 
 import static com.aoapps.encoding.JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder;
-import static com.aoapps.encoding.JavaScriptInXhtmlEncoder.javaScriptInXhtmlEncoder;
 import static com.aoapps.encoding.TextInJavaScriptEncoder.textInJavaScriptEncoder;
 import static com.aoapps.encoding.TextInMysqlEncoder.textInMysqlEncoder;
 import static com.aoapps.encoding.TextInPsqlEncoder.textInPsqlEncoder;
@@ -38,6 +37,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Locale;
 
@@ -107,7 +107,15 @@ public final class ChainWriter implements Appendable, Closeable {
 		this.encodingContext = NullArgumentException.checkNotNull(encodingContext, "encodingContext");
 		this.out = out;
 		javaScriptInXhtmlAttributeWriter = new MediaWriter(encodingContext, javaScriptInXhtmlAttributeEncoder, out);
-		javaScriptInXhtmlWriter = new MediaWriter(encodingContext, javaScriptInXhtmlEncoder, out);
+		try {
+			javaScriptInXhtmlWriter = new MediaWriter(
+				encodingContext,
+				MediaEncoder.getInstance(encodingContext, MediaType.JAVASCRIPT, MediaType.XHTML),
+				out
+			);
+		} catch(UnsupportedEncodingException e) {
+			throw new AssertionError("JAVASCRIPT in XHTML is implemented", e);
+		}
 	}
 
 	/**

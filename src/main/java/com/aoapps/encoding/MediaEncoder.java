@@ -77,34 +77,14 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 				}
 				break;
 			case JAVASCRIPT :
-				switch(containerType) {
-					case JAVASCRIPT :
-					case JSON :
-					case LD_JSON :         return null;
-					case TEXT :            return null;
-					case XHTML :           encoder = new JavaScriptInXhtmlEncoder(contentType, encodingContext); break;
-					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
-					default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
-				}
-				break;
 			case JSON :
-				switch(containerType) {
-					case JAVASCRIPT :
-					case JSON :
-					case LD_JSON :         return null;
-					case TEXT :            return null;
-					case XHTML :           encoder = JavaScriptInXhtmlEncoder.jsonInXhtmlEncoder; break;
-					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
-					default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
-				}
-				break;
 			case LD_JSON :
 				switch(containerType) {
 					case JAVASCRIPT :
 					case JSON :
 					case LD_JSON :         return null;
 					case TEXT :            return null;
-					case XHTML :           encoder = JavaScriptInXhtmlEncoder.ldJsonInXhtmlEncoder; break;
+					case XHTML :           encoder = new JavaScriptInXhtmlEncoder(contentType, encodingContext); break;
 					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
 					default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
 				}

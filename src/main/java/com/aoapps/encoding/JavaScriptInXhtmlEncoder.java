@@ -149,12 +149,18 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 
 	/**
 	 * Singleton instance intended for static import for application/json.
+	 *
+	 * @deprecated  This singleton does not have any context so assumes {@link EncodingContext#DEFAULT}.
 	 */
+	@Deprecated
 	public static final JavaScriptInXhtmlEncoder jsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JSON, EncodingContext.DEFAULT);
 
 	/**
 	 * Singleton instance intended for static import for application/ld+json.
+	 *
+	 * @deprecated  This singleton does not have any context so assumes {@link EncodingContext#DEFAULT}.
 	 */
+	@Deprecated
 	public static final JavaScriptInXhtmlEncoder ldJsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.LD_JSON, EncodingContext.DEFAULT);
 
 	private final MediaType contentType;

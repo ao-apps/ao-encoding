@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2016, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,6 +22,9 @@
  */
 package com.aoapps.encoding;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 /**
  * The current encoding context may perform URL rewriting.
  *
@@ -35,6 +38,7 @@ public interface EncodingContext {
 	 *
 	 * @see  Doctype#DEFAULT
 	 * @see  Serialization#DEFAULT
+	 * @see  StandardCharsets#UTF_8
 	 */
 	EncodingContext DEFAULT = new EncodingContext() {};
 
@@ -43,6 +47,7 @@ public interface EncodingContext {
 	 *
 	 * @see  Doctype#DEFAULT
 	 * @see  Serialization#XML
+	 * @see  StandardCharsets#UTF_8
 	 */
 	@SuppressWarnings("Convert2Lambda") // Cannot actually convert to Lambda, despite NetBeans 12.0 suggesting
 	EncodingContext XML = new EncodingContext() {
@@ -57,6 +62,7 @@ public interface EncodingContext {
 	 *
 	 * @see  Doctype#DEFAULT
 	 * @see  Serialization#SGML
+	 * @see  StandardCharsets#UTF_8
 	 */
 	@SuppressWarnings("Convert2Lambda") // Cannot actually convert to Lambda, despite NetBeans 12.0 suggesting
 	EncodingContext SGML = new EncodingContext() {
@@ -96,5 +102,15 @@ public interface EncodingContext {
 	 */
 	default Serialization getSerialization() {
 		return Serialization.DEFAULT;
+	}
+
+	/**
+	 * The output character encoding.
+	 * <p>
+	 * Defaults to {@link StandardCharsets#UTF_8}.
+	 * </p>
+	 */
+	default Charset getCharacterEncoding() {
+		return StandardCharsets.UTF_8;
 	}
 }
