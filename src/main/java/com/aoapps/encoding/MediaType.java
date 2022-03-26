@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -79,6 +79,21 @@ public enum MediaType {
 	 * An HTML document (<code>text/html</code>).
 	 */
 	// HTML(ContentType.HTML),
+
+	/**
+	 * A CSS stylesheet (<code>text/css</code>).
+	 */
+	CSS(ContentType.CSS) {
+		@Override
+		boolean isUsedFor(String contentType) {
+			return ContentType.CSS.equalsIgnoreCase(contentType);
+		}
+
+		@Override
+		public MarkupType getMarkupType() {
+			return MarkupType.CSS;
+		}
+	},
 
 	/**
 	 * A JavaScript script (<code>application/javascript</code>).

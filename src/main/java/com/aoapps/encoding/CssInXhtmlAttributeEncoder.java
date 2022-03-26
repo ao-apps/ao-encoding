@@ -1,0 +1,243 @@
+/*
+ * ao-encoding - High performance streaming character encoding.
+ * Copyright (C) 2022  AO Industries, Inc.
+ *     support@aoindustries.com
+ *     7262 Bull Pen Cir
+ *     Mobile, AL 36695
+ *
+ * This file is part of ao-encoding.
+ *
+ * ao-encoding is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ao-encoding is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
+ */
+package com.aoapps.encoding;
+
+import com.aoapps.lang.Coercion;
+import com.aoapps.lang.io.LocalizedIOException;
+import java.io.IOException;
+import java.io.Writer;
+
+/**
+ * Encode CSS into an XHTML attribute.  This does not add any quotes or tags.
+ * <ul>
+ * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
+ * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
+ * </ul>
+ *
+ * @author  AO Industries, Inc.
+ */
+public final class CssInXhtmlAttributeEncoder extends MediaEncoder {
+
+	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
+	/**
+	 * Encodes a single character and returns its String representation
+	 * or null if no modification is necessary.
+	 * " and ' are changed to XHTML entities.
+	 * <ul>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
+	 * </ul>
+	 *
+	 * @throws  IOException  if any text character cannot be converted for use in XHTML attribute
+	 */
+	private static String getEscapedCharacter(char c) throws IOException {
+		switch(c) {
+			// These characters are allowed in CSS but need encoded for XHTML
+			case '<': return "&lt;";
+			case '>': return "&gt;";
+			case '&': return "&amp;";
+			case '"': return "&quot;";
+			case '\'': return "&#39;";
+			case '\r': return "&#xD;";
+			case '\n': return "&#xA;";
+			case '\t': return "&#x9;";
+		}
+		if(
+			(c >= 0x20 && c <= 0x7E) // common case first
+			|| (c >= 0xA0 && c <= 0xFFFD)
+		) return null;
+		throw new LocalizedIOException(CssValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
+	}
+
+	/**
+	 * <ul>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
+	 * </ul>
+	 */
+	public static void encodeCssInXhtmlAttribute(char c, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
+		String escaped = getEscapedCharacter(c);
+		if(escaped != null) out.append(escaped);
+		else out.append(c);
+	}
+
+	/**
+	 * <ul>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
+	 * </ul>
+	 */
+	public static void encodeCssInXhtmlAttribute(char[] cbuf, Writer out) throws IOException {
+		encodeCssInXhtmlAttribute(cbuf, 0, cbuf.length, out);
+	}
+
+	/**
+	 * <ul>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
+	 * </ul>
+	 */
+	public static void encodeCssInXhtmlAttribute(char[] cbuf, int off, int len, Writer out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
+		int end = off + len;
+		int toPrint = 0;
+		for (int c = off; c < end; c++) {
+			String escaped = getEscapedCharacter(cbuf[c]);
+			if(escaped != null) {
+				if(toPrint > 0) {
+					out.write(cbuf, c - toPrint, toPrint);
+					toPrint = 0;
+				}
+				out.write(escaped);
+			} else {
+				toPrint++;
+			}
+		}
+		if(toPrint > 0) out.write(cbuf, end-toPrint, toPrint);
+	}
+
+	/**
+	 * <ul>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
+	 * </ul>
+	 */
+	public static void encodeCssInXhtmlAttribute(CharSequence cs, Appendable out) throws IOException {
+		if(cs != null) {
+			encodeCssInXhtmlAttribute(cs, 0, cs.length(), out);
+		} else {
+			assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
+		}
+	}
+
+	/**
+	 * <ul>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
+	 * </ul>
+	 */
+	public static void encodeCssInXhtmlAttribute(CharSequence cs, int start, int end, Appendable out) throws IOException {
+		assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
+		if(cs != null) {
+			int toPrint = 0;
+			for (int c = start; c < end; c++) {
+				String escaped = getEscapedCharacter(cs.charAt(c));
+				if(escaped != null) {
+					if(toPrint > 0) {
+						out.append(cs, c - toPrint, c);
+						toPrint = 0;
+					}
+					out.append(escaped);
+				} else {
+					toPrint++;
+				}
+			}
+			if(toPrint > 0) out.append(cs, end - toPrint, end);
+		}
+	}
+
+	/**
+	 * <ul>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
+	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
+	 * </ul>
+	 */
+	public static void encodeCssInXhtmlAttribute(Object value, Appendable out) throws IOException {
+		Coercion.append(value, cssInXhtmlAttributeEncoder, out);
+	}
+	// </editor-fold>
+
+	/**
+	 * Singleton instance intended for static import.
+	 */
+	public static final CssInXhtmlAttributeEncoder cssInXhtmlAttributeEncoder = new CssInXhtmlAttributeEncoder();
+
+	@Override
+	public MediaType getValidMediaInputType() {
+		return MediaType.CSS;
+	}
+
+	@Override
+	public boolean isValidatingMediaInputType(MediaType inputType) {
+		return
+			inputType == MediaType.CSS
+			|| inputType == MediaType.TEXT  // No validation required
+		;
+	}
+
+	@Override
+	public boolean canSkipValidation(MediaType inputType) {
+		return inputType == MediaType.CSS;
+	}
+
+	@Override
+	public MediaType getValidMediaOutputType() {
+		return MediaType.XHTML_ATTRIBUTE;
+	}
+
+	@Override
+	public void write(int c, Writer out) throws IOException {
+		encodeCssInXhtmlAttribute((char)c, out);
+	}
+
+	@Override
+	public void write(char[] cbuf, Writer out) throws IOException {
+		encodeCssInXhtmlAttribute(cbuf, out);
+	}
+
+	@Override
+	public void write(char[] cbuf, int off, int len, Writer out) throws IOException {
+		encodeCssInXhtmlAttribute(cbuf, off, len, out);
+	}
+
+	@Override
+	public void write(String str, Writer out) throws IOException {
+		if(str == null) throw new IllegalArgumentException("str is null");
+		encodeCssInXhtmlAttribute(str, out);
+	}
+
+	@Override
+	public void write(String str, int off, int len, Writer out) throws IOException {
+		if(str == null) throw new IllegalArgumentException("str is null");
+		encodeCssInXhtmlAttribute(str, off, off + len, out);
+	}
+
+	@Override
+	public CssInXhtmlAttributeEncoder append(char c, Appendable out) throws IOException {
+		encodeCssInXhtmlAttribute(c, out);
+		return this;
+	}
+
+	@Override
+	public CssInXhtmlAttributeEncoder append(CharSequence csq, Appendable out) throws IOException {
+		encodeCssInXhtmlAttribute(csq == null ? "null" : csq, out);
+		return this;
+	}
+
+	@Override
+	public CssInXhtmlAttributeEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException {
+		encodeCssInXhtmlAttribute(csq == null ? "null" : csq, start, end, out);
+		return this;
+	}
+}
