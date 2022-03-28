@@ -197,6 +197,8 @@ public final class TextInShEncoder extends MediaEncoder {
 	public static void encodeTextInSh(CharSequence cs, Appendable out) throws IOException {
 		if(cs != null) {
 			encodeTextInSh(cs, 0, cs.length(), out);
+		} else {
+			assert Assertions.isValidating(out, MediaType.SH);
 		}
 	}
 
