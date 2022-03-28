@@ -84,7 +84,7 @@ public class UrlInXhtmlAttributeEncoder extends BufferedEncoder {
 		}
 		// XHTML_ATTRIBUTE does not support \uFFFE or \uFFFF
 		if(encoded.indexOf('\uFFFE') != -1) {
-			Charset charset = encodingContext.getCharacterEncoding();
+			Charset charset = (encodingContext == null ? EncodingContext.DEFAULT : encodingContext).getCharacterEncoding();
 			String charsetName = charset.name();
 			String newUrl = encoded.replace(
 				"\uFFFE",
@@ -99,7 +99,7 @@ public class UrlInXhtmlAttributeEncoder extends BufferedEncoder {
 			encoded = newUrl;
 		}
 		if(encoded.indexOf('\uFFFF') != -1) {
-			Charset charset = encodingContext.getCharacterEncoding();
+			Charset charset = (encodingContext == null ? EncodingContext.DEFAULT : encodingContext).getCharacterEncoding();
 			String charsetName = charset.name();
 			String newUrl = encoded.replace(
 				"\uFFFF",

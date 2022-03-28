@@ -120,8 +120,8 @@ public class UrlInCssEncoder extends BufferedEncoder {
 			) {
 				StringBuilder sb = new StringBuilder(len + (len - i) * 2); // Enough room should all additional characters need to be %HH encoded
 				sb.append(encoded, 0, i);
-				Charset charset = encodingContext.getCharacterEncoding();
-				String charsetName = encodingContext.getCharacterEncoding().name();
+				Charset charset = (encodingContext == null ? EncodingContext.DEFAULT : encodingContext).getCharacterEncoding();
+				String charsetName = charset.name();
 				String fffe_escape;
 				String ffff_escape;
 				String[] escapes;
