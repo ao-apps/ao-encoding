@@ -100,8 +100,11 @@ public class CssValidator extends MediaValidator {
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
 			inputType == MediaType.CSS
-			|| inputType == MediaType.XHTML // No validation required (All valid CSS characters are also valid XML)
-			|| inputType == MediaType.TEXT // No validation required
+			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in CSS
+			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in CSS
+			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in CSS
+			|| inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS
+			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in CSS
 		;
 	}
 

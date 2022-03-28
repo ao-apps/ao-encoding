@@ -98,7 +98,11 @@ public final class CssInXhtmlEncoder extends MediaEncoder {
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
 			inputType == MediaType.CSS
-			|| inputType == MediaType.TEXT  // No validation required
+			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in CSS in XHTML
+			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in CSS in XHTML
+			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in CSS in XHTML
+			|| inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS in XHTML
+			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in CSS in XHTML
 		;
 	}
 

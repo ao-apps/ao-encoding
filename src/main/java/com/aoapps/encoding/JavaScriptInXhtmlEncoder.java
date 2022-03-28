@@ -179,10 +179,10 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType==MediaType.JAVASCRIPT
-			|| inputType==MediaType.JSON
-			|| inputType==MediaType.LD_JSON
-			|| inputType==MediaType.TEXT  // No validation required
+			inputType == MediaType.JAVASCRIPT
+			|| inputType == MediaType.JSON
+			|| inputType == MediaType.LD_JSON
+			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT in XHTML
 		;
 	}
 

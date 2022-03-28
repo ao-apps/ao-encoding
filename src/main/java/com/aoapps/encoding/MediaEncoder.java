@@ -77,6 +77,16 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 				}
 				break;
 			case JAVASCRIPT :
+				switch(containerType) {
+					case JAVASCRIPT :
+					case JSON :
+					case LD_JSON :         return null;
+					case TEXT :            return null;
+					case XHTML :           encoder = new JavaScriptInXhtmlEncoder(contentType, encodingContext); break;
+					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
+					default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+				}
+				break;
 			case JSON :
 			case LD_JSON :
 				switch(containerType) {
@@ -85,7 +95,6 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 					case LD_JSON :         return null;
 					case TEXT :            return null;
 					case XHTML :           encoder = new JavaScriptInXhtmlEncoder(contentType, encodingContext); break;
-					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
 					default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
 				}
 				break;
@@ -156,8 +165,12 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 			default : throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
 		}
 		// Make sure types match - bug catching
-		assert encoder.getValidMediaOutputType()==containerType : "encoder.getValidMediaOutputType()!=containerType: "+encoder.getValidMediaOutputType()+"!="+containerType;
-		assert encoder.isValidatingMediaInputType(contentType) : "encoder="+encoder.getClass().getName()+" is not a validator for contentType="+contentType;
+		assert encoder.getValidMediaOutputType() == containerType :
+			"encoder.getValidMediaOutputType() != containerType: " + encoder.getValidMediaOutputType() + " != " + containerType;
+		assert encoder.getValidMediaInputType() == contentType :
+			"encoder.getValidMediaInputType() != contentType: " + encoder.getValidMediaInputType() + " != " + contentType;
+		assert encoder.isValidatingMediaInputType(contentType) :
+			"encoder = " + encoder.getClass().getName() + " is not validating contentType = " + contentType;
 		return encoder;
 	}
 

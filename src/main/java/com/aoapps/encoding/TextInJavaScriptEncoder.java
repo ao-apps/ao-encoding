@@ -156,7 +156,10 @@ public final class TextInJavaScriptEncoder extends MediaEncoder {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType==MediaType.TEXT
+			inputType == MediaType.TEXT
+			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in JAVASCRIPT
+			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in JAVASCRIPT
+			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in JAVASCRIPT
 		;
 	}
 

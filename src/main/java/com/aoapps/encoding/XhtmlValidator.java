@@ -95,8 +95,11 @@ public class XhtmlValidator extends MediaValidator {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType==MediaType.XHTML
-			|| inputType==MediaType.TEXT        // No validation required
+			inputType == MediaType.XHTML
+			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in XHTML
+			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in XHTML
+			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in XHTML
+			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in XHTML
 		;
 	}
 

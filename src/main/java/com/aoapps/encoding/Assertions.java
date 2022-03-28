@@ -34,15 +34,15 @@ final class Assertions  {
 	/** Make no instances. */
 	private Assertions() {throw new AssertionError();}
 
-	private static boolean isValidating(ValidMediaInput out, MediaType mediaType) {
-		return out.canSkipValidation(mediaType) || out.isValidatingMediaInputType(mediaType);
+	private static boolean isValidating(ValidMediaInput out, MediaType inputType) {
+		return out.canSkipValidation(inputType) || out.isValidatingMediaInputType(inputType);
 	}
 
-	static boolean isValidating(Appendable out, MediaType mediaType) {
-		return !(out instanceof ValidMediaInput) || isValidating((ValidMediaInput)out, mediaType);
+	static boolean isValidating(Appendable out, MediaType inputType) {
+		return !(out instanceof ValidMediaInput) || isValidating((ValidMediaInput)out, inputType);
 	}
 
-	static boolean isValidating(Writer out, MediaType mediaType) {
-		return !(out instanceof ValidMediaInput) || isValidating((ValidMediaInput)out, mediaType);
+	static boolean isValidating(Writer out, MediaType inputType) {
+		return !(out instanceof ValidMediaInput) || isValidating((ValidMediaInput)out, inputType);
 	}
 }

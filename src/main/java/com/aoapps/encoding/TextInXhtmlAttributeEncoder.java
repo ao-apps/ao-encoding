@@ -159,7 +159,11 @@ public final class TextInXhtmlAttributeEncoder extends MediaEncoder {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType==MediaType.TEXT
+			inputType == MediaType.TEXT
+			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in XHTML_ATTRIBUTE
+			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in XHTML_ATTRIBUTE
+			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in XHTML_ATTRIBUTE
+			|| inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in TEXT in XHTML_ATTRIBUTE
 		;
 	}
 

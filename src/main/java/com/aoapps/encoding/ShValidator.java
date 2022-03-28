@@ -98,7 +98,14 @@ public class ShValidator extends MediaValidator {
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
 			inputType == MediaType.SH
-			|| inputType == MediaType.TEXT // No validation required
+			|| inputType == MediaType.CSS // All invalid characters in CSS are also invalid in SH
+			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in SH
+			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in SH
+			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in SH
+			|| inputType == MediaType.MYSQL // All invalid characters in MYSQL are also invalid in SH
+			|| inputType == MediaType.PSQL // All invalid characters in PSQL are also invalid in SH
+			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in SH
+			|| inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in SH
 		;
 	}
 

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -47,10 +47,10 @@ public class JavaScriptValidator extends MediaValidator {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType==MediaType.JAVASCRIPT
-			|| inputType==MediaType.JSON
-			|| inputType==MediaType.LD_JSON
-			|| inputType==MediaType.TEXT        // No validation required
+			inputType == MediaType.JAVASCRIPT
+			|| inputType == MediaType.JSON
+			|| inputType == MediaType.LD_JSON
+			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT
 		;
 	}
 

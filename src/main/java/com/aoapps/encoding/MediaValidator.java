@@ -47,50 +47,75 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 
 	/**
 	 * Gets the media validator for the given type.  If the given writer is
-	 * already validator for the requested type, will return the provided writer.
+	 * {@linkplain MediaValidator#isValidatingMediaInputType(com.aoapps.encoding.MediaType) already validator for the requested type},
+	 * will return the provided writer.
+	 * <p>
+	 * Please note, the returned validator may be more strict than the requested media type.  It is guaranteed to
+	 * forbid at least all the invalid characters of {@link contentType}, but may also forbid more.
+	 * </p>
 	 * <p>
 	 * When the returned {@code validator != out}, {@link #validate()} must be called to finalize the validation.
 	 * When the returned {@code validator == out}, {@link #validate()} should not be called, since the provided writer
 	 * will finalize the validation within its proper scope.
 	 * </p>
 	 *
-	 * @return  A new validator or <code>out</code> when the given writer is already a validator for the requested type.
+	 * @return  A new validator or <code>out</code> when the given writer is
+	 *          {@linkplain MediaValidator#isValidatingMediaInputType(com.aoapps.encoding.MediaType) already a validator for the requested type}.
 	 *
 	 * @exception UnsupportedEncodingException when unable to find an appropriate validator.
 	 */
 	public static MediaValidator getMediaValidator(MediaType contentType, Writer out) throws UnsupportedEncodingException {
 		// If the existing out is already validating for this type, use it.
-		// This occurs when one validation validates to a set of characters that are a subset of the requested validator.
-		// For example, a URL is always valid TEXT.
-		if(out instanceof MediaValidator) {
-			MediaValidator inputValidator = (MediaValidator)out;
-			if(inputValidator.isValidatingMediaInputType(contentType)) return inputValidator;
+		// This occurs when the existing validator will also catch all invalid characters on the new content type.
+		// For example: All invalid characters in XHTML are also invalid in XHTML_ATTRIBUTE (but not the other way around)
+		final MediaValidator mvTemp;
+		final MediaValidator inputValidator;
+		if(
+			out instanceof MediaValidator
+			&& (mvTemp = (MediaValidator)out).isValidatingMediaInputType(contentType)
+		) {
+			inputValidator = mvTemp;
+		} else {
+			// Add filter if needed for the given type
+			switch(contentType) {
+				case CSS:
+					inputValidator = new CssValidator(out);
+					break;
+				case JAVASCRIPT:
+				case JSON:
+				case LD_JSON:
+					inputValidator = new JavaScriptValidator(out, contentType);
+					break;
+				case SH:
+					inputValidator = new ShValidator(out);
+					break;
+				case MYSQL:
+					inputValidator = new MysqlValidator(out);
+					break;
+				case PSQL:
+					inputValidator = new PsqlValidator(out);
+					break;
+				case TEXT:
+					inputValidator = new TextValidator(out);
+					break;
+				case URL:
+					inputValidator = new UrlValidator(out);
+					break;
+				case XHTML:
+					inputValidator = new XhtmlValidator(out);
+					break;
+				case XHTML_ATTRIBUTE:
+					inputValidator = new XhtmlAttributeValidator(out);
+					break;
+				default:
+					throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindValidator", contentType.getContentType());
+			}
+			assert inputValidator.getValidMediaInputType() == contentType :
+				"inputValidator.getValidMediaInputType() != contentType: " + inputValidator.getValidMediaInputType() + " != " + contentType;
 		}
-		// Add filter if needed for the given type
-		switch(contentType) {
-			case CSS:
-				return new CssValidator(out);
-			case JAVASCRIPT:
-			case JSON:
-			case LD_JSON:
-				return new JavaScriptValidator(out, contentType);
-			case SH:
-				return new ShValidator(out);
-			case MYSQL:
-				return new MysqlValidator(out);
-			case PSQL:
-				return new PsqlValidator(out);
-			case TEXT:
-				return new TextValidator(out);
-			case URL:
-				return new UrlValidator(out);
-			case XHTML:
-				return new XhtmlValidator(out);
-			case XHTML_ATTRIBUTE:
-				return new XhtmlAttributeValidator(out);
-			default:
-				throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindValidator", contentType.getContentType());
-		}
+		assert inputValidator.isValidatingMediaInputType(contentType) :
+			"inputValidator=" + inputValidator.getClass().getName() + " is not validating contentType=" + contentType;
+		return inputValidator;
 	}
 
 	protected MediaValidator(Writer out) {
