@@ -155,17 +155,24 @@ public final class TextInXhtmlEncoder extends MediaEncoder {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType == MediaType.TEXT
-			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in XHTML
+			inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in XHTML
 			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in XHTML
 			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in XHTML
+			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in XHTML
 			|| inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in TEXT in XHTML
 		;
 	}
 
 	@Override
-	public boolean canSkipValidation(MediaType inputType) {
-		return true;
+	public boolean canSkipValidation(MediaType outputType) {
+		return
+			outputType == MediaType.CSS // All valid characters in CSS are also valid in TEXT in XHTML
+			|| outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in TEXT in XHTML
+			|| outputType == MediaType.PSQL // All valid characters in PSQL are also valid in TEXT in XHTML
+			|| outputType == MediaType.SH // All valid characters in SH are also valid in TEXT in XHTML
+			|| outputType == MediaType.XHTML // All valid characters in XHTML are also valid in TEXT in XHTML
+			|| outputType == MediaType.XHTML_ATTRIBUTE // All valid characters in XHTML_ATTRIBUTE are also valid in TEXT in XHTML
+		;
 	}
 
 	@Override

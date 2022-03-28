@@ -92,12 +92,12 @@ public class PsqlValidator extends MediaValidator {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType == MediaType.PSQL
-			|| inputType == MediaType.CSS // All invalid characters in CSS are also invalid in PSQL
+			inputType == MediaType.CSS // All invalid characters in CSS are also invalid in PSQL
 			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in PSQL
 			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in PSQL
 			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in PSQL
 			|| inputType == MediaType.MYSQL // All invalid characters in MYSQL are also invalid in PSQL
+			|| inputType == MediaType.PSQL // All invalid characters in PSQL are also invalid in PSQL
 			|| inputType == MediaType.SH // All invalid characters in SH are also invalid in PSQL
 			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in PSQL
 			|| inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in PSQL
@@ -105,8 +105,12 @@ public class PsqlValidator extends MediaValidator {
 	}
 
 	@Override
-	public boolean canSkipValidation(MediaType inputType) {
-		return inputType == MediaType.PSQL;
+	public boolean canSkipValidation(MediaType outputType) {
+		return
+			outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in PSQL
+			|| outputType == MediaType.PSQL // All valid characters in PSQL are also valid in PSQL
+			|| outputType == MediaType.SH // All valid characters in SH are also valid in PSQL
+		;
 	}
 
 	@Override

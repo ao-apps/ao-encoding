@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2021  AO Industries, Inc.
+ * Copyright (C) 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,6 +22,7 @@
  */
 package com.aoapps.encoding;
 
+import com.aoapps.lang.Strings;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -91,10 +92,14 @@ public abstract class BufferedValidator extends MediaValidator {
 	 * Performs final validation and clears the buffer for reuse.
 	 */
 	@Override
-	public final void validate() throws IOException {
-		validate(buffer);
-		buffer.setLength(0);
+	public final void validate(boolean trim) throws IOException {
+		try {
+			validate(trim ? Strings.trim(buffer) : buffer);
+		} finally {
+			// Tests require buffer reset even on failure
+			buffer.setLength(0);
+		}
 	}
 
-	protected abstract void validate(StringBuilder buffer) throws IOException;
+	protected abstract void validate(CharSequence buffer) throws IOException;
 }

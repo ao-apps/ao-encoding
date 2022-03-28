@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2013, 2015, 2016, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,6 +22,7 @@
  */
 package com.aoapps.encoding;
 
+import com.aoapps.lang.Strings;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -94,15 +95,16 @@ public abstract class BufferedEncoder extends MediaEncoder {
 		return this;
 	}
 
-	/**
-	 * Writes the suffix and clears the buffer for reuse.
-	 */
 	@Override
-	public final void writeSuffixTo(Appendable out) throws IOException {
-		super.writeSuffixTo(out);
-		writeSuffix(buffer, out);
-		buffer.setLength(0);
+	public final void writeSuffixTo(Appendable out, boolean trim) throws IOException {
+		super.writeSuffixTo(out, trim);
+		try {
+			writeSuffix(trim ? Strings.trim(buffer) : buffer, out);
+		} finally {
+			// Tests require buffer reset even on failure
+			buffer.setLength(0);
+		}
 	}
 
-	protected abstract void writeSuffix(StringBuilder buffer, Appendable out) throws IOException;
+	protected abstract void writeSuffix(CharSequence buffer, Appendable out) throws IOException;
 }

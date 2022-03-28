@@ -50,11 +50,21 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MediaEncoder.class);
 
 	/**
-	 * Gets the media encoder for the requested types or <code>null</code> if
+	 * Gets the media encoder for the requested types or {@code null} if
 	 * no encoding is necessary.  When an encoder is returned it is also a validator
 	 * for the contentType and produces valid output for the containerType.
 	 * When no encoder is returned, it is necessary to use a separate validator
 	 * if character validation is required.
+	 * <p>
+	 * Please note that all types can be encoded both to and from {@link MediaType#TEXT}.  Thus, when a specialized
+	 * encoder is not available (as indicated by throwing {@link UnsupportedEncodingException}), can always use
+	 * an intermediate TEXT to connect between types, such as CSS -&gt; TEXT -&gt; XHTML will just display the raw CSS
+	 * directly.
+	 * </p>
+	 * <p>
+	 * No automatic intermediate TEXT conversion is done, because the addition of new encoders could suddenly change
+	 * the semantics.
+	 * </p>
 	 *
 	 * @param  encodingContext  Required encoding context
 	 *
@@ -170,7 +180,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 		assert encoder.getValidMediaInputType() == contentType :
 			"encoder.getValidMediaInputType() != contentType: " + encoder.getValidMediaInputType() + " != " + contentType;
 		assert encoder.isValidatingMediaInputType(contentType) :
-			"encoder = " + encoder.getClass().getName() + " is not validating contentType = " + contentType;
+			"encoder = " + encoder.getClass().getName() + " is not validating contentType = " + contentType.name();
 		return encoder;
 	}
 
@@ -216,11 +226,25 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 	/**
 	 * {@inheritDoc}
 	 * <p>
+	 * This default implementation calls {@link #writeSuffixTo(java.lang.Appendable, boolean)} without trimming.
+	 * </p>
+	 *
+	 * @deprecated  Please use {@link #writeSuffixTo(java.lang.Appendable, boolean)} while specifying desired trim.
+	 */
+	@Deprecated
+	@Override
+	public final void writeSuffixTo(Appendable out) throws IOException {
+		writeSuffixTo(out, false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p>
 	 * This default implementation validates media types in assertion but writes nothing.
 	 * </p>
 	 */
 	@Override
-	public void writeSuffixTo(Appendable out) throws IOException {
+	public void writeSuffixTo(Appendable out, boolean trim) throws IOException {
 		assert Assertions.isValidating(out, getValidMediaOutputType());
 	}
 }

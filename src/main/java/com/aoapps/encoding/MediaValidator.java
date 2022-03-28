@@ -51,7 +51,7 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 	 * will return the provided writer.
 	 * <p>
 	 * Please note, the returned validator may be more strict than the requested media type.  It is guaranteed to
-	 * forbid at least all the invalid characters of {@link contentType}, but may also forbid more.
+	 * forbid at least all the invalid characters of {@code contentType}, but may also forbid more.
 	 * </p>
 	 * <p>
 	 * When the returned {@code validator != out}, {@link #validate()} must be called to finalize the validation.
@@ -174,9 +174,24 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 
 	/**
 	 * Performs final validation and resets the validator for reuse.
+	 * <p>
+	 * This default implementation calls {@link #validate(boolean)} without trimming.
+	 * </p>
+	 *
+	 * @deprecated  Please use {@link #validate(boolean)} while specifying desired trim.
+	 */
+	@Deprecated
+	public final void validate() throws IOException {
+		validate(false);
+	}
+
+	/**
+	 * Performs final validation and resets the validator for reuse.
+	 *
+	 * @param  trim  Requests that the buffer be trimmed, if buffered and trim supported.
 	 */
 	@SuppressWarnings("NoopMethodInAbstractClass")
-	public void validate() throws IOException {
+	public void validate(boolean trim) throws IOException {
 		// Nothing to do since nothing buffered and everything already validated
 	}
 

@@ -162,16 +162,21 @@ public final class TextInMysqlEncoder extends MediaEncoder {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType == MediaType.TEXT
-			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in MYSQL
+			inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in MYSQL
 			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in MYSQL
 			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in MYSQL
+			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in MYSQL
 		;
 	}
 
 	@Override
-	public boolean canSkipValidation(MediaType inputType) {
-		return true;
+	public boolean canSkipValidation(MediaType outputType) {
+		return
+			outputType == MediaType.CSS // All valid characters in CSS are also valid in TEXT in MYSQL
+			|| outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in TEXT in MYSQL
+			|| outputType == MediaType.PSQL // All valid characters in PSQL are also valid in TEXT in MYSQL
+			|| outputType == MediaType.SH // All valid characters in SH are also valid in TEXT in MYSQL
+		;
 	}
 
 	@Override
@@ -231,8 +236,8 @@ public final class TextInMysqlEncoder extends MediaEncoder {
 	}
 
 	@Override
-	public void writeSuffixTo(Appendable out) throws IOException {
-		super.writeSuffixTo(out);
+	public void writeSuffixTo(Appendable out, boolean trim) throws IOException {
+		super.writeSuffixTo(out, trim);
 		out.append('\'');
 	}
 }

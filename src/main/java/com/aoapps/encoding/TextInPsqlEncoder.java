@@ -239,16 +239,24 @@ public final class TextInPsqlEncoder extends MediaEncoder {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType == MediaType.TEXT
-			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in PSQL
+			inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in PSQL
 			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in PSQL
 			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in PSQL
+			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in PSQL
 		;
 	}
 
 	@Override
-	public boolean canSkipValidation(MediaType inputType) {
-		return true;
+	public boolean canSkipValidation(MediaType outputType) {
+		return
+			outputType == MediaType.CSS // All valid characters in CSS are also valid in TEXT in PSQL
+			|| outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in TEXT in PSQL
+			|| outputType == MediaType.PSQL // All valid characters in PSQL are also valid in TEXT in PSQL
+			|| outputType == MediaType.SH // All valid characters in SH are also valid in TEXT in PSQL
+			|| outputType == MediaType.URL // All valid characters in URL are also valid in TEXT in PSQL
+			|| outputType == MediaType.XHTML // All valid characters in XHTML are also valid in TEXT in PSQL
+			|| outputType == MediaType.XHTML_ATTRIBUTE // All valid characters in XHTML_ATTRIBUTE are also valid in TEXT in PSQL
+		;
 	}
 
 	@Override
@@ -308,8 +316,8 @@ public final class TextInPsqlEncoder extends MediaEncoder {
 	}
 
 	@Override
-	public void writeSuffixTo(Appendable out) throws IOException {
-		super.writeSuffixTo(out);
+	public void writeSuffixTo(Appendable out, boolean trim) throws IOException {
+		super.writeSuffixTo(out, trim);
 		out.append('\'');
 	}
 }

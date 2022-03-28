@@ -22,7 +22,6 @@
  */
 package com.aoapps.encoding;
 
-import com.aoapps.lang.Strings;
 import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
@@ -158,26 +157,25 @@ public class UrlValidator extends BufferedValidator {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType == MediaType.URL
-			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL
+			inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL
 			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL
 			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL
-			|| inputType == MediaType.MYSQL // All invalid characters in MYSQL are also invalid in URL
-			|| inputType == MediaType.PSQL // All invalid characters in PSQL are also invalid in URL
-			|| inputType == MediaType.SH // All invalid characters in SH are also invalid in URL
 			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL
+			|| inputType == MediaType.URL // All invalid characters in URL are also invalid in URL
 		;
 	}
 
 	@Override
-	public boolean canSkipValidation(MediaType inputType) {
-		return inputType == MediaType.URL;
+	public boolean canSkipValidation(MediaType outputType) {
+		return
+			outputType == MediaType.URL // All valid characters in URL are also valid in URL
+		;
 	}
 
 	@Override
-	protected void validate(StringBuilder buffer) throws IOException {
-		String url = Strings.trim(buffer).toString();
-		checkCharacters(url, 0, url.length());
-		out.write(url);
+	protected void validate(CharSequence buffer) throws IOException {
+		int len = buffer.length();
+		checkCharacters(buffer, 0, len);
+		out.append(buffer, 0, len);
 	}
 }

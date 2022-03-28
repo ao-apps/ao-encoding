@@ -22,7 +22,6 @@
  */
 package com.aoapps.encoding;
 
-import com.aoapps.lang.Strings;
 import java.io.IOException;
 
 /**
@@ -57,20 +56,19 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType == MediaType.URL
-			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL in JAVASCRIPT
+			inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL in JAVASCRIPT
 			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in JAVASCRIPT
 			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in JAVASCRIPT
-			|| inputType == MediaType.MYSQL // All invalid characters in MYSQL are also invalid in URL in JAVASCRIPT
-			|| inputType == MediaType.PSQL // All invalid characters in PSQL are also invalid in URL in JAVASCRIPT
-			|| inputType == MediaType.SH // All invalid characters in SH are also invalid in URL in JAVASCRIPT
 			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in JAVASCRIPT
+			|| inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in JAVASCRIPT
 		;
 	}
 
 	@Override
-	public boolean canSkipValidation(MediaType inputType) {
-		return inputType == MediaType.URL;
+	public boolean canSkipValidation(MediaType outputType) {
+		return
+			outputType == MediaType.URL // All valid characters in URL are also valid in URL in JAVASCRIPT
+		;
 	}
 
 	@Override
@@ -86,8 +84,8 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
 
 	@Override
 	@SuppressWarnings("StringEquality")
-	protected void writeSuffix(StringBuilder buffer, Appendable out) throws IOException {
-		String url = Strings.trim(buffer).toString();
+	protected void writeSuffix(CharSequence buffer, Appendable out) throws IOException {
+		String url = buffer.toString();
 		UrlValidator.checkCharacters(url, 0, url.length());
 		String encoded;
 		if(encodingContext != null) {

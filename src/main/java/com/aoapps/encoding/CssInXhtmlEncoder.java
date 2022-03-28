@@ -97,18 +97,23 @@ public final class CssInXhtmlEncoder extends MediaEncoder {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType == MediaType.CSS
+			inputType == MediaType.CSS // All invalid characters in CSS are also invalid in CSS in XHTML
 			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in CSS in XHTML
 			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in CSS in XHTML
 			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in CSS in XHTML
-			|| inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS in XHTML
 			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in CSS in XHTML
+			|| inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS in XHTML
 		;
 	}
 
 	@Override
-	public boolean canSkipValidation(MediaType inputType) {
-		return inputType == MediaType.CSS;
+	public boolean canSkipValidation(MediaType outputType) {
+		return
+			outputType == MediaType.CSS // All valid characters in CSS are also valid in CSS in XHTML
+			|| outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in CSS in XHTML
+			|| outputType == MediaType.PSQL // All valid characters in PSQL are also valid in CSS in XHTML
+			|| outputType == MediaType.SH // All valid characters in SH are also valid in CSS in XHTML
+		;
 	}
 
 	@Override
@@ -174,8 +179,8 @@ public final class CssInXhtmlEncoder extends MediaEncoder {
 	}
 
 	@Override
-	public void writeSuffixTo(Appendable out) throws IOException {
-		super.writeSuffixTo(out);
+	public void writeSuffixTo(Appendable out, boolean trim) throws IOException {
+		super.writeSuffixTo(out, trim);
 		if(encodingContext.getSerialization() == Serialization.XML) {
 			out.append(WhitespaceWriter.NL + "/*]]>*/</style>");
 		} else {

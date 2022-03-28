@@ -179,20 +179,16 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	@Override
 	public boolean isValidatingMediaInputType(MediaType inputType) {
 		return
-			inputType == MediaType.JAVASCRIPT
-			|| inputType == MediaType.JSON
-			|| inputType == MediaType.LD_JSON
+			inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in JAVASCRIPT in XHTML
+			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in JAVASCRIPT in XHTML
+			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in JAVASCRIPT in XHTML
 			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT in XHTML
 		;
 	}
 
 	@Override
-	public boolean canSkipValidation(MediaType inputType) {
-		return
-			inputType==MediaType.JAVASCRIPT
-			|| inputType==MediaType.JSON
-			|| inputType==MediaType.LD_JSON
-		;
+	public boolean canSkipValidation(MediaType outputType) {
+		return true; // All characters are valid in JAVASCRIPT in XHTML
 	}
 
 	@Override
@@ -267,8 +263,8 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	}
 
 	@Override
-	public void writeSuffixTo(Appendable out) throws IOException {
-		super.writeSuffixTo(out);
+	public void writeSuffixTo(Appendable out, boolean trim) throws IOException {
+		super.writeSuffixTo(out, trim);
 		if(
 			contentType == MediaType.JAVASCRIPT
 			&& encodingContext.getSerialization() == Serialization.XML

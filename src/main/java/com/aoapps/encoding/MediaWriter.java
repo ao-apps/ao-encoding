@@ -81,8 +81,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	}
 
 	@Override
-	public boolean canSkipValidation(MediaType inputType) {
-		return encoder.canSkipValidation(inputType);
+	public boolean canSkipValidation(MediaType outputType) {
+		return encoder.canSkipValidation(outputType);
 	}
 
 	@Override
@@ -229,7 +229,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -240,7 +240,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		MediaWriter tw = getTextWriter();
 		if(tw != this) tw.encoder.writePrefixTo(this);
 		tw.append(NBSP);
-		if(tw != this) tw.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this, false);
 		return this;
 	}
 
@@ -248,7 +248,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -259,7 +259,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		MediaWriter tw = getTextWriter();
 		if(tw != this) tw.encoder.writePrefixTo(this);
 		WriterUtil.nbsp(tw, count);
-		if(tw != this) tw.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this, false);
 		return this;
 	}
 
@@ -267,7 +267,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -278,7 +278,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		MediaWriter tw = getTextWriter();
 		if(tw != this) tw.encoder.writePrefixTo(this);
 		tw.append(ch);
-		if(tw != this) tw.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this, false);
 		return this;
 	}
 
@@ -286,7 +286,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -304,7 +304,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		} else {
 			throw new IllegalArgumentException(String.format("Invalid code point: 0x%X", codePoint));
 		}
-		if(tw != this) tw.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this, false);
 		return this;
 	}
 
@@ -312,7 +312,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -323,7 +323,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		MediaWriter tw = getTextWriter();
 		if(tw != this) tw.encoder.writePrefixTo(this);
 		if(cbuf != null) tw.write(cbuf);
-		if(tw != this) tw.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this, false);
 		return this;
 	}
 
@@ -331,7 +331,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -342,7 +342,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		MediaWriter tw = getTextWriter();
 		if(tw != this) tw.encoder.writePrefixTo(this);
 		if(cbuf != null) tw.write(cbuf, offset, len);
-		if(tw != this) tw.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this, false);
 		return this;
 	}
 
@@ -350,7 +350,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -361,7 +361,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		MediaWriter tw = getTextWriter();
 		if(tw != this) tw.encoder.writePrefixTo(this);
 		if(csq != null) tw.append(csq);
-		if(tw != this) tw.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this, false);
 		return this;
 	}
 
@@ -369,7 +369,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -380,7 +380,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		MediaWriter tw = getTextWriter();
 		if(tw != this) tw.encoder.writePrefixTo(this);
 		if(csq != null) tw.append(csq, start, end);
-		if(tw != this) tw.encoder.writeSuffixTo(this);
+		if(tw != this) tw.encoder.writeSuffixTo(this, false);
 		return this;
 	}
 
@@ -388,7 +388,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
 	 * If the string is translated, comments will be added giving the
@@ -458,7 +458,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
 	 * If the string is translated, comments will be added giving the
@@ -476,7 +476,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -498,7 +498,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * {@inheritDoc}
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable) suffixes} by media type, such as {@code "…"}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -515,7 +515,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		) {
 			@Override
 			public void close() throws IOException {
-				if(tw != MediaWriter.this) tw.encoder.writeSuffixTo(MediaWriter.this);
+				if(tw != MediaWriter.this) tw.encoder.writeSuffixTo(MediaWriter.this, false);
 			}
 		};
 	}

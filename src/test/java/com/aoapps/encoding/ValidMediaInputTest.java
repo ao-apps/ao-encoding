@@ -71,7 +71,7 @@ public class ValidMediaInputTest {
 	 * <p>
 	 * Tests that the implementation of {@link ValidMediaInput#isValidatingMediaInputType(com.aoapps.encoding.MediaType)}
 	 * is maximally broad for most optimized implementation.  All possible character values are compared, and if any
-	 * validator is determined to be a subset of another, it will ensure a true result from
+	 * validator is determined to disallow all characters, it will ensure a true result from
 	 * {@link ValidMediaInput#isValidatingMediaInputType(com.aoapps.encoding.MediaType)}.
 	 * </p>
 	 */
@@ -89,7 +89,7 @@ public class ValidMediaInputTest {
 						boolean canonicalInvalid;
 						try {
 							canonical.append(ch);
-							canonical.validate();
+							canonical.validate(false);
 							canonicalInvalid = false;
 						} catch(IOException e) {
 							canonicalInvalid = true;
@@ -100,12 +100,12 @@ public class ValidMediaInputTest {
 								if(validator instanceof MediaValidator) {
 									MediaValidator mv = (MediaValidator)validator;
 									mv.append(ch);
-									mv.validate();
+									mv.validate(false);
 								} else if(validator instanceof MediaEncoder) {
 									MediaEncoder me = (MediaEncoder)validator;
 									me.writePrefixTo(nullOut);
 									me.append(ch, nullOut);
-									me.writeSuffixTo(nullOut);
+									me.writeSuffixTo(nullOut, false);
 								} else {
 									fail("Unexpected type of validator: " + validator.getClass().getName());
 								}
@@ -135,7 +135,7 @@ public class ValidMediaInputTest {
 						boolean canonicalInvalid;
 						try {
 							canonical.append(ch);
-							canonical.validate();
+							canonical.validate(false);
 							canonicalInvalid = false;
 						} catch(IOException e) {
 							canonicalInvalid = true;
@@ -146,12 +146,12 @@ public class ValidMediaInputTest {
 								if(validator instanceof MediaValidator) {
 									MediaValidator mv = (MediaValidator)validator;
 									mv.append(ch);
-									mv.validate();
+									mv.validate(false);
 								} else if(validator instanceof MediaEncoder) {
 									MediaEncoder me = (MediaEncoder)validator;
 									me.writePrefixTo(nullOut);
 									me.append(ch, nullOut);
-									me.writeSuffixTo(nullOut);
+									me.writeSuffixTo(nullOut, false);
 								} else {
 									fail("Unexpected type of validator: " + validator.getClass().getName());
 								}
@@ -172,7 +172,126 @@ public class ValidMediaInputTest {
 								+ "validator should also declare this media type in isValidatingMediaInputType(inputType = %s)",
 								canonical.getClass().getSimpleName(),
 								validator.getClass().getSimpleName(),
-								inputType
+								inputType.name()
+							)
+						);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * <p>
+	 * Tests that all true results of {@link ValidMediaInput#canSkipValidation(com.aoapps.encoding.MediaType)}
+	 * allow all characters that are valid in the media type.  Characters are compared versus the media-type
+	 * specific validators from {@link MediaValidator#getMediaValidator(com.aoapps.encoding.MediaType, java.io.Writer)}.
+	 * </p>
+	 * <p>
+	 * Tests that the implementation of {@link ValidMediaInput#canSkipValidation(com.aoapps.encoding.MediaType)}
+	 * is maximally broad for most optimized implementation.  All possible character values are compared, and if any
+	 * validator is determined to allow all characters, it will ensure a true result from
+	 * {@link ValidMediaInput#canSkipValidation(com.aoapps.encoding.MediaType)}.
+	 * </p>
+	 */
+	@Test
+	public void testCanSkipValidation() throws UnsupportedEncodingException {
+		final Writer nullOut = NullWriter.getInstance();
+		for(ValidMediaInput validator : validators) {
+			for(MediaType outputType : MediaType.values()) {
+				// Find canonical validator for comparison
+				MediaValidator canonical = MediaValidator.getMediaValidator(outputType, nullOut);
+				if(validator.canSkipValidation(outputType)) {
+					// Check all possible characters
+					for(int c = Character.MIN_VALUE; c <= Character.MAX_VALUE; c++) {
+						char ch = (char)c;
+						boolean canonicalValid;
+						try {
+							canonical.append(ch);
+							canonical.validate(false);
+							canonicalValid = true;
+						} catch(IOException e) {
+							canonicalValid = false;
+						}
+						if(canonicalValid) {
+							boolean validatorValid;
+							try {
+								if(validator instanceof MediaValidator) {
+									MediaValidator mv = (MediaValidator)validator;
+									mv.append(ch);
+									mv.validate(false);
+								} else if(validator instanceof MediaEncoder) {
+									MediaEncoder me = (MediaEncoder)validator;
+									me.writePrefixTo(nullOut);
+									me.append(ch, nullOut);
+									me.writeSuffixTo(nullOut, false);
+								} else {
+									fail("Unexpected type of validator: " + validator.getClass().getName());
+								}
+								validatorValid = true;
+							} catch(IOException e2) {
+								validatorValid = false;
+							}
+							// The validator must also allow the valid character
+							if(!validatorValid) {
+								fail(
+									String.format(
+										"canonical (%s) allows valid character that validator (%s) did not: 0x%X",
+										canonical.getClass().getSimpleName(),
+										validator.getClass().getSimpleName(),
+										c
+									)
+								);
+							}
+						}
+					}
+				} else {
+					// If this validator also allows all legal characters from the canonical validator, it should also
+					// declare the outputType in canSkipValidation
+					boolean overlap = true;
+					for(int c = Character.MIN_VALUE; c <= Character.MAX_VALUE; c++) {
+						char ch = (char)c;
+						boolean canonicalValid;
+						try {
+							canonical.append(ch);
+							canonical.validate(false);
+							canonicalValid = true;
+						} catch(IOException e) {
+							canonicalValid = false;
+						}
+						if(canonicalValid) {
+							boolean validatorValid;
+							try {
+								if(validator instanceof MediaValidator) {
+									MediaValidator mv = (MediaValidator)validator;
+									mv.append(ch);
+									mv.validate(false);
+								} else if(validator instanceof MediaEncoder) {
+									MediaEncoder me = (MediaEncoder)validator;
+									me.writePrefixTo(nullOut);
+									me.append(ch, nullOut);
+									me.writeSuffixTo(nullOut, false);
+								} else {
+									fail("Unexpected type of validator: " + validator.getClass().getName());
+								}
+								validatorValid = true;
+							} catch(IOException e2) {
+								validatorValid = false;
+							}
+							if(!validatorValid) {
+								overlap = false;
+								break;
+							}
+						}
+					}
+					if(overlap) {
+						fail(
+							String.format(
+								"All valid characters in canonical (%s) are also valid in validator (%s), "
+								+ "validator should also declare this media type in canSkipValidation(outputType = %s)",
+								canonical.getClass().getSimpleName(),
+								validator.getClass().getSimpleName(),
+								outputType.name()
 							)
 						);
 					}

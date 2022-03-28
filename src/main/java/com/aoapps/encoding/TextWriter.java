@@ -135,7 +135,7 @@ public interface TextWriter<C extends TextWriter<C>> extends WhitespaceWriter<C>
 	 * This is well suited for use in a try-with-resources block.
 	 *
 	 * @return  A new writer that may be used for arbitrary text.
-	 *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable)}.
+	 *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
 	 */
 	MediaWriter text() throws IOException;
 }

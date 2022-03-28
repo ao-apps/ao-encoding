@@ -25,6 +25,7 @@ package com.aoapps.encoding;
 import com.aoapps.hodgepodge.i18n.MarkupType;
 import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.ContentType;
+import com.aoapps.lang.io.Encoder;
 import com.aoapps.lang.io.LocalizedUnsupportedEncodingException;
 import java.io.UnsupportedEncodingException;
 import java.util.ResourceBundle;
@@ -176,6 +177,11 @@ public enum MediaType {
 		public MarkupType getMarkupType() {
 			return MarkupType.NONE;
 		}
+
+		@Override
+		public boolean getTrimBuffer() {
+			return true;
+		}
 	},
 
 	/**
@@ -253,6 +259,17 @@ public enum MediaType {
 	 * Gets the markup type compatible with this media type.
 	 */
 	public abstract MarkupType getMarkupType();
+
+	/**
+	 * Should this content type generally be trimmed before validation?
+	 *
+	 * @see  MediaValidator#validate(boolean)
+	 * @see  Encoder#writeSuffixTo(java.lang.Appendable, boolean)
+	 * @see  MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)
+	 */
+	public boolean getTrimBuffer() {
+		return false;
+	}
 
 	private static final MediaType[] values = values();
 
