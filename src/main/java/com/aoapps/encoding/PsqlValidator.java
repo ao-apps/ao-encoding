@@ -35,6 +35,7 @@ import java.util.ResourceBundle;
  */
 public class PsqlValidator extends MediaValidator {
 
+	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, PsqlValidator.class);
 
 	/**
@@ -77,6 +78,7 @@ public class PsqlValidator extends MediaValidator {
 			checkCharacter(str.charAt(start++));
 		}
 	}
+	// </editor-fold>
 
 	protected PsqlValidator(Writer out) {
 		super(out);

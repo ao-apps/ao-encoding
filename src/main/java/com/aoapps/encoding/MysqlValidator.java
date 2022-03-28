@@ -35,6 +35,7 @@ import java.util.ResourceBundle;
  */
 public class MysqlValidator extends MediaValidator {
 
+	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MysqlValidator.class);
 
 	/**
@@ -77,6 +78,7 @@ public class MysqlValidator extends MediaValidator {
 			checkCharacter(str.charAt(start++));
 		}
 	}
+	// </editor-fold>
 
 	protected MysqlValidator(Writer out) {
 		super(out);

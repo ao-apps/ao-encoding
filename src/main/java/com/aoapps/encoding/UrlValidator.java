@@ -38,6 +38,7 @@ import java.util.ResourceBundle;
  */
 public class UrlValidator extends BufferedValidator {
 
+	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, UrlValidator.class);
 
 	/**
@@ -143,6 +144,7 @@ public class UrlValidator extends BufferedValidator {
 			checkCharacter(str.charAt(start++));
 		}
 	}
+	// </editor-fold>
 
 	protected UrlValidator(Writer out) {
 		super(out, 128);

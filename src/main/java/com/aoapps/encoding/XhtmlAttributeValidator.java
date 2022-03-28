@@ -41,6 +41,7 @@ import java.util.ResourceBundle;
  */
 public class XhtmlAttributeValidator extends MediaValidator {
 
+	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, XhtmlAttributeValidator.class);
 
 	/**
@@ -84,6 +85,7 @@ public class XhtmlAttributeValidator extends MediaValidator {
 			checkCharacter(str.charAt(start++));
 		}
 	}
+	// </editor-fold>
 
 	protected XhtmlAttributeValidator(Writer out) {
 		super(out);

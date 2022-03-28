@@ -40,6 +40,7 @@ import java.util.ResourceBundle;
 //       Would same apply to JavaScript?
 public class CssValidator extends MediaValidator {
 
+	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, CssValidator.class);
 
 	/**
@@ -86,6 +87,7 @@ public class CssValidator extends MediaValidator {
 			checkCharacter(str.charAt(start++));
 		}
 	}
+	// </editor-fold>
 
 	protected CssValidator(Writer out) {
 		super(out);
