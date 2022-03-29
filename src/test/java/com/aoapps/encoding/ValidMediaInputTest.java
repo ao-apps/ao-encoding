@@ -28,7 +28,6 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,7 +45,7 @@ public class ValidMediaInputTest {
 			try {
 				validators.add(MediaValidator.getMediaValidator(contentType, nullOut));
 			} catch(UnsupportedEncodingException e) {
-				fail("All media types must have validator implementations: " + contentType);
+				throw new AssertionError("All media types must have validator implementations: " + contentType.name(), e);
 			}
 			// MediaEncoder
 			for(MediaType containerType : MediaType.values()) {
@@ -107,7 +106,7 @@ public class ValidMediaInputTest {
 									me.append(ch, nullOut);
 									me.writeSuffixTo(nullOut, false);
 								} else {
-									fail("Unexpected type of validator: " + validator.getClass().getName());
+									throw new AssertionError("Unexpected type of validator: " + validator.getClass().getName());
 								}
 								validatorInvalid = false;
 							} catch(IOException e2) {
@@ -115,7 +114,7 @@ public class ValidMediaInputTest {
 							}
 							// The validator must also catch the invalid character
 							if(!validatorInvalid) {
-								fail(
+								throw new AssertionError(
 									String.format(
 										"canonical (%s) caught invalid character that validator (%s) did not: 0x%X",
 										canonical.getClass().getSimpleName(),
@@ -153,7 +152,7 @@ public class ValidMediaInputTest {
 									me.append(ch, nullOut);
 									me.writeSuffixTo(nullOut, false);
 								} else {
-									fail("Unexpected type of validator: " + validator.getClass().getName());
+									throw new AssertionError("Unexpected type of validator: " + validator.getClass().getName());
 								}
 								validatorInvalid = false;
 							} catch(IOException e2) {
@@ -166,7 +165,7 @@ public class ValidMediaInputTest {
 						}
 					}
 					if(overlap) {
-						fail(
+						throw new AssertionError(
 							String.format(
 								"All invalid characters in canonical (%s) are also invalid in validator (%s), "
 								+ "validator should also declare this media type in isValidatingMediaInputType(inputType = %s)",
@@ -226,7 +225,7 @@ public class ValidMediaInputTest {
 									me.append(ch, nullOut);
 									me.writeSuffixTo(nullOut, false);
 								} else {
-									fail("Unexpected type of validator: " + validator.getClass().getName());
+									throw new AssertionError("Unexpected type of validator: " + validator.getClass().getName());
 								}
 								validatorValid = true;
 							} catch(IOException e2) {
@@ -234,7 +233,7 @@ public class ValidMediaInputTest {
 							}
 							// The validator must also allow the valid character
 							if(!validatorValid) {
-								fail(
+								throw new AssertionError(
 									String.format(
 										"canonical (%s) allows valid character that validator (%s) did not: 0x%X",
 										canonical.getClass().getSimpleName(),
@@ -272,7 +271,7 @@ public class ValidMediaInputTest {
 									me.append(ch, nullOut);
 									me.writeSuffixTo(nullOut, false);
 								} else {
-									fail("Unexpected type of validator: " + validator.getClass().getName());
+									throw new AssertionError("Unexpected type of validator: " + validator.getClass().getName());
 								}
 								validatorValid = true;
 							} catch(IOException e2) {
@@ -285,7 +284,7 @@ public class ValidMediaInputTest {
 						}
 					}
 					if(overlap) {
-						fail(
+						throw new AssertionError(
 							String.format(
 								"All valid characters in canonical (%s) are also valid in validator (%s), "
 								+ "validator should also declare this media type in canSkipValidation(outputType = %s)",
