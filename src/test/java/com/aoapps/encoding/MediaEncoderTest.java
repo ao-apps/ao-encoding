@@ -166,4 +166,49 @@ public class MediaEncoderTest {
 			}
 		}
 	}
+
+	/**
+	 * Tests that any {@code null} return from {@link MediaValidator#getMediaValidator(com.aoapps.encoding.MediaType, java.io.Writer)}
+	 * is also found in {@link MediaValidator#canSkipValidation(com.aoapps.encoding.MediaType)} for the {@code containerType}.
+	 * This ensures that all valid characters in {@code contentType} are also valid in {@code containerType}
+	 * as tested in {@link ValidMediaInputTest#testCanSkipValidation()}.
+	 */
+	@Test
+	public void testNoEncoderNecessaryIsCanSkipValidation() {
+		final Writer nullOut = NullWriter.getInstance();
+		for(MediaType containerType : MediaType.values()) {
+			// MediaValidator
+			MediaValidator canonical;
+			try {
+				canonical = MediaValidator.getMediaValidator(containerType, nullOut);
+			} catch(UnsupportedEncodingException e) {
+				throw new AssertionError("All media types must have validator implementations: " + containerType.name(), e);
+			}
+			// MediaEncoder
+			for(MediaType contentType : MediaType.values()) {
+				try {
+					MediaEncoder encoder = MediaEncoder.getInstance(EncodingContext.DEFAULT, contentType, containerType);
+					if(encoder == null) {
+						// When no encoder is needed, it must also be skippable on canonical validator
+						if(!canonical.canSkipValidation(contentType)) {
+							throw new AssertionError(
+								String.format(
+									"\"No encoder needed\" for %s into %s, but %s.canSkipValidation(%s) returned false, "
+									+ "which indicates not all valid characters in %s are valid in %s",
+									contentType.name(),
+									containerType.name(),
+									canonical.getClass().getSimpleName(),
+									contentType.name(),
+									contentType.name(),
+									containerType.name()
+								)
+							);
+						}
+					}
+				} catch(UnsupportedEncodingException e) {
+					// OK if not supported
+				}
+			}
+		}
+	}
 }
