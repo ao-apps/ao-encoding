@@ -53,8 +53,17 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 	 * Gets the media encoder for the requested types or {@code null} if
 	 * no encoding is necessary.  When an encoder is returned it is also a validator
 	 * for the contentType and produces valid output for the containerType.
+	 * <p>
+	 * An encoder is not needed when no prefix or suffix is needed, all valid
+	 * {@code contentType} characters are also valid in {@code containerType},
+	 * and with the same representation.  Furthermore, there must be some meaningful
+	 * relationship between {@code contentType} and {@code containerType} -
+	 * simply having compatible characters alone is insufficient.
+	 * </p>
+	 * <p>
 	 * When no encoder is returned, it is necessary to use {@linkplain MediaValidator a separate validator}
 	 * if character validation is required.
+	 * </p>
 	 * <p>
 	 * Please note that all types can be encoded both to and from {@link MediaType#TEXT}.  Thus, when a specialized
 	 * encoder is not available (as indicated by throwing {@link UnsupportedEncodingException}), can always use
