@@ -23,7 +23,6 @@
 package com.aoapps.encoding;
 
 import com.aoapps.lang.Coercion;
-import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -120,9 +119,9 @@ public final class TextInPsqlEncoder extends MediaEncoder {
 	 *
 	 * @see PsqlValidator#checkCharacter(char)
 	 *
-	 * @throws  IOException  if any text character cannot be converted for use in the psql command line
+	 * @throws  InvalidCharacterException  if any text character cannot be converted for use in the psql command line
 	 */
-	private static String getEscapedCharacter(char c) throws IOException {
+	private static String getEscapedCharacter(char c) throws InvalidCharacterException {
 		switch(c) {
 			case '\\' : return "\\\\";
 			case '\'' : return "''";
@@ -138,7 +137,7 @@ public final class TextInPsqlEncoder extends MediaEncoder {
 		if(c == 0xFFFE) return "\\uFFFE";
 		if(c == 0xFFFF) return "\\uFFFF";
 		assert c == 0 : "The only character not supported is NULL (\\x00), got " + Integer.toHexString(c);
-		throw new LocalizedIOException(PsqlValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
+		throw new InvalidCharacterException(PsqlValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**

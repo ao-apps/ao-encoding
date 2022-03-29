@@ -23,7 +23,6 @@
 package com.aoapps.encoding;
 
 import com.aoapps.lang.i18n.Resources;
-import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ResourceBundle;
@@ -41,13 +40,13 @@ public class UrlValidator extends BufferedValidator {
 	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, UrlValidator.class);
 
 	/**
-	 * Checks one character, throws IOException if invalid.
+	 * Checks one character, throws {@link InvalidCharacterException} if invalid.
 	 * <p>
 	 * See <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
 	 * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
 	 * </p>
 	 */
-	public static void checkCharacter(char c) throws IOException {
+	public static void checkCharacter(char c) throws InvalidCharacterException {
 		switch(c) {
 			/*
 			 * Reserved Characters
@@ -114,17 +113,17 @@ public class UrlValidator extends BufferedValidator {
 					return;
 				}
 		}
-		throw new LocalizedIOException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
+		throw new InvalidCharacterException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**
-	 * Checks a set of characters, throws IOException if invalid
+	 * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
 	 * <p>
 	 * See <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
 	 * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
 	 * </p>
 	 */
-	public static void checkCharacters(char[] cbuf, int off, int len) throws IOException {
+	public static void checkCharacters(char[] cbuf, int off, int len) throws InvalidCharacterException {
 		int end = off + len;
 		while(off < end) {
 			checkCharacter(cbuf[off++]);
@@ -132,13 +131,13 @@ public class UrlValidator extends BufferedValidator {
 	}
 
 	/**
-	 * Checks a set of characters, throws IOException if invalid
+	 * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
 	 * <p>
 	 * See <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
 	 * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
 	 * </p>
 	 */
-	public static void checkCharacters(CharSequence str, int start, int end) throws IOException {
+	public static void checkCharacters(CharSequence str, int start, int end) throws InvalidCharacterException {
 		while(start < end) {
 			checkCharacter(str.charAt(start++));
 		}

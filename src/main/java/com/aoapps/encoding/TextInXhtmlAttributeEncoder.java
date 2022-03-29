@@ -42,9 +42,9 @@ public final class TextInXhtmlAttributeEncoder extends MediaEncoder {
 	 *
 	 * @see XhtmlMediaValidator#checkCharacter(char)
 	 *
-	 * @throws  IOException  if any text character cannot be converted to XHTML attribute
+	 * @throws  InvalidCharacterException  if any text character cannot be converted to XHTML attribute
 	 */
-	private static String getEscapedCharacter(char c) throws IOException {
+	private static String getEscapedCharacter(char c) throws InvalidCharacterException {
 		switch(c) {
 			case '<': return "&lt;";
 			case '>': return "&gt;";

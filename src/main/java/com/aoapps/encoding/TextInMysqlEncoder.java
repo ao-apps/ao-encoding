@@ -23,7 +23,6 @@
 package com.aoapps.encoding;
 
 import com.aoapps.lang.Coercion;
-import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -43,9 +42,9 @@ public final class TextInMysqlEncoder extends MediaEncoder {
 	 *
 	 * @see MysqlValidator#checkCharacter(char)
 	 *
-	 * @throws  IOException  if any text character cannot be converted for use in the mysql command line
+	 * @throws  InvalidCharacterException  if any text character cannot be converted for use in the mysql command line
 	 */
-	private static String getEscapedCharacter(char c) throws IOException {
+	private static String getEscapedCharacter(char c) throws InvalidCharacterException {
 		switch(c) {
 			case '\0' : return "\\0";
 			case '\'' : return "''";
@@ -61,7 +60,7 @@ public final class TextInMysqlEncoder extends MediaEncoder {
 			(c >= 0x20 && c <= 0x7E) // common case first
 			|| (c >= 0xA0 && c <= 0xFFFD)
 		) return null;
-		throw new LocalizedIOException(MysqlValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
+		throw new InvalidCharacterException(MysqlValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**

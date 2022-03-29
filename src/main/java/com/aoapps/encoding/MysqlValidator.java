@@ -23,7 +23,6 @@
 package com.aoapps.encoding;
 
 import com.aoapps.lang.i18n.Resources;
-import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ResourceBundle;
@@ -39,28 +38,28 @@ public class MysqlValidator extends MediaValidator {
 	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MysqlValidator.class);
 
 	/**
-	 * Checks one character, throws IOException if invalid.
+	 * Checks one character, throws {@link InvalidCharacterException} if invalid.
 	 * <p>
 	 * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
 	 * </p>
 	 */
-	public static void checkCharacter(char c) throws IOException {
+	public static void checkCharacter(char c) throws InvalidCharacterException {
 		if(
 			(c < 0x20 || c > 0x7E) // common case first
 			&& c != '\t'
 			&& c != '\n'
 			// 7F to 9F - control characters
 			&& (c < 0xA0 || c > 0xFFFD)
-		) throw new LocalizedIOException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
+		) throw new InvalidCharacterException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**
-	 * Checks a set of characters, throws IOException if invalid
+	 * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
 	 * <p>
 	 * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
 	 * </p>
 	 */
-	public static void checkCharacters(char[] cbuf, int off, int len) throws IOException {
+	public static void checkCharacters(char[] cbuf, int off, int len) throws InvalidCharacterException {
 		int end = off + len;
 		while(off < end) {
 			checkCharacter(cbuf[off++]);
@@ -68,12 +67,12 @@ public class MysqlValidator extends MediaValidator {
 	}
 
 	/**
-	 * Checks a set of characters, throws IOException if invalid
+	 * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
 	 * <p>
 	 * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
 	 * </p>
 	 */
-	public static void checkCharacters(CharSequence str, int start, int end) throws IOException {
+	public static void checkCharacters(CharSequence str, int start, int end) throws InvalidCharacterException {
 		while(start < end) {
 			checkCharacter(str.charAt(start++));
 		}

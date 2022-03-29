@@ -49,6 +49,7 @@ public class MediaEncoderTest {
 			try {
 				canonical.append(c);
 			} catch(IOException e) {
+				assert e instanceof InvalidCharacterException;
 				throw new AssertionError(
 					String.format(
 						"encoder (%s) wrote invalid output for character 0x%X that canonical (%s) caught: 0x%X",
@@ -68,6 +69,7 @@ public class MediaEncoderTest {
 			try {
 				canonical.append(csq);
 			} catch(IOException e) {
+				assert e instanceof InvalidCharacterException;
 				throw new AssertionError(
 					String.format(
 						"encoder (%s) wrote invalid output for character 0x%X that canonical (%s) caught: %s",
@@ -87,6 +89,7 @@ public class MediaEncoderTest {
 			try {
 				canonical.append(csq, start, end);
 			} catch(IOException e) {
+				assert e instanceof InvalidCharacterException;
 				throw new AssertionError(
 					String.format(
 						"encoder (%s) wrote invalid output for character 0x%X that canonical (%s) caught: %s",
@@ -135,6 +138,7 @@ public class MediaEncoderTest {
 								encoder.writePrefixTo(noInvalidAllowed);
 								canonical.validate(false);
 							} catch(IOException e) {
+								assert e instanceof InvalidCharacterException;
 								throw new AssertionError(
 									"Error from writePrefixTo: " + encoder.getClass().getSimpleName() + " into "
 									+ canonical.getClass().getSimpleName(),
@@ -146,12 +150,14 @@ public class MediaEncoderTest {
 								encoder.append(ch, noInvalidAllowed);
 								encoder.writeSuffixTo(noInvalidAllowed, false);
 							} catch(IOException e) {
+								assert e instanceof InvalidCharacterException;
 								// Invalid character caught by encoder: OK
 							}
 							// Canonical may have buffered validation
 							try {
 								canonical.validate(false);
 							} catch(IOException e) {
+								assert e instanceof InvalidCharacterException;
 								throw new AssertionError(
 									"Error from final canonical validation: " + encoder.getClass().getSimpleName() + " into "
 									+ canonical.getClass().getSimpleName(),

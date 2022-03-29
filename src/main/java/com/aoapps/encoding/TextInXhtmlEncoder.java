@@ -42,9 +42,9 @@ public final class TextInXhtmlEncoder extends MediaEncoder {
 	 *
 	 * @see XhtmlValidator#checkCharacter(char)
 	 *
-	 * @throws  IOException  if any text character cannot be converted to XHTML
+	 * @throws  InvalidCharacterException  if any text character cannot be converted to XHTML
 	 */
-	private static String getEscapedCharacter(char c) throws IOException {
+	private static String getEscapedCharacter(char c) throws InvalidCharacterException {
 		// 0.0037849858401 ms per call with switch
 		// 0.00360391125522 ms per call with if, no room to improve here
 		switch(c) {

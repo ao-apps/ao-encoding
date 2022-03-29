@@ -23,7 +23,6 @@
 package com.aoapps.encoding;
 
 import com.aoapps.lang.Coercion;
-import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -48,9 +47,9 @@ public final class CssInXhtmlAttributeEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 *
-	 * @throws  IOException  if any text character cannot be converted for use in XHTML attribute
+	 * @throws  InvalidCharacterException  if any text character cannot be converted for use in XHTML attribute
 	 */
-	private static String getEscapedCharacter(char c) throws IOException {
+	private static String getEscapedCharacter(char c) throws InvalidCharacterException {
 		switch(c) {
 			// These characters are allowed in CSS but need encoded for XHTML
 			case '<': return "&lt;";
@@ -66,7 +65,7 @@ public final class CssInXhtmlAttributeEncoder extends MediaEncoder {
 			(c >= 0x20 && c <= 0x7E) // common case first
 			|| (c >= 0xA0 && c <= 0xFFFD)
 		) return null;
-		throw new LocalizedIOException(CssValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
+		throw new InvalidCharacterException(CssValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**

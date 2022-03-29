@@ -23,7 +23,6 @@
 package com.aoapps.encoding;
 
 import com.aoapps.lang.Coercion;
-import com.aoapps.lang.io.LocalizedIOException;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -49,9 +48,9 @@ public final class TextInCssEncoder extends MediaEncoder {
 	 *
 	 * @see CssValidator#checkCharacter(char)
 	 *
-	 * @throws  IOException  if any text character cannot be converted for use within a CSS string
+	 * @throws  InvalidCharacterException  if any text character cannot be converted for use within a CSS string
 	 */
-	private static String getEscapedCharacter(char c) throws IOException {
+	private static String getEscapedCharacter(char c) throws InvalidCharacterException {
 		switch(c) {
 			case '"' : return "\\\"";
 			// Not needed inside double quotes overall: case ''' : return "\\'";
@@ -64,7 +63,7 @@ public final class TextInCssEncoder extends MediaEncoder {
 			(c >= 0x20 && c <= 0x7E) // common case first
 			|| (c >= 0xA0 && c <= 0xFFFD)
 		) return null;
-		throw new LocalizedIOException(CssValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
+		throw new InvalidCharacterException(CssValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**

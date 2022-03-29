@@ -91,6 +91,7 @@ public class ValidMediaInputTest {
 							canonical.validate(false);
 							canonicalInvalid = false;
 						} catch(IOException e) {
+							assert e instanceof InvalidCharacterException;
 							canonicalInvalid = true;
 						}
 						if(canonicalInvalid) {
@@ -110,6 +111,7 @@ public class ValidMediaInputTest {
 								}
 								validatorInvalid = false;
 							} catch(IOException e2) {
+								assert e2 instanceof InvalidCharacterException;
 								validatorInvalid = true;
 							}
 							// The validator must also catch the invalid character
@@ -137,6 +139,7 @@ public class ValidMediaInputTest {
 							canonical.validate(false);
 							canonicalInvalid = false;
 						} catch(IOException e) {
+							assert e instanceof InvalidCharacterException;
 							canonicalInvalid = true;
 						}
 						if(canonicalInvalid) {
@@ -156,6 +159,7 @@ public class ValidMediaInputTest {
 								}
 								validatorInvalid = false;
 							} catch(IOException e2) {
+								assert e2 instanceof InvalidCharacterException;
 								validatorInvalid = true;
 							}
 							if(!validatorInvalid) {
@@ -210,6 +214,7 @@ public class ValidMediaInputTest {
 							canonical.validate(false);
 							canonicalValid = true;
 						} catch(IOException e) {
+							assert e instanceof InvalidCharacterException;
 							canonicalValid = false;
 						}
 						if(canonicalValid) {
@@ -229,6 +234,7 @@ public class ValidMediaInputTest {
 								}
 								validatorValid = true;
 							} catch(IOException e2) {
+								assert e2 instanceof InvalidCharacterException;
 								validatorValid = false;
 							}
 							// The validator must also allow the valid character
@@ -256,6 +262,7 @@ public class ValidMediaInputTest {
 							canonical.validate(false);
 							canonicalValid = true;
 						} catch(IOException e) {
+							assert e instanceof InvalidCharacterException;
 							canonicalValid = false;
 						}
 						if(canonicalValid) {
@@ -275,6 +282,7 @@ public class ValidMediaInputTest {
 								}
 								validatorValid = true;
 							} catch(IOException e2) {
+								assert e2 instanceof InvalidCharacterException;
 								validatorValid = false;
 							}
 							if(!validatorValid) {
