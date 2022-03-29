@@ -26,6 +26,7 @@ import com.aoapps.lang.Coercion;
 import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.Encoder;
 import com.aoapps.lang.io.LocalizedUnsupportedEncodingException;
+import com.aoapps.lang.io.NoClose;
 import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -111,10 +112,10 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 					throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindValidator", contentType.getContentType());
 			}
 			assert inputValidator.getValidMediaInputType() == contentType :
-				"inputValidator.getValidMediaInputType() != contentType: " + inputValidator.getValidMediaInputType() + " != " + contentType;
+				"inputValidator.getValidMediaInputType() != contentType: " + inputValidator.getValidMediaInputType().name() + " != " + contentType.name();
 		}
 		assert inputValidator.isValidatingMediaInputType(contentType) :
-			"inputValidator=" + inputValidator.getClass().getName() + " is not validating contentType=" + contentType;
+			"inputValidator = " + inputValidator.getClass().getName() + " is not validating contentType = " + contentType.name();
 		return inputValidator;
 	}
 
@@ -211,7 +212,10 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 								+ " into " + validator.getValidMediaInputType()
 							);
 						}
-						return validator.getOut();
+						Writer newOut = validator.getOut();
+						assert (newOut instanceof NoClose) == (validator instanceof NoClose);
+						assert (newOut instanceof NoCloseMediaValidator) == (validator instanceof NoCloseMediaValidator);
+						return newOut;
 					}
 				}
 			}

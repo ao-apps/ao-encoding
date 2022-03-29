@@ -23,6 +23,7 @@
 package com.aoapps.encoding;
 
 import com.aoapps.hodgepodge.i18n.MarkupCoercion;
+import com.aoapps.lang.CoercionOptimizer;
 import com.aoapps.lang.NullArgumentException;
 import com.aoapps.lang.Throwables;
 import com.aoapps.lang.io.EncoderWriter;
@@ -47,10 +48,27 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 
 	protected MediaWriter textWriter;
 
-	public MediaWriter(EncodingContext encodingContext, MediaEncoder encoder, Writer out) {
-		super(encoder, out);
+	/**
+	 * @param  out  Conditionally passed through {@link com.aoapps.lang.Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link com.aoapps.lang.Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 */
+	public MediaWriter(EncodingContext encodingContext, MediaEncoder encoder, Writer out, boolean outOptimized) {
+		super(encoder, out, outOptimized);
+		Writer optimized = getOut();
+		assert !(optimized instanceof MediaValidator) || !((MediaValidator)optimized).canSkipValidation(encoder.getValidMediaOutputType()) :
+			"Validation should have been skipped by " + CoercionOptimizer.class.getName() + " registered by " + MediaValidator.class.getName()
+			+ " for outputType = " + encoder.getValidMediaOutputType().name();
+		assert !(optimized instanceof MediaValidator) || ((MediaValidator)optimized).isValidatingMediaInputType(encoder.getValidMediaOutputType()) :
+			"MediaValidator = " + optimized.getClass().getName() + " is not validating outputType = " + encoder.getValidMediaOutputType().name();
 		this.encodingContext = NullArgumentException.checkNotNull(encodingContext, "encodingContext");
 		this.encoder = encoder;
+	}
+
+	/**
+	 * @param  out  Passed through {@link com.aoapps.lang.Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 */
+	public MediaWriter(EncodingContext encodingContext, MediaEncoder encoder, Writer out) {
+		this(encodingContext, encoder, out, false);
 	}
 
 	public EncodingContext getEncodingContext() {

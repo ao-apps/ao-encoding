@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2022-03-28T02:57:19-05:00"
+		dateModified="2022-03-28T18:05:16-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -62,6 +62,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 					<li>Added <code>EncodingContext.getCharacterEncoding()</code> to get output character encoding.</li>
 					<li>Increased number of validation skips and substitutions through new tests that verify all characters.</li>
 					<li>Encoder suffix and validate now accept optional trim, when trimmed, validation is applied after trimming.</li>
+					<li><code>MediaWriter</code> now unwraps the writer via <code>Coercion.optimize(Writer, Encoder)</code>.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
