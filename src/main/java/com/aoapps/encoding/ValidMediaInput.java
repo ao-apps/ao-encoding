@@ -56,7 +56,7 @@ public interface ValidMediaInput {
 	boolean isValidatingMediaInputType(MediaType inputType);
 
 	/**
-	 * Checks if validation may be skipped when the data being written to this
+	 * Checks if validation may be skipped when the characters being written to this
 	 * validator is already known to be valid with the given media type.  This may be done when every valid character
 	 * for the given media type is also valid within this validator.
 	 * <p>

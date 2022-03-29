@@ -28,7 +28,7 @@ import java.io.Writer;
 
 /**
  * <p>
- * Encodes arbitrary data for use in a shell script.
+ * Encodes arbitrary text for use in a shell script.
  * </p>
  * <p>
  * This implementation is based on <a href="https://www.gnu.org/software/bash/">Bash</a>,

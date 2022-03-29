@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * Encodes arbitrary data for use in as a CSS string.
+ * Encodes arbitrary text for use in as a CSS string.
  * <ul>
  * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
  * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>

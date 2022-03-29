@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * Encodes arbitrary data for use in the <code>mysql</code> command line.
+ * Encodes arbitrary text for use in the <code>mysql</code> command line.
  * This implementation is based on <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
  *
  * @author  AO Industries, Inc.

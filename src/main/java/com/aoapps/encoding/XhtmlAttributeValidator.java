@@ -29,8 +29,7 @@ import java.util.ResourceBundle;
 
 /**
  * <p>
- * Makes sure that all data going through this writer has the correct characters
- * for an XHTML attribute.
+ * Verifies all characters going through this filter are valid for an XHTML attribute.
  * </p>
  * <p>
  * <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>

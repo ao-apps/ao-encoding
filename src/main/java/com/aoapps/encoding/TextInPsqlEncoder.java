@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * Encodes arbitrary data for use in the <code>psql</code> command line.
+ * Encodes arbitrary text for use in the <code>psql</code> command line.
  * This implementation is based on <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
  *
  * @author  AO Industries, Inc.

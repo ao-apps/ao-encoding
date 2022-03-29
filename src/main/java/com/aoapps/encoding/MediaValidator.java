@@ -36,7 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Verify that the data passing through this filter is valid for the provided media type.
+ * Verifies all characters going through this filter are valid for the given media type.
  *
  * @author  AO Industries, Inc.
  */

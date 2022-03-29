@@ -28,8 +28,8 @@ import java.io.Writer;
 import java.util.ResourceBundle;
 
 /**
- * Makes sure that all data going through this writer has the correct characters
- * for URI/URL data.  The URL must be valid <a href="https://datatracker.ietf.org/doc/html/rfc3986">RFC 3986 URI</a> or
+ * Verifies all characters going through this filter are valid for a URI/URL.
+ * The URL must be valid <a href="https://datatracker.ietf.org/doc/html/rfc3986">RFC 3986 URI</a> or
  * <a href="https://datatracker.ietf.org/doc/html/rfc3987">RFC 3987 IRI</a>.
  *
  * @author  AO Industries, Inc.

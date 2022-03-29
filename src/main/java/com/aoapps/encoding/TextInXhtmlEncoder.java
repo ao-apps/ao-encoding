@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * Encodes arbitrary data into XHTML.  Minimal conversion is performed, just
+ * Encodes arbitrary text into XHTML.  Minimal conversion is performed, just
  * encoding of necessary values and throwing an IOException when any character
  * is found that cannot be converted to XHTML entities.
  *

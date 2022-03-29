@@ -34,7 +34,7 @@ import java.util.ResourceBundle;
 /**
  * <p>
  * Encodes media to allow it to be contained in a different type of media.
- * For example, one may have plaintext inside of HTML, or arbitrary data inside
+ * For example, one may have plaintext inside of HTML, or arbitrary text inside
  * a JavaScript String inside an onclick attribute of an area tag in a XHTML
  * document.  All necessary encoding is automatically performed.
  * </p>
