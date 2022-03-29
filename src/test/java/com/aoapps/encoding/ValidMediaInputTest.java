@@ -87,7 +87,7 @@ public class ValidMediaInputTest {
 						char ch = (char)c;
 						boolean canonicalInvalid;
 						try {
-							canonical.append(ch);
+							canonical.write(ch);
 							canonical.validate(false);
 							canonicalInvalid = false;
 						} catch(IOException e) {
@@ -144,12 +144,12 @@ public class ValidMediaInputTest {
 							try {
 								if(validator instanceof MediaValidator) {
 									MediaValidator mv = (MediaValidator)validator;
-									mv.append(ch);
+									mv.write(ch);
 									mv.validate(false);
 								} else if(validator instanceof MediaEncoder) {
 									MediaEncoder me = (MediaEncoder)validator;
 									me.writePrefixTo(nullOut);
-									me.append(ch, nullOut);
+									me.write(ch, nullOut);
 									me.writeSuffixTo(nullOut, false);
 								} else {
 									throw new AssertionError("Unexpected type of validator: " + validator.getClass().getName());
@@ -217,12 +217,12 @@ public class ValidMediaInputTest {
 							try {
 								if(validator instanceof MediaValidator) {
 									MediaValidator mv = (MediaValidator)validator;
-									mv.append(ch);
+									mv.write(ch);
 									mv.validate(false);
 								} else if(validator instanceof MediaEncoder) {
 									MediaEncoder me = (MediaEncoder)validator;
 									me.writePrefixTo(nullOut);
-									me.append(ch, nullOut);
+									me.write(ch, nullOut);
 									me.writeSuffixTo(nullOut, false);
 								} else {
 									throw new AssertionError("Unexpected type of validator: " + validator.getClass().getName());
@@ -252,7 +252,7 @@ public class ValidMediaInputTest {
 						char ch = (char)c;
 						boolean canonicalValid;
 						try {
-							canonical.append(ch);
+							canonical.write(ch);
 							canonical.validate(false);
 							canonicalValid = true;
 						} catch(IOException e) {
