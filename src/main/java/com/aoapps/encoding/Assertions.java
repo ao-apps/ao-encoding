@@ -29,13 +29,22 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-final class Assertions  {
+final class Assertions {
 
 	/** Make no instances. */
 	private Assertions() {throw new AssertionError();}
 
 	private static boolean isValidating(ValidMediaInput out, MediaType outputType) {
-		return out.canSkipValidation(outputType) || out.isValidatingMediaInputType(outputType);
+		if(!out.canSkipValidation(outputType) && !out.isValidatingMediaInputType(outputType)) {
+			throw new AssertionError(
+				String.format(
+					"%s is not validating %s, nor can validation be skipped",
+					outputType.name(),
+					out.getClass().getName()
+				)
+			);
+		}
+		return true;
 	}
 
 	static boolean isValidating(Appendable out, MediaType outputType) {
