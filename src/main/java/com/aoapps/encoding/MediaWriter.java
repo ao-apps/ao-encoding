@@ -311,32 +311,6 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	 * </p>
 	 */
 	@Override
-	public MediaWriter text(int codePoint) throws IOException {
-		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.encoder.writePrefixTo(this);
-		if(Character.isBmpCodePoint(codePoint)) {
-			tw.append((char)codePoint);
-		} else if(Character.isValidCodePoint(codePoint)) {
-			tw.append(Character.lowSurrogate(codePoint));
-			tw.append(Character.highSurrogate(codePoint));
-		} else {
-			throw new IllegalArgumentException(String.format("Invalid code point: 0x%X", codePoint));
-		}
-		if(tw != this) tw.encoder.writeSuffixTo(this, false);
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 */
-	@Override
 	public MediaWriter text(char[] cbuf) throws IOException {
 		MediaWriter tw = getTextWriter();
 		if(tw != this) tw.encoder.writePrefixTo(this);

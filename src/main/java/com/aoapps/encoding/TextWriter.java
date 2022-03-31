@@ -75,13 +75,6 @@ public interface TextWriter<C extends TextWriter<C>> extends WhitespaceWriter<C>
 	 *
 	 * @return  {@code this} writer
 	 */
-	C text(int codePoint) throws IOException;
-
-	/**
-	 * Writes the given text with proper encoding.
-	 *
-	 * @return  {@code this} writer
-	 */
 	C text(char[] cbuf) throws IOException;
 
 	/**
