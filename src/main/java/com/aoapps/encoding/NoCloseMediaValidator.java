@@ -22,6 +22,7 @@
  */
 package com.aoapps.encoding;
 
+import com.aoapps.lang.Coercion;
 import com.aoapps.lang.io.NoClose;
 import com.aoapps.lang.io.NoCloseWriter;
 import java.io.IOException;
@@ -79,7 +80,9 @@ public class NoCloseMediaValidator extends MediaValidator implements NoClose {
 	}
 
 	/**
-	 * Gets the wrapped writer as {@link NoClose}.
+	 * Gets the wrapped writer, which has been optimized via
+	 * {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)},
+	 * then as {@link NoClose}.
 	 *
 	 * @return  the wrapped writer passed through {@link #wrap(java.io.Writer)}
 	 */

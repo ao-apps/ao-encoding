@@ -535,10 +535,11 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInXhtmlAttributeEncoder
-	 * @see  Coercion#write(java.lang.Object, com.aoapps.lang.io.Encoder, java.io.Writer)
+	 * @see  Coercion#write(java.lang.Object, com.aoapps.lang.io.Encoder, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInXmlAttribute(Object value) throws IOException {
-		Coercion.write(value, textInXhtmlAttributeEncoder, out);
+		assert out == Coercion.optimize(out, textInXhtmlAttributeEncoder) : "There are no optimizers for PrintWriter";
+		Coercion.write(value, textInXhtmlAttributeEncoder, out, true);
 		return this;
 	}
 
@@ -546,10 +547,11 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInXhtmlEncoder
-	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInXhtml(Object value) throws IOException {
-		MarkupCoercion.write(value, MarkupType.XHTML, false, textInXhtmlEncoder, false, out);
+		assert out == Coercion.optimize(out, textInXhtmlEncoder) : "There are no optimizers for PrintWriter";
+		MarkupCoercion.write(value, MarkupType.XHTML, false, textInXhtmlEncoder, false, out, true);
 		return this;
 	}
 
@@ -595,10 +597,11 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInJavaScriptEncoder
-	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInJavaScript(Object value) throws IOException {
-		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, out);
+		assert out == Coercion.optimize(out, textInJavaScriptEncoder) : "There are no optimizers for PrintWriter";
+		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, out, true);
 		return this;
 	}
 
@@ -612,13 +615,14 @@ public final class ChainWriter implements Appendable, Closeable {
 	 *
 	 * @see  TextInJavaScriptEncoder
 	 * @see  JavaScriptInXhtmlAttributeEncoder
-	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInJavaScriptInXmlAttribute(Object value) throws IOException {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XML Attribute
-		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, javaScriptInXhtmlAttributeWriter);
+		assert javaScriptInXhtmlAttributeWriter == Coercion.optimize(javaScriptInXhtmlAttributeWriter, textInJavaScriptEncoder) : "There are no optimizers for MediaWriter";
+		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, javaScriptInXhtmlAttributeWriter, true);
 		return this;
 	}
 
@@ -632,13 +636,14 @@ public final class ChainWriter implements Appendable, Closeable {
 	 *
 	 * @see  TextInJavaScriptEncoder
 	 * @see  JavaScriptInXhtmlEncoder
-	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInJavaScriptInXhtml(Object value) throws IOException {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XHTML
-		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, javaScriptInXhtmlWriter);
+		assert javaScriptInXhtmlWriter == Coercion.optimize(javaScriptInXhtmlWriter, textInJavaScriptEncoder) : "There are no optimizers for MediaWriter";
+		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, javaScriptInXhtmlWriter, true);
 		return this;
 	}
 
@@ -651,10 +656,11 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInMysqlEncoder
-	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInMysql(Object value) throws IOException {
-		MarkupCoercion.write(value, MarkupType.MYSQL, false, textInMysqlEncoder, true, out);
+		assert out == Coercion.optimize(out, textInMysqlEncoder) : "There are no optimizers for PrintWriter";
+		MarkupCoercion.write(value, MarkupType.MYSQL, false, textInMysqlEncoder, true, out, true);
 		return this;
 	}
 
@@ -667,10 +673,11 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInPsqlEncoder
-	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInPsql(Object value) throws IOException {
-		MarkupCoercion.write(value, MarkupType.PSQL, false, textInPsqlEncoder, true, out);
+		assert out == Coercion.optimize(out, textInPsqlEncoder) : "There are no optimizers for PrintWriter";
+		MarkupCoercion.write(value, MarkupType.PSQL, false, textInPsqlEncoder, true, out, true);
 		return this;
 	}
 
@@ -683,10 +690,11 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @param  value  the value to be encoded
 	 *
 	 * @see  TextInShEncoder
-	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer)
+	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInSh(Object value) throws IOException {
-		MarkupCoercion.write(value, MarkupType.SH, false, textInShEncoder, true, out);
+		assert out == Coercion.optimize(out, textInShEncoder) : "There are no optimizers for PrintWriter";
+		MarkupCoercion.write(value, MarkupType.SH, false, textInShEncoder, true, out, true);
 		return this;
 	}
 	// </editor-fold>

@@ -257,9 +257,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter nbsp() throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.encoder.writePrefixTo(this);
+		if(tw != this) tw.writePrefix();
 		tw.append(NBSP);
-		if(tw != this) tw.encoder.writeSuffixTo(this, false);
+		if(tw != this) tw.writeSuffix(false);
 		return this;
 	}
 
@@ -276,9 +276,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter nbsp(int count) throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.encoder.writePrefixTo(this);
+		if(tw != this) tw.writePrefix();
 		WriterUtil.nbsp(tw, count);
-		if(tw != this) tw.encoder.writeSuffixTo(this, false);
+		if(tw != this) tw.writeSuffix(false);
 		return this;
 	}
 
@@ -295,9 +295,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter text(char ch) throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.encoder.writePrefixTo(this);
+		if(tw != this) tw.writePrefix();
 		tw.append(ch);
-		if(tw != this) tw.encoder.writeSuffixTo(this, false);
+		if(tw != this) tw.writeSuffix(false);
 		return this;
 	}
 
@@ -314,9 +314,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter text(char[] cbuf) throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.encoder.writePrefixTo(this);
+		if(tw != this) tw.writePrefix();
 		if(cbuf != null) tw.write(cbuf);
-		if(tw != this) tw.encoder.writeSuffixTo(this, false);
+		if(tw != this) tw.writeSuffix(false);
 		return this;
 	}
 
@@ -333,9 +333,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter text(char[] cbuf, int offset, int len) throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.encoder.writePrefixTo(this);
+		if(tw != this) tw.writePrefix();
 		if(cbuf != null) tw.write(cbuf, offset, len);
-		if(tw != this) tw.encoder.writeSuffixTo(this, false);
+		if(tw != this) tw.writeSuffix(false);
 		return this;
 	}
 
@@ -352,9 +352,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter text(CharSequence csq) throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.encoder.writePrefixTo(this);
+		if(tw != this) tw.writePrefix();
 		if(csq != null) tw.append(csq);
-		if(tw != this) tw.encoder.writeSuffixTo(this, false);
+		if(tw != this) tw.writeSuffix(false);
 		return this;
 	}
 
@@ -371,9 +371,9 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter text(CharSequence csq, int start, int end) throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.encoder.writePrefixTo(this);
+		if(tw != this) tw.writePrefix();
 		if(csq != null) tw.append(csq, start, end);
-		if(tw != this) tw.encoder.writeSuffixTo(this, false);
+		if(tw != this) tw.writeSuffix(false);
 		return this;
 	}
 
@@ -431,7 +431,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 				false, // Should this be true?
 				encoder,
 				false,
-				out
+				out,
+				true
 			);
 		} else {
 			// Text within a non-textual context
@@ -441,7 +442,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 				false,
 				tw.encoder,
 				true,
-				this
+				tw.out,
+				true
 			);
 		}
 		return this;
@@ -500,7 +502,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	@Override
 	public MediaWriter text() throws IOException {
 		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.encoder.writePrefixTo(this);
+		if(tw != this) tw.writePrefix();
 		return new MediaWriter(
 			tw.encodingContext,
 			tw.encoder,
@@ -508,7 +510,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		) {
 			@Override
 			public void close() throws IOException {
-				if(tw != MediaWriter.this) tw.encoder.writeSuffixTo(MediaWriter.this, false);
+				if(tw != MediaWriter.this) tw.writeSuffix(false);
 			}
 		};
 	}

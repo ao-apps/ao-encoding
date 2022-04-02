@@ -60,6 +60,10 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 	 * will finalize the validation within its proper scope.
 	 * </p>
 	 *
+	 * @param  out  When is already validating the content type, is returned directly.
+	 *              Otherwise, will be optimized via {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 *              then passed through {@link NoCloseMediaValidator#wrap(java.io.Writer)} when {@code out} is {@link NoClose}.
+	 *
 	 * @return  A new validator or <code>out</code> when the given writer is
 	 *          {@linkplain MediaValidator#isValidatingMediaInputType(com.aoapps.encoding.MediaType) already a validator for the requested type}.
 	 *
@@ -119,8 +123,24 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 		return inputValidator;
 	}
 
+	/**
+	 * Optimize while maintaining {@link NoClose}
+	 */
+	private static Writer optimize(Writer out) {
+		Writer optimized = Coercion.optimize(out, null);
+		// Maintain NoClose
+		if(optimized != out && out instanceof NoClose) {
+			optimized = NoCloseMediaValidator.wrap(optimized);
+		}
+		return optimized;
+	}
+
+	/**
+	 * @param  out  Will be optimized via {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 *              then passed through {@link NoCloseMediaValidator#wrap(java.io.Writer)} when {@code out} is {@link NoClose}.
+	 */
 	protected MediaValidator(Writer out) {
-		super(out);
+		super(optimize(out));
 	}
 
 	/**
@@ -134,7 +154,9 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 	}
 
 	/**
-	 * Gets the wrapped writer.
+	 * Gets the wrapped writer, which has been optimized via
+	 * {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 * then passed through {@link NoCloseMediaValidator#wrap(java.io.Writer)} when {@code out} is {@link NoClose}.
 	 */
 	public Writer getOut() {
 		return out;
@@ -213,8 +235,7 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 							);
 						}
 						Writer newOut = validator.getOut();
-						assert (newOut instanceof NoClose) == (validator instanceof NoClose);
-						assert (newOut instanceof NoCloseMediaValidator) == (validator instanceof NoCloseMediaValidator);
+						assert !(validator instanceof NoClose) || (newOut instanceof NoClose) : "NoClose must have been maintained during optimized wrapping";
 						return newOut;
 					}
 				}
