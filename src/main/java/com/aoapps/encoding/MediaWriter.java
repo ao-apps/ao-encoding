@@ -506,7 +506,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		return new MediaWriter(
 			tw.encodingContext,
 			tw.encoder,
-			tw.out
+			tw.out,
+			true
 		) {
 			@Override
 			public void close() throws IOException {
