@@ -37,10 +37,10 @@ import java.util.ResourceBundle;
  */
 // TODO: identifier(...) methods, similar to text(...), to escape arbitrary identifiers?
 //       Would same apply to JavaScript?
-public class CssValidator extends MediaValidator {
+public class StyleValidator extends MediaValidator {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
-	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, CssValidator.class);
+	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, StyleValidator.class);
 
 	/**
 	 * Checks one character, throws {@link InvalidCharacterException} if invalid.
@@ -88,7 +88,7 @@ public class CssValidator extends MediaValidator {
 	}
 	// </editor-fold>
 
-	protected CssValidator(Writer out) {
+	protected StyleValidator(Writer out) {
 		super(out);
 	}
 
@@ -139,21 +139,21 @@ public class CssValidator extends MediaValidator {
 	}
 
 	@Override
-	public CssValidator append(CharSequence csq) throws IOException {
+	public StyleValidator append(CharSequence csq) throws IOException {
 		checkCharacters(csq, 0, csq.length());
 		out.append(csq);
 		return this;
 	}
 
 	@Override
-	public CssValidator append(CharSequence csq, int start, int end) throws IOException {
+	public StyleValidator append(CharSequence csq, int start, int end) throws IOException {
 		checkCharacters(csq, start, end);
 		out.append(csq, start, end);
 		return this;
 	}
 
 	@Override
-	public CssValidator append(char c) throws IOException {
+	public StyleValidator append(char c) throws IOException {
 		checkCharacter(c);
 		out.append(c);
 		return this;

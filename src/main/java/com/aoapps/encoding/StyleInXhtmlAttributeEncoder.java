@@ -35,7 +35,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public final class CssInXhtmlAttributeEncoder extends MediaEncoder {
+public final class StyleInXhtmlAttributeEncoder extends MediaEncoder {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	/**
@@ -65,7 +65,7 @@ public final class CssInXhtmlAttributeEncoder extends MediaEncoder {
 			(c >= 0x20 && c <= 0x7E) // common case first
 			|| (c >= 0xA0 && c <= 0xFFFD)
 		) return null;
-		throw new InvalidCharacterException(CssValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
+		throw new InvalidCharacterException(StyleValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**
@@ -74,7 +74,7 @@ public final class CssInXhtmlAttributeEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 */
-	public static void encodeCssInXhtmlAttribute(char c, Appendable out) throws IOException {
+	public static void encodeStyleInXhtmlAttribute(char c, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
 		String escaped = getEscapedCharacter(c);
 		if(escaped != null) out.append(escaped);
@@ -87,8 +87,8 @@ public final class CssInXhtmlAttributeEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 */
-	public static void encodeCssInXhtmlAttribute(char[] cbuf, Writer out) throws IOException {
-		encodeCssInXhtmlAttribute(cbuf, 0, cbuf.length, out);
+	public static void encodeStyleInXhtmlAttribute(char[] cbuf, Writer out) throws IOException {
+		encodeStyleInXhtmlAttribute(cbuf, 0, cbuf.length, out);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public final class CssInXhtmlAttributeEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 */
-	public static void encodeCssInXhtmlAttribute(char[] cbuf, int off, int len, Writer out) throws IOException {
+	public static void encodeStyleInXhtmlAttribute(char[] cbuf, int off, int len, Writer out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
 		int end = off + len;
 		int toPrint = 0;
@@ -122,9 +122,9 @@ public final class CssInXhtmlAttributeEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 */
-	public static void encodeCssInXhtmlAttribute(CharSequence cs, Appendable out) throws IOException {
+	public static void encodeStyleInXhtmlAttribute(CharSequence cs, Appendable out) throws IOException {
 		if(cs != null) {
-			encodeCssInXhtmlAttribute(cs, 0, cs.length(), out);
+			encodeStyleInXhtmlAttribute(cs, 0, cs.length(), out);
 		} else {
 			assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
 		}
@@ -136,7 +136,7 @@ public final class CssInXhtmlAttributeEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 */
-	public static void encodeCssInXhtmlAttribute(CharSequence cs, int start, int end, Appendable out) throws IOException {
+	public static void encodeStyleInXhtmlAttribute(CharSequence cs, int start, int end, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML_ATTRIBUTE);
 		if(cs != null) {
 			int toPrint = 0;
@@ -162,15 +162,15 @@ public final class CssInXhtmlAttributeEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 */
-	public static void encodeCssInXhtmlAttribute(Object value, Appendable out) throws IOException {
-		Coercion.append(value, cssInXhtmlAttributeEncoder, out);
+	public static void encodeStyleInXhtmlAttribute(Object value, Appendable out) throws IOException {
+		Coercion.append(value, styleInXhtmlAttributeEncoder, out);
 	}
 	// </editor-fold>
 
 	/**
 	 * Singleton instance intended for static import.
 	 */
-	public static final CssInXhtmlAttributeEncoder cssInXhtmlAttributeEncoder = new CssInXhtmlAttributeEncoder();
+	public static final StyleInXhtmlAttributeEncoder styleInXhtmlAttributeEncoder = new StyleInXhtmlAttributeEncoder();
 
 	@Override
 	public MediaType getValidMediaInputType() {
@@ -206,46 +206,46 @@ public final class CssInXhtmlAttributeEncoder extends MediaEncoder {
 
 	@Override
 	public void write(int c, Writer out) throws IOException {
-		encodeCssInXhtmlAttribute((char)c, out);
+		encodeStyleInXhtmlAttribute((char)c, out);
 	}
 
 	@Override
 	public void write(char[] cbuf, Writer out) throws IOException {
-		encodeCssInXhtmlAttribute(cbuf, out);
+		encodeStyleInXhtmlAttribute(cbuf, out);
 	}
 
 	@Override
 	public void write(char[] cbuf, int off, int len, Writer out) throws IOException {
-		encodeCssInXhtmlAttribute(cbuf, off, len, out);
+		encodeStyleInXhtmlAttribute(cbuf, off, len, out);
 	}
 
 	@Override
 	public void write(String str, Writer out) throws IOException {
 		if(str == null) throw new IllegalArgumentException("str is null");
-		encodeCssInXhtmlAttribute(str, out);
+		encodeStyleInXhtmlAttribute(str, out);
 	}
 
 	@Override
 	public void write(String str, int off, int len, Writer out) throws IOException {
 		if(str == null) throw new IllegalArgumentException("str is null");
-		encodeCssInXhtmlAttribute(str, off, off + len, out);
+		encodeStyleInXhtmlAttribute(str, off, off + len, out);
 	}
 
 	@Override
-	public CssInXhtmlAttributeEncoder append(char c, Appendable out) throws IOException {
-		encodeCssInXhtmlAttribute(c, out);
+	public StyleInXhtmlAttributeEncoder append(char c, Appendable out) throws IOException {
+		encodeStyleInXhtmlAttribute(c, out);
 		return this;
 	}
 
 	@Override
-	public CssInXhtmlAttributeEncoder append(CharSequence csq, Appendable out) throws IOException {
-		encodeCssInXhtmlAttribute(csq == null ? "null" : csq, out);
+	public StyleInXhtmlAttributeEncoder append(CharSequence csq, Appendable out) throws IOException {
+		encodeStyleInXhtmlAttribute(csq == null ? "null" : csq, out);
 		return this;
 	}
 
 	@Override
-	public CssInXhtmlAttributeEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException {
-		encodeCssInXhtmlAttribute(csq == null ? "null" : csq, start, end, out);
+	public StyleInXhtmlAttributeEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException {
+		encodeStyleInXhtmlAttribute(csq == null ? "null" : csq, start, end, out);
 		return this;
 	}
 }

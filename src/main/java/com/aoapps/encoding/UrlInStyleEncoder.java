@@ -37,11 +37,11 @@ import java.nio.charset.Charset;
  *
  * @author  AO Industries, Inc.
  */
-public class UrlInCssEncoder extends BufferedEncoder {
+public class UrlInStyleEncoder extends BufferedEncoder {
 
 	private final EncodingContext encodingContext;
 
-	UrlInCssEncoder(EncodingContext encodingContext) {
+	UrlInStyleEncoder(EncodingContext encodingContext) {
 		super(128);
 		this.encodingContext = encodingContext;
 	}
@@ -174,7 +174,7 @@ public class UrlInCssEncoder extends BufferedEncoder {
 				break;
 			}
 		}
-		TextInCssEncoder.encodeTextInCss(encoded, out);
+		TextInStyleEncoder.encodeTextInStyle(encoded, out);
 		out.append("\")");
 	}
 }

@@ -35,43 +35,43 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public final class CssInXhtmlEncoder extends MediaEncoder {
+public final class StyleInXhtmlEncoder extends MediaEncoder {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
-	public static void encodeCssInXhtml(char ch, Appendable out) throws IOException {
+	public static void encodeStyleInXhtml(char ch, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML);
-		CssValidator.checkCharacter(ch);
+		StyleValidator.checkCharacter(ch);
 		out.append(ch);
 	}
 
-	public static void encodeCssInXhtml(char[] cbuf, Writer out) throws IOException {
-		encodeCssInXhtml(cbuf, 0, cbuf.length, out);
+	public static void encodeStyleInXhtml(char[] cbuf, Writer out) throws IOException {
+		encodeStyleInXhtml(cbuf, 0, cbuf.length, out);
 	}
 
-	public static void encodeCssInXhtml(char[] cbuf, int off, int len, Writer out) throws IOException {
+	public static void encodeStyleInXhtml(char[] cbuf, int off, int len, Writer out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML);
-		CssValidator.checkCharacters(cbuf, off, len);
+		StyleValidator.checkCharacters(cbuf, off, len);
 		out.write(cbuf, off, len);
 	}
 
-	public static void encodeCssInXhtml(CharSequence cs, Appendable out) throws IOException {
+	public static void encodeStyleInXhtml(CharSequence cs, Appendable out) throws IOException {
 		if(cs != null) {
-			encodeCssInXhtml(cs, 0, cs.length(), out);
+			encodeStyleInXhtml(cs, 0, cs.length(), out);
 		} else {
 			assert Assertions.isValidating(out, MediaType.XHTML);
 		}
 	}
 
-	public static void encodeCssInXhtml(CharSequence cs, int start, int end, Appendable out) throws IOException {
+	public static void encodeStyleInXhtml(CharSequence cs, int start, int end, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML);
 		if(cs != null) {
-			CssValidator.checkCharacters(cs, start, end);
+			StyleValidator.checkCharacters(cs, start, end);
 			out.append(cs, start, end);
 		}
 	}
 
-	public static void encodeCssInXhtml(Object value, Appendable out) throws IOException {
-		Coercion.append(value, cssInXhtmlEncoder, out);
+	public static void encodeStyleInXhtml(Object value, Appendable out) throws IOException {
+		Coercion.append(value, styleInXhtmlEncoder, out);
 	}
 	// </editor-fold>
 
@@ -81,11 +81,11 @@ public final class CssInXhtmlEncoder extends MediaEncoder {
 	 * @deprecated  This singleton does not have any context so assumes {@link EncodingContext#DEFAULT}.
 	 */
 	@Deprecated
-	public static final CssInXhtmlEncoder cssInXhtmlEncoder = new CssInXhtmlEncoder(EncodingContext.DEFAULT);
+	public static final StyleInXhtmlEncoder styleInXhtmlEncoder = new StyleInXhtmlEncoder(EncodingContext.DEFAULT);
 
 	private final EncodingContext encodingContext;
 
-	CssInXhtmlEncoder(EncodingContext encodingContext) {
+	StyleInXhtmlEncoder(EncodingContext encodingContext) {
 		this.encodingContext = encodingContext;
 	}
 
@@ -135,46 +135,46 @@ public final class CssInXhtmlEncoder extends MediaEncoder {
 
 	@Override
 	public void write(int c, Writer out) throws IOException {
-		encodeCssInXhtml((char)c, out);
+		encodeStyleInXhtml((char)c, out);
 	}
 
 	@Override
 	public void write(char[] cbuf, Writer out) throws IOException {
-		encodeCssInXhtml(cbuf, out);
+		encodeStyleInXhtml(cbuf, out);
 	}
 
 	@Override
 	public void write(char[] cbuf, int off, int len, Writer out) throws IOException {
-		encodeCssInXhtml(cbuf, off, len, out);
+		encodeStyleInXhtml(cbuf, off, len, out);
 	}
 
 	@Override
 	public void write(String str, Writer out) throws IOException {
 		if(str == null) throw new IllegalArgumentException("str is null");
-		encodeCssInXhtml(str, out);
+		encodeStyleInXhtml(str, out);
 	}
 
 	@Override
 	public void write(String str, int off, int len, Writer out) throws IOException {
 		if(str == null) throw new IllegalArgumentException("str is null");
-		encodeCssInXhtml(str, off, off+len, out);
+		encodeStyleInXhtml(str, off, off+len, out);
 	}
 
 	@Override
-	public CssInXhtmlEncoder append(char c, Appendable out) throws IOException {
-		encodeCssInXhtml(c, out);
+	public StyleInXhtmlEncoder append(char c, Appendable out) throws IOException {
+		encodeStyleInXhtml(c, out);
 		return this;
 	}
 
 	@Override
-	public CssInXhtmlEncoder append(CharSequence csq, Appendable out) throws IOException {
-		encodeCssInXhtml(csq == null ? "null" : csq, out);
+	public StyleInXhtmlEncoder append(CharSequence csq, Appendable out) throws IOException {
+		encodeStyleInXhtml(csq == null ? "null" : csq, out);
 		return this;
 	}
 
 	@Override
-	public CssInXhtmlEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException {
-		encodeCssInXhtml(csq == null ? "null" : csq, start, end, out);
+	public StyleInXhtmlEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException {
+		encodeStyleInXhtml(csq == null ? "null" : csq, start, end, out);
 		return this;
 	}
 

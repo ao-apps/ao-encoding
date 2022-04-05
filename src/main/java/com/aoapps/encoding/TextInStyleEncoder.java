@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * Encodes arbitrary text for use in as a CSS string.
+ * Encodes arbitrary text for use as a CSS string.
  * <ul>
  * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
  * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
@@ -35,7 +35,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public final class TextInCssEncoder extends MediaEncoder {
+public final class TextInStyleEncoder extends MediaEncoder {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	/**
@@ -46,7 +46,7 @@ public final class TextInCssEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 *
-	 * @see CssValidator#checkCharacter(char)
+	 * @see StyleValidator#checkCharacter(char)
 	 *
 	 * @throws  InvalidCharacterException  if any text character cannot be converted for use within a CSS string
 	 */
@@ -63,7 +63,7 @@ public final class TextInCssEncoder extends MediaEncoder {
 			(c >= 0x20 && c <= 0x7E) // common case first
 			|| (c >= 0xA0 && c <= 0xFFFD)
 		) return null;
-		throw new InvalidCharacterException(CssValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
+		throw new InvalidCharacterException(StyleValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
 	}
 
 	/**
@@ -72,7 +72,7 @@ public final class TextInCssEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 */
-	public static void encodeTextInCss(char ch, Appendable out) throws IOException {
+	public static void encodeTextInStyle(char ch, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.CSS);
 		String escaped = getEscapedCharacter(ch);
 		if(escaped != null) out.append(escaped);
@@ -85,8 +85,8 @@ public final class TextInCssEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 */
-	public static void encodeTextInCss(char[] cbuf, Writer out) throws IOException {
-		encodeTextInCss(cbuf, 0, cbuf.length, out);
+	public static void encodeTextInStyle(char[] cbuf, Writer out) throws IOException {
+		encodeTextInStyle(cbuf, 0, cbuf.length, out);
 	}
 
 	/**
@@ -95,7 +95,7 @@ public final class TextInCssEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 */
-	public static void encodeTextInCss(char[] cbuf, int off, int len, Writer out) throws IOException {
+	public static void encodeTextInStyle(char[] cbuf, int off, int len, Writer out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.CSS);
 		int end = off + len;
 		int toPrint = 0;
@@ -120,9 +120,9 @@ public final class TextInCssEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 */
-	public static void encodeTextInCss(CharSequence cs, Appendable out) throws IOException {
+	public static void encodeTextInStyle(CharSequence cs, Appendable out) throws IOException {
 		if(cs != null) {
-			encodeTextInCss(cs, 0, cs.length(), out);
+			encodeTextInStyle(cs, 0, cs.length(), out);
 		} else {
 			assert Assertions.isValidating(out, MediaType.CSS);
 		}
@@ -134,7 +134,7 @@ public final class TextInCssEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 */
-	public static void encodeTextInCss(CharSequence cs, int start, int end, Appendable out) throws IOException {
+	public static void encodeTextInStyle(CharSequence cs, int start, int end, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.CSS);
 		if(cs != null) {
 			int toPrint = 0;
@@ -160,17 +160,17 @@ public final class TextInCssEncoder extends MediaEncoder {
 	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
 	 * </ul>
 	 */
-	public static void encodeTextInCss(Object value, Appendable out) throws IOException {
-		Coercion.append(value, textInCssEncoder, out);
+	public static void encodeTextInStyle(Object value, Appendable out) throws IOException {
+		Coercion.append(value, textInStyleEncoder, out);
 	}
 	// </editor-fold>
 
 	/**
 	 * Singleton instance intended for static import.
 	 */
-	public static final TextInCssEncoder textInCssEncoder = new TextInCssEncoder();
+	public static final TextInStyleEncoder textInStyleEncoder = new TextInStyleEncoder();
 
-	private TextInCssEncoder() {
+	private TextInStyleEncoder() {
 		// Do nothing
 	}
 
@@ -214,46 +214,46 @@ public final class TextInCssEncoder extends MediaEncoder {
 
 	@Override
 	public void write(int c, Writer out) throws IOException {
-		encodeTextInCss((char)c, out);
+		encodeTextInStyle((char)c, out);
 	}
 
 	@Override
 	public void write(char[] cbuf, Writer out) throws IOException {
-		encodeTextInCss(cbuf, out);
+		encodeTextInStyle(cbuf, out);
 	}
 
 	@Override
 	public void write(char[] cbuf, int off, int len, Writer out) throws IOException {
-		encodeTextInCss(cbuf, off, len, out);
+		encodeTextInStyle(cbuf, off, len, out);
 	}
 
 	@Override
 	public void write(String str, Writer out) throws IOException {
 		if(str == null) throw new IllegalArgumentException("str is null");
-		encodeTextInCss(str, out);
+		encodeTextInStyle(str, out);
 	}
 
 	@Override
 	public void write(String str, int off, int len, Writer out) throws IOException {
 		if(str == null) throw new IllegalArgumentException("str is null");
-		encodeTextInCss(str, off, off + len, out);
+		encodeTextInStyle(str, off, off + len, out);
 	}
 
 	@Override
-	public TextInCssEncoder append(char c, Appendable out) throws IOException {
-		encodeTextInCss(c, out);
+	public TextInStyleEncoder append(char c, Appendable out) throws IOException {
+		encodeTextInStyle(c, out);
 		return this;
 	}
 
 	@Override
-	public TextInCssEncoder append(CharSequence csq, Appendable out) throws IOException {
-		encodeTextInCss(csq == null ? "null" : csq, out);
+	public TextInStyleEncoder append(CharSequence csq, Appendable out) throws IOException {
+		encodeTextInStyle(csq == null ? "null" : csq, out);
 		return this;
 	}
 
 	@Override
-	public TextInCssEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException {
-		encodeTextInCss(csq == null ? "null" : csq, start, end, out);
+	public TextInStyleEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException {
+		encodeTextInStyle(csq == null ? "null" : csq, start, end, out);
 		return this;
 	}
 

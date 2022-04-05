@@ -84,7 +84,7 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 			// Add filter if needed for the given type
 			switch(contentType) {
 				case CSS:
-					inputValidator = new CssValidator(out);
+					inputValidator = new StyleValidator(out);
 					break;
 				case JAVASCRIPT:
 				case JSON:

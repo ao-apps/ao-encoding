@@ -90,8 +90,8 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 				switch(containerType) {
 					case CSS :
 					case TEXT :            return null;
-					case XHTML :           encoder = new CssInXhtmlEncoder(encodingContext); break;
-					case XHTML_ATTRIBUTE : encoder = CssInXhtmlAttributeEncoder.cssInXhtmlAttributeEncoder; break;
+					case XHTML :           encoder = new StyleInXhtmlEncoder(encodingContext); break;
+					case XHTML_ATTRIBUTE : encoder = StyleInXhtmlAttributeEncoder.styleInXhtmlAttributeEncoder; break;
 					default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
 				}
 				break;
@@ -140,7 +140,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 				//break;
 			case TEXT:
 				switch(containerType) {
-					case CSS :             encoder = TextInCssEncoder.textInCssEncoder; break;
+					case CSS :             encoder = TextInStyleEncoder.textInStyleEncoder; break;
 					case JAVASCRIPT :      encoder = TextInJavaScriptEncoder.textInJavaScriptEncoder; break;
 					case JSON :            encoder = TextInJavaScriptEncoder.textInJsonEncoder; break;
 					case LD_JSON :         encoder = TextInJavaScriptEncoder.textInLdJsonEncoder; break;
@@ -155,7 +155,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 				break;
 			case URL :
 				switch(containerType) {
-					case CSS :             encoder = new UrlInCssEncoder(encodingContext); break;
+					case CSS :             encoder = new UrlInStyleEncoder(encodingContext); break;
 					case JAVASCRIPT :
 					case JSON :
 					case LD_JSON :         encoder = new UrlInJavaScriptEncoder(containerType, encodingContext); break;
