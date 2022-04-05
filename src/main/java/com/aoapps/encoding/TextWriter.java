@@ -28,12 +28,58 @@ import java.io.IOException;
 /**
  * Encodes arbitrary text for safe output.
  *
- * @param  <C>  The current type of writer.
- *
  * @author  AO Industries, Inc.
  */
-public interface TextWriter<C extends TextWriter<C>> extends WhitespaceWriter<C> {
+public interface TextWriter extends WhitespaceWriter {
 
+	// <editor-fold desc="WhitespaceWriter - manual self-type" defaultstate="collapsed">
+	@Override
+	TextWriter nl() throws IOException;
+
+	@Override
+	default TextWriter nli() throws IOException {
+		WhitespaceWriter.super.nli();
+		return this;
+	}
+
+	@Override
+	default TextWriter nli(int depthOffset) throws IOException {
+		WhitespaceWriter.super.nli(depthOffset);
+		return this;
+	}
+
+	@Override
+	default TextWriter indent() throws IOException {
+		WhitespaceWriter.super.indent();
+		return this;
+	}
+
+	@Override
+	TextWriter indent(int depthOffset) throws IOException;
+
+	@Override
+	TextWriter setIndent(boolean indent);
+
+	@Override
+	TextWriter setDepth(int depth);
+
+	@Override
+	TextWriter incDepth();
+
+	@Override
+	TextWriter decDepth();
+
+	@Override
+	default TextWriter sp() throws IOException {
+		WhitespaceWriter.super.sp();
+		return this;
+	}
+
+	@Override
+	TextWriter sp(int count) throws IOException;
+	// </editor-fold>
+
+	// <editor-fold desc="TextWriter - definition" defaultstate="collapsed">
 	/**
 	 * The character used for non-breaking space, which is {@code '\u00A0'}.
 	 */
@@ -47,7 +93,7 @@ public interface TextWriter<C extends TextWriter<C>> extends WhitespaceWriter<C>
 	 * @see  #nbsp(int)
 	 * @see  #NBSP
 	 */
-	default C nbsp() throws IOException {
+	default TextWriter nbsp() throws IOException {
 		return nbsp(1);
 	}
 
@@ -61,58 +107,49 @@ public interface TextWriter<C extends TextWriter<C>> extends WhitespaceWriter<C>
 	 * @see  #nbsp()
 	 * @see  #NBSP
 	 */
-	C nbsp(int count) throws IOException;
+	TextWriter nbsp(int count) throws IOException;
 
 	/**
 	 * Writes the given text with proper encoding.
 	 *
 	 * @return  {@code this} writer
 	 */
-	C text(char ch) throws IOException;
+	TextWriter text(char ch) throws IOException;
 
 	/**
 	 * Writes the given text with proper encoding.
 	 *
 	 * @return  {@code this} writer
 	 */
-	C text(char[] cbuf) throws IOException;
+	TextWriter text(char[] cbuf) throws IOException;
 
 	/**
 	 * Writes the given text with proper encoding.
 	 *
 	 * @return  {@code this} writer
 	 */
-	C text(char[] cbuf, int offset, int len) throws IOException;
+	TextWriter text(char[] cbuf, int offset, int len) throws IOException;
 
 	/**
 	 * Writes the given text with proper encoding.
 	 *
 	 * @return  {@code this} writer
 	 */
-	C text(CharSequence csq) throws IOException;
+	TextWriter text(CharSequence csq) throws IOException;
 
 	/**
 	 * Writes the given text with proper encoding.
 	 *
 	 * @return  {@code this} writer
 	 */
-	C text(CharSequence csq, int start, int end) throws IOException;
+	TextWriter text(CharSequence csq, int start, int end) throws IOException;
 
 	/**
 	 * Writes the given text with proper encoding.
 	 *
 	 * @return  {@code this} writer
 	 */
-	C text(Object text) throws IOException;
-
-	/**
-	 * Writes the given text with proper encoding.
-	 *
-	 * @param  <Ex>  An arbitrary exception type that may be thrown
-	 *
-	 * @return  {@code this} writer
-	 */
-	<Ex extends Throwable> C text(IOSupplierE<?, Ex> text) throws IOException, Ex;
+	TextWriter text(Object text) throws IOException;
 
 	/**
 	 * Writes the given text with proper encoding.
@@ -121,7 +158,16 @@ public interface TextWriter<C extends TextWriter<C>> extends WhitespaceWriter<C>
 	 *
 	 * @return  {@code this} writer
 	 */
-	<Ex extends Throwable> C text(MediaWritable<Ex> text) throws IOException, Ex;
+	<Ex extends Throwable> TextWriter text(IOSupplierE<?, Ex> text) throws IOException, Ex;
+
+	/**
+	 * Writes the given text with proper encoding.
+	 *
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
+	 *
+	 * @return  {@code this} writer
+	 */
+	<Ex extends Throwable> TextWriter text(MediaWritable<Ex> text) throws IOException, Ex;
 
 	/**
 	 * Writes the given text with proper encoding.
@@ -131,4 +177,5 @@ public interface TextWriter<C extends TextWriter<C>> extends WhitespaceWriter<C>
 	 *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
 	 */
 	MediaWriter text() throws IOException;
+	// </editor-fold>
 }

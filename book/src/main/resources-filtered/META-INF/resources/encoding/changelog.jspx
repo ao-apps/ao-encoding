@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2022-04-01T00:31:24-05:00"
+		dateModified="2022-04-04T20:50:15-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -65,6 +65,11 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 					<li>
 						Now throws new <code>InvalidCharacterException</code> when invalid characters are detected instead
 						of less specific <code>IOException</code>.
+					</li>
+					<li>
+						Removed self-referential generics that were emulating self-types.  Instead, manually overloading
+						all methods.  Although a bit tedious in the implementation, this cleans-up the API by removing
+						unnecessary type parameter.
 					</li>
 				</ul>
 			</changelog:release>

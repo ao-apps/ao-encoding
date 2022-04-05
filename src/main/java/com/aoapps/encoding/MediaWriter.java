@@ -41,7 +41,7 @@ import java.util.Optional;
  *
  * @author  AO Industries, Inc.
  */
-public class MediaWriter extends EncoderWriter implements ValidMediaFilter, TextWriter<MediaWriter> {
+public class MediaWriter extends EncoderWriter implements ValidMediaFilter, TextWriter {
 
 	private final EncodingContext encodingContext;
 	private final MediaEncoder encoder;
@@ -127,7 +127,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		return this;
 	}
 
-	// <editor-fold desc="WhitespaceWriter">
+	// <editor-fold desc="WhitespaceWriter - implementation" defaultstate="collapsed">
 	/**
 	 * Is indenting enabled?
 	 */
@@ -150,7 +150,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	// Matches AnyDocument.nli()
 	@Override
 	public MediaWriter nli() throws IOException {
-		return nli(0);
+		TextWriter.super.nli();
+		return this;
 	}
 
 	// Matches AnyDocument.nli(int)
@@ -167,7 +168,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	// Matches AnyDocument.indent()
 	@Override
 	public MediaWriter indent() throws IOException {
-		return indent(0);
+		TextWriter.super.indent();
+		return this;
 	}
 
 	// Matches AnyDocument.indent(int)
@@ -243,7 +245,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	}
 	// </editor-fold>
 
-	// <editor-fold desc="TextWriter">
+	// <editor-fold desc="TextWriter - implementation" defaultstate="collapsed">
 	/**
 	 * {@inheritDoc}
 	 * <p>

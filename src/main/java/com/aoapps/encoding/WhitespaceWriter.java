@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2021  AO Industries, Inc.
+ * Copyright (C) 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -27,12 +27,11 @@ import java.io.IOException;
 /**
  * See <a href="https://html.spec.whatwg.org/multipage/dom.html#content-models:space-characters">3.2.5 Content models / ASCII whitespace</a>.
  *
- * @param  <C>  The current type of writer.
- *
  * @author  AO Industries, Inc.
  */
-public interface WhitespaceWriter<C> {
+public interface WhitespaceWriter {
 
+	// <editor-fold desc="WhitespaceWriter - definition" defaultstate="collapsed">
 	/**
 	 * The character used for newlines.
 	 * <p>
@@ -65,7 +64,7 @@ public interface WhitespaceWriter<C> {
 	 * @see  #nli()
 	 * @see  #nli(int)
 	 */
-	C nl() throws IOException;
+	WhitespaceWriter nl() throws IOException;
 
 	/**
 	 * Writes a newline, followed by current indentation when {@linkplain #getIndent() indentation enabled}.
@@ -82,7 +81,7 @@ public interface WhitespaceWriter<C> {
 	 * @see  #getIndent()
 	 * @see  #setIndent(boolean)
 	 */
-	default C nli() throws IOException {
+	default WhitespaceWriter nli() throws IOException {
 		return nli(0);
 	}
 
@@ -104,7 +103,7 @@ public interface WhitespaceWriter<C> {
 	 * @see  #getIndent()
 	 * @see  #setIndent(boolean)
 	 */
-	default C nli(int depthOffset) throws IOException {
+	default WhitespaceWriter nli(int depthOffset) throws IOException {
 		nl();
 		return indent(depthOffset);
 	}
@@ -120,7 +119,7 @@ public interface WhitespaceWriter<C> {
 	 * @see  #getIndent()
 	 * @see  #setIndent(boolean)
 	 */
-	default C indent() throws IOException {
+	default WhitespaceWriter indent() throws IOException {
 		return indent(0);
 	}
 
@@ -138,7 +137,7 @@ public interface WhitespaceWriter<C> {
 	 * @see  #getIndent()
 	 * @see  #setIndent(boolean)
 	 */
-	C indent(int depthOffset) throws IOException;
+	WhitespaceWriter indent(int depthOffset) throws IOException;
 
 	/**
 	 * Gets if indentation is currently enabled, off by default.
@@ -150,7 +149,7 @@ public interface WhitespaceWriter<C> {
 	 *
 	 * @return  {@code this} writer
 	 */
-	C setIndent(boolean indent);
+	WhitespaceWriter setIndent(boolean indent);
 
 	/**
 	 * Gets the current indentation depth, which begins at zero.
@@ -164,21 +163,21 @@ public interface WhitespaceWriter<C> {
 	 *
 	 * @return  {@code this} writer
 	 */
-	C setDepth(int depth);
+	WhitespaceWriter setDepth(int depth);
 
 	/**
 	 * Increments the indentation depth, if enabled.
 	 *
 	 * @return  {@code this} writer
 	 */
-	C incDepth();
+	WhitespaceWriter incDepth();
 
 	/**
 	 * Decrements the indentation depth, if enabled.
 	 *
 	 * @return  {@code this} writer
 	 */
-	C decDepth();
+	WhitespaceWriter decDepth();
 
 	/**
 	 * Writes one space character.
@@ -188,7 +187,7 @@ public interface WhitespaceWriter<C> {
 	 * @see  #sp(int)
 	 * @see  #SPACE
 	 */
-	default C sp() throws IOException {
+	default WhitespaceWriter sp() throws IOException {
 		return sp(1);
 	}
 
@@ -202,5 +201,6 @@ public interface WhitespaceWriter<C> {
 	 * @see  #sp()
 	 * @see  #SPACE
 	 */
-	C sp(int count) throws IOException;
+	WhitespaceWriter sp(int count) throws IOException;
+	// </editor-fold>
 }
