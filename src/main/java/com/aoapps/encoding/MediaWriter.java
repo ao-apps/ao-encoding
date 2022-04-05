@@ -23,6 +23,7 @@
 package com.aoapps.encoding;
 
 import com.aoapps.hodgepodge.i18n.MarkupCoercion;
+import com.aoapps.lang.Coercion;
 import com.aoapps.lang.CoercionOptimizer;
 import com.aoapps.lang.NullArgumentException;
 import com.aoapps.lang.Throwables;
@@ -49,8 +50,8 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	protected MediaWriter textWriter;
 
 	/**
-	 * @param  out  Conditionally passed through {@link com.aoapps.lang.Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
-	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link com.aoapps.lang.Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 * @param  out  Conditionally passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
 	 */
 	@SuppressWarnings("AssertWithSideEffects")
 	public MediaWriter(EncodingContext encodingContext, MediaEncoder encoder, Writer out, boolean outOptimized) {
@@ -66,7 +67,7 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 	}
 
 	/**
-	 * @param  out  Passed through {@link com.aoapps.lang.Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
 	 */
 	public MediaWriter(EncodingContext encodingContext, MediaEncoder encoder, Writer out) {
 		this(encodingContext, encoder, out, false);

@@ -55,8 +55,8 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 	 * forbid at least all the invalid characters of {@code contentType}, but may also forbid more.
 	 * </p>
 	 * <p>
-	 * When the returned {@code validator != out}, {@link #validate()} must be called to finalize the validation.
-	 * When the returned {@code validator == out}, {@link #validate()} should not be called, since the provided writer
+	 * When the returned {@code validator != out}, {@link #validate(boolean)} must be called to finalize the validation.
+	 * When the returned {@code validator == out}, {@link #validate(boolean)} should not be called, since the provided writer
 	 * will finalize the validation within its proper scope.
 	 * </p>
 	 *
@@ -193,19 +193,6 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 	public MediaValidator append(char c) throws IOException {
 		out.append(c);
 		return this;
-	}
-
-	/**
-	 * Performs final validation and resets the validator for reuse.
-	 * <p>
-	 * This default implementation calls {@link #validate(boolean)} without trimming.
-	 * </p>
-	 *
-	 * @deprecated  Please use {@link #validate(boolean)} while specifying desired trim.
-	 */
-	@Deprecated
-	public final void validate() throws IOException {
-		validate(false);
 	}
 
 	/**

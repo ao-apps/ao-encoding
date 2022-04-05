@@ -71,6 +71,13 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 						all methods.  Although a bit tedious in the implementation, this cleans-up the API by removing
 						unnecessary type parameter.
 					</li>
+					<li>Removed deprecated items:
+						<ol>
+							<li><code>com.aoapps.encoding.Coercion</code></li>
+							<li><code>com.aoapps.encoding.MediaValidator.validate()</code></li>
+							<li><code>com.aoapps.encoding.Supplier</code></li>
+						</ol>
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
