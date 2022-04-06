@@ -111,7 +111,7 @@ public class NoCloseMediaValidator extends MediaValidator implements NoClose {
 
 	@Override
 	public void validate(boolean trim) throws IOException {
-		wrapped.validate(true);
+		wrapped.validate(trim);
 	}
 
 	/**

@@ -29,32 +29,53 @@ import com.aoapps.lang.NullArgumentException;
 import com.aoapps.lang.Throwables;
 import com.aoapps.lang.io.EncoderWriter;
 import com.aoapps.lang.io.Writable;
+import com.aoapps.lang.io.function.IOConsumer;
 import com.aoapps.lang.io.function.IOSupplierE;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
  * Streaming versions of media encoders.
+ * <p>
+ * Note: The specialized subclasses implement {@linkplain Encode per-type interfaces} precisely matching
+ * {@linkplain MediaEncoder#getInstance(com.aoapps.encoding.EncodingContext, com.aoapps.encoding.MediaType, com.aoapps.encoding.MediaType) the supported encoders}.
+ * </p>
  *
  * @see  MediaEncoder
  *
  * @author  AO Industries, Inc.
  */
-public class MediaWriter extends EncoderWriter implements ValidMediaFilter, TextWriter {
+public abstract class MediaWriter extends EncoderWriter implements ValidMediaFilter, Encode {
 
-	private final EncodingContext encodingContext;
-	private final MediaEncoder encoder;
+	final EncodingContext encodingContext;
+	final MediaType inputType;
+	final MediaEncoder encoder;
+	final Whitespace indentDelegate;
+	private final IOConsumer<? super Writer> closer;
 
-	protected MediaWriter textWriter;
+	private Map<MediaType, MediaWriter> mediaWriters;
 
 	/**
 	 * @param  out  Conditionally passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
 	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
+	 *                         This allows the indentation to be coordinated between nested content types.
+	 * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer
 	 */
 	@SuppressWarnings("AssertWithSideEffects")
-	public MediaWriter(EncodingContext encodingContext, MediaEncoder encoder, Writer out, boolean outOptimized) {
+	MediaWriter(
+		EncodingContext encodingContext,
+		MediaType inputType,
+		MediaEncoder encoder,
+		Writer out,
+		boolean outOptimized,
+		Whitespace indentDelegate,
+		IOConsumer<? super Writer> closer
+	) {
 		super(encoder, out, outOptimized);
 		Writer optimized = null;
 		assert !((optimized = getOut()) instanceof MediaValidator) || !((MediaValidator)optimized).canSkipValidation(encoder.getValidMediaOutputType()) :
@@ -62,15 +83,12 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 			+ " for outputType = " + encoder.getValidMediaOutputType().name();
 		assert !(optimized instanceof MediaValidator) || ((MediaValidator)optimized).isValidatingMediaInputType(encoder.getValidMediaOutputType()) :
 			"MediaValidator = " + optimized.getClass().getName() + " is not validating outputType = " + encoder.getValidMediaOutputType().name();
+		assert encoder.isValidatingMediaInputType(inputType);
 		this.encodingContext = NullArgumentException.checkNotNull(encodingContext, "encodingContext");
+		this.inputType = inputType;
 		this.encoder = encoder;
-	}
-
-	/**
-	 * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
-	 */
-	public MediaWriter(EncodingContext encodingContext, MediaEncoder encoder, Writer out) {
-		this(encodingContext, encoder, out, false);
+		this.indentDelegate = indentDelegate;
+		this.closer = closer;
 	}
 
 	public EncodingContext getEncodingContext() {
@@ -82,17 +100,67 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		return encoder;
 	}
 
-	protected MediaWriter getTextWriter() throws UnsupportedEncodingException {
-		if(textWriter == null) {
-			MediaEncoder textEncoder = MediaEncoder.getInstance(encodingContext, MediaType.TEXT, encoder.getValidMediaInputType());
-			textWriter = (textEncoder == null) ? this : new MediaWriter(encodingContext, textEncoder, this);
+	@Override
+	public void close() throws IOException {
+		if(closer != null) closer.accept(out);
+	}
+
+	/**
+	 * Creates a new instance of writer of the same type as the current writer.
+	 *
+	 * @param  out  Conditionally passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
+	 *                         This allows the indentation to be coordinated between nested content types.
+	 * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer
+	 */
+	abstract MediaWriter newMediaWriter(
+		EncodingContext encodingContext,
+		MediaType inputType,
+		MediaEncoder encoder,
+		Writer out,
+		boolean outOptimized,
+		Whitespace indentDelegate,
+		IOConsumer<? super Writer> closer
+	);
+
+	MediaWriter getMediaWriter(MediaType contentType) throws UnsupportedEncodingException {
+		Map<MediaType, MediaWriter> mws = mediaWriters;
+		MediaWriter mediaWriter;
+		if(mws == null) {
+			mws = new EnumMap<>(MediaType.class);
+			mediaWriters = mws;
+			mediaWriter = null;
+		} else {
+			mediaWriter = mws.get(contentType);
 		}
-		return textWriter;
+		if(mediaWriter == null) {
+			MediaEncoder newEncoder = MediaEncoder.getInstance(encodingContext, contentType, inputType/*encoder.getValidMediaInputType()*/);
+			assert this == Coercion.optimize(this, newEncoder) : "There are no CoercionOptimizer registered for MediaWritable";
+			if(newEncoder == null) {
+				mediaWriter = this;
+			} else {
+				mediaWriter = contentType.newMediaWriter(
+					encodingContext,
+					contentType,
+					newEncoder,
+					this,
+					true, // There are no CoercionOptimizer registered for MediaWritable
+					(indentDelegate != null) ? indentDelegate
+						: (this instanceof Whitespace) ? (Whitespace)this
+						: null,
+					closing -> {throw new AssertionError("Never closed");}
+				);
+				assert contentType.getEncodeClass().isInstance(mediaWriter);
+			}
+			mws.put(contentType, mediaWriter);
+		}
+		return mediaWriter;
 	}
 
 	@Override
 	public MediaType getValidMediaInputType() {
-		return encoder.getValidMediaInputType();
+		return inputType;
 	}
 
 	@Override
@@ -128,401 +196,204 @@ public class MediaWriter extends EncoderWriter implements ValidMediaFilter, Text
 		return this;
 	}
 
-	// <editor-fold desc="WhitespaceWriter - implementation" defaultstate="collapsed">
-	/**
-	 * Is indenting enabled?
-	 */
-	// Matches AnyDocument.indent
-	private boolean indent;
-
-	/**
-	 * Current indentation level.
-	 */
-	// Matches AnyDocument.depth
-	private int depth;
-
-	// Matches AnyDocument.nl()
+	// <editor-fold desc="Encode - manual self-type and implementation" defaultstate="collapsed">
 	@Override
-	public MediaWriter nl() throws IOException {
-		encoder.append(NL, out);
+	public MediaWriter encode(MediaType contentType, char ch) throws IOException {
+		Encode.super.encode(contentType, ch);
 		return this;
 	}
 
-	// Matches AnyDocument.nli()
 	@Override
-	public MediaWriter nli() throws IOException {
-		TextWriter.super.nli();
+	public MediaWriter encode(MediaType contentType, char[] cbuf) throws IOException {
+		Encode.super.encode(contentType, cbuf);
 		return this;
 	}
 
-	// Matches AnyDocument.nli(int)
 	@Override
-	public MediaWriter nli(int depthOffset) throws IOException {
-		if(getIndent()) {
-			WriterUtil.nli(encoder, out, getDepth() + depthOffset);
-		} else {
-			encoder.append(NL, out);
-		}
+	public MediaWriter encode(MediaType contentType, char[] cbuf, int offset, int len) throws IOException {
+		Encode.super.encode(contentType, cbuf, offset, len);
 		return this;
 	}
 
-	// Matches AnyDocument.indent()
 	@Override
-	public MediaWriter indent() throws IOException {
-		TextWriter.super.indent();
+	public MediaWriter encode(MediaType contentType, CharSequence csq) throws IOException {
+		Encode.super.encode(contentType, csq);
 		return this;
 	}
 
-	// Matches AnyDocument.indent(int)
 	@Override
-	public MediaWriter indent(int depthOffset) throws IOException {
-		if(getIndent()) {
-			WriterUtil.indent(encoder, out, getDepth() + depthOffset);
-		}
+	public MediaWriter encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException {
+		Encode.super.encode(contentType, csq, start, end);
 		return this;
 	}
 
-	// Matches AnyDocument.getIndent()
-	@Override
-	public boolean getIndent() {
-		return indent;
-	}
-
-	// Matches AnyDocument.setIndent(int)
-	@Override
-	public MediaWriter setIndent(boolean indent) {
-		this.indent = indent;
-		return this;
-	}
-
-	// Matches AnyDocument.getDepth()
-	@Override
-	public int getDepth() {
-		return depth;
-	}
-
-	// Matches AnyDocument.setDepth(int)
-	@Override
-	public MediaWriter setDepth(int depth) {
-		if(depth < 0) throw new IllegalArgumentException("depth < 0: " + depth);
-		this.depth = depth;
-		return this;
-	}
-
-	// Matches AnyDocument.incDepth()
-	@Override
-	public MediaWriter incDepth() {
-		if(getIndent()) {
-			int d = ++depth;
-			if(d < 0) depth = Integer.MAX_VALUE;
-		}
-		assert depth >= 0;
-		return this;
-	}
-
-	// Matches AnyDocument.decDepth()
-	@Override
-	public MediaWriter decDepth() {
-		if(getIndent()) {
-			int d = --depth;
-			if(d < 0) depth = 0;
-		}
-		assert depth >= 0;
-		return this;
-	}
-
-	// Matches AnyDocument.sp()
-	@Override
-	public MediaWriter sp() throws IOException {
-		encoder.append(SPACE, out);
-		return this;
-	}
-
-	// Matches AnyDocument.sp(int)
-	@Override
-	public MediaWriter sp(int count) throws IOException {
-		WriterUtil.sp(encoder, out, count);
-		return this;
-	}
-	// </editor-fold>
-
-	// <editor-fold desc="TextWriter - implementation" defaultstate="collapsed">
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 */
-	@Override
-	public MediaWriter nbsp() throws IOException {
-		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.writePrefix();
-		tw.append(NBSP);
-		if(tw != this) tw.writeSuffix(false);
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 */
-	@Override
-	public MediaWriter nbsp(int count) throws IOException {
-		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.writePrefix();
-		WriterUtil.nbsp(tw, count);
-		if(tw != this) tw.writeSuffix(false);
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 */
-	@Override
-	public MediaWriter text(char ch) throws IOException {
-		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.writePrefix();
-		tw.append(ch);
-		if(tw != this) tw.writeSuffix(false);
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 */
-	@Override
-	public MediaWriter text(char[] cbuf) throws IOException {
-		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.writePrefix();
-		if(cbuf != null) tw.write(cbuf);
-		if(tw != this) tw.writeSuffix(false);
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 */
-	@Override
-	public MediaWriter text(char[] cbuf, int offset, int len) throws IOException {
-		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.writePrefix();
-		if(cbuf != null) tw.write(cbuf, offset, len);
-		if(tw != this) tw.writeSuffix(false);
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 */
-	@Override
-	public MediaWriter text(CharSequence csq) throws IOException {
-		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.writePrefix();
-		if(csq != null) tw.append(csq);
-		if(tw != this) tw.writeSuffix(false);
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 */
-	@Override
-	public MediaWriter text(CharSequence csq, int start, int end) throws IOException {
-		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.writePrefix();
-		if(csq != null) tw.append(csq, start, end);
-		if(tw != this) tw.writeSuffix(false);
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * If the string is translated, comments will be added giving the
-	 * translation lookup id to aid in translation of server-translated values.
-	 * </p>
-	 */
 	@Override
 	@SuppressWarnings("UseSpecificCatch")
-	public MediaWriter text(Object text) throws IOException {
+	public MediaWriter encode(MediaType contentType, Object content) throws IOException {
 		// Support Optional
-		while(text instanceof Optional) {
-			text = ((Optional<?>)text).orElse(null);
+		while(content instanceof Optional) {
+			content = ((Optional<?>)content).orElse(null);
 		}
-		while(text instanceof IOSupplierE<?, ?>) {
+		while(content instanceof IOSupplierE<?, ?>) {
 			try {
-				text = ((IOSupplierE<?, ?>)text).get();
+				content = ((IOSupplierE<?, ?>)content).get();
 			} catch(Throwable t) {
 				throw Throwables.wrap(t, IOException.class, IOException::new);
 			}
 		}
-		if(text instanceof char[]) {
-			return text((char[])text);
+		if(content instanceof char[]) {
+			return encode(contentType, (char[])content);
 		}
-		if(text instanceof CharSequence) {
-			return text((CharSequence)text);
+		if(content instanceof CharSequence) {
+			return encode(contentType, (CharSequence)content);
 		}
-		if(text instanceof Writable) {
-			Writable writable = (Writable)text;
+		if(content instanceof Writable) {
+			Writable writable = (Writable)content;
 			if(writable.isFastToString()) {
-				return text(writable.toString());
+				return encode(contentType, writable.toString());
 			}
 		}
-		if(text instanceof MediaWritable) {
+		if(content instanceof MediaWritable) {
 			try {
-				return text((MediaWritable<?>)text);
+				return encode(contentType, (MediaWritable<?>)content);
 			} catch(Throwable t) {
 				throw Throwables.wrap(t, IOException.class, IOException::new);
 			}
 		}
 		// Allow text markup from translations
-		MediaWriter tw = getTextWriter();
-		if(tw == this) {
-			// Already in a textual context
+		MediaWriter mw = getMediaWriter(contentType);
+		assert mw.encoder.isValidatingMediaInputType(contentType);
+		if(mw == this) {
+			// Already in the compatible context, no prefix/suffix required
+			MediaEncoder newEncoder;
+			Writer newOut;
+			boolean outOptimized;
+			if(contentType == inputType) {
+				// Use same encoder
+				newEncoder = encoder;
+				newOut = out;
+				outOptimized = true;
+			} else {
+				// Require new encoder
+				newEncoder = MediaEncoder.getInstance(encodingContext, contentType, inputType);
+				if(newEncoder == null) {
+					newEncoder = new ValidateOnlyEncoder(contentType);
+				}
+				newOut = this; // Must run through this level of encoding
+				outOptimized = false;
+			}
+			if(contentType == inputType) {
+				// Is compatible, no wrapping needed
+				MarkupCoercion.write(
+					content,
+					contentType.getMarkupType(),
+					false, // Should this be true?
+					newEncoder,
+					false,
+					newOut,
+					outOptimized
+				);
+			} else {
+				// Wrap in new MediaWriter for compatibility
+				MediaWriter typeWrapper = contentType.newMediaWriter(
+					encodingContext,
+					contentType,
+					newEncoder,
+					newOut,
+					outOptimized,
+					(indentDelegate != null) ? indentDelegate
+						: (this instanceof Whitespace) ? (Whitespace)this
+						: null,
+					null // Ignore close: before other Coercion writes, too?
+				);
+				MarkupCoercion.write(
+					content,
+					contentType.getMarkupType(),
+					typeWrapper
+				);
+			}
+		} else {
+			// Content within a different context
+			assert contentType != inputType;
+			assert contentType == mw.inputType;
 			MarkupCoercion.write(
-				text,
-				MediaType.TEXT.getMarkupType(),
-				false, // Should this be true?
-				encoder,
+				content,
+				contentType.getMarkupType(), // mw.encoder.getValidMediaInputType().getMarkupType()?
 				false,
-				out,
+				mw.encoder,
+				true,
+				mw.out,
 				true
+			);
+		}
+		return this;
+	}
+
+	@Override
+	public <Ex extends Throwable> MediaWriter encode(MediaType contentType, IOSupplierE<?, Ex> content) throws IOException, Ex {
+		Encode.super.encode(contentType, content);
+		return this;
+	}
+
+	@Override
+	public <Ex extends Throwable> MediaWriter encode(MediaType contentType, MediaWritable<Ex> content) throws IOException, Ex {
+		Encode.super.encode(contentType, content);
+		return this;
+	}
+
+	@Override
+	public MediaWriter encode(MediaType contentType) throws IOException {
+		MediaWriter newMediaWriter;
+		MediaWriter mw = getMediaWriter(contentType);
+		if(mw == this) {
+			// Already in the compatible context, no prefix/suffix required
+			MediaEncoder newEncoder;
+			Writer newOut;
+			boolean outOptimized;
+			if(contentType == inputType) {
+				// Use same encoder
+				newEncoder = encoder;
+				newOut = out;
+				outOptimized = true;
+			} else {
+				// Require new encoder
+				newEncoder = MediaEncoder.getInstance(encodingContext, contentType, inputType);
+				if(newEncoder == null) {
+					newEncoder = new ValidateOnlyEncoder(contentType);
+				}
+				newOut = this; // Must run through this level of encoding
+				outOptimized = false;
+			}
+			newMediaWriter = contentType.newMediaWriter(
+				encodingContext,
+				contentType,
+				newEncoder,
+				newOut,
+				outOptimized,
+				(indentDelegate != null) ? indentDelegate
+					: (this instanceof Whitespace) ? (Whitespace)this
+					: null,
+				null // Ignore close
 			);
 		} else {
-			// Text within a non-textual context
-			MarkupCoercion.write(
-				text,
-				encoder.getValidMediaInputType().getMarkupType(),
-				false,
-				tw.encoder,
+			// Prefix/suffix required
+			newMediaWriter = contentType.newMediaWriter(
+				mw.encodingContext,
+				contentType,
+				mw.encoder,
+				mw.out,
 				true,
-				tw.out,
-				true
+				(mw.indentDelegate != null) ? mw.indentDelegate
+					: (mw instanceof Whitespace) ? (Whitespace)mw
+					: null,
+				closing -> mw.encoder.writeSuffixTo(mw.out, false)
 			);
+			mw.encoder.writePrefixTo(mw.out);
 		}
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * If the string is translated, comments will be added giving the
-	 * translation lookup id to aid in translation of server-translated values.
-	 * </p>
-	 *
-	 * @param  <Ex>  An arbitrary exception type that may be thrown
-	 */
-	@Override
-	public <Ex extends Throwable> MediaWriter text(IOSupplierE<?, Ex> text) throws IOException, Ex {
-		return text((text == null) ? null : text.get());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 *
-	 * @param  <Ex>  An arbitrary exception type that may be thrown
-	 */
-	@Override
-	public <Ex extends Throwable> MediaWriter text(MediaWritable<Ex> text) throws IOException, Ex {
-		try (MediaWriter tw = text()) {
-			if(text != null) {
-				text.writeTo(tw);
-			}
-		}
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 */
-	@Override
-	public MediaWriter text() throws IOException {
-		MediaWriter tw = getTextWriter();
-		if(tw != this) tw.writePrefix();
-		return new MediaWriter(
-			tw.encodingContext,
-			tw.encoder,
-			tw.out,
-			true
-		) {
-			@Override
-			public void close() throws IOException {
-				if(tw != MediaWriter.this) tw.writeSuffix(false);
-			}
-		};
+		assert contentType.getEncodeClass().isInstance(newMediaWriter) : "Nested self-encoding is always allowed";
+		return newMediaWriter;
 	}
 	// </editor-fold>
-
-	// TODO: A set of per-type methods, like xml(), script(), style(), ...
-
-	// TODO: A set of out() methods that take MediaType and value
 
 	// TODO: comments
 

@@ -53,8 +53,8 @@ public final class ChainWriter implements Appendable, Closeable {
 	// <editor-fold defaultstate="collapsed" desc="PrintWriter wrapping">
 	private final EncodingContext encodingContext;
 	private final PrintWriter out;
-	private final MediaWriter javaScriptInXhtmlAttributeWriter;
-	private final MediaWriter javaScriptInXhtmlWriter;
+	private final JavaScriptWriter javaScriptInXhtmlAttributeWriter;
+	private final JavaScriptWriter javaScriptInXhtmlWriter;
 
 	/**
 	 * Create a new PrintWriter, without automatic line flushing, from an
@@ -106,9 +106,13 @@ public final class ChainWriter implements Appendable, Closeable {
 	public ChainWriter(EncodingContext encodingContext, PrintWriter out) {
 		this.encodingContext = NullArgumentException.checkNotNull(encodingContext, "encodingContext");
 		this.out = out;
-		javaScriptInXhtmlAttributeWriter = new MediaWriter(encodingContext, javaScriptInXhtmlAttributeEncoder, out);
+		javaScriptInXhtmlAttributeWriter = new JavaScriptWriter(
+			encodingContext,
+			javaScriptInXhtmlAttributeEncoder,
+			out
+		);
 		try {
-			javaScriptInXhtmlWriter = new MediaWriter(
+			javaScriptInXhtmlWriter = new JavaScriptWriter(
 				encodingContext,
 				MediaEncoder.getInstance(encodingContext, MediaType.JAVASCRIPT, MediaType.XHTML),
 				out
@@ -621,7 +625,7 @@ public final class ChainWriter implements Appendable, Closeable {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XML Attribute
-		assert javaScriptInXhtmlAttributeWriter == Coercion.optimize(javaScriptInXhtmlAttributeWriter, textInJavaScriptEncoder) : "There are no optimizers for MediaWriter";
+		assert javaScriptInXhtmlAttributeWriter == Coercion.optimize(javaScriptInXhtmlAttributeWriter, textInJavaScriptEncoder) : "There are no optimizers for " + JavaScriptWriter.class.getName();
 		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, javaScriptInXhtmlAttributeWriter, true);
 		return this;
 	}
@@ -642,7 +646,7 @@ public final class ChainWriter implements Appendable, Closeable {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XHTML
-		assert javaScriptInXhtmlWriter == Coercion.optimize(javaScriptInXhtmlWriter, textInJavaScriptEncoder) : "There are no optimizers for MediaWriter";
+		assert javaScriptInXhtmlWriter == Coercion.optimize(javaScriptInXhtmlWriter, textInJavaScriptEncoder) : "There are no optimizers for " + JavaScriptWriter.class.getName();
 		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, javaScriptInXhtmlWriter, true);
 		return this;
 	}

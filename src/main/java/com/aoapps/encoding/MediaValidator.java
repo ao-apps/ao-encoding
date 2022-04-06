@@ -25,11 +25,9 @@ package com.aoapps.encoding;
 import com.aoapps.lang.Coercion;
 import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.Encoder;
-import com.aoapps.lang.io.LocalizedUnsupportedEncodingException;
 import com.aoapps.lang.io.NoClose;
 import java.io.FilterWriter;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -66,10 +64,8 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 	 *
 	 * @return  A new validator or <code>out</code> when the given writer is
 	 *          {@linkplain MediaValidator#isValidatingMediaInputType(com.aoapps.encoding.MediaType) already a validator for the requested type}.
-	 *
-	 * @exception UnsupportedEncodingException when unable to find an appropriate validator.
 	 */
-	public static MediaValidator getMediaValidator(MediaType contentType, Writer out) throws UnsupportedEncodingException {
+	public static MediaValidator getMediaValidator(MediaType contentType, Writer out) {
 		// If the existing out is already validating for this type, use it.
 		// This occurs when the existing validator will also catch all invalid characters on the new content type.
 		// For example: All invalid characters in XHTML are also invalid in XHTML_ATTRIBUTE (but not the other way around)
@@ -113,7 +109,7 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 					inputValidator = new XhtmlAttributeValidator(out);
 					break;
 				default:
-					throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindValidator", contentType.getContentType());
+					throw new AssertionError(RESOURCES.getMessage("unableToFindValidator", contentType.getContentType()));
 			}
 			assert inputValidator.getValidMediaInputType() == contentType :
 				"inputValidator.getValidMediaInputType() != contentType: " + inputValidator.getValidMediaInputType().name() + " != " + contentType.name();

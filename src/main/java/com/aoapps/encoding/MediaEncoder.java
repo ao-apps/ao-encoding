@@ -65,19 +65,24 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 	 * if character validation is required.
 	 * </p>
 	 * <p>
-	 * Please note that all types can be encoded both to and from {@link MediaType#TEXT}.  Thus, when a specialized
-	 * encoder is not available (as indicated by throwing {@link UnsupportedEncodingException}), can always use
-	 * an intermediate TEXT to connect between types, such as CSS -&gt; TEXT -&gt; XHTML will just display the raw CSS
-	 * directly.
+	 * Please note that most types can be encoded both to and from {@link MediaType#TEXT}.  Thus, when a specialized
+	 * encoder is not available (as indicated by throwing {@link UnsupportedEncodingException}), it may be possible to
+	 * use an intermediate TEXT to connect between types, such as CSS -&gt; TEXT -&gt; XHTML will just display the raw
+	 * CSS directly.
 	 * </p>
 	 * <p>
 	 * No automatic intermediate TEXT conversion is done, because the addition of new encoders could suddenly change
 	 * the semantics.
 	 * </p>
+	 * <p>
+	 * Note: {@linkplain MediaEncoder#getInstance(com.aoapps.encoding.EncodingContext, com.aoapps.encoding.MediaType, com.aoapps.encoding.MediaType) The supported encoders}
+	 * precisely matches the specialized subclasses of {@link MediaWriter} that implement {@linkplain Encode per-type interfaces}.
+	 * </p>
 	 *
 	 * @param  encodingContext  Required encoding context
 	 *
-	 * @return the encoder or <code>null</code> if no encoding is necessary
+	 * @return the encoder or <code>null</code> if no encoding is necessary.  If an encoder is still needed for API
+	 *         requirements (such as required for {@link MediaWriter}), can use {@link ValidateOnlyEncoder}.
 	 *
 	 * @exception UnsupportedEncodingException when unable to encode the content into the container
 	 *                                         either because it is impossible or not yet implemented.

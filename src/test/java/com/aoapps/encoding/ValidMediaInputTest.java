@@ -42,11 +42,7 @@ public class ValidMediaInputTest {
 		validators = new ArrayList<>();
 		for(MediaType contentType : MediaType.values()) {
 			// MediaValidator
-			try {
-				validators.add(MediaValidator.getMediaValidator(contentType, nullOut));
-			} catch(UnsupportedEncodingException e) {
-				throw new AssertionError("All media types must have validator implementations: " + contentType.name(), e);
-			}
+			validators.add(MediaValidator.getMediaValidator(contentType, nullOut));
 			// MediaEncoder
 			for(MediaType containerType : MediaType.values()) {
 				try {
@@ -75,7 +71,7 @@ public class ValidMediaInputTest {
 	 * </p>
 	 */
 	@Test
-	public void testIsValidatingMediaInputTypeConsistency() throws UnsupportedEncodingException {
+	public void testIsValidatingMediaInputTypeConsistency() {
 		final Writer nullOut = NullWriter.getInstance();
 		for(ValidMediaInput validator : validators) {
 			for(MediaType inputType : MediaType.values()) {
@@ -198,7 +194,7 @@ public class ValidMediaInputTest {
 	 * </p>
 	 */
 	@Test
-	public void testCanSkipValidation() throws UnsupportedEncodingException {
+	public void testCanSkipValidation() {
 		final Writer nullOut = NullWriter.getInstance();
 		for(ValidMediaInput validator : validators) {
 			for(MediaType outputType : MediaType.values()) {

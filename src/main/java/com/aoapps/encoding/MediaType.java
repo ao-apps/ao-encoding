@@ -23,11 +23,14 @@
 package com.aoapps.encoding;
 
 import com.aoapps.hodgepodge.i18n.MarkupType;
+import com.aoapps.lang.Coercion;
 import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.ContentType;
 import com.aoapps.lang.io.Encoder;
 import com.aoapps.lang.io.LocalizedUnsupportedEncodingException;
+import com.aoapps.lang.io.function.IOConsumer;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.ResourceBundle;
 
 /**
@@ -57,6 +60,33 @@ public enum MediaType {
 		public MarkupType getMarkupType() {
 			return MarkupType.XHTML;
 		}
+
+		@Override
+		public XhtmlWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaType inputType,
+			MediaEncoder encoder,
+			Writer out,
+			boolean outOptimized,
+			Whitespace indentDelegate,
+			IOConsumer<? super Writer> closer
+		) {
+			return new XhtmlWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+		}
+
+		@Override
+		public XhtmlWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaEncoder encoder,
+			Writer out
+		) {
+			return new XhtmlWriter(encodingContext, encoder, out);
+		}
+
+		@Override
+		Class<? extends Encode> getEncodeClass() {
+			return Xhtml.class;
+		}
 	},
 
 	/**
@@ -73,6 +103,33 @@ public enum MediaType {
 		@Override
 		public MarkupType getMarkupType() {
 			return MarkupType.NONE;
+		}
+
+		@Override
+		public XhtmlAttributeWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaType inputType,
+			MediaEncoder encoder,
+			Writer out,
+			boolean outOptimized,
+			Whitespace indentDelegate,
+			IOConsumer<? super Writer> closer
+		) {
+			return new XhtmlAttributeWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+		}
+
+		@Override
+		public XhtmlAttributeWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaEncoder encoder,
+			Writer out
+		) {
+			return new XhtmlAttributeWriter(encodingContext, encoder, out);
+		}
+
+		@Override
+		Class<? extends Encode> getEncodeClass() {
+			return XhtmlAttribute.class;
 		}
 	},
 
@@ -94,6 +151,33 @@ public enum MediaType {
 		public MarkupType getMarkupType() {
 			return MarkupType.CSS;
 		}
+
+		@Override
+		public StyleWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaType inputType,
+			MediaEncoder encoder,
+			Writer out,
+			boolean outOptimized,
+			Whitespace indentDelegate,
+			IOConsumer<? super Writer> closer
+		) {
+			return new StyleWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+		}
+
+		@Override
+		public StyleWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaEncoder encoder,
+			Writer out
+		) {
+			return new StyleWriter(encodingContext, encoder, out);
+		}
+
+		@Override
+		Class<? extends Encode> getEncodeClass() {
+			return Style.class;
+		}
 	},
 
 	/**
@@ -114,10 +198,37 @@ public enum MediaType {
 		public MarkupType getMarkupType() {
 			return MarkupType.JAVASCRIPT;
 		}
+
+		@Override
+		public JavaScriptWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaType inputType,
+			MediaEncoder encoder,
+			Writer out,
+			boolean outOptimized,
+			Whitespace indentDelegate,
+			IOConsumer<? super Writer> closer
+		) {
+			return new JavaScriptWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+		}
+
+		@Override
+		public JavaScriptWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaEncoder encoder,
+			Writer out
+		) {
+			return new JavaScriptWriter(encodingContext, encoder, out);
+		}
+
+		@Override
+		Class<? extends Encode> getEncodeClass() {
+			return JavaScript.class;
+		}
 	},
 
 	/**
-	 * A JSON script (<code>application/json</code>).
+	 * A JSON object graph (<code>application/json</code>).
 	 */
 	JSON(ContentType.JSON) {
 		@Override
@@ -130,10 +241,37 @@ public enum MediaType {
 			// JSON doesn't support comments
 			return MarkupType.NONE;
 		}
+
+		@Override
+		public JsonWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaType inputType,
+			MediaEncoder encoder,
+			Writer out,
+			boolean outOptimized,
+			Whitespace indentDelegate,
+			IOConsumer<? super Writer> closer
+		) {
+			return new JsonWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+		}
+
+		@Override
+		public JsonWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaEncoder encoder,
+			Writer out
+		) {
+			return new JsonWriter(encodingContext, encoder, out);
+		}
+
+		@Override
+		Class<? extends Encode> getEncodeClass() {
+			return Json.class;
+		}
 	},
 
 	/**
-	 * A JSON linked data script (<code>application/ld+json</code>).
+	 * JSON linked data (<code>application/ld+json</code>).
 	 */
 	LD_JSON(ContentType.LD_JSON) {
 		@Override
@@ -145,6 +283,33 @@ public enum MediaType {
 		public MarkupType getMarkupType() {
 			// JSON doesn't support comments
 			return MarkupType.NONE;
+		}
+
+		@Override
+		public LdJsonWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaType inputType,
+			MediaEncoder encoder,
+			Writer out,
+			boolean outOptimized,
+			Whitespace indentDelegate,
+			IOConsumer<? super Writer> closer
+		) {
+			return new LdJsonWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+		}
+
+		@Override
+		public LdJsonWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaEncoder encoder,
+			Writer out
+		) {
+			return new LdJsonWriter(encodingContext, encoder, out);
+		}
+
+		@Override
+		Class<? extends Encode> getEncodeClass() {
+			return LdJson.class;
 		}
 	},
 
@@ -161,6 +326,33 @@ public enum MediaType {
 		@Override
 		public MarkupType getMarkupType() {
 			return MarkupType.TEXT;
+		}
+
+		@Override
+		public TextWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaType inputType,
+			MediaEncoder encoder,
+			Writer out,
+			boolean outOptimized,
+			Whitespace indentDelegate,
+			IOConsumer<? super Writer> closer
+		) {
+			return new TextWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+		}
+
+		@Override
+		public TextWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaEncoder encoder,
+			Writer out
+		) {
+			return new TextWriter(encodingContext, encoder, out);
+		}
+
+		@Override
+		Class<? extends Encode> getEncodeClass() {
+			return Text.class;
 		}
 	},
 
@@ -182,6 +374,33 @@ public enum MediaType {
 		public boolean getTrimBuffer() {
 			return true;
 		}
+
+		@Override
+		public UrlWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaType inputType,
+			MediaEncoder encoder,
+			Writer out,
+			boolean outOptimized,
+			Whitespace indentDelegate,
+			IOConsumer<? super Writer> closer
+		) {
+			return new UrlWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+		}
+
+		@Override
+		public UrlWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaEncoder encoder,
+			Writer out
+		) {
+			return new UrlWriter(encodingContext, encoder, out);
+		}
+
+		@Override
+		Class<? extends Encode> getEncodeClass() {
+			return Url.class;
+		}
 	},
 
 	/**
@@ -197,10 +416,37 @@ public enum MediaType {
 		public MarkupType getMarkupType() {
 			return MarkupType.SH;
 		}
+
+		@Override
+		public ShWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaType inputType,
+			MediaEncoder encoder,
+			Writer out,
+			boolean outOptimized,
+			Whitespace indentDelegate,
+			IOConsumer<? super Writer> closer
+		) {
+			return new ShWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+		}
+
+		@Override
+		public ShWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaEncoder encoder,
+			Writer out
+		) {
+			return new ShWriter(encodingContext, encoder, out);
+		}
+
+		@Override
+		Class<? extends Encode> getEncodeClass() {
+			return Sh.class;
+		}
 	},
 
 	/**
-	 * The MySQL <code>mysql</code> command line (<code>text/x-mysql</code>).
+	 * MySQL <code>mysql</code> command input (<code>text/x-mysql</code>).
 	 */
 	MYSQL(ContentType.MYSQL) {
 		@Override
@@ -212,10 +458,37 @@ public enum MediaType {
 		public MarkupType getMarkupType() {
 			return MarkupType.MYSQL;
 		}
+
+		@Override
+		public MysqlWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaType inputType,
+			MediaEncoder encoder,
+			Writer out,
+			boolean outOptimized,
+			Whitespace indentDelegate,
+			IOConsumer<? super Writer> closer
+		) {
+			return new MysqlWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+		}
+
+		@Override
+		public MysqlWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaEncoder encoder,
+			Writer out
+		) {
+			return new MysqlWriter(encodingContext, encoder, out);
+		}
+
+		@Override
+		Class<? extends Encode> getEncodeClass() {
+			return Mysql.class;
+		}
 	},
 
 	/**
-	 * The PostgreSQL <code>psql</code> command line (<code>text/x-psql</code>).
+	 * PostgreSQL <code>psql</code> command input (<code>text/x-psql</code>).
 	 */
 	PSQL(ContentType.PSQL) {
 		@Override
@@ -226,6 +499,33 @@ public enum MediaType {
 		@Override
 		public MarkupType getMarkupType() {
 			return MarkupType.PSQL;
+		}
+
+		@Override
+		public PsqlWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaType inputType,
+			MediaEncoder encoder,
+			Writer out,
+			boolean outOptimized,
+			Whitespace indentDelegate,
+			IOConsumer<? super Writer> closer
+		) {
+			return new PsqlWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+		}
+
+		@Override
+		public PsqlWriter newMediaWriter(
+			EncodingContext encodingContext,
+			MediaEncoder encoder,
+			Writer out
+		) {
+			return new PsqlWriter(encodingContext, encoder, out);
+		}
+
+		@Override
+		Class<? extends Encode> getEncodeClass() {
+			return Psql.class;
 		}
 	};
 
@@ -296,4 +596,39 @@ public enum MediaType {
 		}
 		throw new LocalizedUnsupportedEncodingException(RESOURCES, "getMediaType.unknownType", fullContentType);
 	}
+
+	/**
+	 * Creates a new instance of {@link MediaWriter} for this media type.
+	 *
+	 * @param  out  Conditionally passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
+	 *                         This allows the indentation to be coordinated between nested content types.
+	 * @param  closer  Called on {@link MediaWriter#close()}, which may optionally perform final suffix write and/or close the underlying writer
+	 */
+	public abstract MediaWriter newMediaWriter(
+		EncodingContext encodingContext,
+		MediaType inputType,
+		MediaEncoder encoder,
+		Writer out,
+		boolean outOptimized,
+		Whitespace indentDelegate,
+		IOConsumer<? super Writer> closer
+	);
+
+	/**
+	 * Creates a new instance of {@link MediaWriter} for this media type.
+	 *
+	 * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 */
+	public abstract MediaWriter newMediaWriter(
+		EncodingContext encodingContext,
+		MediaEncoder encoder,
+		Writer out
+	);
+
+	/**
+	 * Gets the per-type interface matching this media type.
+	 */
+	abstract Class<? extends Encode> getEncodeClass();
 }

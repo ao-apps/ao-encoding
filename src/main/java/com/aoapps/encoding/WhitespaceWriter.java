@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,185 +22,239 @@
  */
 package com.aoapps.encoding;
 
+import com.aoapps.lang.Coercion;
+import com.aoapps.lang.io.function.IOConsumer;
+import com.aoapps.lang.io.function.IOSupplierE;
 import java.io.IOException;
+import java.io.Writer;
 
 /**
- * See <a href="https://html.spec.whatwg.org/multipage/dom.html#content-models:space-characters">3.2.5 Content models / ASCII whitespace</a>.
+ * Streaming versions of media encoders that can write whitespace.
+ *
+ * @see  MediaEncoder
  *
  * @author  AO Industries, Inc.
  */
-public interface WhitespaceWriter {
-
-	// <editor-fold desc="WhitespaceWriter - definition" defaultstate="collapsed">
-	/**
-	 * The character used for newlines.
-	 * <p>
-	 * This is {@code '\n'} on all platforms.  If a different newline is required,
-	 * such as {@code "\r\n"} for email, filter the output.
-	 * </p>
-	 */
-	char NL = '\n';
+public abstract class WhitespaceWriter extends MediaWriter implements Whitespace {
 
 	/**
-	 * The character used for indentation, which is {@code '\t'}.
+	 * @param  out  Conditionally passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
+	 *                         This allows the indentation to be coordinated between nested content types.
+	 * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer
 	 */
-	char INDENT = '\t';
-
-	/**
-	 * The character used for space, which is {@code ' '}.
-	 */
-	char SPACE = ' ';
-
-	/**
-	 * Writes a newline.
-	 * <p>
-	 * This is {@code '\n'} on all platforms.  If a different newline is required,
-	 * such as {@code "\r\n"} for email, filter the output.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #NL
-	 * @see  #nli()
-	 * @see  #nli(int)
-	 */
-	WhitespaceWriter nl() throws IOException;
-
-	/**
-	 * Writes a newline, followed by current indentation when {@linkplain #getIndent() indentation enabled}.
-	 * <p>
-	 * This is {@code '\n'} on all platforms.  If a different newline is required,
-	 * such as {@code "\r\n"} for email, filter the output.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #nli(int)
-	 * @see  #nl()
-	 * @see  #indent()
-	 * @see  #getIndent()
-	 * @see  #setIndent(boolean)
-	 */
-	default WhitespaceWriter nli() throws IOException {
-		return nli(0);
+	WhitespaceWriter(
+		EncodingContext encodingContext,
+		MediaType inputType,
+		MediaEncoder encoder,
+		Writer out,
+		boolean outOptimized,
+		Whitespace indentDelegate,
+		IOConsumer<? super Writer> closer
+	) {
+		super(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
 	}
 
-	/**
-	 * Writes a newline, followed by current indentation with a depth offset when {@linkplain #getIndent() indentation enabled}.
-	 * <p>
-	 * This is {@code '\n'} on all platforms.  If a different newline is required,
-	 * such as {@code "\r\n"} for email, filter the output.
-	 * </p>
-	 *
-	 * @param  depthOffset  A value added to the current indentation depth.
-	 *                      For example, pass {@code -1} when performing a newline before a closing tag or ending curly brace.
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #nli()
-	 * @see  #nl()
-	 * @see  #indent(int)
-	 * @see  #getIndent()
-	 * @see  #setIndent(boolean)
-	 */
-	default WhitespaceWriter nli(int depthOffset) throws IOException {
-		nl();
-		return indent(depthOffset);
+	@Override
+	public WhitespaceWriter append(char c) throws IOException {
+		super.append(c);
+		return this;
 	}
 
-	/**
-	 * Writes the current indentation when {@linkplain #getIndent() indentation enabled}.
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #indent(int)
-	 * @see  #INDENT
-	 * @see  #nli()
-	 * @see  #getIndent()
-	 * @see  #setIndent(boolean)
-	 */
-	default WhitespaceWriter indent() throws IOException {
-		return indent(0);
+	@Override
+	public WhitespaceWriter append(CharSequence csq) throws IOException {
+		super.append(csq);
+		return this;
 	}
 
-	/**
-	 * Writes the current indentation with a depth offset when {@linkplain #getIndent() indentation enabled}.
-	 *
-	 * @param  depthOffset  A value added to the current indentation depth.
-	 *                      For example, pass {@code -1} when performing a newline before a closing tag or ending curly brace.
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #indent()
-	 * @see  #INDENT
-	 * @see  #nli(int)
-	 * @see  #getIndent()
-	 * @see  #setIndent(boolean)
-	 */
-	WhitespaceWriter indent(int depthOffset) throws IOException;
-
-	/**
-	 * Gets if indentation is currently enabled, off by default.
-	 */
-	boolean getIndent();
-
-	/**
-	 * Enables or disabled indentation.
-	 *
-	 * @return  {@code this} writer
-	 */
-	WhitespaceWriter setIndent(boolean indent);
-
-	/**
-	 * Gets the current indentation depth, which begins at zero.
-	 * This value is not updated when indentation is disabled.
-	 * Not all tags will trigger indentation.
-	 */
-	int getDepth();
-
-	/**
-	 * Sets the indentation depth.
-	 *
-	 * @return  {@code this} writer
-	 */
-	WhitespaceWriter setDepth(int depth);
-
-	/**
-	 * Increments the indentation depth, if enabled.
-	 *
-	 * @return  {@code this} writer
-	 */
-	WhitespaceWriter incDepth();
-
-	/**
-	 * Decrements the indentation depth, if enabled.
-	 *
-	 * @return  {@code this} writer
-	 */
-	WhitespaceWriter decDepth();
-
-	/**
-	 * Writes one space character.
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #sp(int)
-	 * @see  #SPACE
-	 */
-	default WhitespaceWriter sp() throws IOException {
-		return sp(1);
+	@Override
+	public WhitespaceWriter append(CharSequence csq, int start, int end) throws IOException {
+		super.append(csq, start, end);
+		return this;
 	}
 
+	// <editor-fold desc="Encode - manual self-type" defaultstate="collapsed">
+	@Override
+	public WhitespaceWriter encode(MediaType contentType, char ch) throws IOException {
+		super.encode(contentType, ch);
+		return this;
+	}
+
+	@Override
+	public WhitespaceWriter encode(MediaType contentType, char[] cbuf) throws IOException {
+		super.encode(contentType, cbuf);
+		return this;
+	}
+
+	@Override
+	public WhitespaceWriter encode(MediaType contentType, char[] cbuf, int offset, int len) throws IOException {
+		super.encode(contentType, cbuf, offset, len);
+		return this;
+	}
+
+	@Override
+	public WhitespaceWriter encode(MediaType contentType, CharSequence csq) throws IOException {
+		super.encode(contentType, csq);
+		return this;
+	}
+
+	@Override
+	public WhitespaceWriter encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException {
+		super.encode(contentType, csq, start, end);
+		return this;
+	}
+
+	@Override
+	public WhitespaceWriter encode(MediaType contentType, Object content) throws IOException {
+		super.encode(contentType, content);
+		return this;
+	}
+
+	@Override
+	public <Ex extends Throwable> WhitespaceWriter encode(MediaType contentType, IOSupplierE<?, Ex> content) throws IOException, Ex {
+		super.encode(contentType, content);
+		return this;
+	}
+
+	@Override
+	public <Ex extends Throwable> WhitespaceWriter encode(MediaType contentType, MediaWritable<Ex> content) throws IOException, Ex {
+		super.encode(contentType, content);
+		return this;
+	}
+	// </editor-fold>
+
+	// <editor-fold desc="Whitespace - implementation" defaultstate="collapsed">
 	/**
-	 * Writes the given number of space characters.
-	 *
-	 * @param  count  When {@code count <= 0}, nothing is written.
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #sp()
-	 * @see  #SPACE
+	 * Is indenting enabled?
 	 */
-	WhitespaceWriter sp(int count) throws IOException;
+	// Matches AnyDocument.indent
+	private boolean indent;
+
+	/**
+	 * Current indentation level.
+	 */
+	// Matches AnyDocument.depth
+	private int depth;
+
+	// Matches AnyDocument.nl()
+	@Override
+	public WhitespaceWriter nl() throws IOException {
+		encoder.append(NL, out);
+		return this;
+	}
+
+	// Matches AnyDocument.nli()
+	@Override
+	public WhitespaceWriter nli() throws IOException {
+		Whitespace.super.nli();
+		return this;
+	}
+
+	// Matches AnyDocument.nli(int)
+	@Override
+	public WhitespaceWriter nli(int depthOffset) throws IOException {
+		if(getIndent()) {
+			WriterUtil.nli(encoder, out, getDepth() + depthOffset);
+		} else {
+			encoder.append(NL, out);
+		}
+		return this;
+	}
+
+	// Matches AnyDocument.indent()
+	@Override
+	public WhitespaceWriter indent() throws IOException {
+		Whitespace.super.indent();
+		return this;
+	}
+
+	// Matches AnyDocument.indent(int)
+	@Override
+	public WhitespaceWriter indent(int depthOffset) throws IOException {
+		if(getIndent()) {
+			WriterUtil.indent(encoder, out, getDepth() + depthOffset);
+		}
+		return this;
+	}
+
+	// Matches AnyDocument.getIndent()
+	@Override
+	public boolean getIndent() {
+		return (indentDelegate != null) ? indentDelegate.getIndent() : indent;
+	}
+
+	// Matches AnyDocument.setIndent(int)
+	@Override
+	public WhitespaceWriter setIndent(boolean indent) {
+		if(indentDelegate != null) {
+			indentDelegate.setIndent(indent);
+		} else {
+			this.indent = indent;
+		}
+		return this;
+	}
+
+	// Matches AnyDocument.getDepth()
+	@Override
+	public int getDepth() {
+		return (indentDelegate != null) ? indentDelegate.getDepth() : depth;
+	}
+
+	// Matches AnyDocument.setDepth(int)
+	@Override
+	public WhitespaceWriter setDepth(int depth) {
+		if(indentDelegate != null) {
+			indentDelegate.setDepth(depth);
+		} else {
+			if(depth < 0) throw new IllegalArgumentException("depth < 0: " + depth);
+			this.depth = depth;
+		}
+		return this;
+	}
+
+	// Matches AnyDocument.incDepth()
+	@Override
+	public WhitespaceWriter incDepth() {
+		if(indentDelegate != null) {
+			indentDelegate.incDepth();
+		} else {
+			if(getIndent()) {
+				int d = ++depth;
+				if(d < 0) depth = Integer.MAX_VALUE;
+			}
+			assert depth >= 0;
+		}
+		return this;
+	}
+
+	// Matches AnyDocument.decDepth()
+	@Override
+	public WhitespaceWriter decDepth() {
+		if(indentDelegate != null) {
+			indentDelegate.decDepth();
+		} else {
+			if(getIndent()) {
+				int d = --depth;
+				if(d < 0) depth = 0;
+			}
+			assert depth >= 0;
+		}
+		return this;
+	}
+
+	// Matches AnyDocument.sp()
+	@Override
+	public WhitespaceWriter sp() throws IOException {
+		encoder.append(SPACE, out);
+		return this;
+	}
+
+	// Matches AnyDocument.sp(int)
+	@Override
+	public WhitespaceWriter sp(int count) throws IOException {
+		WriterUtil.sp(encoder, out, count);
+		return this;
+	}
 	// </editor-fold>
 }

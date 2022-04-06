@@ -26,11 +26,11 @@ import com.aoapps.lang.io.function.IOSupplierE;
 import java.io.IOException;
 
 /**
- * Encodes JavaScript for safe output.
+ * Encodes JSON object graphs for safe output.
  *
  * @author  AO Industries, Inc.
  */
-public interface JavaScript extends Encode {
+public interface Json extends Encode {
 
 	// <editor-fold desc="Encode - manual self-type and deprecate since not expected" defaultstate="collapsed">
 	/**
@@ -40,7 +40,7 @@ public interface JavaScript extends Encode {
 	 */
 	@Deprecated
 	@Override
-	default JavaScript encode(MediaType contentType, char ch) throws IOException {
+	default Json encode(MediaType contentType, char ch) throws IOException {
 		Encode.super.encode(contentType, ch);
 		return this;
 	}
@@ -52,7 +52,7 @@ public interface JavaScript extends Encode {
 	 */
 	@Deprecated
 	@Override
-	default JavaScript encode(MediaType contentType, char[] cbuf) throws IOException {
+	default Json encode(MediaType contentType, char[] cbuf) throws IOException {
 		Encode.super.encode(contentType, cbuf);
 		return this;
 	}
@@ -64,7 +64,7 @@ public interface JavaScript extends Encode {
 	 */
 	@Deprecated
 	@Override
-	default JavaScript encode(MediaType contentType, char[] cbuf, int offset, int len) throws IOException {
+	default Json encode(MediaType contentType, char[] cbuf, int offset, int len) throws IOException {
 		Encode.super.encode(contentType, cbuf, offset, len);
 		return this;
 	}
@@ -76,7 +76,7 @@ public interface JavaScript extends Encode {
 	 */
 	@Deprecated
 	@Override
-	default JavaScript encode(MediaType contentType, CharSequence csq) throws IOException {
+	default Json encode(MediaType contentType, CharSequence csq) throws IOException {
 		Encode.super.encode(contentType, csq);
 		return this;
 	}
@@ -88,7 +88,7 @@ public interface JavaScript extends Encode {
 	 */
 	@Deprecated
 	@Override
-	default JavaScript encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException {
+	default Json encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException {
 		Encode.super.encode(contentType, csq, start, end);
 		return this;
 	}
@@ -100,7 +100,7 @@ public interface JavaScript extends Encode {
 	 */
 	@Deprecated
 	@Override
-	JavaScript encode(MediaType contentType, Object content) throws IOException;
+	Json encode(MediaType contentType, Object content) throws IOException;
 
 	/**
 	 * {@inheritDoc}
@@ -109,7 +109,7 @@ public interface JavaScript extends Encode {
 	 */
 	@Deprecated
 	@Override
-	default <Ex extends Throwable> JavaScript encode(MediaType contentType, IOSupplierE<?, Ex> content) throws IOException, Ex {
+	default <Ex extends Throwable> Json encode(MediaType contentType, IOSupplierE<?, Ex> content) throws IOException, Ex {
 		Encode.super.encode(contentType, content);
 		return this;
 	}
@@ -121,7 +121,7 @@ public interface JavaScript extends Encode {
 	 */
 	@Deprecated
 	@Override
-	default <Ex extends Throwable> JavaScript encode(MediaType contentType, MediaWritable<Ex> content) throws IOException, Ex {
+	default <Ex extends Throwable> Json encode(MediaType contentType, MediaWritable<Ex> content) throws IOException, Ex {
 		Encode.super.encode(contentType, content);
 		return this;
 	}
@@ -136,51 +136,51 @@ public interface JavaScript extends Encode {
 	MediaWriter encode(MediaType contentType) throws IOException;
 	// </editor-fold>
 
-	// <editor-fold desc="JavaScript - definition" defaultstate="collapsed">
+	// <editor-fold desc="Json - definition" defaultstate="collapsed">
 	/**
-	 * Writes the given JavaScript with proper encoding.
+	 * Writes the given JSON object graph with proper encoding.
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script>…</script>}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script type="application/json">…</script>}.
 	 * </p>
 	 *
 	 * @return  {@code this} writer
 	 */
-	default JavaScript javascript(char ch) throws IOException {
-		return encode(MediaType.JAVASCRIPT, ch);
+	default Json json(char ch) throws IOException {
+		return encode(MediaType.JSON, ch);
 	}
 
 	/**
-	 * Writes the given JavaScript with proper encoding.
+	 * Writes the given JSON object graph with proper encoding.
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script>…</script>}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script type="application/json">…</script>}.
 	 * </p>
 	 *
 	 * @return  {@code this} writer
 	 */
-	default JavaScript javascript(char[] cbuf) throws IOException {
-		return encode(MediaType.JAVASCRIPT, cbuf);
+	default Json json(char[] cbuf) throws IOException {
+		return encode(MediaType.JSON, cbuf);
 	}
 
 	/**
-	 * Writes the given JavaScript with proper encoding.
+	 * Writes the given JSON object graph with proper encoding.
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script>…</script>}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script type="application/json">…</script>}.
 	 * </p>
 	 *
 	 * @return  {@code this} writer
 	 */
-	default JavaScript javascript(char[] cbuf, int offset, int len) throws IOException {
-		return encode(MediaType.JAVASCRIPT, cbuf, offset, len);
+	default Json json(char[] cbuf, int offset, int len) throws IOException {
+		return encode(MediaType.JSON, cbuf, offset, len);
 	}
 
 	/**
-	 * Writes the given JavaScript with proper encoding.
+	 * Writes the given JSON object graph with proper encoding.
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script>…</script>}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script type="application/json">…</script>}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -189,15 +189,15 @@ public interface JavaScript extends Encode {
 	 *
 	 * @return  {@code this} writer
 	 */
-	default JavaScript javascript(CharSequence csq) throws IOException {
-		return encode(MediaType.JAVASCRIPT, csq);
+	default Json json(CharSequence csq) throws IOException {
+		return encode(MediaType.JSON, csq);
 	}
 
 	/**
-	 * Writes the given JavaScript with proper encoding.
+	 * Writes the given JSON object graph with proper encoding.
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script>…</script>}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script type="application/json">…</script>}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -206,15 +206,15 @@ public interface JavaScript extends Encode {
 	 *
 	 * @return  {@code this} writer
 	 */
-	default JavaScript javascript(CharSequence csq, int start, int end) throws IOException {
-		return encode(MediaType.JAVASCRIPT, csq, start, end);
+	default Json json(CharSequence csq, int start, int end) throws IOException {
+		return encode(MediaType.JSON, csq, start, end);
 	}
 
 	/**
-	 * Writes the given JavaScript with proper encoding.
+	 * Writes the given JSON object graph with proper encoding.
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script>…</script>}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script type="application/json">…</script>}.
 	 * </p>
 	 * <p>
 	 * If the string is translated, comments will be added giving the
@@ -223,15 +223,15 @@ public interface JavaScript extends Encode {
 	 *
 	 * @return  {@code this} writer
 	 */
-	default JavaScript javascript(Object javascript) throws IOException {
-		return encode(MediaType.JAVASCRIPT, javascript);
+	default Json json(Object json) throws IOException {
+		return encode(MediaType.JSON, json);
 	}
 
 	/**
-	 * Writes the given JavaScript with proper encoding.
+	 * Writes the given JSON object graph with proper encoding.
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script>…</script>}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script type="application/json">…</script>}.
 	 * </p>
 	 * <p>
 	 * If the string is translated, comments will be added giving the
@@ -242,15 +242,15 @@ public interface JavaScript extends Encode {
 	 *
 	 * @return  {@code this} writer
 	 */
-	default <Ex extends Throwable> JavaScript javascript(IOSupplierE<?, Ex> javascript) throws IOException, Ex {
-		return encode(MediaType.JAVASCRIPT, javascript);
+	default <Ex extends Throwable> Json json(IOSupplierE<?, Ex> json) throws IOException, Ex {
+		return encode(MediaType.JSON, json);
 	}
 
 	/**
-	 * Writes the given JavaScript with proper encoding.
+	 * Writes the given JSON object graph with proper encoding.
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script>…</script>}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script type="application/json">…</script>}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
@@ -260,26 +260,26 @@ public interface JavaScript extends Encode {
 	 *
 	 * @return  {@code this} writer
 	 */
-	default <Ex extends Throwable> JavaScript javascript(JavaScriptWritable<Ex> javascript) throws IOException, Ex {
-		return encode(MediaType.JAVASCRIPT, javascript);
+	default <Ex extends Throwable> Json json(JsonWritable<Ex> json) throws IOException, Ex {
+		return encode(MediaType.JSON, json);
 	}
 
 	/**
-	 * Writes the given JavaScript with proper encoding.
+	 * Writes the given JSON object graph with proper encoding.
 	 * This is well suited for use in a try-with-resources block.
 	 * <p>
 	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script>…</script>}.
+	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script type="application/json">…</script>}.
 	 * </p>
 	 * <p>
 	 * Does not perform any translation markups.
 	 * </p>
 	 *
-	 * @return  A new writer that may be used for arbitrary JavaScript.
+	 * @return  A new writer that may be used for arbitrary JSON object graph.
 	 *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
 	 */
-	default JavaScriptWriter javascript() throws IOException {
-		return (JavaScriptWriter)encode(MediaType.JAVASCRIPT);
+	default JsonWriter json() throws IOException {
+		return (JsonWriter)encode(MediaType.JSON);
 	}
 	// </editor-fold>
 }

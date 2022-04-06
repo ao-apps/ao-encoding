@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2022-04-04T20:50:15-05:00"
+		dateModified="2022-04-05T01:40:09-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -76,6 +76,27 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 							<li><code>com.aoapps.encoding.Coercion</code></li>
 							<li><code>com.aoapps.encoding.MediaValidator.validate()</code></li>
 							<li><code>com.aoapps.encoding.Supplier</code></li>
+						</ol>
+					</li>
+					<li>
+						New <code>ValidateOnlyEncoder</code> that may be used for <code>MediaWriter</code> when no
+						character encoding is required.
+					</li>
+					<li>Per-type output interfaces with related per-type writer implementations:
+						<ol>
+							<li>Renamed <code>WhitespaceWriter</code> to <code>Whitespace</code></li>
+							<li>Renamed <code>TextWriter</code> to <code>Text</code></li>
+							<li>
+								<code>Text</code> no longer extends <code>Whitespace</code>, implementations
+								that require both can either extend both or use the intersection type
+								<code><![CDATA[Text &amp; Whitespace]]></code>.
+							</li>
+							<li>Per-type interfaces provide writer/content-agnostic output while minimizing implementation boilerplate.</li>
+							<li>
+								Per-type <code>MediaWriter</code> implementations, with convenient per-content-type methods
+								for all supported content types.
+							</li>
+							<li>Per-type <code>MediaWritable</code> functional interfaces.</li>
 						</ol>
 					</li>
 				</ul>
@@ -543,8 +564,8 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 			<ul>
 				<li>Minimum Java version changed from 1.6 to 1.7.</li>
 				<li>
-					Implemented encodings for Bourne shell scripts, MySQL command line <code>mysql</code>,
-					and PostgreSQL command line <code>psql</code>.
+					Implemented encodings for Bourne shell scripts, MySQL command <code>mysql</code> input,
+					and PostgreSQL command <code>psql</code> input.
 				</li>
 			</ul>
 		</changelog:release>

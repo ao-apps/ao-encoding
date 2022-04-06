@@ -28,7 +28,7 @@ import java.io.Writer;
 
 /**
  * Encodes arbitrary text into a JavaScript string.  The static utility
- * methods do not add the quotes.  When used as a MediaWriter, the text is
+ * methods do not add the quotes.  When used as a {@link MediaWriter}, the text is
  * automatically surrounded by double quotes.  Any binary data is encoded with
  * \\uxxxx escapes.
  *
@@ -58,7 +58,7 @@ public final class TextInJavaScriptEncoder extends MediaEncoder {
 			// Note: This also prevents the potential closing of scripts with "</script>" or CDATA blocks with "]]>" inside strings.
 			case '>': return "\\u003e";
 			default:
-				if(ch<' ') return JavaScript.getUnicodeEscapeString(ch);
+				if(ch<' ') return JavaScriptUtil.getUnicodeEscapeString(ch);
 				// No conversion necessary
 				return null;
 		}

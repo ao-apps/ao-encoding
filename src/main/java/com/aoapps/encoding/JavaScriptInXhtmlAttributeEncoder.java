@@ -54,7 +54,7 @@ public final class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
 			case '\t': return "&#x9;";
 			default:
 				// Escape using JavaScript unicode escape when needed
-				return JavaScript.getUnicodeEscapeString(ch);
+				return JavaScriptUtil.getUnicodeEscapeString(ch);
 		}
 	}
 
@@ -124,6 +124,7 @@ public final class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
 	/**
 	 * Singleton instance intended for static import.
 	 */
+	// TODO: Rename all "javaScript" to "javascript" (and middle of lowerCamelCase like encodeJavaScript... to encodeJavascript), deprecating old spelling
 	public static final JavaScriptInXhtmlAttributeEncoder javaScriptInXhtmlAttributeEncoder = new JavaScriptInXhtmlAttributeEncoder();
 
 	@Override

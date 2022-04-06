@@ -30,7 +30,7 @@ import java.io.Writer;
 /**
  * <p>
  * Encode JavaScript and related formats into XHTML.  The static utility methods
- * only encode the characters.  When used as a MediaWriter, it automatically
+ * only encode the characters.  When used as a {@link MediaWriter}, it automatically
  * adds the &lt;script&gt; tags and optionally a CDATA block.
  * </p>
  * <p>
@@ -72,7 +72,7 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 				return null;
 			default:
 				// Escape using JavaScript unicode escape when needed.
-				return JavaScript.getUnicodeEscapeString(ch);
+				return JavaScriptUtil.getUnicodeEscapeString(ch);
 		}
 	}
 
@@ -211,9 +211,9 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 			doCdata = false;
 		}
 		if(doCdata) {
-			out.append(">//<![CDATA[" + WhitespaceWriter.NL);
+			out.append(">//<![CDATA[" + Whitespace.NL);
 		} else {
-			out.append(">" + WhitespaceWriter.NL);
+			out.append(">" + Whitespace.NL);
 		}
 	}
 
@@ -269,9 +269,9 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 			contentType == MediaType.JAVASCRIPT
 			&& encodingContext.getSerialization() == Serialization.XML
 		) {
-			out.append(WhitespaceWriter.NL + "//]]></script>");
+			out.append(Whitespace.NL + "//]]></script>");
 		} else {
-			out.append(WhitespaceWriter.NL + "</script>");
+			out.append(Whitespace.NL + "</script>");
 		}
 	}
 }

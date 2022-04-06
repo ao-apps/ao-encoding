@@ -115,12 +115,7 @@ public class MediaEncoderTest {
 		final Writer nullOut = NullWriter.getInstance();
 		for(MediaType containerType : MediaType.values()) {
 			// MediaValidator
-			MediaValidator canonical;
-			try {
-				canonical = MediaValidator.getMediaValidator(containerType, nullOut);
-			} catch(UnsupportedEncodingException e) {
-				throw new AssertionError("All media types must have validator implementations: " + containerType.name(), e);
-			}
+			MediaValidator canonical = MediaValidator.getMediaValidator(containerType, nullOut);
 			// MediaEncoder
 			for(MediaType contentType : MediaType.values()) {
 				try {
@@ -184,12 +179,7 @@ public class MediaEncoderTest {
 		final Writer nullOut = NullWriter.getInstance();
 		for(MediaType containerType : MediaType.values()) {
 			// MediaValidator
-			MediaValidator canonical;
-			try {
-				canonical = MediaValidator.getMediaValidator(containerType, nullOut);
-			} catch(UnsupportedEncodingException e) {
-				throw new AssertionError("All media types must have validator implementations: " + containerType.name(), e);
-			}
+			MediaValidator canonical = MediaValidator.getMediaValidator(containerType, nullOut);
 			// MediaEncoder
 			for(MediaType contentType : MediaType.values()) {
 				try {

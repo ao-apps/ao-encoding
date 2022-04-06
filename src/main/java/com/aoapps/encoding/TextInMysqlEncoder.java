@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * Encodes arbitrary text for use in the <code>mysql</code> command line.
+ * Encodes arbitrary text for use as <code>mysql</code> command input.
  * This implementation is based on <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
  *
  * @author  AO Industries, Inc.
@@ -42,7 +42,7 @@ public final class TextInMysqlEncoder extends MediaEncoder {
 	 *
 	 * @see MysqlValidator#checkCharacter(char)
 	 *
-	 * @throws  InvalidCharacterException  if any text character cannot be converted for use in the mysql command line
+	 * @throws  InvalidCharacterException  if any text character cannot be converted for use as mysql command input
 	 */
 	private static String getEscapedCharacter(char c) throws InvalidCharacterException {
 		switch(c) {

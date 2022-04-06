@@ -30,7 +30,7 @@ import java.io.Writer;
  * <p>
  * Encode CSS into XHTML.  The static utility methods only validate the characters since all valid CSS characters are
  * also valid in XHTML and do not require additional encoding.
- * When used as a MediaWriter, it automatically adds the &lt;style&gt; tags and optionally a CDATA block.
+ * When used as a {@link MediaWriter}, it automatically adds the &lt;style&gt; tags and optionally a CDATA block.
  * </p>
  *
  * @author  AO Industries, Inc.
@@ -127,9 +127,9 @@ public final class StyleInXhtmlEncoder extends MediaEncoder {
 		out.append("<style");
 		encodingContext.getDoctype().styleType(out);
 		if(encodingContext.getSerialization() == Serialization.XML) {
-			out.append(">/*<![CDATA[*/" + WhitespaceWriter.NL);
+			out.append(">/*<![CDATA[*/" + Whitespace.NL);
 		} else {
-			out.append(">" + WhitespaceWriter.NL);
+			out.append(">" + Whitespace.NL);
 		}
 	}
 
@@ -182,9 +182,9 @@ public final class StyleInXhtmlEncoder extends MediaEncoder {
 	public void writeSuffixTo(Appendable out, boolean trim) throws IOException {
 		super.writeSuffixTo(out, trim);
 		if(encodingContext.getSerialization() == Serialization.XML) {
-			out.append(WhitespaceWriter.NL + "/*]]>*/</style>");
+			out.append(Whitespace.NL + "/*]]>*/</style>");
 		} else {
-			out.append(WhitespaceWriter.NL + "</style>");
+			out.append(Whitespace.NL + "</style>");
 		}
 	}
 }

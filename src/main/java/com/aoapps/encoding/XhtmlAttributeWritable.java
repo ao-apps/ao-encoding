@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2015, 2016, 2018, 2019, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,24 +22,24 @@
  */
 package com.aoapps.encoding;
 
-/**
- * <p>
- * Indicates that at object can be trusted to generate output with only
- * valid characters for the provided type.  This will allow input validation
- * of the same type to be skipped.
- * </p>
- * <p>
- * Note: This is currently not used to skip input validation.  Input validation
- * is always performed as a means of catching bugs that would result in incorrect output
- * of nested content.
- * </p>
- *
- * @author  AO Industries, Inc.
- */
-public interface ValidMediaOutput {
+import java.io.IOException;
 
-	/**
-	 * Gets the output type.
-	 */
-	MediaType getValidMediaOutputType();
+/**
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
+ * @author  AO Industries,Inc.
+ */
+@FunctionalInterface
+public interface XhtmlAttributeWritable<Ex extends Throwable> extends WhitespaceWritable<Ex> {
+
+	@Override
+	default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
+		if(writer instanceof XhtmlAttributeWriter) {
+			writeTo((XhtmlAttributeWriter)writer);
+		} else {
+			throw new AssertionError("Expected " + XhtmlAttributeWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
+		}
+	}
+
+	void writeTo(XhtmlAttributeWriter writer) throws IOException, Ex;
 }
