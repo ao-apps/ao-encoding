@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2022-04-05T01:40:09-05:00"
+		dateModified="2022-04-07T07:39:03-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -98,6 +98,18 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 							</li>
 							<li>Per-type <code>MediaWritable</code> functional interfaces.</li>
 						</ol>
+					</li>
+					<li>
+						<p>
+							Renamed lowerCamelCase from "javaScript" to "javascript" (so javascript reads as a single word),
+							for example, is now "javascriptInXhtmlAttributeEncoder" and "textInJavascriptEncoder".
+						</p>
+						<p>
+							<em>
+								We did not leave any deprecated compatibility methods.  This is a major version bump that
+								may require minor source changes to those upgrading.
+							</em>
+						</p>
 					</li>
 				</ul>
 			</changelog:release>

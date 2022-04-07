@@ -42,23 +42,23 @@ final class JavaScriptUtil {
 	 */
 	// 0x0 <= ch < 0x20
 	private static final int ENCODE_RANGE_1_END   = 0x20;
-	private static final String[] javaScriptUnicodeEscapeStrings1 = new String[ENCODE_RANGE_1_END];
+	private static final String[] javascriptUnicodeEscapeStrings1 = new String[ENCODE_RANGE_1_END];
 	// 0xD800 <= ch < 0xE000
 	private static final int ENCODE_RANGE_2_START = 0xD800;
 	private static final int ENCODE_RANGE_2_END   = 0xE000;
-	private static final String[] javaScriptUnicodeEscapeStrings2 = new String[ENCODE_RANGE_2_END - ENCODE_RANGE_2_START];
+	private static final String[] javascriptUnicodeEscapeStrings2 = new String[ENCODE_RANGE_2_END - ENCODE_RANGE_2_START];
 	// 0xFFFE <= ch < 0x10000
 	private static final String FFFE = "\\ufffe";
 	private static final String FFFF = "\\uffff";
 	static {
 		for(int ch = 0; ch < ENCODE_RANGE_1_END; ch++) {
 			// Escape using JavaScript unicode escape.
-			javaScriptUnicodeEscapeStrings1[ch] =
+			javascriptUnicodeEscapeStrings1[ch] =
 				("\\u" + getHex(ch >>> 12) + getHex(ch >>> 8) + getHex(ch >>> 4) + getHex(ch)).intern();
 		}
 		for(int ch = ENCODE_RANGE_2_START; ch < ENCODE_RANGE_2_END; ch++) {
 			// Escape using JavaScript unicode escape.
-			javaScriptUnicodeEscapeStrings2[ch - ENCODE_RANGE_2_START] =
+			javascriptUnicodeEscapeStrings2[ch - ENCODE_RANGE_2_START] =
 				("\\u" + getHex(ch >>> 12) + getHex(ch >>> 8) + getHex(ch >>> 4) + getHex(ch)).intern();
 		}
 		assert 0xfffe >= ENCODE_RANGE_2_END;
@@ -81,11 +81,11 @@ final class JavaScriptUtil {
 	static String getUnicodeEscapeString(char ch) {
 		int chInt = ch;
 		if(chInt < ENCODE_RANGE_1_END) {
-			return javaScriptUnicodeEscapeStrings1[chInt];
+			return javascriptUnicodeEscapeStrings1[chInt];
 		}
 		if(chInt >= ENCODE_RANGE_2_START) {
 			if(chInt < ENCODE_RANGE_2_END) {
-				return javaScriptUnicodeEscapeStrings2[chInt - ENCODE_RANGE_2_START];
+				return javascriptUnicodeEscapeStrings2[chInt - ENCODE_RANGE_2_START];
 			}
 			if(chInt == 0xfffe) return FFFE;
 			if(chInt == 0xffff) return FFFF;

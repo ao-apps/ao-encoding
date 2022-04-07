@@ -94,7 +94,7 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
 		} else {
 			encoded = url;
 		}
-		TextInJavaScriptEncoder.encodeTextInJavaScript(encoded, out);
+		TextInJavaScriptEncoder.encodeTextInJavascript(encoded, out);
 		out.append('"');
 	}
 }

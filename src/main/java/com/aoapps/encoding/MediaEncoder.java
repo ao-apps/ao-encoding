@@ -107,7 +107,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 					case LD_JSON :         return null;
 					case TEXT :            return null;
 					case XHTML :           encoder = new JavaScriptInXhtmlEncoder(contentType, encodingContext); break;
-					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder; break;
+					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javascriptInXhtmlAttributeEncoder; break;
 					default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
 				}
 				break;
@@ -146,7 +146,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 			case TEXT:
 				switch(containerType) {
 					case CSS :             encoder = TextInStyleEncoder.textInStyleEncoder; break;
-					case JAVASCRIPT :      encoder = TextInJavaScriptEncoder.textInJavaScriptEncoder; break;
+					case JAVASCRIPT :      encoder = TextInJavaScriptEncoder.textInJavascriptEncoder; break;
 					case JSON :            encoder = TextInJavaScriptEncoder.textInJsonEncoder; break;
 					case LD_JSON :         encoder = TextInJavaScriptEncoder.textInLdJsonEncoder; break;
 					case MYSQL :           encoder = TextInMysqlEncoder.textInMysqlEncoder; break;

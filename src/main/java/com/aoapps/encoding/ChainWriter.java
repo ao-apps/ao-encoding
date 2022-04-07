@@ -22,8 +22,8 @@
  */
 package com.aoapps.encoding;
 
-import static com.aoapps.encoding.JavaScriptInXhtmlAttributeEncoder.javaScriptInXhtmlAttributeEncoder;
-import static com.aoapps.encoding.TextInJavaScriptEncoder.textInJavaScriptEncoder;
+import static com.aoapps.encoding.JavaScriptInXhtmlAttributeEncoder.javascriptInXhtmlAttributeEncoder;
+import static com.aoapps.encoding.TextInJavaScriptEncoder.textInJavascriptEncoder;
 import static com.aoapps.encoding.TextInMysqlEncoder.textInMysqlEncoder;
 import static com.aoapps.encoding.TextInPsqlEncoder.textInPsqlEncoder;
 import static com.aoapps.encoding.TextInShEncoder.textInShEncoder;
@@ -53,8 +53,8 @@ public final class ChainWriter implements Appendable, Closeable {
 	// <editor-fold defaultstate="collapsed" desc="PrintWriter wrapping">
 	private final EncodingContext encodingContext;
 	private final PrintWriter out;
-	private final JavaScriptWriter javaScriptInXhtmlAttributeWriter;
-	private final JavaScriptWriter javaScriptInXhtmlWriter;
+	private final JavaScriptWriter javascriptInXhtmlAttributeWriter;
+	private final JavaScriptWriter javascriptInXhtmlWriter;
 
 	/**
 	 * Create a new PrintWriter, without automatic line flushing, from an
@@ -106,13 +106,13 @@ public final class ChainWriter implements Appendable, Closeable {
 	public ChainWriter(EncodingContext encodingContext, PrintWriter out) {
 		this.encodingContext = NullArgumentException.checkNotNull(encodingContext, "encodingContext");
 		this.out = out;
-		javaScriptInXhtmlAttributeWriter = new JavaScriptWriter(
+		javascriptInXhtmlAttributeWriter = new JavaScriptWriter(
 			encodingContext,
-			javaScriptInXhtmlAttributeEncoder,
+			javascriptInXhtmlAttributeEncoder,
 			out
 		);
 		try {
-			javaScriptInXhtmlWriter = new JavaScriptWriter(
+			javascriptInXhtmlWriter = new JavaScriptWriter(
 				encodingContext,
 				MediaEncoder.getInstance(encodingContext, MediaType.JAVASCRIPT, MediaType.XHTML),
 				out
@@ -603,9 +603,9 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @see  TextInJavaScriptEncoder
 	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
-	public ChainWriter textInJavaScript(Object value) throws IOException {
-		assert out == Coercion.optimize(out, textInJavaScriptEncoder) : "There are no optimizers for PrintWriter";
-		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, out, true);
+	public ChainWriter textInJavascript(Object value) throws IOException {
+		assert out == Coercion.optimize(out, textInJavascriptEncoder) : "There are no optimizers for PrintWriter";
+		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavascriptEncoder, true, out, true);
 		return this;
 	}
 
@@ -621,12 +621,12 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @see  JavaScriptInXhtmlAttributeEncoder
 	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
-	public ChainWriter textInJavaScriptInXmlAttribute(Object value) throws IOException {
+	public ChainWriter textInJavascriptInXmlAttribute(Object value) throws IOException {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XML Attribute
-		assert javaScriptInXhtmlAttributeWriter == Coercion.optimize(javaScriptInXhtmlAttributeWriter, textInJavaScriptEncoder) : "There are no optimizers for " + JavaScriptWriter.class.getName();
-		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, javaScriptInXhtmlAttributeWriter, true);
+		assert javascriptInXhtmlAttributeWriter == Coercion.optimize(javascriptInXhtmlAttributeWriter, textInJavascriptEncoder) : "There are no optimizers for " + JavaScriptWriter.class.getName();
+		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavascriptEncoder, true, javascriptInXhtmlAttributeWriter, true);
 		return this;
 	}
 
@@ -642,12 +642,12 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @see  JavaScriptInXhtmlEncoder
 	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
-	public ChainWriter textInJavaScriptInXhtml(Object value) throws IOException {
+	public ChainWriter textInJavascriptInXhtml(Object value) throws IOException {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XHTML
-		assert javaScriptInXhtmlWriter == Coercion.optimize(javaScriptInXhtmlWriter, textInJavaScriptEncoder) : "There are no optimizers for " + JavaScriptWriter.class.getName();
-		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavaScriptEncoder, true, javaScriptInXhtmlWriter, true);
+		assert javascriptInXhtmlWriter == Coercion.optimize(javascriptInXhtmlWriter, textInJavascriptEncoder) : "There are no optimizers for " + JavaScriptWriter.class.getName();
+		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavascriptEncoder, true, javascriptInXhtmlWriter, true);
 		return this;
 	}
 

@@ -76,18 +76,18 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 		}
 	}
 
-	public static void encodeJavaScriptInXhtml(char ch, Appendable out) throws IOException {
+	public static void encodeJavascriptInXhtml(char ch, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML);
 		String escaped = getEscapedCharacter(ch);
 		if(escaped!=null) out.append(escaped);
 		else out.append(ch);
 	}
 
-	public static void encodeJavaScriptInXhtml(char[] cbuf, Writer out) throws IOException {
-		encodeJavaScriptInXhtml(cbuf, 0, cbuf.length, out);
+	public static void encodeJavascriptInXhtml(char[] cbuf, Writer out) throws IOException {
+		encodeJavascriptInXhtml(cbuf, 0, cbuf.length, out);
 	}
 
-	public static void encodeJavaScriptInXhtml(char[] cbuf, int off, int len, Writer out) throws IOException {
+	public static void encodeJavascriptInXhtml(char[] cbuf, int off, int len, Writer out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML);
 		int end = off + len;
 		int toPrint = 0;
@@ -106,15 +106,15 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 		if(toPrint>0) out.write(cbuf, end-toPrint, toPrint);
 	}
 
-	public static void encodeJavaScriptInXhtml(CharSequence cs, Appendable out) throws IOException {
+	public static void encodeJavascriptInXhtml(CharSequence cs, Appendable out) throws IOException {
 		if(cs != null) {
-			encodeJavaScriptInXhtml(cs, 0, cs.length(), out);
+			encodeJavascriptInXhtml(cs, 0, cs.length(), out);
 		} else {
 			assert Assertions.isValidating(out, MediaType.XHTML);
 		}
 	}
 
-	public static void encodeJavaScriptInXhtml(CharSequence cs, int start, int end, Appendable out) throws IOException {
+	public static void encodeJavascriptInXhtml(CharSequence cs, int start, int end, Appendable out) throws IOException {
 		assert Assertions.isValidating(out, MediaType.XHTML);
 		if(cs != null) {
 			int toPrint = 0;
@@ -134,8 +134,8 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 		}
 	}
 
-	public static void encodeJavaScriptInXhtml(Object value, Appendable out) throws IOException {
-		Coercion.append(value, javaScriptInXhtmlEncoder, out);
+	public static void encodeJavascriptInXhtml(Object value, Appendable out) throws IOException {
+		Coercion.append(value, javascriptInXhtmlEncoder, out);
 	}
 	// </editor-fold>
 
@@ -145,7 +145,7 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 	 * @deprecated  This singleton does not have any context so assumes {@link EncodingContext#DEFAULT}.
 	 */
 	@Deprecated
-	public static final JavaScriptInXhtmlEncoder javaScriptInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JAVASCRIPT, EncodingContext.DEFAULT);
+	public static final JavaScriptInXhtmlEncoder javascriptInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JAVASCRIPT, EncodingContext.DEFAULT);
 
 	/**
 	 * Singleton instance intended for static import for application/json.
@@ -219,46 +219,46 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 
 	@Override
 	public void write(int c, Writer out) throws IOException {
-		encodeJavaScriptInXhtml((char)c, out);
+		encodeJavascriptInXhtml((char)c, out);
 	}
 
 	@Override
 	public void write(char[] cbuf, Writer out) throws IOException {
-		encodeJavaScriptInXhtml(cbuf, out);
+		encodeJavascriptInXhtml(cbuf, out);
 	}
 
 	@Override
 	public void write(char[] cbuf, int off, int len, Writer out) throws IOException {
-		encodeJavaScriptInXhtml(cbuf, off, len, out);
+		encodeJavascriptInXhtml(cbuf, off, len, out);
 	}
 
 	@Override
 	public void write(String str, Writer out) throws IOException {
 		if(str==null) throw new IllegalArgumentException("str is null");
-		encodeJavaScriptInXhtml(str, out);
+		encodeJavascriptInXhtml(str, out);
 	}
 
 	@Override
 	public void write(String str, int off, int len, Writer out) throws IOException {
 		if(str==null) throw new IllegalArgumentException("str is null");
-		encodeJavaScriptInXhtml(str, off, off+len, out);
+		encodeJavascriptInXhtml(str, off, off+len, out);
 	}
 
 	@Override
 	public JavaScriptInXhtmlEncoder append(char c, Appendable out) throws IOException {
-		encodeJavaScriptInXhtml(c, out);
+		encodeJavascriptInXhtml(c, out);
 		return this;
 	}
 
 	@Override
 	public JavaScriptInXhtmlEncoder append(CharSequence csq, Appendable out) throws IOException {
-		encodeJavaScriptInXhtml(csq==null ? "null" : csq, out);
+		encodeJavascriptInXhtml(csq==null ? "null" : csq, out);
 		return this;
 	}
 
 	@Override
 	public JavaScriptInXhtmlEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException {
-		encodeJavaScriptInXhtml(csq==null ? "null" : csq, start, end, out);
+		encodeJavascriptInXhtml(csq==null ? "null" : csq, start, end, out);
 		return this;
 	}
 
