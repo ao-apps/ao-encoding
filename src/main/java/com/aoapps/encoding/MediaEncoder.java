@@ -65,6 +65,13 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 	 * if character validation is required.
 	 * </p>
 	 * <p>
+	 * Media encoder implementations are extremely light weight.  Although they can be reused after calling
+	 * {@link #writeSuffixTo(java.lang.Appendable, boolean)}, there is likely no benefit in caching or reusing
+	 * instances.  The only possible exception would be any {@link BufferedEncoder}, which currently is only
+	 * the encoders for {@link MediaType#URL}; however, since URLs are generally fairly short, the reuse of underlying
+	 * buffers would be of marginal benefit.
+	 * </p>
+	 * <p>
 	 * Please note that most types can be encoded both to and from {@link MediaType#TEXT}.  Thus, when a specialized
 	 * encoder is not available (as indicated by throwing {@link UnsupportedEncodingException}), it may be possible to
 	 * use an intermediate TEXT to connect between types, such as CSS -&gt; TEXT -&gt; XHTML will just display the raw
@@ -87,6 +94,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 	 * @exception UnsupportedEncodingException when unable to encode the content into the container
 	 *                                         either because it is impossible or not yet implemented.
 	 */
+	@SuppressWarnings("deprecation")
 	public static MediaEncoder getInstance(EncodingContext encodingContext, MediaType contentType, MediaType containerType) throws UnsupportedEncodingException {
 		NullArgumentException.checkNotNull(encodingContext, "encodingContext");
 		final MediaEncoder encoder;
@@ -95,7 +103,11 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 				switch(containerType) {
 					case CSS :
 					case TEXT :            return null;
-					case XHTML :           encoder = new StyleInXhtmlEncoder(encodingContext); break;
+					case XHTML :
+						encoder = (encodingContext == EncodingContext.DEFAULT)
+							? StyleInXhtmlEncoder.styleInXhtmlEncoder
+							: new StyleInXhtmlEncoder(encodingContext);
+						break;
 					case XHTML_ATTRIBUTE : encoder = StyleInXhtmlAttributeEncoder.styleInXhtmlAttributeEncoder; break;
 					default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
 				}
@@ -106,7 +118,14 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 					case JSON :
 					case LD_JSON :         return null;
 					case TEXT :            return null;
-					case XHTML :           encoder = new JavaScriptInXhtmlEncoder(contentType, encodingContext); break;
+					case XHTML :
+						assert contentType == MediaType.JAVASCRIPT;
+						if(encodingContext == EncodingContext.DEFAULT) {
+							encoder = JavaScriptInXhtmlEncoder.javascriptInXhtmlEncoder;
+						} else {
+							encoder = new JavaScriptInXhtmlEncoder(MediaType.JAVASCRIPT, encodingContext);
+						}
+						break;
 					case XHTML_ATTRIBUTE : encoder = JavaScriptInXhtmlAttributeEncoder.javascriptInXhtmlAttributeEncoder; break;
 					default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
 				}
@@ -118,7 +137,20 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 					case JSON :
 					case LD_JSON :         return null;
 					case TEXT :            return null;
-					case XHTML :           encoder = new JavaScriptInXhtmlEncoder(contentType, encodingContext); break;
+					case XHTML :
+						assert contentType == MediaType.JSON || contentType == MediaType.LD_JSON;
+						if(encodingContext == EncodingContext.DEFAULT) {
+							if(contentType == MediaType.JSON) {
+								encoder = JavaScriptInXhtmlEncoder.jsonInXhtmlEncoder;
+							} else if(contentType == MediaType.LD_JSON) {
+								encoder = JavaScriptInXhtmlEncoder.ldJsonInXhtmlEncoder;
+							} else {
+								throw new AssertionError();
+							}
+						} else {
+							encoder = new JavaScriptInXhtmlEncoder(contentType, encodingContext);
+						}
+						break;
 					default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
 				}
 				break;
