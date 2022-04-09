@@ -30,10 +30,10 @@ import java.io.IOException;
  * @author  AO Industries,Inc.
  */
 @FunctionalInterface
-public interface JsonWritable<Ex extends Throwable> extends WhitespaceWritable<Ex> {
+public interface JsonWritable<Ex extends Throwable> extends JavaScriptWritable<Ex> {
 
 	@Override
-	default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
+	default void writeTo(JavaScriptWriter writer) throws IOException, Ex {
 		if(writer instanceof JsonWriter) {
 			writeTo((JsonWriter)writer);
 		} else {

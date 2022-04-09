@@ -30,11 +30,11 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public class JavaScriptValidator extends MediaValidator {
+public final class JavaScriptValidator extends MediaValidator {
 
 	private final MediaType inputType;
 
-	protected JavaScriptValidator(Writer out, MediaType inputType) {
+	JavaScriptValidator(Writer out, MediaType inputType) {
 		super(out);
 		this.inputType = inputType;
 	}

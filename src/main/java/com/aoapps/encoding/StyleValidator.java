@@ -37,7 +37,7 @@ import java.util.ResourceBundle;
  */
 // TODO: identifier(...) methods, similar to text(...), to escape arbitrary identifiers?
 //       Would same apply to JavaScript?
-public class StyleValidator extends MediaValidator {
+public final class StyleValidator extends MediaValidator {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, StyleValidator.class);
@@ -88,7 +88,7 @@ public class StyleValidator extends MediaValidator {
 	}
 	// </editor-fold>
 
-	protected StyleValidator(Writer out) {
+	StyleValidator(Writer out) {
 		super(out);
 	}
 

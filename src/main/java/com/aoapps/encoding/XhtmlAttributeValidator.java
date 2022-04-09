@@ -37,7 +37,7 @@ import java.util.ResourceBundle;
  *
  * @author  AO Industries, Inc.
  */
-public class XhtmlAttributeValidator extends MediaValidator {
+public final class XhtmlAttributeValidator extends MediaValidator {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, XhtmlAttributeValidator.class);
@@ -85,7 +85,7 @@ public class XhtmlAttributeValidator extends MediaValidator {
 	}
 	// </editor-fold>
 
-	protected XhtmlAttributeValidator(Writer out) {
+	XhtmlAttributeValidator(Writer out) {
 		super(out);
 	}
 

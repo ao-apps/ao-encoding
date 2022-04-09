@@ -27,6 +27,7 @@ import com.aoapps.lang.io.function.IOConsumer;
 import com.aoapps.lang.io.function.IOSupplierE;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.function.Predicate;
 
 /**
  * Streaming versions of media encoders.
@@ -35,50 +36,48 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, Json, LdJson, Text, Url {
+public final class LdJsonWriter extends JsonWriter implements JavaScript, Json, LdJson, Text, Url {
 
 	/**
 	 * @param  out  Conditionally passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
 	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
 	 * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
 	 *                         This allows the indentation to be coordinated between nested content types.
-	 * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer
+	 * @param  isNoClose  Called to determine result of {@link #isNoClose()}
+	 * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer,
+	 *                 will only be called to be idempotent, implementation can assume will only be called once.
 	 */
 	public LdJsonWriter(
 		EncodingContext encodingContext,
-		MediaType inputType,
 		MediaEncoder encoder,
 		Writer out,
 		boolean outOptimized,
 		Whitespace indentDelegate,
-		IOConsumer<? super Writer> closer
+		Predicate<? super MediaWriter> isNoClose,
+		IOConsumer<? super MediaWriter> closer
 	) {
-		super(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
-		assert encoder.isValidatingMediaInputType(MediaType.LD_JSON);
+		super(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 	}
 
 	/**
+	 * Simplified constructor.
+	 *
 	 * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 *
+	 * @see  #DEFAULT_IS_NO_CLOSE
+	 * @see  #DEFAULT_CLOSER
 	 */
 	public LdJsonWriter(
 		EncodingContext encodingContext,
 		MediaEncoder encoder,
 		Writer out
 	) {
-		this(encodingContext, encoder.getValidMediaInputType(), encoder, out, false, null, Writer::close);
+		super(encodingContext, encoder, out);
 	}
 
 	@Override
-	LdJsonWriter newMediaWriter(
-		EncodingContext encodingContext,
-		MediaType inputType,
-		MediaEncoder encoder,
-		Writer out,
-		boolean outOptimized,
-		Whitespace indentDelegate,
-		IOConsumer<? super Writer> closer
-	) {
-		return new LdJsonWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+	public MediaType getValidMediaInputType() {
+		return MediaType.LD_JSON;
 	}
 
 	@Override
@@ -285,7 +284,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter javascript(char ch) throws IOException {
-		JavaScript.super.javascript(ch);
+		super.javascript(ch);
 		return this;
 	}
 
@@ -297,7 +296,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter javascript(char[] cbuf) throws IOException {
-		JavaScript.super.javascript(cbuf);
+		super.javascript(cbuf);
 		return this;
 	}
 
@@ -309,7 +308,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter javascript(char[] cbuf, int offset, int len) throws IOException {
-		JavaScript.super.javascript(cbuf, offset, len);
+		super.javascript(cbuf, offset, len);
 		return this;
 	}
 
@@ -321,7 +320,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter javascript(CharSequence csq) throws IOException {
-		JavaScript.super.javascript(csq);
+		super.javascript(csq);
 		return this;
 	}
 
@@ -333,7 +332,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter javascript(CharSequence csq, int start, int end) throws IOException {
-		JavaScript.super.javascript(csq, start, end);
+		super.javascript(csq, start, end);
 		return this;
 	}
 
@@ -345,7 +344,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter javascript(Object javascript) throws IOException {
-		JavaScript.super.javascript(javascript);
+		super.javascript(javascript);
 		return this;
 	}
 
@@ -357,7 +356,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public <Ex extends Throwable> LdJsonWriter javascript(IOSupplierE<?, Ex> javascript) throws IOException, Ex {
-		JavaScript.super.javascript(javascript);
+		super.javascript(javascript);
 		return this;
 	}
 
@@ -369,7 +368,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public <Ex extends Throwable> LdJsonWriter javascript(JavaScriptWritable<Ex> javascript) throws IOException, Ex {
-		JavaScript.super.javascript(javascript);
+		super.javascript(javascript);
 		return this;
 	}
 
@@ -381,7 +380,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public JavaScriptWriter javascript() throws IOException {
-		return JavaScript.super.javascript();
+		return super.javascript();
 	}
 	// </editor-fold>
 
@@ -394,7 +393,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter json(char ch) throws IOException {
-		Json.super.json(ch);
+		super.json(ch);
 		return this;
 	}
 
@@ -406,7 +405,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter json(char[] cbuf) throws IOException {
-		Json.super.json(cbuf);
+		super.json(cbuf);
 		return this;
 	}
 
@@ -418,7 +417,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter json(char[] cbuf, int offset, int len) throws IOException {
-		Json.super.json(cbuf, offset, len);
+		super.json(cbuf, offset, len);
 		return this;
 	}
 
@@ -430,7 +429,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter json(CharSequence csq) throws IOException {
-		Json.super.json(csq);
+		super.json(csq);
 		return this;
 	}
 
@@ -442,7 +441,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter json(CharSequence csq, int start, int end) throws IOException {
-		Json.super.json(csq, start, end);
+		super.json(csq, start, end);
 		return this;
 	}
 
@@ -454,7 +453,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter json(Object json) throws IOException {
-		Json.super.json(json);
+		super.json(json);
 		return this;
 	}
 
@@ -466,7 +465,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public <Ex extends Throwable> LdJsonWriter json(IOSupplierE<?, Ex> json) throws IOException, Ex {
-		Json.super.json(json);
+		super.json(json);
 		return this;
 	}
 
@@ -478,7 +477,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public <Ex extends Throwable> LdJsonWriter json(JsonWritable<Ex> json) throws IOException, Ex {
-		Json.super.json(json);
+		super.json(json);
 		return this;
 	}
 
@@ -490,7 +489,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public JsonWriter json() throws IOException {
-		return Json.super.json();
+		return super.json();
 	}
 	// </editor-fold>
 
@@ -503,7 +502,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter ldJson(char ch) throws IOException {
-		LdJson.super.ldJson(ch);
+		super.ldJson(ch);
 		return this;
 	}
 
@@ -515,7 +514,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter ldJson(char[] cbuf) throws IOException {
-		LdJson.super.ldJson(cbuf);
+		super.ldJson(cbuf);
 		return this;
 	}
 
@@ -527,7 +526,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter ldJson(char[] cbuf, int offset, int len) throws IOException {
-		LdJson.super.ldJson(cbuf, offset, len);
+		super.ldJson(cbuf, offset, len);
 		return this;
 	}
 
@@ -539,7 +538,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter ldJson(CharSequence csq) throws IOException {
-		LdJson.super.ldJson(csq);
+		super.ldJson(csq);
 		return this;
 	}
 
@@ -551,7 +550,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter ldJson(CharSequence csq, int start, int end) throws IOException {
-		LdJson.super.ldJson(csq, start, end);
+		super.ldJson(csq, start, end);
 		return this;
 	}
 
@@ -563,7 +562,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter ldJson(Object ldJson) throws IOException {
-		LdJson.super.ldJson(ldJson);
+		super.ldJson(ldJson);
 		return this;
 	}
 
@@ -575,7 +574,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public <Ex extends Throwable> LdJsonWriter ldJson(IOSupplierE<?, Ex> ldJson) throws IOException, Ex {
-		LdJson.super.ldJson(ldJson);
+		super.ldJson(ldJson);
 		return this;
 	}
 
@@ -587,7 +586,7 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public <Ex extends Throwable> LdJsonWriter ldJson(LdJsonWritable<Ex> ldJson) throws IOException, Ex {
-		LdJson.super.ldJson(ldJson);
+		super.ldJson(ldJson);
 		return this;
 	}
 
@@ -599,68 +598,68 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	@Deprecated
 	@Override
 	public LdJsonWriter ldJson() throws IOException {
-		return LdJson.super.ldJson();
+		return super.ldJson();
 	}
 	// </editor-fold>
 
 	// <editor-fold desc="Text - manual self-type" defaultstate="collapsed">
 	@Override
 	public LdJsonWriter nbsp() throws IOException {
-		Text.super.nbsp();
+		super.nbsp();
 		return this;
 	}
 
 	@Override
 	public LdJsonWriter nbsp(int count) throws IOException {
-		Text.super.nbsp(count);
+		super.nbsp(count);
 		return this;
 	}
 
 	@Override
 	public LdJsonWriter text(char ch) throws IOException {
-		Text.super.text(ch);
+		super.text(ch);
 		return this;
 	}
 
 	@Override
 	public LdJsonWriter text(char[] cbuf) throws IOException {
-		Text.super.text(cbuf);
+		super.text(cbuf);
 		return this;
 	}
 
 	@Override
 	public LdJsonWriter text(char[] cbuf, int offset, int len) throws IOException {
-		Text.super.text(cbuf, offset, len);
+		super.text(cbuf, offset, len);
 		return this;
 	}
 
 	@Override
 	public LdJsonWriter text(CharSequence csq) throws IOException {
-		Text.super.text(csq);
+		super.text(csq);
 		return this;
 	}
 
 	@Override
 	public LdJsonWriter text(CharSequence csq, int start, int end) throws IOException {
-		Text.super.text(csq, start, end);
+		super.text(csq, start, end);
 		return this;
 	}
 
 	@Override
 	public LdJsonWriter text(Object text) throws IOException {
-		Text.super.text(text);
+		super.text(text);
 		return this;
 	}
 
 	@Override
 	public <Ex extends Throwable> LdJsonWriter text(IOSupplierE<?, Ex> text) throws IOException, Ex {
-		Text.super.text(text);
+		super.text(text);
 		return this;
 	}
 
 	@Override
 	public <Ex extends Throwable> LdJsonWriter text(TextWritable<Ex> text) throws IOException, Ex {
-		Text.super.text(text);
+		super.text(text);
 		return this;
 	}
 	// </editor-fold>
@@ -668,49 +667,49 @@ public final class LdJsonWriter extends WhitespaceWriter implements JavaScript, 
 	// <editor-fold desc="Url - manual self-type" defaultstate="collapsed">
 	@Override
 	public LdJsonWriter url(char ch) throws IOException {
-		Url.super.url(ch);
+		super.url(ch);
 		return this;
 	}
 
 	@Override
 	public LdJsonWriter url(char[] cbuf) throws IOException {
-		Url.super.url(cbuf);
+		super.url(cbuf);
 		return this;
 	}
 
 	@Override
 	public LdJsonWriter url(char[] cbuf, int offset, int len) throws IOException {
-		Url.super.url(cbuf, offset, len);
+		super.url(cbuf, offset, len);
 		return this;
 	}
 
 	@Override
 	public LdJsonWriter url(CharSequence csq) throws IOException {
-		Url.super.url(csq);
+		super.url(csq);
 		return this;
 	}
 
 	@Override
 	public LdJsonWriter url(CharSequence csq, int start, int end) throws IOException {
-		Url.super.url(csq, start, end);
+		super.url(csq, start, end);
 		return this;
 	}
 
 	@Override
 	public LdJsonWriter url(Object url) throws IOException {
-		Url.super.url(url);
+		super.url(url);
 		return this;
 	}
 
 	@Override
 	public <Ex extends Throwable> LdJsonWriter url(IOSupplierE<?, Ex> url) throws IOException, Ex {
-		Url.super.url(url);
+		super.url(url);
 		return this;
 	}
 
 	@Override
 	public <Ex extends Throwable> LdJsonWriter url(UrlWritable<Ex> url) throws IOException, Ex {
-		Url.super.url(url);
+		super.url(url);
 		return this;
 	}
 	// </editor-fold>

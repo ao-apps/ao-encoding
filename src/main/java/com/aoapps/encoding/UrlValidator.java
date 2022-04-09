@@ -34,7 +34,7 @@ import java.util.ResourceBundle;
  *
  * @author  AO Industries, Inc.
  */
-public class UrlValidator extends BufferedValidator {
+public final class UrlValidator extends BufferedValidator {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, UrlValidator.class);
@@ -144,7 +144,7 @@ public class UrlValidator extends BufferedValidator {
 	}
 	// </editor-fold>
 
-	protected UrlValidator(Writer out) {
+	UrlValidator(Writer out) {
 		super(out, 128);
 	}
 
@@ -172,7 +172,7 @@ public class UrlValidator extends BufferedValidator {
 	}
 
 	@Override
-	protected void validate(CharSequence buffer) throws IOException {
+	void validate(CharSequence buffer) throws IOException {
 		int len = buffer.length();
 		checkCharacters(buffer, 0, len);
 		out.append(buffer, 0, len);

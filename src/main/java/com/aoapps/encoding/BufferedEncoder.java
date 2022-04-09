@@ -42,6 +42,16 @@ public abstract class BufferedEncoder extends MediaEncoder {
 		this.buffer = new StringBuilder(initialCapacity);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @return  {@code true} since buffered
+	 */
+	@Override
+	public final boolean isBuffered() {
+		return true;
+	}
+
 	@Override
 	public final void write(int c, Writer out) {
 		assert Assertions.isValidating(out, getValidMediaOutputType());

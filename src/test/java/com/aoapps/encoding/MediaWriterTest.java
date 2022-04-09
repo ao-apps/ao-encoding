@@ -26,7 +26,8 @@ import com.aoapps.lang.io.NullWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.EnumSet;
 import java.util.Set;
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class MediaWriterTest {
@@ -50,11 +51,12 @@ public class MediaWriterTest {
 				} catch(UnsupportedEncodingException e) {
 					// Not supported
 				}
-				if(contentType.getEncodeClass().isInstance(mediaWriter)) {
+				assertTrue(contentType.getEncodeInterface().isInterface());
+				if(contentType.getEncodeInterface().isInstance(mediaWriter)) {
 					implementedInterfaces.add(contentType);
 				}
 			}
-			Assert.assertEquals("Set of per-type interfaces must match set of supported media encoders", supportedEncoders, implementedInterfaces);
+			assertEquals("Set of per-type interfaces must match set of supported media encoders", supportedEncoders, implementedInterfaces);
 		}
 	}
 }

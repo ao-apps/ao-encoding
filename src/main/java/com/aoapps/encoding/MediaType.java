@@ -32,6 +32,7 @@ import com.aoapps.lang.io.function.IOConsumer;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 /**
  * Supported content types.
@@ -64,14 +65,14 @@ public enum MediaType {
 		@Override
 		public XhtmlWriter newMediaWriter(
 			EncodingContext encodingContext,
-			MediaType inputType,
 			MediaEncoder encoder,
 			Writer out,
 			boolean outOptimized,
 			Whitespace indentDelegate,
-			IOConsumer<? super Writer> closer
+			Predicate<? super MediaWriter> isNoClose,
+			IOConsumer<? super MediaWriter> closer
 		) {
-			return new XhtmlWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+			return new XhtmlWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 		}
 
 		@Override
@@ -84,8 +85,13 @@ public enum MediaType {
 		}
 
 		@Override
-		Class<? extends Encode> getEncodeClass() {
+		Class<? extends Encode> getEncodeInterface() {
 			return Xhtml.class;
+		}
+
+		@Override
+		Class<? extends MediaWriter> getMediaWriterClass() {
+			return XhtmlWriter.class;
 		}
 	},
 
@@ -108,14 +114,14 @@ public enum MediaType {
 		@Override
 		public XhtmlAttributeWriter newMediaWriter(
 			EncodingContext encodingContext,
-			MediaType inputType,
 			MediaEncoder encoder,
 			Writer out,
 			boolean outOptimized,
 			Whitespace indentDelegate,
-			IOConsumer<? super Writer> closer
+			Predicate<? super MediaWriter> isNoClose,
+			IOConsumer<? super MediaWriter> closer
 		) {
-			return new XhtmlAttributeWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+			return new XhtmlAttributeWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 		}
 
 		@Override
@@ -128,8 +134,13 @@ public enum MediaType {
 		}
 
 		@Override
-		Class<? extends Encode> getEncodeClass() {
+		Class<? extends Encode> getEncodeInterface() {
 			return XhtmlAttribute.class;
+		}
+
+		@Override
+		Class<? extends MediaWriter> getMediaWriterClass() {
+			return XhtmlAttributeWriter.class;
 		}
 	},
 
@@ -155,14 +166,14 @@ public enum MediaType {
 		@Override
 		public StyleWriter newMediaWriter(
 			EncodingContext encodingContext,
-			MediaType inputType,
 			MediaEncoder encoder,
 			Writer out,
 			boolean outOptimized,
 			Whitespace indentDelegate,
-			IOConsumer<? super Writer> closer
+			Predicate<? super MediaWriter> isNoClose,
+			IOConsumer<? super MediaWriter> closer
 		) {
-			return new StyleWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+			return new StyleWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 		}
 
 		@Override
@@ -175,8 +186,13 @@ public enum MediaType {
 		}
 
 		@Override
-		Class<? extends Encode> getEncodeClass() {
+		Class<? extends Encode> getEncodeInterface() {
 			return Style.class;
+		}
+
+		@Override
+		Class<? extends MediaWriter> getMediaWriterClass() {
+			return StyleWriter.class;
 		}
 	},
 
@@ -202,14 +218,14 @@ public enum MediaType {
 		@Override
 		public JavaScriptWriter newMediaWriter(
 			EncodingContext encodingContext,
-			MediaType inputType,
 			MediaEncoder encoder,
 			Writer out,
 			boolean outOptimized,
 			Whitespace indentDelegate,
-			IOConsumer<? super Writer> closer
+			Predicate<? super MediaWriter> isNoClose,
+			IOConsumer<? super MediaWriter> closer
 		) {
-			return new JavaScriptWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+			return new JavaScriptWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 		}
 
 		@Override
@@ -222,8 +238,13 @@ public enum MediaType {
 		}
 
 		@Override
-		Class<? extends Encode> getEncodeClass() {
+		Class<? extends Encode> getEncodeInterface() {
 			return JavaScript.class;
+		}
+
+		@Override
+		Class<? extends MediaWriter> getMediaWriterClass() {
+			return JavaScriptWriter.class;
 		}
 	},
 
@@ -245,14 +266,14 @@ public enum MediaType {
 		@Override
 		public JsonWriter newMediaWriter(
 			EncodingContext encodingContext,
-			MediaType inputType,
 			MediaEncoder encoder,
 			Writer out,
 			boolean outOptimized,
 			Whitespace indentDelegate,
-			IOConsumer<? super Writer> closer
+			Predicate<? super MediaWriter> isNoClose,
+			IOConsumer<? super MediaWriter> closer
 		) {
-			return new JsonWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+			return new JsonWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 		}
 
 		@Override
@@ -265,8 +286,13 @@ public enum MediaType {
 		}
 
 		@Override
-		Class<? extends Encode> getEncodeClass() {
+		Class<? extends Encode> getEncodeInterface() {
 			return Json.class;
+		}
+
+		@Override
+		Class<? extends MediaWriter> getMediaWriterClass() {
+			return JsonWriter.class;
 		}
 	},
 
@@ -288,14 +314,14 @@ public enum MediaType {
 		@Override
 		public LdJsonWriter newMediaWriter(
 			EncodingContext encodingContext,
-			MediaType inputType,
 			MediaEncoder encoder,
 			Writer out,
 			boolean outOptimized,
 			Whitespace indentDelegate,
-			IOConsumer<? super Writer> closer
+			Predicate<? super MediaWriter> isNoClose,
+			IOConsumer<? super MediaWriter> closer
 		) {
-			return new LdJsonWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+			return new LdJsonWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 		}
 
 		@Override
@@ -308,8 +334,13 @@ public enum MediaType {
 		}
 
 		@Override
-		Class<? extends Encode> getEncodeClass() {
+		Class<? extends Encode> getEncodeInterface() {
 			return LdJson.class;
+		}
+
+		@Override
+		Class<? extends MediaWriter> getMediaWriterClass() {
+			return LdJsonWriter.class;
 		}
 	},
 
@@ -331,14 +362,14 @@ public enum MediaType {
 		@Override
 		public TextWriter newMediaWriter(
 			EncodingContext encodingContext,
-			MediaType inputType,
 			MediaEncoder encoder,
 			Writer out,
 			boolean outOptimized,
 			Whitespace indentDelegate,
-			IOConsumer<? super Writer> closer
+			Predicate<? super MediaWriter> isNoClose,
+			IOConsumer<? super MediaWriter> closer
 		) {
-			return new TextWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+			return new TextWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 		}
 
 		@Override
@@ -351,8 +382,13 @@ public enum MediaType {
 		}
 
 		@Override
-		Class<? extends Encode> getEncodeClass() {
+		Class<? extends Encode> getEncodeInterface() {
 			return Text.class;
+		}
+
+		@Override
+		Class<? extends MediaWriter> getMediaWriterClass() {
+			return TextWriter.class;
 		}
 	},
 
@@ -378,14 +414,14 @@ public enum MediaType {
 		@Override
 		public UrlWriter newMediaWriter(
 			EncodingContext encodingContext,
-			MediaType inputType,
 			MediaEncoder encoder,
 			Writer out,
 			boolean outOptimized,
 			Whitespace indentDelegate,
-			IOConsumer<? super Writer> closer
+			Predicate<? super MediaWriter> isNoClose,
+			IOConsumer<? super MediaWriter> closer
 		) {
-			return new UrlWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+			return new UrlWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 		}
 
 		@Override
@@ -398,8 +434,13 @@ public enum MediaType {
 		}
 
 		@Override
-		Class<? extends Encode> getEncodeClass() {
+		Class<? extends Encode> getEncodeInterface() {
 			return Url.class;
+		}
+
+		@Override
+		Class<? extends MediaWriter> getMediaWriterClass() {
+			return UrlWriter.class;
 		}
 	},
 
@@ -420,14 +461,14 @@ public enum MediaType {
 		@Override
 		public ShWriter newMediaWriter(
 			EncodingContext encodingContext,
-			MediaType inputType,
 			MediaEncoder encoder,
 			Writer out,
 			boolean outOptimized,
 			Whitespace indentDelegate,
-			IOConsumer<? super Writer> closer
+			Predicate<? super MediaWriter> isNoClose,
+			IOConsumer<? super MediaWriter> closer
 		) {
-			return new ShWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+			return new ShWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 		}
 
 		@Override
@@ -440,8 +481,13 @@ public enum MediaType {
 		}
 
 		@Override
-		Class<? extends Encode> getEncodeClass() {
+		Class<? extends Encode> getEncodeInterface() {
 			return Sh.class;
+		}
+
+		@Override
+		Class<? extends MediaWriter> getMediaWriterClass() {
+			return ShWriter.class;
 		}
 	},
 
@@ -462,14 +508,14 @@ public enum MediaType {
 		@Override
 		public MysqlWriter newMediaWriter(
 			EncodingContext encodingContext,
-			MediaType inputType,
 			MediaEncoder encoder,
 			Writer out,
 			boolean outOptimized,
 			Whitespace indentDelegate,
-			IOConsumer<? super Writer> closer
+			Predicate<? super MediaWriter> isNoClose,
+			IOConsumer<? super MediaWriter> closer
 		) {
-			return new MysqlWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+			return new MysqlWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 		}
 
 		@Override
@@ -482,8 +528,13 @@ public enum MediaType {
 		}
 
 		@Override
-		Class<? extends Encode> getEncodeClass() {
+		Class<? extends Encode> getEncodeInterface() {
 			return Mysql.class;
+		}
+
+		@Override
+		Class<? extends MediaWriter> getMediaWriterClass() {
+			return MysqlWriter.class;
 		}
 	},
 
@@ -504,14 +555,14 @@ public enum MediaType {
 		@Override
 		public PsqlWriter newMediaWriter(
 			EncodingContext encodingContext,
-			MediaType inputType,
 			MediaEncoder encoder,
 			Writer out,
 			boolean outOptimized,
 			Whitespace indentDelegate,
-			IOConsumer<? super Writer> closer
+			Predicate<? super MediaWriter> isNoClose,
+			IOConsumer<? super MediaWriter> closer
 		) {
-			return new PsqlWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+			return new PsqlWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 		}
 
 		@Override
@@ -524,8 +575,13 @@ public enum MediaType {
 		}
 
 		@Override
-		Class<? extends Encode> getEncodeClass() {
+		Class<? extends Encode> getEncodeInterface() {
 			return Psql.class;
+		}
+
+		@Override
+		Class<? extends MediaWriter> getMediaWriterClass() {
+			return PsqlWriter.class;
 		}
 	};
 
@@ -535,6 +591,7 @@ public enum MediaType {
 
 	private MediaType(String contentType) {
 		this.contentType = contentType;
+		assert getEncodeInterface().isAssignableFrom(getMediaWriterClass()) : "Nested self-encoding is always allowed";
 	}
 
 	/**
@@ -604,22 +661,27 @@ public enum MediaType {
 	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
 	 * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
 	 *                         This allows the indentation to be coordinated between nested content types.
-	 * @param  closer  Called on {@link MediaWriter#close()}, which may optionally perform final suffix write and/or close the underlying writer
+	 * @param  isNoClose  Called to determine result of {@link MediaWriter#isNoClose()}
+	 * @param  closer  Called on {@link MediaWriter#close()}, which may optionally perform final suffix write and/or close the underlying writer,
+	 *                 will only be called to be idempotent, implementation can assume will only be called once.
 	 */
 	public abstract MediaWriter newMediaWriter(
 		EncodingContext encodingContext,
-		MediaType inputType,
 		MediaEncoder encoder,
 		Writer out,
 		boolean outOptimized,
 		Whitespace indentDelegate,
-		IOConsumer<? super Writer> closer
+		Predicate<? super MediaWriter> isNoClose,
+		IOConsumer<? super MediaWriter> closer
 	);
 
 	/**
 	 * Creates a new instance of {@link MediaWriter} for this media type.
 	 *
 	 * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 *
+	 * @see  MediaWriter#DEFAULT_IS_NO_CLOSE
+	 * @see  MediaWriter#DEFAULT_CLOSER
 	 */
 	public abstract MediaWriter newMediaWriter(
 		EncodingContext encodingContext,
@@ -628,7 +690,12 @@ public enum MediaType {
 	);
 
 	/**
-	 * Gets the per-type interface matching this media type.
+	 * Gets the per-type encode interface matching this media type.
 	 */
-	abstract Class<? extends Encode> getEncodeClass();
+	abstract Class<? extends Encode> getEncodeInterface();
+
+	/**
+	 * Gets the per-type writer class matching this media type.
+	 */
+	abstract Class<? extends MediaWriter> getMediaWriterClass();
 }

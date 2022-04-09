@@ -88,18 +88,13 @@ public interface Encode {
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
-	 * Does not perform any translation markups.
-	 * TODO: This probably should when is a String
+	 * If the string is translated, comments will be added giving the
+	 * translation lookup id to aid in translation of server-translated values.
 	 * </p>
 	 *
 	 * @return  {@code this} writer
 	 */
-	default Encode encode(MediaType contentType, CharSequence csq) throws IOException {
-		try (MediaWriter mw = encode(contentType)) {
-			if(csq != null) mw.append(csq);
-		}
-		return this;
-	}
+	Encode encode(MediaType contentType, CharSequence csq) throws IOException;
 
 	/**
 	 * Encodes the given nested type with proper encoding.
@@ -108,18 +103,13 @@ public interface Encode {
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
-	 * Does not perform any translation markups.
-	 * TODO: This probably should when is a String
+	 * If the string is translated, comments will be added giving the
+	 * translation lookup id to aid in translation of server-translated values.
 	 * </p>
 	 *
 	 * @return  {@code this} writer
 	 */
-	default Encode encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException {
-		try (MediaWriter mw = encode(contentType)) {
-			if(csq != null) mw.append(csq, start, end);
-		}
-		return this;
-	}
+	Encode encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException;
 
 	/**
 	 * Encodes the given nested type with proper encoding.
@@ -191,6 +181,11 @@ public interface Encode {
 	 *
 	 * @return  A new writer that may be used for the given content type.
 	 *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
+	 *          <p>
+	 *          The returned writer will be of the specific subclass of {@link MediaWriter} matching {@code contentType}
+	 *          (see {@link MediaType#getMediaWriterClass()}.  This means {@link MediaWriter#getValidMediaInputType()} will
+	 *          be {@code contentType}.
+	 *          </p>
 	 */
 	MediaWriter encode(MediaType contentType) throws IOException;
 	// </editor-fold>

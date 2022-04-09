@@ -29,9 +29,9 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public class TextValidator extends MediaValidator {
+public final class TextValidator extends MediaValidator {
 
-	protected TextValidator(Writer out) {
+	TextValidator(Writer out) {
 		super(out);
 	}
 

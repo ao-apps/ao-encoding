@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  *
  * @author  AO Industries, Inc.
  */
-public class PsqlValidator extends MediaValidator {
+public final class PsqlValidator extends MediaValidator {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, PsqlValidator.class);
@@ -79,7 +79,7 @@ public class PsqlValidator extends MediaValidator {
 	}
 	// </editor-fold>
 
-	protected PsqlValidator(Writer out) {
+	PsqlValidator(Writer out) {
 		super(out);
 	}
 

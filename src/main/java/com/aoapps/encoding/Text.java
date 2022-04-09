@@ -52,16 +52,10 @@ public interface Text extends Encode {
 	}
 
 	@Override
-	default Text encode(MediaType contentType, CharSequence csq) throws IOException {
-		Encode.super.encode(contentType, csq);
-		return this;
-	}
+	Text encode(MediaType contentType, CharSequence csq) throws IOException;
 
 	@Override
-	default Text encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException {
-		Encode.super.encode(contentType, csq, start, end);
-		return this;
-	}
+	Text encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException;
 
 	@Override
 	Text encode(MediaType contentType, Object content) throws IOException;
@@ -168,8 +162,8 @@ public interface Text extends Encode {
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
-	 * Does not perform any translation markups.
-	 * TODO: This probably should when is a String
+	 * If the string is translated, comments will be added giving the
+	 * translation lookup id to aid in translation of server-translated values.
 	 * </p>
 	 *
 	 * @return  {@code this} writer
@@ -185,8 +179,8 @@ public interface Text extends Encode {
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
 	 * </p>
 	 * <p>
-	 * Does not perform any translation markups.
-	 * TODO: This probably should when is a String
+	 * If the string is translated, comments will be added giving the
+	 * translation lookup id to aid in translation of server-translated values.
 	 * </p>
 	 *
 	 * @return  {@code this} writer

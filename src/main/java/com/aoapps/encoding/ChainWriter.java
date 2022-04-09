@@ -554,8 +554,18 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInXhtml(Object value) throws IOException {
-		assert out == Coercion.optimize(out, textInXhtmlEncoder) : "There are no optimizers for PrintWriter";
-		MarkupCoercion.write(value, MarkupType.XHTML, false, textInXhtmlEncoder, false, out, true);
+		MediaEncoder encoder = textInXhtmlEncoder;
+		assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
+		assert out == Coercion.optimize(out, encoder) : "There are no optimizers for PrintWriter";
+		MarkupCoercion.write(
+			value,
+			MarkupType.XHTML,
+			false,
+			encoder,
+			true,
+			out,
+			true // There are no optimizers for PrintWriter
+		);
 		return this;
 	}
 
@@ -604,8 +614,18 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInJavascript(Object value) throws IOException {
-		assert out == Coercion.optimize(out, textInJavascriptEncoder) : "There are no optimizers for PrintWriter";
-		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavascriptEncoder, true, out, true);
+		MediaEncoder encoder = textInJavascriptEncoder;
+		assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
+		assert out == Coercion.optimize(out, encoder) : "There are no optimizers for PrintWriter";
+		MarkupCoercion.write(
+			value,
+			MarkupType.JAVASCRIPT,
+			false,
+			encoder,
+			true,
+			out,
+			true // There are no optimizers for PrintWriter
+		);
 		return this;
 	}
 
@@ -625,8 +645,18 @@ public final class ChainWriter implements Appendable, Closeable {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XML Attribute
-		assert javascriptInXhtmlAttributeWriter == Coercion.optimize(javascriptInXhtmlAttributeWriter, textInJavascriptEncoder) : "There are no optimizers for " + JavaScriptWriter.class.getName();
-		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavascriptEncoder, true, javascriptInXhtmlAttributeWriter, true);
+		MediaEncoder encoder = textInJavascriptEncoder;
+		assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
+		assert javascriptInXhtmlAttributeWriter == Coercion.optimize(javascriptInXhtmlAttributeWriter, encoder) : "There are no optimizers for " + JavaScriptWriter.class.getName();
+		MarkupCoercion.write(
+			value,
+			MarkupType.JAVASCRIPT,
+			false,
+			encoder,
+			true,
+			javascriptInXhtmlAttributeWriter,
+			true // There are no optimizers for JavaScriptWriter
+		);
 		return this;
 	}
 
@@ -646,8 +676,18 @@ public final class ChainWriter implements Appendable, Closeable {
 		// Two stage encoding:
 		//   1) Text -> JavaScript (with quotes added)
 		//   2) JavaScript -> XHTML
-		assert javascriptInXhtmlWriter == Coercion.optimize(javascriptInXhtmlWriter, textInJavascriptEncoder) : "There are no optimizers for " + JavaScriptWriter.class.getName();
-		MarkupCoercion.write(value, MarkupType.JAVASCRIPT, false, textInJavascriptEncoder, true, javascriptInXhtmlWriter, true);
+		MediaEncoder encoder = textInJavascriptEncoder;
+		assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
+		assert javascriptInXhtmlWriter == Coercion.optimize(javascriptInXhtmlWriter, encoder) : "There are no optimizers for " + JavaScriptWriter.class.getName();
+		MarkupCoercion.write(
+			value,
+			MarkupType.JAVASCRIPT,
+			false,
+			encoder,
+			true,
+			javascriptInXhtmlWriter,
+			true // There are no optimizers for JavaScriptWriter
+		);
 		return this;
 	}
 
@@ -663,8 +703,18 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInMysql(Object value) throws IOException {
-		assert out == Coercion.optimize(out, textInMysqlEncoder) : "There are no optimizers for PrintWriter";
-		MarkupCoercion.write(value, MarkupType.MYSQL, false, textInMysqlEncoder, true, out, true);
+		MediaEncoder encoder = textInMysqlEncoder;
+		assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
+		assert out == Coercion.optimize(out, encoder) : "There are no optimizers for PrintWriter";
+		MarkupCoercion.write(
+			value,
+			MarkupType.MYSQL,
+			false,
+			encoder,
+			true,
+			out,
+			true // There are no optimizers for PrintWriter
+		);
 		return this;
 	}
 
@@ -680,8 +730,18 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInPsql(Object value) throws IOException {
-		assert out == Coercion.optimize(out, textInPsqlEncoder) : "There are no optimizers for PrintWriter";
-		MarkupCoercion.write(value, MarkupType.PSQL, false, textInPsqlEncoder, true, out, true);
+		MediaEncoder encoder = textInPsqlEncoder;
+		assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
+		assert out == Coercion.optimize(out, encoder) : "There are no optimizers for PrintWriter";
+		MarkupCoercion.write(
+			value,
+			MarkupType.PSQL,
+			false,
+			encoder,
+			true,
+			out,
+			true // There are no optimizers for PrintWriter
+		);
 		return this;
 	}
 
@@ -697,8 +757,18 @@ public final class ChainWriter implements Appendable, Closeable {
 	 * @see  MarkupCoercion#write(java.lang.Object, com.aoapps.util.i18n.MarkupType, boolean, com.aoapps.lang.io.Encoder, boolean, java.io.Writer, boolean)
 	 */
 	public ChainWriter textInSh(Object value) throws IOException {
-		assert out == Coercion.optimize(out, textInShEncoder) : "There are no optimizers for PrintWriter";
-		MarkupCoercion.write(value, MarkupType.SH, false, textInShEncoder, true, out, true);
+		MediaEncoder encoder = textInShEncoder;
+		assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
+		assert out == Coercion.optimize(out, encoder) : "There are no optimizers for PrintWriter";
+		MarkupCoercion.write(
+			value,
+			MarkupType.SH,
+			false,
+			encoder,
+			true,
+			out,
+			true // There are no optimizers for PrintWriter
+		);
 		return this;
 	}
 	// </editor-fold>

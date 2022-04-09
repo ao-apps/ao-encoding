@@ -25,6 +25,7 @@ package com.aoapps.encoding;
 import com.aoapps.lang.Coercion;
 import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.Encoder;
+import com.aoapps.lang.io.EncoderWriter;
 import com.aoapps.lang.io.NoClose;
 import java.io.FilterWriter;
 import java.io.IOException;
@@ -38,7 +39,7 @@ import java.util.logging.Logger;
  *
  * @author  AO Industries, Inc.
  */
-public abstract class MediaValidator extends FilterWriter implements ValidMediaFilter {
+public abstract class MediaValidator extends FilterWriter implements ValidMediaFilter, NoClose {
 
 	private static final Logger logger = Logger.getLogger(MediaValidator.class.getName());
 
@@ -58,9 +59,11 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 	 * will finalize the validation within its proper scope.
 	 * </p>
 	 *
-	 * @param  out  When is already validating the content type, is returned directly.
-	 *              Otherwise, will be optimized via {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
-	 *              then passed through {@link NoCloseMediaValidator#wrap(java.io.Writer)} when {@code out} is {@link NoClose}.
+	 * @param  out  First, when is already validating the content type, is returned directly.
+	 *              Second, will be optimized via {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 *              (with {@code encoder = null}).
+	 *              Third, then passed through {@link NoCloseMediaValidator#wrap(java.io.Writer)} when {@code out} is
+	 *              {@link NoClose} and {@link NoClose#isNoClose()}.
 	 *
 	 * @return  A new validator or <code>out</code> when the given writer is
 	 *          {@linkplain MediaValidator#isValidatingMediaInputType(com.aoapps.encoding.MediaType) already a validator for the requested type}.
@@ -125,17 +128,24 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 	private static Writer optimize(Writer out) {
 		Writer optimized = Coercion.optimize(out, null);
 		// Maintain NoClose
-		if(optimized != out && out instanceof NoClose) {
+		if(
+			optimized != out
+			&&  (out       instanceof NoClose && ((NoClose)out      ).isNoClose()) // original   isNoClose
+			&& !(optimized instanceof NoClose && ((NoClose)optimized).isNoClose()) // optimized !isNoClose
+		) {
+			// Requires wrapping
 			optimized = NoCloseMediaValidator.wrap(optimized);
 		}
 		return optimized;
 	}
 
 	/**
-	 * @param  out  Will be optimized via {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
-	 *              then passed through {@link NoCloseMediaValidator#wrap(java.io.Writer)} when {@code out} is {@link NoClose}.
+	 * @param  out  First, will be optimized via {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 *              (with {@code encoder = null}).
+	 *              Second, will then passed through {@link NoCloseMediaValidator#wrap(java.io.Writer)} when {@code out}
+	 *              is {@link NoClose} and {@link NoClose#isNoClose()}.
 	 */
-	protected MediaValidator(Writer out) {
+	MediaValidator(Writer out) {
 		super(optimize(out));
 	}
 
@@ -149,10 +159,35 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 		return getValidMediaInputType();
 	}
 
+	@Override
+	public boolean isNoClose() {
+		return (out instanceof NoClose) && ((NoClose)out).isNoClose();
+	}
+
 	/**
-	 * Gets the wrapped writer, which has been optimized via
-	 * {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
-	 * then passed through {@link NoCloseMediaValidator#wrap(java.io.Writer)} when {@code out} is {@link NoClose}.
+	 * Is this validator buffered?  A buffered validator may delay validation until {@link #validate(boolean)}.
+	 * Furthermore, a buffered validator should not be bypassed before any buffered data has been written via {@link #validate(boolean)}.
+	 * An example of encoder bypassing is performing direct output on the writer from {@link EncoderWriter#getOut()}.
+	 *
+	 * @return  {@code false} by default
+	 *
+	 * @see  Encoder#isBuffered()
+	 * @see  BufferedEncoder#isBuffered()
+	 * @see  ValidateOnlyEncoder#isBuffered()
+	 * @see  BufferedValidator#isBuffered()
+	 * @see  EncoderWriter#getOut()
+	 * @see  MediaWriter#getOut()
+	 */
+	public boolean isBuffered() {
+		return false;
+	}
+
+	/**
+	 * Gets the wrapped writer, which has been optimized:
+	 * First, passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 * (with {@code encoder = null}).
+	 * Second, passed through {@link NoCloseMediaValidator#wrap(java.io.Writer)} when {@code out} is {@link NoClose} and
+	 * {@link NoClose#isNoClose()}.
 	 */
 	public Writer getOut() {
 		return out;
@@ -218,7 +253,7 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 							);
 						}
 						Writer newOut = validator.getOut();
-						assert !(validator instanceof NoClose) || (newOut instanceof NoClose) : "NoClose must have been maintained during optimized wrapping";
+						assert !validator.isNoClose() || (newOut instanceof NoClose && ((NoClose)newOut).isNoClose()) : "NoClose must have been maintained during optimized wrapping";
 						return newOut;
 					}
 				}

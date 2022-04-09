@@ -76,10 +76,7 @@ public interface Xhtml extends Encode {
 	 */
 	@Deprecated
 	@Override
-	default Xhtml encode(MediaType contentType, CharSequence csq) throws IOException {
-		Encode.super.encode(contentType, csq);
-		return this;
-	}
+	Xhtml encode(MediaType contentType, CharSequence csq) throws IOException;
 
 	/**
 	 * {@inheritDoc}
@@ -88,10 +85,7 @@ public interface Xhtml extends Encode {
 	 */
 	@Deprecated
 	@Override
-	default Xhtml encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException {
-		Encode.super.encode(contentType, csq, start, end);
-		return this;
-	}
+	Xhtml encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException;
 
 	/**
 	 * {@inheritDoc}
@@ -183,8 +177,8 @@ public interface Xhtml extends Encode {
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
 	 * </p>
 	 * <p>
-	 * Does not perform any translation markups.
-	 * TODO: This probably should when is a String
+	 * If the string is translated, comments will be added giving the
+	 * translation lookup id to aid in translation of server-translated values.
 	 * </p>
 	 *
 	 * @return  {@code this} writer
@@ -200,8 +194,8 @@ public interface Xhtml extends Encode {
 	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
 	 * </p>
 	 * <p>
-	 * Does not perform any translation markups.
-	 * TODO: This probably should when is a String
+	 * If the string is translated, comments will be added giving the
+	 * translation lookup id to aid in translation of server-translated values.
 	 * </p>
 	 *
 	 * @return  {@code this} writer

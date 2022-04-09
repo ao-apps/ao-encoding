@@ -37,10 +37,19 @@ public class ValidateOnlyEncoder extends MediaEncoder {
 
 	private final MediaValidator validator;
 
+	/**
+	 * Writes through to the given validator.
+	 */
 	public ValidateOnlyEncoder(MediaValidator validator) {
 		this.validator = validator;
 	}
 
+	/**
+	 * Writes through to the correct validator for the given content type, then discards all output.
+	 *
+	 * @see  MediaValidator#getMediaValidator(com.aoapps.encoding.MediaType, java.io.Writer)
+	 * @see  NullWriter#getInstance()
+	 */
 	public ValidateOnlyEncoder(MediaType contentType) {
 		this(MediaValidator.getMediaValidator(contentType, NullWriter.getInstance()));
 		assert validator.getValidMediaInputType() == contentType;
@@ -65,6 +74,16 @@ public class ValidateOnlyEncoder extends MediaEncoder {
 	public MediaType getValidMediaOutputType() {
 		assert validator.getValidMediaInputType() == validator.getValidMediaOutputType();
 		return validator.getValidMediaOutputType();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @return  The result of {@link MediaValidator#isBuffered()}
+	 */
+	@Override
+	public final boolean isBuffered() {
+		return validator.isBuffered();
 	}
 
 	@Override

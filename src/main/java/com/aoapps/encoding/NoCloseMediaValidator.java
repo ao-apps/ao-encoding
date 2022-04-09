@@ -22,7 +22,6 @@
  */
 package com.aoapps.encoding;
 
-import com.aoapps.lang.Coercion;
 import com.aoapps.lang.io.NoClose;
 import com.aoapps.lang.io.NoCloseWriter;
 import java.io.IOException;
@@ -33,20 +32,19 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public class NoCloseMediaValidator extends MediaValidator implements NoClose {
+public final class NoCloseMediaValidator extends MediaValidator {
 
 	/**
-	 * Returns {@code out} when it is already a {@link NoCloseMediaValidator}, otherwise
+	 * Returns {@code out} when it is already a {@link MediaValidator#isNoClose()}, otherwise
 	 * returns a new {@link NoCloseMediaValidator} wrapping {@code out}.
 	 */
-	public static NoCloseMediaValidator wrap(MediaValidator out) {
-		if(out instanceof NoCloseMediaValidator) return (NoCloseMediaValidator)out;
-		return new NoCloseMediaValidator(out);
+	public static MediaValidator wrap(MediaValidator out) {
+		return out.isNoClose() ? out : new NoCloseMediaValidator(out);
 	}
 
 	/**
-	 * Returns a {@link NoCloseMediaValidator} when out is a {@link MediaValidator}, otherwise dispatches to
-	 * {@link NoCloseWriter#wrap(java.io.Writer)}.
+	 * Dispatches to {@link #wrap(com.aoapps.encoding.MediaValidator)} when out is a {@link MediaValidator}, otherwise
+	 * dispatches to {@link NoCloseWriter#wrap(java.io.Writer)}.
 	 *
 	 * @see  #wrap(com.aoapps.encoding.MediaValidator)
 	 * @see  NoCloseWriter#wrap(java.io.Writer)
@@ -59,8 +57,12 @@ public class NoCloseMediaValidator extends MediaValidator implements NoClose {
 
 	private final MediaValidator wrapped;
 
-	protected NoCloseMediaValidator(MediaValidator out) {
+	/**
+	 * @see  #wrap(com.aoapps.encoding.MediaValidator)
+	 */
+	private NoCloseMediaValidator(MediaValidator out) {
 		super(out);
+		assert !out.isNoClose() : "Should not have wrapped when already isNoClose()";
 		wrapped = out;
 	}
 
@@ -80,11 +82,10 @@ public class NoCloseMediaValidator extends MediaValidator implements NoClose {
 	}
 
 	/**
-	 * Gets the wrapped writer, which has been optimized via
-	 * {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)},
-	 * then as {@link NoClose}.
+	 * {@inheritDoc}
 	 *
 	 * @return  the wrapped writer passed through {@link #wrap(java.io.Writer)}
+	 *          or {@link #wrap(com.aoapps.encoding.MediaValidator)}.
 	 */
 	@Override
 	public Writer getOut() {
@@ -112,6 +113,16 @@ public class NoCloseMediaValidator extends MediaValidator implements NoClose {
 	@Override
 	public void validate(boolean trim) throws IOException {
 		wrapped.validate(trim);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @return  {@code true} since this is always no-close.
+	 */
+	@Override
+	public boolean isNoClose() {
+		return true;
 	}
 
 	/**

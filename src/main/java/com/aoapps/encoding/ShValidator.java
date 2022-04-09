@@ -39,7 +39,7 @@ import java.util.ResourceBundle;
  *
  * @author  AO Industries, Inc.
  */
-public class ShValidator extends MediaValidator {
+public final class ShValidator extends MediaValidator {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ShValidator.class);
@@ -86,7 +86,7 @@ public class ShValidator extends MediaValidator {
 	}
 	// </editor-fold>
 
-	protected ShValidator(Writer out) {
+	ShValidator(Writer out) {
 		super(out);
 	}
 

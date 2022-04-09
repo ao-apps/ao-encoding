@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  *
  * @author  AO Industries, Inc.
  */
-public class MysqlValidator extends MediaValidator {
+public final class MysqlValidator extends MediaValidator {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
 	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MysqlValidator.class);
@@ -79,7 +79,7 @@ public class MysqlValidator extends MediaValidator {
 	}
 	// </editor-fold>
 
-	protected MysqlValidator(Writer out) {
+	MysqlValidator(Writer out) {
 		super(out);
 	}
 

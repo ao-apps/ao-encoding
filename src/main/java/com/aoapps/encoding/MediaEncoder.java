@@ -142,10 +142,9 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 						if(encodingContext == EncodingContext.DEFAULT) {
 							if(contentType == MediaType.JSON) {
 								encoder = JavaScriptInXhtmlEncoder.jsonInXhtmlEncoder;
-							} else if(contentType == MediaType.LD_JSON) {
-								encoder = JavaScriptInXhtmlEncoder.ldJsonInXhtmlEncoder;
 							} else {
-								throw new AssertionError();
+								assert contentType == MediaType.LD_JSON;
+								encoder = JavaScriptInXhtmlEncoder.ldJsonInXhtmlEncoder;
 							}
 						} else {
 							encoder = new JavaScriptInXhtmlEncoder(contentType, encodingContext);

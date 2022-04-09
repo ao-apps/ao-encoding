@@ -27,6 +27,7 @@ import com.aoapps.lang.io.function.IOConsumer;
 import com.aoapps.lang.io.function.IOSupplierE;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.function.Predicate;
 
 /**
  * Streaming versions of media encoders that can write whitespace.
@@ -42,18 +43,30 @@ public abstract class WhitespaceWriter extends MediaWriter implements Whitespace
 	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
 	 * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
 	 *                         This allows the indentation to be coordinated between nested content types.
-	 * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer
+	 * @param  isNoClose  Called to determine result of {@link #isNoClose()}
+	 * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer,
+	 *                 will only be called to be idempotent, implementation can assume will only be called once.
 	 */
 	WhitespaceWriter(
 		EncodingContext encodingContext,
-		MediaType inputType,
 		MediaEncoder encoder,
 		Writer out,
 		boolean outOptimized,
 		Whitespace indentDelegate,
-		IOConsumer<? super Writer> closer
+		Predicate<? super MediaWriter> isNoClose,
+		IOConsumer<? super MediaWriter> closer
 	) {
-		super(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+		super(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @return  {@link #indentDelegate} when present, otherwise {@code this}
+	 */
+	@Override
+	Whitespace getIndentDelegate() {
+		return (indentDelegate != null) ? indentDelegate : this;
 	}
 
 	@Override

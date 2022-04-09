@@ -27,6 +27,7 @@ import com.aoapps.lang.io.function.IOConsumer;
 import com.aoapps.lang.io.function.IOSupplierE;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.function.Predicate;
 
 /**
  * Streaming versions of media encoders.
@@ -42,43 +43,41 @@ public final class UrlWriter extends MediaWriter implements Url {
 	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
 	 * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
 	 *                         This allows the indentation to be coordinated between nested content types.
-	 * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer
+	 * @param  isNoClose  Called to determine result of {@link #isNoClose()}
+	 * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer,
+	 *                 will only be called to be idempotent, implementation can assume will only be called once.
 	 */
 	public UrlWriter(
 		EncodingContext encodingContext,
-		MediaType inputType,
 		MediaEncoder encoder,
 		Writer out,
 		boolean outOptimized,
 		Whitespace indentDelegate,
-		IOConsumer<? super Writer> closer
+		Predicate<? super MediaWriter> isNoClose,
+		IOConsumer<? super MediaWriter> closer
 	) {
-		super(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
-		assert encoder.isValidatingMediaInputType(MediaType.URL);
+		super(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
 	}
 
 	/**
+	 * Simplified constructor.
+	 *
 	 * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 *
+	 * @see  #DEFAULT_IS_NO_CLOSE
+	 * @see  #DEFAULT_CLOSER
 	 */
 	public UrlWriter(
 		EncodingContext encodingContext,
 		MediaEncoder encoder,
 		Writer out
 	) {
-		this(encodingContext, encoder.getValidMediaInputType(), encoder, out, false, null, Writer::close);
+		this(encodingContext, encoder, out, false, null, DEFAULT_IS_NO_CLOSE, DEFAULT_CLOSER);
 	}
 
 	@Override
-	UrlWriter newMediaWriter(
-		EncodingContext encodingContext,
-		MediaType inputType,
-		MediaEncoder encoder,
-		Writer out,
-		boolean outOptimized,
-		Whitespace indentDelegate,
-		IOConsumer<? super Writer> closer
-	) {
-		return new UrlWriter(encodingContext, inputType, encoder, out, outOptimized, indentDelegate, closer);
+	public MediaType getValidMediaInputType() {
+		return MediaType.URL;
 	}
 
 	@Override

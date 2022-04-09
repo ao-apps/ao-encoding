@@ -38,9 +38,19 @@ public abstract class BufferedValidator extends MediaValidator {
 	 */
 	private final StringBuilder buffer;
 
-	protected BufferedValidator(Writer out, int initialCapacity) {
+	BufferedValidator(Writer out, int initialCapacity) {
 		super(out);
 		this.buffer = new StringBuilder(initialCapacity);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @return  {@code true} since buffered
+	 */
+	@Override
+	public final boolean isBuffered() {
+		return true;
 	}
 
 	@Override
@@ -101,5 +111,5 @@ public abstract class BufferedValidator extends MediaValidator {
 		}
 	}
 
-	protected abstract void validate(CharSequence buffer) throws IOException;
+	abstract void validate(CharSequence buffer) throws IOException;
 }
