@@ -40,6 +40,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Locale;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * A chain writer encapsulates a {@link PrintWriter} and returns the {@link ChainWriter}
@@ -48,6 +49,7 @@ import java.util.Locale;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public final class ChainWriter implements Appendable, Closeable {
 
 	// <editor-fold defaultstate="collapsed" desc="PrintWriter wrapping">

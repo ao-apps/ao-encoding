@@ -25,6 +25,8 @@ package com.aoapps.encoding;
 import com.aoapps.lang.Coercion;
 import java.io.IOException;
 import java.io.Writer;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * <p>
@@ -41,6 +43,8 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
+@Immutable
 public final class TextInShEncoder extends MediaEncoder {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">

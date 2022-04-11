@@ -24,12 +24,14 @@ package com.aoapps.encoding;
 
 import com.aoapps.lang.io.function.IOSupplierE;
 import java.io.IOException;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Encodes arbitrary text for safe output.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public interface Text extends Encode {
 
 	// <editor-fold desc="Encode - manual self-type" defaultstate="collapsed">

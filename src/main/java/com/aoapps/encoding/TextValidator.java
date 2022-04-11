@@ -23,12 +23,14 @@
 package com.aoapps.encoding;
 
 import java.io.Writer;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * No validation is performed on text.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public final class TextValidator extends MediaValidator {
 
 	TextValidator(Writer out) {

@@ -25,21 +25,23 @@ package com.aoapps.encoding;
 import com.aoapps.lang.Strings;
 import java.io.IOException;
 import java.io.Writer;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Buffers the content to perform final output on writeSuffix.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public abstract class BufferedEncoder extends MediaEncoder {
 
 	/**
 	 * Buffers all contents to pass to writeSuffix.
 	 */
-	private final StringBuilder buffer;
+	private final StringBuffer buffer;
 
 	protected BufferedEncoder(int initialCapacity) {
-		this.buffer = new StringBuilder(initialCapacity);
+		this.buffer = new StringBuffer(initialCapacity);
 	}
 
 	/**

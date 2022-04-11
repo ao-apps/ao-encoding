@@ -26,12 +26,14 @@ import com.aoapps.lang.i18n.Resources;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ResourceBundle;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * This implementation is based on <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public final class PsqlValidator extends MediaValidator {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">

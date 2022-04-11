@@ -23,12 +23,14 @@
 package com.aoapps.encoding;
 
 import java.io.IOException;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * @param  <Ex>  An arbitrary exception type that may be thrown
  *
  * @author  AO Industries,Inc.
  */
+@ThreadSafe
 @FunctionalInterface
 public interface StyleWritable<Ex extends Throwable> extends WhitespaceWritable<Ex> {
 

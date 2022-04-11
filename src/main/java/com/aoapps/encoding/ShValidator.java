@@ -26,6 +26,7 @@ import com.aoapps.lang.i18n.Resources;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ResourceBundle;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Although shell scripts can potentially parse and execute with lots of unprintable and binary values,
@@ -39,6 +40,7 @@ import java.util.ResourceBundle;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public final class ShValidator extends MediaValidator {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">

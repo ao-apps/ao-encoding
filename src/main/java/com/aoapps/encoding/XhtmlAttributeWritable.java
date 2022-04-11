@@ -23,6 +23,7 @@
 package com.aoapps.encoding;
 
 import java.io.IOException;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * @param  <Ex>  An arbitrary exception type that may be thrown
@@ -30,6 +31,7 @@ import java.io.IOException;
  * @author  AO Industries,Inc.
  */
 @FunctionalInterface
+@ThreadSafe
 public interface XhtmlAttributeWritable<Ex extends Throwable> extends WhitespaceWritable<Ex> {
 
 	@Override

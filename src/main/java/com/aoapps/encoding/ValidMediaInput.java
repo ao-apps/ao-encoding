@@ -22,6 +22,8 @@
  */
 package com.aoapps.encoding;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 /**
  * Indicates that the object validates its input for the provided type.
  * If invalid characters are received it will throw an appropriate exception.
@@ -30,6 +32,7 @@ package com.aoapps.encoding;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public interface ValidMediaInput {
 
 	/**

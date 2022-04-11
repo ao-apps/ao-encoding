@@ -25,6 +25,8 @@ package com.aoapps.encoding;
 import com.aoapps.lang.Coercion;
 import java.io.IOException;
 import java.io.Writer;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Encode CSS into an XHTML attribute.  This does not add any quotes or tags.
@@ -35,6 +37,8 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
+@Immutable
 public final class StyleInXhtmlAttributeEncoder extends MediaEncoder {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">

@@ -23,12 +23,16 @@
 package com.aoapps.encoding;
 
 import java.io.Writer;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Utility methods helping with assertions.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
+@Immutable
 final class Assertions {
 
 	/** Make no instances. */

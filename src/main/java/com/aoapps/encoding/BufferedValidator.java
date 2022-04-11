@@ -25,22 +25,24 @@ package com.aoapps.encoding;
 import com.aoapps.lang.Strings;
 import java.io.IOException;
 import java.io.Writer;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Buffers the content to perform final validation.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public abstract class BufferedValidator extends MediaValidator {
 
 	/**
 	 * Buffers all contents to pass to validate.
 	 */
-	private final StringBuilder buffer;
+	private final StringBuffer buffer;
 
 	BufferedValidator(Writer out, int initialCapacity) {
 		super(out);
-		this.buffer = new StringBuilder(initialCapacity);
+		this.buffer = new StringBuffer(initialCapacity);
 	}
 
 	/**

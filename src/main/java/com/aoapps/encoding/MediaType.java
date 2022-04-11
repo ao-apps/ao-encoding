@@ -33,12 +33,16 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Supported content types.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
+@Immutable
 public enum MediaType {
 
 	/**

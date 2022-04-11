@@ -26,10 +26,14 @@ import com.aoapps.lang.io.NullWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.EnumSet;
 import java.util.Set;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
+@ThreadSafe
+@Immutable
 public class MediaWriterTest {
 
 	/**

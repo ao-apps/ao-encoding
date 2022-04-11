@@ -26,6 +26,7 @@ import com.aoapps.lang.i18n.Resources;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ResourceBundle;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * <ul>
@@ -37,6 +38,7 @@ import java.util.ResourceBundle;
  */
 // TODO: identifier(...) methods, similar to text(...), to escape arbitrary identifiers?
 //       Would same apply to JavaScript?
+@ThreadSafe
 public final class StyleValidator extends MediaValidator {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">

@@ -27,7 +27,9 @@ import com.aoapps.lang.io.function.IOConsumer;
 import com.aoapps.lang.io.function.IOSupplierE;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Streaming versions of media encoders that can write whitespace.
@@ -36,6 +38,7 @@ import java.util.function.Predicate;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public abstract class WhitespaceWriter extends MediaWriter implements Whitespace {
 
 	/**
@@ -142,13 +145,13 @@ public abstract class WhitespaceWriter extends MediaWriter implements Whitespace
 	 * Is indenting enabled?
 	 */
 	// Matches AnyDocument.indent
-	private boolean indent;
+	private volatile boolean indent;
 
 	/**
 	 * Current indentation level.
 	 */
 	// Matches AnyDocument.depth
-	private int depth;
+	private final AtomicInteger depth = new AtomicInteger();
 
 	// Matches AnyDocument.nl()
 	@Override
@@ -211,7 +214,7 @@ public abstract class WhitespaceWriter extends MediaWriter implements Whitespace
 	// Matches AnyDocument.getDepth()
 	@Override
 	public int getDepth() {
-		return (indentDelegate != null) ? indentDelegate.getDepth() : depth;
+		return (indentDelegate != null) ? indentDelegate.getDepth() : depth.get();
 	}
 
 	// Matches AnyDocument.setDepth(int)
@@ -221,7 +224,7 @@ public abstract class WhitespaceWriter extends MediaWriter implements Whitespace
 			indentDelegate.setDepth(depth);
 		} else {
 			if(depth < 0) throw new IllegalArgumentException("depth < 0: " + depth);
-			this.depth = depth;
+			this.depth.set(depth);
 		}
 		return this;
 	}
@@ -233,10 +236,10 @@ public abstract class WhitespaceWriter extends MediaWriter implements Whitespace
 			indentDelegate.incDepth();
 		} else {
 			if(getIndent()) {
-				int d = ++depth;
-				if(d < 0) depth = Integer.MAX_VALUE;
+				int d = depth.incrementAndGet();
+				if(d < 0) depth.set(Integer.MAX_VALUE);
 			}
-			assert depth >= 0;
+			assert depth.get() >= 0;
 		}
 		return this;
 	}
@@ -248,10 +251,10 @@ public abstract class WhitespaceWriter extends MediaWriter implements Whitespace
 			indentDelegate.decDepth();
 		} else {
 			if(getIndent()) {
-				int d = --depth;
-				if(d < 0) depth = 0;
+				int d = depth.decrementAndGet();
+				if(d < 0) depth.set(0);
 			}
-			assert depth >= 0;
+			assert depth.get() >= 0;
 		}
 		return this;
 	}

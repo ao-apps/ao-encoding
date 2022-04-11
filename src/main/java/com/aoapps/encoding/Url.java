@@ -24,6 +24,7 @@ package com.aoapps.encoding;
 
 import com.aoapps.lang.io.function.IOSupplierE;
 import java.io.IOException;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Encodes <a href="https://datatracker.ietf.org/doc/html/rfc3986">RFC 3986 URI</a> or
@@ -31,6 +32,7 @@ import java.io.IOException;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public interface Url extends Encode {
 
 	// <editor-fold desc="Encode - manual self-type and deprecate since not expected" defaultstate="collapsed">

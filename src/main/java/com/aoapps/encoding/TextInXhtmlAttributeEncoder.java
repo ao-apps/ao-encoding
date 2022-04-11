@@ -25,6 +25,8 @@ package com.aoapps.encoding;
 import com.aoapps.lang.Coercion;
 import java.io.IOException;
 import java.io.Writer;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Encodes arbitrary text into an XHTML attribute.  Minimal conversion is performed, just
@@ -33,6 +35,8 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
+@Immutable
 public final class TextInXhtmlAttributeEncoder extends MediaEncoder {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">

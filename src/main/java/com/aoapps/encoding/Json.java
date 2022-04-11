@@ -24,12 +24,14 @@ package com.aoapps.encoding;
 
 import com.aoapps.lang.io.function.IOSupplierE;
 import java.io.IOException;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Encodes JSON object graphs for safe output.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public interface Json extends Encode {
 
 	// <editor-fold desc="Encode - manual self-type and deprecate since not expected" defaultstate="collapsed">

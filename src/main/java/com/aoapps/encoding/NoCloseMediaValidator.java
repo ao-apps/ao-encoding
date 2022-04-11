@@ -26,12 +26,14 @@ import com.aoapps.lang.io.NoClose;
 import com.aoapps.lang.io.NoCloseWriter;
 import java.io.IOException;
 import java.io.Writer;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Wraps a {@link MediaValidator} while doing nothing on {@link MediaValidator#close()}.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public final class NoCloseMediaValidator extends MediaValidator {
 
 	/**

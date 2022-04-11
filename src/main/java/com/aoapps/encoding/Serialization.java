@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -29,12 +29,16 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * The type of serialization ({@link #SGML} or {@link #XML}).
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
+@Immutable
 public enum Serialization {
 	SGML {
 		@Override
@@ -97,6 +101,7 @@ public enum Serialization {
 	 * Default to <code>application/xhtml+xml</code> as discussed at
 	 * <a href="https://web.archive.org/web/20080913043830/http://www.smackthemouse.com/xhtmlxml">http://www.smackthemouse.com/xhtmlxml</a>
 	 */
+	@SuppressWarnings("AssignmentToForLoopParameter")
 	public static Serialization select(Iterator<? extends String> acceptHeaderValues) {
 		// Some test accept headers:
 		//   Firefox: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5

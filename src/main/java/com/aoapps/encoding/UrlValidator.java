@@ -26,6 +26,7 @@ import com.aoapps.lang.i18n.Resources;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ResourceBundle;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Verifies all characters going through this filter are valid for a URI/URL.
@@ -34,6 +35,7 @@ import java.util.ResourceBundle;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public final class UrlValidator extends BufferedValidator {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">

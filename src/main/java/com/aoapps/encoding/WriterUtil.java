@@ -27,6 +27,8 @@ import com.aoapps.lang.util.BufferManager;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Arrays;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Helpers for implementing {@link Whitespace}.
@@ -35,6 +37,8 @@ import java.util.Arrays;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
+@Immutable
 public final class WriterUtil {
 
 	/** Make no instances. */

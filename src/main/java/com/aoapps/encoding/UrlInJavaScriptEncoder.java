@@ -23,6 +23,7 @@
 package com.aoapps.encoding;
 
 import java.io.IOException;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Encodes a URL into a JavaScript string.  It {@link EncodingContext#encodeURL(java.lang.String)}
@@ -30,6 +31,7 @@ import java.io.IOException;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public class UrlInJavaScriptEncoder extends BufferedEncoder {
 
 	private final MediaType outputType;

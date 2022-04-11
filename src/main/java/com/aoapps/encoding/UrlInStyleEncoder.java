@@ -27,6 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Encodes a URL into CSS, using {@link EncodingContext#encodeURL(java.lang.String)}
@@ -37,6 +38,7 @@ import java.nio.charset.Charset;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public class UrlInStyleEncoder extends BufferedEncoder {
 
 	private final EncodingContext encodingContext;

@@ -24,12 +24,14 @@ package com.aoapps.encoding;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * The current encoding context may perform URL rewriting.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public interface EncodingContext {
 
 	/**

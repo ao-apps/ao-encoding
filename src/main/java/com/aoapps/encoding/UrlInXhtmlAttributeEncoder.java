@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Encodes a URL into an XHTML attribute.  It {@link EncodingContext#encodeURL(java.lang.String)} to
@@ -33,6 +34,7 @@ import java.nio.charset.Charset;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public class UrlInXhtmlAttributeEncoder extends BufferedEncoder {
 
 	private final EncodingContext encodingContext;

@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ResourceBundle;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * <p>
@@ -45,6 +46,7 @@ import java.util.ResourceBundle;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 
 	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, MediaEncoder.class);

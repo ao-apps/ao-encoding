@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T20:03:30-05:00"
-		dateModified="2022-04-07T17:40:40-05:00"
+		dateModified="2022-04-10T15:08:01-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -112,6 +112,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 						</p>
 					</li>
 					<li>Added support for translation markups to <code>CharSequence</code> encoders.</li>
+					<li>Implementation is now 100% thread-safe.</li>
 				</ul>
 			</changelog:release>
 		</c:if>

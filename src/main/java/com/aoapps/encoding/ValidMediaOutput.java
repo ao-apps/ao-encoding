@@ -22,6 +22,8 @@
  */
 package com.aoapps.encoding;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 /**
  * <p>
  * Indicates that at object can be trusted to generate output with only
@@ -36,6 +38,7 @@ package com.aoapps.encoding;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public interface ValidMediaOutput {
 
 	/**

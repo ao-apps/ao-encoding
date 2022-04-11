@@ -23,12 +23,14 @@
 package com.aoapps.encoding;
 
 import java.io.IOException;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * See <a href="https://html.spec.whatwg.org/multipage/dom.html#content-models:space-characters">3.2.5 Content models / ASCII whitespace</a>.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public interface Whitespace {
 
 	// <editor-fold desc="Whitespace - definition" defaultstate="collapsed">

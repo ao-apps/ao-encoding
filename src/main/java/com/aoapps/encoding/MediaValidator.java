@@ -33,12 +33,14 @@ import java.io.Writer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Verifies all characters going through this filter are valid for the given media type.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public abstract class MediaValidator extends FilterWriter implements ValidMediaFilter, NoClose {
 
 	private static final Logger logger = Logger.getLogger(MediaValidator.class.getName());

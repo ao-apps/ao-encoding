@@ -26,12 +26,14 @@ import com.aoapps.lang.i18n.Resources;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ResourceBundle;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * This implementation is based on <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public final class MysqlValidator extends MediaValidator {
 
 	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">

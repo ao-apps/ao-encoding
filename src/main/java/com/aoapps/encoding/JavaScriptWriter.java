@@ -28,6 +28,7 @@ import com.aoapps.lang.io.function.IOSupplierE;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.function.Predicate;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Streaming versions of media encoders.
@@ -36,6 +37,7 @@ import java.util.function.Predicate;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public class JavaScriptWriter extends WhitespaceWriter implements JavaScript, Json, LdJson, Text, Url {
 
 	/**

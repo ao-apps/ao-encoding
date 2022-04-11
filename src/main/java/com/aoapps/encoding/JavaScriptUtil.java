@@ -22,11 +22,16 @@
  */
 package com.aoapps.encoding;
 
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
+
 /**
  * Utilities helping JavaScript encoder implementations.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
+@Immutable
 final class JavaScriptUtil {
 
 	/** Make no instances. */

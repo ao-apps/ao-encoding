@@ -25,6 +25,7 @@ package com.aoapps.encoding;
 import com.aoapps.lang.io.NullWriter;
 import java.io.IOException;
 import java.io.Writer;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Passes through all characters unaltered after validating with the given validator.
@@ -33,6 +34,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public class ValidateOnlyEncoder extends MediaEncoder {
 
 	private final MediaValidator validator;

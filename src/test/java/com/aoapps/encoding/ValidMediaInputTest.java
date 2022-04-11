@@ -28,9 +28,11 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.concurrent.NotThreadSafe;
 import org.junit.Before;
 import org.junit.Test;
 
+@NotThreadSafe
 public class ValidMediaInputTest {
 
 	private List<ValidMediaInput> validators;

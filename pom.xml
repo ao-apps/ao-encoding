@@ -54,6 +54,8 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 		<sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
 		<sonar.organization>ao-apps</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<!-- Dependencies -->
+		<jsr305.version>3.0.2</jsr305.version>
 	</properties>
 
 	<name>AO Encoding</name>
@@ -192,6 +194,11 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 											<includes>element-list, package-list</includes>
 											<outputDirectory>${project.build.directory}/offlineLinks/com.aoapps/ao-lang</outputDirectory>
 										</artifactItem>
+										<artifactItem>
+											<groupId>com.google.code.findbugs</groupId><artifactId>jsr305</artifactId><classifier>javadoc</classifier>
+											<includes>element-list, package-list</includes>
+											<outputDirectory>${project.build.directory}/offlineLinks/com.google.code.findbugs/jsr305</outputDirectory>
+										</artifactItem>
 										<!-- Test Direct -->
 										<artifactItem>
 											<groupId>junit</groupId><artifactId>junit</artifactId><classifier>javadoc</classifier>
@@ -220,6 +227,10 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 									<url>https://oss.aoapps.com/lang/apidocs/</url>
 									<location>${project.build.directory}/offlineLinks/com.aoapps/ao-lang</location>
 								</offlineLink>
+								<offlineLink>
+									<url>https://javadoc.io/doc/com.google.code.findbugs/jsr305/${jsr305.version}/</url>
+									<location>${project.build.directory}/offlineLinks/com.google.code.findbugs/jsr305</location>
+								</offlineLink>
 								<!-- Test Direct -->
 								<offlineLink>
 									<url>https://junit.org/junit4/javadoc/latest/</url>
@@ -244,6 +255,9 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 			</dependency>
 			<dependency>
 				<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.2.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.code.findbugs</groupId><artifactId>jsr305</artifactId><version>${jsr305.version}</version>
 			</dependency>
 			<!-- Transitive -->
 			<dependency>
@@ -274,6 +288,10 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 		</dependency>
 		<dependency>
 			<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId><artifactId>jsr305</artifactId>
+			<optional>true</optional>
 		</dependency>
 		<!-- Test Direct -->
 		<dependency>

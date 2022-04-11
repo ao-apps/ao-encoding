@@ -26,12 +26,16 @@ import com.aoapps.lang.Throwables;
 import com.aoapps.lang.i18n.Resources;
 import com.aoapps.lang.io.LocalizedIOException;
 import java.io.Serializable;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Exception thrown when an invalid character is detected.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
+@Immutable
 public class InvalidCharacterException extends LocalizedIOException {
 
 	private static final long serialVersionUID = 1L;

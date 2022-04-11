@@ -27,10 +27,14 @@ import com.aoapps.lang.io.ContentType;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
+@Immutable
 public enum Doctype {
 	// See http://www.ibm.com/developerworks/library/x-think45/
 	HTML5 {

@@ -40,6 +40,7 @@ import java.io.Writer;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Streaming versions of media encoders.
@@ -52,6 +53,7 @@ import java.util.function.Predicate;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public abstract class MediaWriter extends EncoderWriter implements ValidMediaFilter, Encode, NoClose {
 
 	/**

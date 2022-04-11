@@ -23,6 +23,7 @@
 package com.aoapps.encoding;
 
 import java.io.Writer;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Currently performs no validation of the character because JavaScript can
@@ -30,6 +31,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public final class JavaScriptValidator extends MediaValidator {
 
 	private final MediaType inputType;

@@ -26,10 +26,15 @@ import com.aoapps.lang.io.NullWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 import org.junit.Test;
 
+@ThreadSafe
+@Immutable
 public class MediaEncoderTest {
 
+	@ThreadSafe
 	private static class NoInvalidAllowedAppendable implements Appendable {
 		private final MediaValidator canonical;
 		private final MediaEncoder encoder;
