@@ -242,6 +242,26 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.felix</groupId><artifactId>maven-bundle-plugin</artifactId>
+						<configuration>
+							<instructions>
+								<!--
+									Releases use "Automatic-Module-Name" instead of "module-info.java"
+									since has direct dependencies that are not yet modularized.
+								-->
+								<Automatic-Module-Name>${module.name}</Automatic-Module-Name>
+								<Private-Package>!.</Private-Package>
+							</instructions>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 
 	<dependencyManagement>
