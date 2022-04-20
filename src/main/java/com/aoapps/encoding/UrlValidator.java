@@ -39,145 +39,145 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class UrlValidator extends BufferedValidator {
 
-	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
-	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, UrlValidator.class);
+  // <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
+  private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, UrlValidator.class);
 
-	/**
-	 * Checks one character, throws {@link InvalidCharacterException} if invalid.
-	 * <p>
-	 * See <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
-	 * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
-	 * </p>
-	 */
-	public static void checkCharacter(char c) throws InvalidCharacterException {
-		switch(c) {
-			/*
-			 * Reserved Characters
-			 */
-			// gen-delims
-			case ':' :
-			case '/' :
-			case '?' :
-			case '#' :
-			case '[' :
-			case ']' :
-			case '@' :
-			// sub-delims
-			case '!' :
-			case '$' :
-			case '&' :
-			case '\'' :
-			case '(' :
-			case ')' :
-			case '*' :
-			case '+' :
-			case ',' :
-			case ';' :
-			case '=' :
+  /**
+   * Checks one character, throws {@link InvalidCharacterException} if invalid.
+   * <p>
+   * See <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
+   * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
+   * </p>
+   */
+  public static void checkCharacter(char c) throws InvalidCharacterException {
+    switch (c) {
+      /*
+       * Reserved Characters
+       */
+      // gen-delims
+      case ':' :
+      case '/' :
+      case '?' :
+      case '#' :
+      case '[' :
+      case ']' :
+      case '@' :
+      // sub-delims
+      case '!' :
+      case '$' :
+      case '&' :
+      case '\'' :
+      case '(' :
+      case ')' :
+      case '*' :
+      case '+' :
+      case ',' :
+      case ';' :
+      case '=' :
 
-			/*
-			 * Already percent-encoded
-			 */
-			//
-			case '%' :
+      /*
+       * Already percent-encoded
+       */
+      //
+      case '%' :
 
-			/*
-			 * IRI-only US-ASCII
-			 */
-			case '<' :
-			case '>' :
-			case '"' :
-			case ' ' :
-			case '{' :
-			case '}' :
-			case '|' :
-			case '\\' :
-			case '^' :
-			case '`' :
+      /*
+       * IRI-only US-ASCII
+       */
+      case '<' :
+      case '>' :
+      case '"' :
+      case ' ' :
+      case '{' :
+      case '}' :
+      case '|' :
+      case '\\' :
+      case '^' :
+      case '`' :
 
-			/*
-			 * Unreserved Characters
-			 */
-			case '-':
-			case '.':
-			case '_':
-			case '~':
-				return;
-			default:
-				if(
-					// ALPHA
-					(c >= 'a' && c <= 'z')
-					|| (c >= 'A' && c <= 'Z')
-					// DIGIT
-					|| (c >= '0' && c <= '9')
-					// IRI
-					|| c >= 128
-				) {
-					return;
-				}
-		}
-		throw new InvalidCharacterException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
-	}
+      /*
+       * Unreserved Characters
+       */
+      case '-':
+      case '.':
+      case '_':
+      case '~':
+        return;
+      default:
+        if (
+          // ALPHA
+          (c >= 'a' && c <= 'z')
+          || (c >= 'A' && c <= 'Z')
+          // DIGIT
+          || (c >= '0' && c <= '9')
+          // IRI
+          || c >= 128
+        ) {
+          return;
+        }
+    }
+    throw new InvalidCharacterException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
+  }
 
-	/**
-	 * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
-	 * <p>
-	 * See <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
-	 * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
-	 * </p>
-	 */
-	public static void checkCharacters(char[] cbuf, int off, int len) throws InvalidCharacterException {
-		int end = off + len;
-		while(off < end) {
-			checkCharacter(cbuf[off++]);
-		}
-	}
+  /**
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * <p>
+   * See <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
+   * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
+   * </p>
+   */
+  public static void checkCharacters(char[] cbuf, int off, int len) throws InvalidCharacterException {
+    int end = off + len;
+    while (off < end) {
+      checkCharacter(cbuf[off++]);
+    }
+  }
 
-	/**
-	 * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
-	 * <p>
-	 * See <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
-	 * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
-	 * </p>
-	 */
-	public static void checkCharacters(CharSequence str, int start, int end) throws InvalidCharacterException {
-		while(start < end) {
-			checkCharacter(str.charAt(start++));
-		}
-	}
-	// </editor-fold>
+  /**
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * <p>
+   * See <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
+   * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
+   * </p>
+   */
+  public static void checkCharacters(CharSequence str, int start, int end) throws InvalidCharacterException {
+    while (start < end) {
+      checkCharacter(str.charAt(start++));
+    }
+  }
+  // </editor-fold>
 
-	UrlValidator(Writer out) {
-		super(out, 128);
-	}
+  UrlValidator(Writer out) {
+    super(out, 128);
+  }
 
-	@Override
-	public MediaType getValidMediaInputType() {
-		return MediaType.URL;
-	}
+  @Override
+  public MediaType getValidMediaInputType() {
+    return MediaType.URL;
+  }
 
-	@Override
-	public boolean isValidatingMediaInputType(MediaType inputType) {
-		return
-			inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL
-			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL
-			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL
-			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL
-			|| inputType == MediaType.URL // All invalid characters in URL are also invalid in URL
-		;
-	}
+  @Override
+  public boolean isValidatingMediaInputType(MediaType inputType) {
+    return
+      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL
+      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL
+      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL
+      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL
+      || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL
+    ;
+  }
 
-	@Override
-	public boolean canSkipValidation(MediaType outputType) {
-		return
-			outputType == MediaType.URL // All valid characters in URL are also valid in URL
-		;
-	}
+  @Override
+  public boolean canSkipValidation(MediaType outputType) {
+    return
+      outputType == MediaType.URL // All valid characters in URL are also valid in URL
+    ;
+  }
 
-	@Override
-	void validate(CharSequence buffer) throws IOException {
-		int len = buffer.length();
-		checkCharacters(buffer, 0, len);
-		out.append(buffer, 0, len);
-	}
+  @Override
+  void validate(CharSequence buffer) throws IOException {
+    int len = buffer.length();
+    checkCharacters(buffer, 0, len);
+    out.append(buffer, 0, len);
+  }
 }

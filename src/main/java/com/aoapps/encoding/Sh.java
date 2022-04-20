@@ -35,248 +35,248 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public interface Sh extends Encode {
 
-	// <editor-fold desc="Encode - manual self-type and deprecate since not expected" defaultstate="collapsed">
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	default Sh encode(MediaType contentType, char ch) throws IOException {
-		Encode.super.encode(contentType, ch);
-		return this;
-	}
+  // <editor-fold desc="Encode - manual self-type and deprecate since not expected" defaultstate="collapsed">
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  default Sh encode(MediaType contentType, char ch) throws IOException {
+    Encode.super.encode(contentType, ch);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	default Sh encode(MediaType contentType, char[] cbuf) throws IOException {
-		Encode.super.encode(contentType, cbuf);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  default Sh encode(MediaType contentType, char[] cbuf) throws IOException {
+    Encode.super.encode(contentType, cbuf);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	default Sh encode(MediaType contentType, char[] cbuf, int offset, int len) throws IOException {
-		Encode.super.encode(contentType, cbuf, offset, len);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  default Sh encode(MediaType contentType, char[] cbuf, int offset, int len) throws IOException {
+    Encode.super.encode(contentType, cbuf, offset, len);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	Sh encode(MediaType contentType, CharSequence csq) throws IOException;
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  Sh encode(MediaType contentType, CharSequence csq) throws IOException;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	Sh encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException;
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  Sh encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	Sh encode(MediaType contentType, Object content) throws IOException;
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  Sh encode(MediaType contentType, Object content) throws IOException;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	default <Ex extends Throwable> Sh encode(MediaType contentType, IOSupplierE<?, Ex> content) throws IOException, Ex {
-		Encode.super.encode(contentType, content);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  default <Ex extends Throwable> Sh encode(MediaType contentType, IOSupplierE<?, Ex> content) throws IOException, Ex {
+    Encode.super.encode(contentType, content);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	default <Ex extends Throwable> Sh encode(MediaType contentType, MediaWritable<Ex> content) throws IOException, Ex {
-		Encode.super.encode(contentType, content);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  default <Ex extends Throwable> Sh encode(MediaType contentType, MediaWritable<Ex> content) throws IOException, Ex {
+    Encode.super.encode(contentType, content);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	MediaWriter encode(MediaType contentType) throws IOException;
-	// </editor-fold>
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  MediaWriter encode(MediaType contentType) throws IOException;
+  // </editor-fold>
 
-	// <editor-fold desc="Sh - definition" defaultstate="collapsed">
-	/**
-	 * Writes the given shell script with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 */
-	default Sh sh(char ch) throws IOException {
-		return encode(MediaType.SH, ch);
-	}
+  // <editor-fold desc="Sh - definition" defaultstate="collapsed">
+  /**
+   * Writes the given shell script with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
+   * </p>
+   *
+   * @return  {@code this} writer
+   */
+  default Sh sh(char ch) throws IOException {
+    return encode(MediaType.SH, ch);
+  }
 
-	/**
-	 * Writes the given shell script with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 */
-	default Sh sh(char[] cbuf) throws IOException {
-		return encode(MediaType.SH, cbuf);
-	}
+  /**
+   * Writes the given shell script with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
+   * </p>
+   *
+   * @return  {@code this} writer
+   */
+  default Sh sh(char[] cbuf) throws IOException {
+    return encode(MediaType.SH, cbuf);
+  }
 
-	/**
-	 * Writes the given shell script with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 */
-	default Sh sh(char[] cbuf, int offset, int len) throws IOException {
-		return encode(MediaType.SH, cbuf, offset, len);
-	}
+  /**
+   * Writes the given shell script with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
+   * </p>
+   *
+   * @return  {@code this} writer
+   */
+  default Sh sh(char[] cbuf, int offset, int len) throws IOException {
+    return encode(MediaType.SH, cbuf, offset, len);
+  }
 
-	/**
-	 * Writes the given shell script with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
-	 * </p>
-	 * <p>
-	 * If the string is translated, comments will be added giving the
-	 * translation lookup id to aid in translation of server-translated values.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 */
-	default Sh sh(CharSequence csq) throws IOException {
-		return encode(MediaType.SH, csq);
-	}
+  /**
+   * Writes the given shell script with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
+   * </p>
+   * <p>
+   * If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.
+   * </p>
+   *
+   * @return  {@code this} writer
+   */
+  default Sh sh(CharSequence csq) throws IOException {
+    return encode(MediaType.SH, csq);
+  }
 
-	/**
-	 * Writes the given shell script with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
-	 * </p>
-	 * <p>
-	 * If the string is translated, comments will be added giving the
-	 * translation lookup id to aid in translation of server-translated values.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 */
-	default Sh sh(CharSequence csq, int start, int end) throws IOException {
-		return encode(MediaType.SH, csq, start, end);
-	}
+  /**
+   * Writes the given shell script with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
+   * </p>
+   * <p>
+   * If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.
+   * </p>
+   *
+   * @return  {@code this} writer
+   */
+  default Sh sh(CharSequence csq, int start, int end) throws IOException {
+    return encode(MediaType.SH, csq, start, end);
+  }
 
-	/**
-	 * Writes the given shell script with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
-	 * </p>
-	 * <p>
-	 * If the string is translated, comments will be added giving the
-	 * translation lookup id to aid in translation of server-translated values.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 */
-	default Sh sh(Object sh) throws IOException {
-		return encode(MediaType.SH, sh);
-	}
+  /**
+   * Writes the given shell script with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
+   * </p>
+   * <p>
+   * If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.
+   * </p>
+   *
+   * @return  {@code this} writer
+   */
+  default Sh sh(Object sh) throws IOException {
+    return encode(MediaType.SH, sh);
+  }
 
-	/**
-	 * Writes the given shell script with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
-	 * </p>
-	 * <p>
-	 * If the string is translated, comments will be added giving the
-	 * translation lookup id to aid in translation of server-translated values.
-	 * </p>
-	 *
-	 * @param  <Ex>  An arbitrary exception type that may be thrown
-	 *
-	 * @return  {@code this} writer
-	 */
-	default <Ex extends Throwable> Sh sh(IOSupplierE<?, Ex> sh) throws IOException, Ex {
-		return encode(MediaType.SH, sh);
-	}
+  /**
+   * Writes the given shell script with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
+   * </p>
+   * <p>
+   * If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.
+   * </p>
+   *
+   * @param  <Ex>  An arbitrary exception type that may be thrown
+   *
+   * @return  {@code this} writer
+   */
+  default <Ex extends Throwable> Sh sh(IOSupplierE<?, Ex> sh) throws IOException, Ex {
+    return encode(MediaType.SH, sh);
+  }
 
-	/**
-	 * Writes the given shell script with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 *
-	 * @param  <Ex>  An arbitrary exception type that may be thrown
-	 *
-	 * @return  {@code this} writer
-	 */
-	default <Ex extends Throwable> Sh sh(ShWritable<Ex> sh) throws IOException, Ex {
-		return encode(MediaType.SH, sh);
-	}
+  /**
+   * Writes the given shell script with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
+   * </p>
+   * <p>
+   * Does not perform any translation markups.
+   * </p>
+   *
+   * @param  <Ex>  An arbitrary exception type that may be thrown
+   *
+   * @return  {@code this} writer
+   */
+  default <Ex extends Throwable> Sh sh(ShWritable<Ex> sh) throws IOException, Ex {
+    return encode(MediaType.SH, sh);
+  }
 
-	/**
-	 * Writes the given shell script with proper encoding.
-	 * This is well suited for use in a try-with-resources block.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 *
-	 * @return  A new writer that may be used for arbitrary shell script.
-	 *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
-	 */
-	default ShWriter sh() throws IOException {
-		return (ShWriter)encode(MediaType.SH);
-	}
-	// </editor-fold>
+  /**
+   * Writes the given shell script with proper encoding.
+   * This is well suited for use in a try-with-resources block.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type.
+   * </p>
+   * <p>
+   * Does not perform any translation markups.
+   * </p>
+   *
+   * @return  A new writer that may be used for arbitrary shell script.
+   *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
+   */
+  default ShWriter sh() throws IOException {
+    return (ShWriter)encode(MediaType.SH);
+  }
+  // </editor-fold>
 }

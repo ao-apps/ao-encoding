@@ -36,41 +36,41 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public interface ValidMediaInput {
 
-	/**
-	 * Gets the input type.
-	 */
-	MediaType getValidMediaInputType();
+  /**
+   * Gets the input type.
+   */
+  MediaType getValidMediaInputType();
 
-	/**
-	 * Checks if this is validating the provided type, which allows one validator to be substituted in place of another.
-	 * This is acceptable when this validator is equal to, or more strict, than the given {@code inputType}.
-	 * <p>
-	 * Please note that this validator only needs to block invalid characters for {@code inputType}.  This validator
-	 * does not need to let through all characters, just block the invalid.  This is a one-way optimization.
-	 * </p>
-	 * <p>
-	 * This is almost the inverse operation of {@link #isValidatingMediaInputType(com.aoapps.encoding.MediaType)}, with
-	 * the exception of characters only invalid due to nested encodings.
-	 * </p>
-	 *
-	 * @see  #canSkipValidation(com.aoapps.encoding.MediaType)
-	 *
-	 * @return {@code true} when this validator will throw exceptions on all invalid characters from the given {@code inputType}
-	 */
-	boolean isValidatingMediaInputType(MediaType inputType);
+  /**
+   * Checks if this is validating the provided type, which allows one validator to be substituted in place of another.
+   * This is acceptable when this validator is equal to, or more strict, than the given {@code inputType}.
+   * <p>
+   * Please note that this validator only needs to block invalid characters for {@code inputType}.  This validator
+   * does not need to let through all characters, just block the invalid.  This is a one-way optimization.
+   * </p>
+   * <p>
+   * This is almost the inverse operation of {@link #isValidatingMediaInputType(com.aoapps.encoding.MediaType)}, with
+   * the exception of characters only invalid due to nested encodings.
+   * </p>
+   *
+   * @see  #canSkipValidation(com.aoapps.encoding.MediaType)
+   *
+   * @return {@code true} when this validator will throw exceptions on all invalid characters from the given {@code inputType}
+   */
+  boolean isValidatingMediaInputType(MediaType inputType);
 
-	/**
-	 * Checks if validation may be skipped when the characters being written to this
-	 * validator is already known to be valid with the given media type.  This may be done when every valid character
-	 * for the given media type is also valid within this validator.
-	 * <p>
-	 * This is almost the inverse operation of {@link #isValidatingMediaInputType(com.aoapps.encoding.MediaType)}, with
-	 * the exception of characters only invalid due to nested encodings.
-	 * </p>
-	 *
-	 * @see  #isValidatingMediaInputType(com.aoapps.encoding.MediaType)
-	 *
-	 * @return {@code true} when all valid characters of the given {@code outputType} are also valid on this validator
-	 */
-	boolean canSkipValidation(MediaType outputType);
+  /**
+   * Checks if validation may be skipped when the characters being written to this
+   * validator is already known to be valid with the given media type.  This may be done when every valid character
+   * for the given media type is also valid within this validator.
+   * <p>
+   * This is almost the inverse operation of {@link #isValidatingMediaInputType(com.aoapps.encoding.MediaType)}, with
+   * the exception of characters only invalid due to nested encodings.
+   * </p>
+   *
+   * @see  #isValidatingMediaInputType(com.aoapps.encoding.MediaType)
+   *
+   * @return {@code true} when all valid characters of the given {@code outputType} are also valid on this validator
+   */
+  boolean canSkipValidation(MediaType outputType);
 }

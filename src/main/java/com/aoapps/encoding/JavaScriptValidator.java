@@ -35,30 +35,30 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class JavaScriptValidator extends MediaValidator {
 
-	private final MediaType inputType;
+  private final MediaType inputType;
 
-	JavaScriptValidator(Writer out, MediaType inputType) {
-		super(out);
-		this.inputType = inputType;
-	}
+  JavaScriptValidator(Writer out, MediaType inputType) {
+    super(out);
+    this.inputType = inputType;
+  }
 
-	@Override
-	public MediaType getValidMediaInputType() {
-		return inputType;
-	}
+  @Override
+  public MediaType getValidMediaInputType() {
+    return inputType;
+  }
 
-	@Override
-	public boolean isValidatingMediaInputType(MediaType inputType) {
-		return
-			inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in JAVASCRIPT
-			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in JAVASCRIPT
-			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in JAVASCRIPT
-			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT
-		;
-	}
+  @Override
+  public boolean isValidatingMediaInputType(MediaType inputType) {
+    return
+      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in JAVASCRIPT
+      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in JAVASCRIPT
+      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in JAVASCRIPT
+      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT
+    ;
+  }
 
-	@Override
-	public boolean canSkipValidation(MediaType outputType) {
-		return true; // All characters are valid in JAVASCRIPT
-	}
+  @Override
+  public boolean canSkipValidation(MediaType outputType) {
+    return true; // All characters are valid in JAVASCRIPT
+  }
 }

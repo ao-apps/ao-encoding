@@ -39,19 +39,19 @@ import javax.annotation.concurrent.ThreadSafe;
 @Immutable
 public class InvalidCharacterException extends LocalizedIOException {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public InvalidCharacterException(Resources resources, String key, Serializable... args) {
-		super(resources, key, args);
-	}
+  public InvalidCharacterException(Resources resources, String key, Serializable... args) {
+    super(resources, key, args);
+  }
 
-	public InvalidCharacterException(Throwable cause, Resources resources, String key, Serializable... args) {
-		super(cause, resources, key, args);
-	}
+  public InvalidCharacterException(Throwable cause, Resources resources, String key, Serializable... args) {
+    super(cause, resources, key, args);
+  }
 
-	static {
-		Throwables.registerSurrogateFactory(InvalidCharacterException.class, (template, cause) ->
-			new InvalidCharacterException(cause, template.getResources(), template.getKey(), template.getArgs())
-		);
-	}
+  static {
+    Throwables.registerSurrogateFactory(InvalidCharacterException.class, (template, cause) ->
+      new InvalidCharacterException(cause, template.getResources(), template.getKey(), template.getArgs())
+    );
+  }
 }

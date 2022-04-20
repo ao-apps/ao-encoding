@@ -35,69 +35,71 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public class UrlInJavaScriptEncoder extends BufferedEncoder {
 
-	private final MediaType outputType;
-	private final EncodingContext encodingContext;
+  private final MediaType outputType;
+  private final EncodingContext encodingContext;
 
-	UrlInJavaScriptEncoder(MediaType outputType, EncodingContext encodingContext) {
-		super(128);
-		if(
-			outputType != MediaType.JAVASCRIPT
-			&& outputType != MediaType.JSON
-			&& outputType != MediaType.LD_JSON
-		) {
-			throw new IllegalArgumentException("Unsupported output type: " + outputType);
-		}
-		this.outputType = outputType;
-		this.encodingContext = encodingContext;
-	}
+  UrlInJavaScriptEncoder(MediaType outputType, EncodingContext encodingContext) {
+    super(128);
+    if (
+      outputType != MediaType.JAVASCRIPT
+      && outputType != MediaType.JSON
+      && outputType != MediaType.LD_JSON
+    ) {
+      throw new IllegalArgumentException("Unsupported output type: " + outputType);
+    }
+    this.outputType = outputType;
+    this.encodingContext = encodingContext;
+  }
 
-	@Override
-	public MediaType getValidMediaInputType() {
-		return MediaType.URL;
-	}
+  @Override
+  public MediaType getValidMediaInputType() {
+    return MediaType.URL;
+  }
 
-	@Override
-	public boolean isValidatingMediaInputType(MediaType inputType) {
-		return
-			inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL in JAVASCRIPT
-			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in JAVASCRIPT
-			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in JAVASCRIPT
-			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in JAVASCRIPT
-			|| inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in JAVASCRIPT
-		;
-	}
+  @Override
+  public boolean isValidatingMediaInputType(MediaType inputType) {
+    return
+      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL in JAVASCRIPT
+      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in JAVASCRIPT
+      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in JAVASCRIPT
+      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in JAVASCRIPT
+      || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in JAVASCRIPT
+    ;
+  }
 
-	@Override
-	public boolean canSkipValidation(MediaType outputType) {
-		return
-			outputType == MediaType.URL // All valid characters in URL are also valid in URL in JAVASCRIPT
-		;
-	}
+  @Override
+  public boolean canSkipValidation(MediaType outputType) {
+    return
+      outputType == MediaType.URL // All valid characters in URL are also valid in URL in JAVASCRIPT
+    ;
+  }
 
-	@Override
-	public MediaType getValidMediaOutputType() {
-		return outputType;
-	}
+  @Override
+  public MediaType getValidMediaOutputType() {
+    return outputType;
+  }
 
-	@Override
-	public void writePrefixTo(Appendable out) throws IOException {
-		super.writePrefixTo(out);
-		out.append('"');
-	}
+  @Override
+  public void writePrefixTo(Appendable out) throws IOException {
+    super.writePrefixTo(out);
+    out.append('"');
+  }
 
-	@Override
-	@SuppressWarnings("StringEquality")
-	protected void writeSuffix(CharSequence buffer, Appendable out) throws IOException {
-		String url = buffer.toString();
-		UrlValidator.checkCharacters(url, 0, url.length());
-		String encoded;
-		if(encodingContext != null) {
-			encoded = encodingContext.encodeURL(url);
-			if(encoded != url) UrlValidator.checkCharacters(encoded, 0, encoded.length());
-		} else {
-			encoded = url;
-		}
-		TextInJavaScriptEncoder.encodeTextInJavascript(encoded, out);
-		out.append('"');
-	}
+  @Override
+  @SuppressWarnings("StringEquality")
+  protected void writeSuffix(CharSequence buffer, Appendable out) throws IOException {
+    String url = buffer.toString();
+    UrlValidator.checkCharacters(url, 0, url.length());
+    String encoded;
+    if (encodingContext != null) {
+      encoded = encodingContext.encodeURL(url);
+      if (encoded != url) {
+        UrlValidator.checkCharacters(encoded, 0, encoded.length());
+      }
+    } else {
+      encoded = url;
+    }
+    TextInJavaScriptEncoder.encodeTextInJavascript(encoded, out);
+    out.append('"');
+  }
 }

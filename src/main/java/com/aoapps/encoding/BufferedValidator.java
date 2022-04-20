@@ -36,83 +36,87 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public abstract class BufferedValidator extends MediaValidator {
 
-	/**
-	 * Buffers all contents to pass to validate.
-	 */
-	private final StringBuffer buffer;
+  /**
+   * Buffers all contents to pass to validate.
+   */
+  private final StringBuffer buffer;
 
-	BufferedValidator(Writer out, int initialCapacity) {
-		super(out);
-		this.buffer = new StringBuffer(initialCapacity);
-	}
+  BufferedValidator(Writer out, int initialCapacity) {
+    super(out);
+    this.buffer = new StringBuffer(initialCapacity);
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @return  {@code true} since buffered
-	 */
-	@Override
-	public final boolean isBuffered() {
-		return true;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @return  {@code true} since buffered
+   */
+  @Override
+  public final boolean isBuffered() {
+    return true;
+  }
 
-	@Override
-	public final void write(int c) {
-		buffer.append((char)c);
-	}
+  @Override
+  public final void write(int c) {
+    buffer.append((char)c);
+  }
 
-	@Override
-	public final void write(char[] cbuf) {
-		buffer.append(cbuf);
-	}
+  @Override
+  public final void write(char[] cbuf) {
+    buffer.append(cbuf);
+  }
 
-	@Override
-	public final void write(char[] cbuf, int off, int len) {
-		buffer.append(cbuf, off, len);
-	}
+  @Override
+  public final void write(char[] cbuf, int off, int len) {
+    buffer.append(cbuf, off, len);
+  }
 
-	@Override
-	public final void write(String str) {
-		if(str==null) throw new IllegalArgumentException("str is null");
-		buffer.append(str);
-	}
+  @Override
+  public final void write(String str) {
+    if (str == null) {
+      throw new IllegalArgumentException("str is null");
+    }
+    buffer.append(str);
+  }
 
-	@Override
-	public final void write(String str, int off, int len) {
-		if(str==null) throw new IllegalArgumentException("str is null");
-		buffer.append(str, off, off+len);
-	}
+  @Override
+  public final void write(String str, int off, int len) {
+    if (str == null) {
+      throw new IllegalArgumentException("str is null");
+    }
+    buffer.append(str, off, off+len);
+  }
 
-	@Override
-	public final BufferedValidator append(char c) {
-		buffer.append(c);
-		return this;
-	}
+  @Override
+  public final BufferedValidator append(char c) {
+    buffer.append(c);
+    return this;
+  }
 
-	@Override
-	public final BufferedValidator append(CharSequence csq) {
-		buffer.append(csq);
-		return this;
-	}
+  @Override
+  public final BufferedValidator append(CharSequence csq) {
+    buffer.append(csq);
+    return this;
+  }
 
-	@Override
-	public final BufferedValidator append(CharSequence csq, int start, int end) {
-		buffer.append(csq, start, end);
-		return this;
-	}
+  @Override
+  public final BufferedValidator append(CharSequence csq, int start, int end) {
+    buffer.append(csq, start, end);
+    return this;
+  }
 
-	/**
-	 * Performs final validation and clears the buffer for reuse.
-	 */
-	@Override
-	public final void validate(boolean trim) throws IOException {
-		try {
-			validate(trim ? Strings.trim(buffer) : buffer);
-		} finally {
-			// Tests require buffer reset even on failure
-			buffer.setLength(0);
-		}
-	}
+  /**
+   * Performs final validation and clears the buffer for reuse.
+   */
+  @Override
+  public final void validate(boolean trim) throws IOException {
+    try {
+      validate(trim ? Strings.trim(buffer) : buffer);
+    } finally {
+      // Tests require buffer reset even on failure
+      buffer.setLength(0);
+    }
+  }
 
-	abstract void validate(CharSequence buffer) throws IOException;
+  abstract void validate(CharSequence buffer) throws IOException;
 }

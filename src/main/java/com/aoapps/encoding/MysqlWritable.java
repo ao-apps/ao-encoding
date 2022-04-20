@@ -35,14 +35,14 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public interface MysqlWritable<Ex extends Throwable> extends WhitespaceWritable<Ex> {
 
-	@Override
-	default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
-		if(writer instanceof MysqlWriter) {
-			writeTo((MysqlWriter)writer);
-		} else {
-			throw new AssertionError("Expected " + MysqlWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
-		}
-	}
+  @Override
+  default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
+    if (writer instanceof MysqlWriter) {
+      writeTo((MysqlWriter)writer);
+    } else {
+      throw new AssertionError("Expected " + MysqlWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
+    }
+  }
 
-	void writeTo(MysqlWriter writer) throws IOException, Ex;
+  void writeTo(MysqlWriter writer) throws IOException, Ex;
 }

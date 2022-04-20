@@ -42,123 +42,127 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class StyleValidator extends MediaValidator {
 
-	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
-	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, StyleValidator.class);
+  // <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
+  static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, StyleValidator.class);
 
-	/**
-	 * Checks one character, throws {@link InvalidCharacterException} if invalid.
-	 * <ul>
-	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
-	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
-	 * </ul>
-	 */
-	public static void checkCharacter(char c) throws InvalidCharacterException {
-		if(
-			(c < 0x20 || c > 0x7E) // common case first
-			&& c != '\t'
-			&& c != '\n'
-			&& c != '\r'
-			// 7F to 9F - control characters
-			&& (c < 0xA0 || c > 0xFFFD)
-		) throw new InvalidCharacterException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
-	}
+  /**
+   * Checks one character, throws {@link InvalidCharacterException} if invalid.
+   * <ul>
+   * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
+   * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
+   * </ul>
+   */
+  public static void checkCharacter(char c) throws InvalidCharacterException {
+    if (
+      (c < 0x20 || c > 0x7E) // common case first
+      && c != '\t'
+      && c != '\n'
+      && c != '\r'
+      // 7F to 9F - control characters
+      && (c < 0xA0 || c > 0xFFFD)
+    ) {
+      throw new InvalidCharacterException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
+    }
+  }
 
-	/**
-	 * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
-	 * <ul>
-	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
-	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
-	 * </ul>
-	 */
-	public static void checkCharacters(char[] cbuf, int off, int len) throws InvalidCharacterException {
-		int end = off + len;
-		while(off < end) {
-			checkCharacter(cbuf[off++]);
-		}
-	}
+  /**
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * <ul>
+   * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
+   * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
+   * </ul>
+   */
+  public static void checkCharacters(char[] cbuf, int off, int len) throws InvalidCharacterException {
+    int end = off + len;
+    while (off < end) {
+      checkCharacter(cbuf[off++]);
+    }
+  }
 
-	/**
-	 * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
-	 * <ul>
-	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
-	 * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
-	 * </ul>
-	 */
-	public static void checkCharacters(CharSequence str, int start, int end) throws InvalidCharacterException {
-		while(start < end) {
-			checkCharacter(str.charAt(start++));
-		}
-	}
-	// </editor-fold>
+  /**
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * <ul>
+   * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
+   * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
+   * </ul>
+   */
+  public static void checkCharacters(CharSequence str, int start, int end) throws InvalidCharacterException {
+    while (start < end) {
+      checkCharacter(str.charAt(start++));
+    }
+  }
+  // </editor-fold>
 
-	StyleValidator(Writer out) {
-		super(out);
-	}
+  StyleValidator(Writer out) {
+    super(out);
+  }
 
-	@Override
-	public MediaType getValidMediaInputType() {
-		return MediaType.CSS;
-	}
+  @Override
+  public MediaType getValidMediaInputType() {
+    return MediaType.CSS;
+  }
 
-	@Override
-	public boolean isValidatingMediaInputType(MediaType inputType) {
-		return
-			inputType == MediaType.CSS // All invalid characters in CSS are also invalid in CSS
-			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in CSS
-			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in CSS
-			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in CSS
-			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in CSS
-			|| inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS
-		;
-	}
+  @Override
+  public boolean isValidatingMediaInputType(MediaType inputType) {
+    return
+      inputType == MediaType.CSS // All invalid characters in CSS are also invalid in CSS
+      || inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in CSS
+      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in CSS
+      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in CSS
+      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in CSS
+      || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS
+    ;
+  }
 
-	@Override
-	public boolean canSkipValidation(MediaType outputType) {
-		return
-			outputType == MediaType.CSS // All valid characters in CSS are also valid in CSS
-			|| outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in CSS
-			|| outputType == MediaType.PSQL // All valid characters in PSQL are also valid in CSS
-			|| outputType == MediaType.SH // All valid characters in SH are also valid in CSS
-		;
-	}
+  @Override
+  public boolean canSkipValidation(MediaType outputType) {
+    return
+      outputType == MediaType.CSS // All valid characters in CSS are also valid in CSS
+      || outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in CSS
+      || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in CSS
+      || outputType == MediaType.SH // All valid characters in SH are also valid in CSS
+    ;
+  }
 
-	@Override
-	public void write(int c) throws IOException {
-		checkCharacter((char)c);
-		out.write(c);
-	}
+  @Override
+  public void write(int c) throws IOException {
+    checkCharacter((char)c);
+    out.write(c);
+  }
 
-	@Override
-	public void write(char[] cbuf, int off, int len) throws IOException {
-		checkCharacters(cbuf, off, len);
-		out.write(cbuf, off, len);
-	}
+  @Override
+  public void write(char[] cbuf, int off, int len) throws IOException {
+    checkCharacters(cbuf, off, len);
+    out.write(cbuf, off, len);
+  }
 
-	@Override
-	public void write(String str, int off, int len) throws IOException {
-		if(str == null) throw new IllegalArgumentException("str is null");
-		checkCharacters(str, off, off + len);
-		out.write(str, off, len);
-	}
+  @Override
+  public void write(String str, int off, int len) throws IOException {
+    if (str == null) {
+      throw new IllegalArgumentException("str is null");
+    }
+    checkCharacters(str, off, off + len);
+    out.write(str, off, len);
+  }
 
-	@Override
-	public StyleValidator append(CharSequence csq) throws IOException {
-		checkCharacters(csq, 0, csq.length());
-		out.append(csq);
-		return this;
-	}
+  @Override
+  public StyleValidator append(CharSequence csq) throws IOException {
+    checkCharacters(csq, 0, csq.length());
+    out.append(csq);
+    return this;
+  }
 
-	@Override
-	public StyleValidator append(CharSequence csq, int start, int end) throws IOException {
-		checkCharacters(csq, start, end);
-		out.append(csq, start, end);
-		return this;
-	}
+  @Override
+  public StyleValidator append(CharSequence csq, int start, int end) throws IOException {
+    checkCharacters(csq, start, end);
+    out.append(csq, start, end);
+    return this;
+  }
 
-	@Override
-	public StyleValidator append(char c) throws IOException {
-		checkCharacter(c);
-		out.append(c);
-		return this;
-	}
+  @Override
+  public StyleValidator append(char c) throws IOException {
+    checkCharacter(c);
+    out.append(c);
+    return this;
+  }
 }

@@ -42,142 +42,144 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public class UrlInStyleEncoder extends BufferedEncoder {
 
-	private final EncodingContext encodingContext;
+  private final EncodingContext encodingContext;
 
-	UrlInStyleEncoder(EncodingContext encodingContext) {
-		super(128);
-		this.encodingContext = encodingContext;
-	}
+  UrlInStyleEncoder(EncodingContext encodingContext) {
+    super(128);
+    this.encodingContext = encodingContext;
+  }
 
-	@Override
-	public MediaType getValidMediaInputType() {
-		return MediaType.URL;
-	}
+  @Override
+  public MediaType getValidMediaInputType() {
+    return MediaType.URL;
+  }
 
-	@Override
-	public boolean isValidatingMediaInputType(MediaType inputType) {
-		return
-			inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL in CSS
-			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in CSS
-			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in CSS
-			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in CSS
-			|| inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in CSS
-		;
-	}
+  @Override
+  public boolean isValidatingMediaInputType(MediaType inputType) {
+    return
+      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL in CSS
+      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in CSS
+      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in CSS
+      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in CSS
+      || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in CSS
+    ;
+  }
 
-	@Override
-	public boolean canSkipValidation(MediaType outputType) {
-		return
-			outputType == MediaType.URL // All valid characters in URL are also valid in URL in CSS
-		;
-	}
+  @Override
+  public boolean canSkipValidation(MediaType outputType) {
+    return
+      outputType == MediaType.URL // All valid characters in URL are also valid in URL in CSS
+    ;
+  }
 
-	@Override
-	public MediaType getValidMediaOutputType() {
-		return MediaType.CSS;
-	}
+  @Override
+  public MediaType getValidMediaOutputType() {
+    return MediaType.CSS;
+  }
 
-	@Override
-	public void writePrefixTo(Appendable out) throws IOException {
-		super.writePrefixTo(out);
-		out.append("url(\"");
-	}
+  @Override
+  public void writePrefixTo(Appendable out) throws IOException {
+    super.writePrefixTo(out);
+    out.append("url(\"");
+  }
 
-	private static final char BEGIN_ENCODE = '\u0080';
-	private static final char END_ENCODE = '\u009F';
-	/**
-	 * Precomputed escapes for the expected case of encoding matching {@link EncodingContext#DEFAULT}
-	 */
-	private static final String[] DEFAULT_ESCAPES = new String[END_ENCODE + 1 - BEGIN_ENCODE];
-	static {
-		String charsetName = EncodingContext.DEFAULT.getCharacterEncoding().name();
-		try {
-			for(char ch = BEGIN_ENCODE; ch <= END_ENCODE; ch++) {
-				DEFAULT_ESCAPES[ch - BEGIN_ENCODE] = URLEncoder.encode(Character.toString(ch), charsetName);
-			}
-		} catch(UnsupportedEncodingException e) {
-			throw new AssertionError("Default encoding must be supported on all platforms: " + charsetName, e);
-		}
-	}
+  private static final char BEGIN_ENCODE = '\u0080';
+  private static final char END_ENCODE = '\u009F';
+  /**
+   * Precomputed escapes for the expected case of encoding matching {@link EncodingContext#DEFAULT}
+   */
+  private static final String[] DEFAULT_ESCAPES = new String[END_ENCODE + 1 - BEGIN_ENCODE];
+  static {
+    String charsetName = EncodingContext.DEFAULT.getCharacterEncoding().name();
+    try {
+      for (char ch = BEGIN_ENCODE; ch <= END_ENCODE; ch++) {
+        DEFAULT_ESCAPES[ch - BEGIN_ENCODE] = URLEncoder.encode(Character.toString(ch), charsetName);
+      }
+    } catch (UnsupportedEncodingException e) {
+      throw new AssertionError("Default encoding must be supported on all platforms: " + charsetName, e);
+    }
+  }
 
-	@Override
-	@SuppressWarnings({"StringEquality", "AssignmentToForLoopParameter"})
-	protected void writeSuffix(CharSequence buffer, Appendable out) throws IOException {
-		String url = buffer.toString();
-		int len = url.length();
-		UrlValidator.checkCharacters(url, 0, len);
-		String encoded;
-		if(encodingContext != null) {
-			encoded = encodingContext.encodeURL(url);
-			if(encoded != url) UrlValidator.checkCharacters(encoded, 0, encoded.length());
-		} else {
-			encoded = url;
-		}
-		// CSS does not support \u0080 through \u009F, \uFFFE, or \uFFFF
-		for(int i = 0; i < len; i++) {
-			char ch = encoded.charAt(i);
-			if(
-				(ch >= BEGIN_ENCODE && ch <= END_ENCODE)
-				|| ch == '\uFFFE'
-				|| ch == '\uFFFF'
-			) {
-				StringBuilder sb = new StringBuilder(len + (len - i) * 2); // Enough room should all additional characters need to be %HH encoded
-				sb.append(encoded, 0, i);
-				Charset charset = (encodingContext == null ? EncodingContext.DEFAULT : encodingContext).getCharacterEncoding();
-				String charsetName = charset.name();
-				String fffe_escape;
-				String ffff_escape;
-				String[] escapes;
-				if(charset == EncodingContext.DEFAULT.getCharacterEncoding()) {
-					// Use precomputed for default charset
-					fffe_escape = UrlInXhtmlEncoder.DEFAULT_FFFE;
-					ffff_escape = UrlInXhtmlEncoder.DEFAULT_FFFF;
-					escapes = DEFAULT_ESCAPES;
-				} else {
-					// Escapes computed once each for current non-default charset
-					fffe_escape = null;
-					ffff_escape = null;
-					escapes = new String[END_ENCODE + 1 - BEGIN_ENCODE];
-				}
-				while(true) {
-					if(ch >= BEGIN_ENCODE && ch <= END_ENCODE) {
-						int escapeIndex = ch - BEGIN_ENCODE;
-						String escape = escapes[escapeIndex];
-						if(escape == null) {
-							assert charset != EncodingContext.DEFAULT.getCharacterEncoding();
-							assert escapes != DEFAULT_ESCAPES;
-							escape = URLEncoder.encode(Character.toString(ch), charsetName);
-							escapes[escapeIndex] = escape;
-						}
-						sb.append(escape);
-					} else if(ch == '\uFFFE') {
-						if(fffe_escape == null) {
-							fffe_escape = URLEncoder.encode("\uFFFE", charsetName);
-						}
-						sb.append(fffe_escape);
-					} else if(ch == '\uFFFF') {
-						if(ffff_escape == null) {
-							ffff_escape = URLEncoder.encode("\uFFFF", charsetName);
-						}
-						sb.append(ffff_escape);
-					} else {
-						sb.append(ch);
-					}
-					i++;
-					if(i < len) {
-						ch = encoded.charAt(i);
-					} else {
-						break;
-					}
-				}
-				assert sb.length() > encoded.length();
-				String newUrl = sb.toString();
-				assert URLDecoder.decode(encoded, charsetName).equals(URLDecoder.decode(newUrl, charsetName));
-				encoded = newUrl;
-				break;
-			}
-		}
-		TextInStyleEncoder.encodeTextInStyle(encoded, out);
-		out.append("\")");
-	}
+  @Override
+  @SuppressWarnings({"StringEquality", "AssignmentToForLoopParameter"})
+  protected void writeSuffix(CharSequence buffer, Appendable out) throws IOException {
+    String url = buffer.toString();
+    int len = url.length();
+    UrlValidator.checkCharacters(url, 0, len);
+    String encoded;
+    if (encodingContext != null) {
+      encoded = encodingContext.encodeURL(url);
+      if (encoded != url) {
+        UrlValidator.checkCharacters(encoded, 0, encoded.length());
+      }
+    } else {
+      encoded = url;
+    }
+    // CSS does not support \u0080 through \u009F, \uFFFE, or \uFFFF
+    for (int i = 0; i < len; i++) {
+      char ch = encoded.charAt(i);
+      if (
+        (ch >= BEGIN_ENCODE && ch <= END_ENCODE)
+        || ch == '\uFFFE'
+        || ch == '\uFFFF'
+      ) {
+        StringBuilder sb = new StringBuilder(len + (len - i) * 2); // Enough room should all additional characters need to be %HH encoded
+        sb.append(encoded, 0, i);
+        Charset charset = (encodingContext == null ? EncodingContext.DEFAULT : encodingContext).getCharacterEncoding();
+        String charsetName = charset.name();
+        String fffe_escape;
+        String ffff_escape;
+        String[] escapes;
+        if (charset == EncodingContext.DEFAULT.getCharacterEncoding()) {
+          // Use precomputed for default charset
+          fffe_escape = UrlInXhtmlEncoder.DEFAULT_FFFE;
+          ffff_escape = UrlInXhtmlEncoder.DEFAULT_FFFF;
+          escapes = DEFAULT_ESCAPES;
+        } else {
+          // Escapes computed once each for current non-default charset
+          fffe_escape = null;
+          ffff_escape = null;
+          escapes = new String[END_ENCODE + 1 - BEGIN_ENCODE];
+        }
+        while (true) {
+          if (ch >= BEGIN_ENCODE && ch <= END_ENCODE) {
+            int escapeIndex = ch - BEGIN_ENCODE;
+            String escape = escapes[escapeIndex];
+            if (escape == null) {
+              assert charset != EncodingContext.DEFAULT.getCharacterEncoding();
+              assert escapes != DEFAULT_ESCAPES;
+              escape = URLEncoder.encode(Character.toString(ch), charsetName);
+              escapes[escapeIndex] = escape;
+            }
+            sb.append(escape);
+          } else if (ch == '\uFFFE') {
+            if (fffe_escape == null) {
+              fffe_escape = URLEncoder.encode("\uFFFE", charsetName);
+            }
+            sb.append(fffe_escape);
+          } else if (ch == '\uFFFF') {
+            if (ffff_escape == null) {
+              ffff_escape = URLEncoder.encode("\uFFFF", charsetName);
+            }
+            sb.append(ffff_escape);
+          } else {
+            sb.append(ch);
+          }
+          i++;
+          if (i < len) {
+            ch = encoded.charAt(i);
+          } else {
+            break;
+          }
+        }
+        assert sb.length() > encoded.length();
+        String newUrl = sb.toString();
+        assert URLDecoder.decode(encoded, charsetName).equals(URLDecoder.decode(newUrl, charsetName));
+        encoded = newUrl;
+        break;
+      }
+    }
+    TextInStyleEncoder.encodeTextInStyle(encoded, out);
+    out.append("\")");
+  }
 }

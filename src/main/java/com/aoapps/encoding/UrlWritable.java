@@ -35,14 +35,14 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public interface UrlWritable<Ex extends Throwable> extends MediaWritable<Ex> {
 
-	@Override
-	default void writeTo(MediaWriter writer) throws IOException, Ex {
-		if(writer instanceof UrlWriter) {
-			writeTo((UrlWriter)writer);
-		} else {
-			throw new AssertionError("Expected " + UrlWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
-		}
-	}
+  @Override
+  default void writeTo(MediaWriter writer) throws IOException, Ex {
+    if (writer instanceof UrlWriter) {
+      writeTo((UrlWriter)writer);
+    } else {
+      throw new AssertionError("Expected " + UrlWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
+    }
+  }
 
-	void writeTo(UrlWriter writer) throws IOException, Ex;
+  void writeTo(UrlWriter writer) throws IOException, Ex;
 }

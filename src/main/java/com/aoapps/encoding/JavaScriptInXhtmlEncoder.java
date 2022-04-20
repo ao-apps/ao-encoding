@@ -50,233 +50,244 @@ import javax.annotation.concurrent.ThreadSafe;
 @Immutable
 public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
 
-	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
-	/**
-	 * Encodes a single character and returns its String representation
-	 * or null if no modification is necessary.  Any character that is
-	 * not valid in XHTML is encoded to JavaScript \\uxxxx escapes.
-	 */
-	private static String getEscapedCharacter(char ch) {
-		// These characters are allowed in JavaScript but need encoded for XHTML
-		switch(ch) {
-			// ']' Is encoded to avoid potential ]]> encoding CDATA early?
-			// Imagine script with: if(array[array2[index]]>value) { ... }
-			// This didn't work as hoped, just don't use "]]>" in scripts!
-			// Note: TextInJavaScriptEncoder always encodes the ">", so dynamic values
-			//       in JavaScript strings will never have "]]>".
-			// case ']' : return "\\u005d";
-			// Commented-out because now using CDATA
-			// case '<': return "&lt;";
-			// case '>': return "&gt;";
-			// case '&': return "&amp;";
-			// These character ranges are passed through unmodified
-			case '\r':
-			case '\n':
-			case '\t':
-			case '\\':
-				return null;
-			default:
-				// Escape using JavaScript unicode escape when needed.
-				return JavaScriptUtil.getUnicodeEscapeString(ch);
-		}
-	}
+  // <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
+  /**
+   * Encodes a single character and returns its String representation
+   * or null if no modification is necessary.  Any character that is
+   * not valid in XHTML is encoded to JavaScript \\uxxxx escapes.
+   */
+  private static String getEscapedCharacter(char ch) {
+    // These characters are allowed in JavaScript but need encoded for XHTML
+    switch (ch) {
+      // ']' Is encoded to avoid potential ]]> encoding CDATA early?
+      // Imagine script with: if (array[array2[index]]>value) { ... }
+      // This didn't work as hoped, just don't use "]]>" in scripts!
+      // Note: TextInJavaScriptEncoder always encodes the ">", so dynamic values
+      //       in JavaScript strings will never have "]]>".
+      // case ']' : return "\\u005d";
+      // Commented-out because now using CDATA
+      // case '<': return "&lt;";
+      // case '>': return "&gt;";
+      // case '&': return "&amp;";
+      // These character ranges are passed through unmodified
+      case '\r':
+      case '\n':
+      case '\t':
+      case '\\':
+        return null;
+      default:
+        // Escape using JavaScript unicode escape when needed.
+        return JavaScriptUtil.getUnicodeEscapeString(ch);
+    }
+  }
 
-	public static void encodeJavascriptInXhtml(char ch, Appendable out) throws IOException {
-		assert Assertions.isValidating(out, MediaType.XHTML);
-		String escaped = getEscapedCharacter(ch);
-		if(escaped!=null) out.append(escaped);
-		else out.append(ch);
-	}
+  public static void encodeJavascriptInXhtml(char ch, Appendable out) throws IOException {
+    assert Assertions.isValidating(out, MediaType.XHTML);
+    String escaped = getEscapedCharacter(ch);
+    if (escaped != null) {
+      out.append(escaped);
+    } else {
+      out.append(ch);
+    }
+  }
 
-	public static void encodeJavascriptInXhtml(char[] cbuf, Writer out) throws IOException {
-		encodeJavascriptInXhtml(cbuf, 0, cbuf.length, out);
-	}
+  public static void encodeJavascriptInXhtml(char[] cbuf, Writer out) throws IOException {
+    encodeJavascriptInXhtml(cbuf, 0, cbuf.length, out);
+  }
 
-	public static void encodeJavascriptInXhtml(char[] cbuf, int off, int len, Writer out) throws IOException {
-		assert Assertions.isValidating(out, MediaType.XHTML);
-		int end = off + len;
-		int toPrint = 0;
-		for (int c = off; c < end; c++) {
-			String escaped = getEscapedCharacter(cbuf[c]);
-			if(escaped!=null) {
-				if(toPrint>0) {
-					out.write(cbuf, c-toPrint, toPrint);
-					toPrint=0;
-				}
-				out.write(escaped);
-			} else {
-				toPrint++;
-			}
-		}
-		if(toPrint>0) out.write(cbuf, end-toPrint, toPrint);
-	}
+  public static void encodeJavascriptInXhtml(char[] cbuf, int off, int len, Writer out) throws IOException {
+    assert Assertions.isValidating(out, MediaType.XHTML);
+    int end = off + len;
+    int toPrint = 0;
+    for (int c = off; c < end; c++) {
+      String escaped = getEscapedCharacter(cbuf[c]);
+      if (escaped != null) {
+        if (toPrint>0) {
+          out.write(cbuf, c-toPrint, toPrint);
+          toPrint=0;
+        }
+        out.write(escaped);
+      } else {
+        toPrint++;
+      }
+    }
+    if (toPrint>0) {
+      out.write(cbuf, end-toPrint, toPrint);
+    }
+  }
 
-	public static void encodeJavascriptInXhtml(CharSequence cs, Appendable out) throws IOException {
-		if(cs != null) {
-			encodeJavascriptInXhtml(cs, 0, cs.length(), out);
-		} else {
-			assert Assertions.isValidating(out, MediaType.XHTML);
-		}
-	}
+  public static void encodeJavascriptInXhtml(CharSequence cs, Appendable out) throws IOException {
+    if (cs != null) {
+      encodeJavascriptInXhtml(cs, 0, cs.length(), out);
+    } else {
+      assert Assertions.isValidating(out, MediaType.XHTML);
+    }
+  }
 
-	public static void encodeJavascriptInXhtml(CharSequence cs, int start, int end, Appendable out) throws IOException {
-		assert Assertions.isValidating(out, MediaType.XHTML);
-		if(cs != null) {
-			int toPrint = 0;
-			for (int c = start; c < end; c++) {
-				String escaped = getEscapedCharacter(cs.charAt(c));
-				if(escaped != null) {
-					if(toPrint > 0) {
-						out.append(cs, c - toPrint, c);
-						toPrint = 0;
-					}
-					out.append(escaped);
-				} else {
-					toPrint++;
-				}
-			}
-			if(toPrint > 0) out.append(cs, end - toPrint, end);
-		}
-	}
+  public static void encodeJavascriptInXhtml(CharSequence cs, int start, int end, Appendable out) throws IOException {
+    assert Assertions.isValidating(out, MediaType.XHTML);
+    if (cs != null) {
+      int toPrint = 0;
+      for (int c = start; c < end; c++) {
+        String escaped = getEscapedCharacter(cs.charAt(c));
+        if (escaped != null) {
+          if (toPrint > 0) {
+            out.append(cs, c - toPrint, c);
+            toPrint = 0;
+          }
+          out.append(escaped);
+        } else {
+          toPrint++;
+        }
+      }
+      if (toPrint > 0) {
+        out.append(cs, end - toPrint, end);
+      }
+    }
+  }
 
-	public static void encodeJavascriptInXhtml(Object value, Appendable out) throws IOException {
-		Coercion.append(value, javascriptInXhtmlEncoder, out);
-	}
-	// </editor-fold>
+  public static void encodeJavascriptInXhtml(Object value, Appendable out) throws IOException {
+    Coercion.append(value, javascriptInXhtmlEncoder, out);
+  }
+  // </editor-fold>
 
-	/**
-	 * Singleton instance intended for static import for application/javascript.
-	 *
-	 * @deprecated  This singleton does not have any context so assumes {@link EncodingContext#DEFAULT}.
-	 */
-	@Deprecated
-	public static final JavaScriptInXhtmlEncoder javascriptInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JAVASCRIPT, EncodingContext.DEFAULT);
+  /**
+   * Singleton instance intended for static import for application/javascript.
+   *
+   * @deprecated  This singleton does not have any context so assumes {@link EncodingContext#DEFAULT}.
+   */
+  @Deprecated
+  public static final JavaScriptInXhtmlEncoder javascriptInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JAVASCRIPT, EncodingContext.DEFAULT);
 
-	/**
-	 * Singleton instance intended for static import for application/json.
-	 *
-	 * @deprecated  This singleton does not have any context so assumes {@link EncodingContext#DEFAULT}.
-	 */
-	@Deprecated
-	public static final JavaScriptInXhtmlEncoder jsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JSON, EncodingContext.DEFAULT);
+  /**
+   * Singleton instance intended for static import for application/json.
+   *
+   * @deprecated  This singleton does not have any context so assumes {@link EncodingContext#DEFAULT}.
+   */
+  @Deprecated
+  public static final JavaScriptInXhtmlEncoder jsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.JSON, EncodingContext.DEFAULT);
 
-	/**
-	 * Singleton instance intended for static import for application/ld+json.
-	 *
-	 * @deprecated  This singleton does not have any context so assumes {@link EncodingContext#DEFAULT}.
-	 */
-	@Deprecated
-	public static final JavaScriptInXhtmlEncoder ldJsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.LD_JSON, EncodingContext.DEFAULT);
+  /**
+   * Singleton instance intended for static import for application/ld+json.
+   *
+   * @deprecated  This singleton does not have any context so assumes {@link EncodingContext#DEFAULT}.
+   */
+  @Deprecated
+  public static final JavaScriptInXhtmlEncoder ldJsonInXhtmlEncoder = new JavaScriptInXhtmlEncoder(MediaType.LD_JSON, EncodingContext.DEFAULT);
 
-	private final MediaType contentType;
-	private final EncodingContext encodingContext;
+  private final MediaType contentType;
+  private final EncodingContext encodingContext;
 
-	JavaScriptInXhtmlEncoder(MediaType contentType, EncodingContext encodingContext) {
-		this.contentType = contentType;
-		this.encodingContext = encodingContext;
-	}
+  JavaScriptInXhtmlEncoder(MediaType contentType, EncodingContext encodingContext) {
+    this.contentType = contentType;
+    this.encodingContext = encodingContext;
+  }
 
-	@Override
-	public MediaType getValidMediaInputType() {
-		return contentType;
-	}
+  @Override
+  public MediaType getValidMediaInputType() {
+    return contentType;
+  }
 
-	@Override
-	public boolean isValidatingMediaInputType(MediaType inputType) {
-		return
-			inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in JAVASCRIPT in XHTML
-			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in JAVASCRIPT in XHTML
-			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in JAVASCRIPT in XHTML
-			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT in XHTML
-		;
-	}
+  @Override
+  public boolean isValidatingMediaInputType(MediaType inputType) {
+    return
+      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in JAVASCRIPT in XHTML
+      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in JAVASCRIPT in XHTML
+      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in JAVASCRIPT in XHTML
+      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT in XHTML
+    ;
+  }
 
-	@Override
-	public boolean canSkipValidation(MediaType outputType) {
-		return true; // All characters are valid in JAVASCRIPT in XHTML
-	}
+  @Override
+  public boolean canSkipValidation(MediaType outputType) {
+    return true; // All characters are valid in JAVASCRIPT in XHTML
+  }
 
-	@Override
-	public MediaType getValidMediaOutputType() {
-		return MediaType.XHTML;
-	}
+  @Override
+  public MediaType getValidMediaOutputType() {
+    return MediaType.XHTML;
+  }
 
-	@Override
-	public void writePrefixTo(Appendable out) throws IOException {
-		super.writePrefixTo(out);
-		out.append("<script");
-		boolean doCdata;
-		if(contentType == MediaType.JAVASCRIPT) {
-			encodingContext.getDoctype().scriptType(out);
-			doCdata = encodingContext.getSerialization() == Serialization.XML;
-		} else {
-			out.append(" type=\"");
-			encodeTextInXhtmlAttribute(contentType.getContentType(), out);
-			out.append('"');
-			doCdata = false;
-		}
-		if(doCdata) {
-			out.append(">//<![CDATA[" + Whitespace.NL);
-		} else {
-			out.append(">" + Whitespace.NL);
-		}
-	}
+  @Override
+  public void writePrefixTo(Appendable out) throws IOException {
+    super.writePrefixTo(out);
+    out.append("<script");
+    boolean doCdata;
+    if (contentType == MediaType.JAVASCRIPT) {
+      encodingContext.getDoctype().scriptType(out);
+      doCdata = encodingContext.getSerialization() == Serialization.XML;
+    } else {
+      out.append(" type=\"");
+      encodeTextInXhtmlAttribute(contentType.getContentType(), out);
+      out.append('"');
+      doCdata = false;
+    }
+    if (doCdata) {
+      out.append(">//<![CDATA[" + Whitespace.NL);
+    } else {
+      out.append(">" + Whitespace.NL);
+    }
+  }
 
-	@Override
-	public void write(int c, Writer out) throws IOException {
-		encodeJavascriptInXhtml((char)c, out);
-	}
+  @Override
+  public void write(int c, Writer out) throws IOException {
+    encodeJavascriptInXhtml((char)c, out);
+  }
 
-	@Override
-	public void write(char[] cbuf, Writer out) throws IOException {
-		encodeJavascriptInXhtml(cbuf, out);
-	}
+  @Override
+  public void write(char[] cbuf, Writer out) throws IOException {
+    encodeJavascriptInXhtml(cbuf, out);
+  }
 
-	@Override
-	public void write(char[] cbuf, int off, int len, Writer out) throws IOException {
-		encodeJavascriptInXhtml(cbuf, off, len, out);
-	}
+  @Override
+  public void write(char[] cbuf, int off, int len, Writer out) throws IOException {
+    encodeJavascriptInXhtml(cbuf, off, len, out);
+  }
 
-	@Override
-	public void write(String str, Writer out) throws IOException {
-		if(str==null) throw new IllegalArgumentException("str is null");
-		encodeJavascriptInXhtml(str, out);
-	}
+  @Override
+  public void write(String str, Writer out) throws IOException {
+    if (str == null) {
+      throw new IllegalArgumentException("str is null");
+    }
+    encodeJavascriptInXhtml(str, out);
+  }
 
-	@Override
-	public void write(String str, int off, int len, Writer out) throws IOException {
-		if(str==null) throw new IllegalArgumentException("str is null");
-		encodeJavascriptInXhtml(str, off, off+len, out);
-	}
+  @Override
+  public void write(String str, int off, int len, Writer out) throws IOException {
+    if (str == null) {
+      throw new IllegalArgumentException("str is null");
+    }
+    encodeJavascriptInXhtml(str, off, off+len, out);
+  }
 
-	@Override
-	public JavaScriptInXhtmlEncoder append(char c, Appendable out) throws IOException {
-		encodeJavascriptInXhtml(c, out);
-		return this;
-	}
+  @Override
+  public JavaScriptInXhtmlEncoder append(char c, Appendable out) throws IOException {
+    encodeJavascriptInXhtml(c, out);
+    return this;
+  }
 
-	@Override
-	public JavaScriptInXhtmlEncoder append(CharSequence csq, Appendable out) throws IOException {
-		encodeJavascriptInXhtml(csq==null ? "null" : csq, out);
-		return this;
-	}
+  @Override
+  public JavaScriptInXhtmlEncoder append(CharSequence csq, Appendable out) throws IOException {
+    encodeJavascriptInXhtml(csq == null ? "null" : csq, out);
+    return this;
+  }
 
-	@Override
-	public JavaScriptInXhtmlEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException {
-		encodeJavascriptInXhtml(csq==null ? "null" : csq, start, end, out);
-		return this;
-	}
+  @Override
+  public JavaScriptInXhtmlEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException {
+    encodeJavascriptInXhtml(csq == null ? "null" : csq, start, end, out);
+    return this;
+  }
 
-	@Override
-	public void writeSuffixTo(Appendable out, boolean trim) throws IOException {
-		super.writeSuffixTo(out, trim);
-		if(
-			contentType == MediaType.JAVASCRIPT
-			&& encodingContext.getSerialization() == Serialization.XML
-		) {
-			out.append(Whitespace.NL + "//]]></script>");
-		} else {
-			out.append(Whitespace.NL + "</script>");
-		}
-	}
+  @Override
+  public void writeSuffixTo(Appendable out, boolean trim) throws IOException {
+    super.writeSuffixTo(out, trim);
+    if (
+      contentType == MediaType.JAVASCRIPT
+      && encodingContext.getSerialization() == Serialization.XML
+    ) {
+      out.append(Whitespace.NL + "//]]></script>");
+    } else {
+      out.append(Whitespace.NL + "</script>");
+    }
+  }
 }

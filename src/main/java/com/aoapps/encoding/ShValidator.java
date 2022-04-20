@@ -44,121 +44,125 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class ShValidator extends MediaValidator {
 
-	// <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
-	static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ShValidator.class);
+  // <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
+  static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ShValidator.class);
 
-	/**
-	 * Checks one character, throws {@link InvalidCharacterException} if invalid.
-	 * <p>
-	 * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
-	 * </p>
-	 */
-	public static void checkCharacter(char c) throws InvalidCharacterException {
-		if(
-			(c < 0x20 || c > 0x7E) // common case first
-			&& c != '\t'
-			&& c != '\n'
-			// 7F to 9F - control characters
-			&& (c < 0xA0 || c > 0xFFFD)
-		) throw new InvalidCharacterException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
-	}
+  /**
+   * Checks one character, throws {@link InvalidCharacterException} if invalid.
+   * <p>
+   * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
+   * </p>
+   */
+  public static void checkCharacter(char c) throws InvalidCharacterException {
+    if (
+      (c < 0x20 || c > 0x7E) // common case first
+      && c != '\t'
+      && c != '\n'
+      // 7F to 9F - control characters
+      && (c < 0xA0 || c > 0xFFFD)
+    ) {
+      throw new InvalidCharacterException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
+    }
+  }
 
-	/**
-	 * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
-	 * <p>
-	 * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
-	 * </p>
-	 */
-	public static void checkCharacters(char[] cbuf, int off, int len) throws InvalidCharacterException {
-		int end = off + len;
-		while(off < end) {
-			checkCharacter(cbuf[off++]);
-		}
-	}
+  /**
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * <p>
+   * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
+   * </p>
+   */
+  public static void checkCharacters(char[] cbuf, int off, int len) throws InvalidCharacterException {
+    int end = off + len;
+    while (off < end) {
+      checkCharacter(cbuf[off++]);
+    }
+  }
 
-	/**
-	 * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
-	 * <p>
-	 * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
-	 * </p>
-	 */
-	public static void checkCharacters(CharSequence str, int start, int end) throws InvalidCharacterException {
-		while(start < end) {
-			checkCharacter(str.charAt(start++));
-		}
-	}
-	// </editor-fold>
+  /**
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * <p>
+   * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
+   * </p>
+   */
+  public static void checkCharacters(CharSequence str, int start, int end) throws InvalidCharacterException {
+    while (start < end) {
+      checkCharacter(str.charAt(start++));
+    }
+  }
+  // </editor-fold>
 
-	ShValidator(Writer out) {
-		super(out);
-	}
+  ShValidator(Writer out) {
+    super(out);
+  }
 
-	@Override
-	public MediaType getValidMediaInputType() {
-		return MediaType.SH;
-	}
+  @Override
+  public MediaType getValidMediaInputType() {
+    return MediaType.SH;
+  }
 
-	@Override
-	public boolean isValidatingMediaInputType(MediaType inputType) {
-		return
-			inputType == MediaType.CSS // All invalid characters in CSS are also invalid in SH
-			|| inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in SH
-			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in SH
-			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in SH
-			|| inputType == MediaType.MYSQL // All invalid characters in MYSQL are also invalid in SH
-			|| inputType == MediaType.PSQL // All invalid characters in PSQL are also invalid in SH
-			|| inputType == MediaType.SH // All invalid characters in SH are also invalid in SH
-			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in SH
-			|| inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in SH
-		;
-	}
+  @Override
+  public boolean isValidatingMediaInputType(MediaType inputType) {
+    return
+      inputType == MediaType.CSS // All invalid characters in CSS are also invalid in SH
+      || inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in SH
+      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in SH
+      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in SH
+      || inputType == MediaType.MYSQL // All invalid characters in MYSQL are also invalid in SH
+      || inputType == MediaType.PSQL // All invalid characters in PSQL are also invalid in SH
+      || inputType == MediaType.SH // All invalid characters in SH are also invalid in SH
+      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in SH
+      || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in SH
+    ;
+  }
 
-	@Override
-	public boolean canSkipValidation(MediaType outputType) {
-		return
-			outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in SH
-			|| outputType == MediaType.PSQL // All valid characters in PSQL are also valid in SH
-			|| outputType == MediaType.SH // All valid characters in SH are also valid in SH
-		;
-	}
+  @Override
+  public boolean canSkipValidation(MediaType outputType) {
+    return
+      outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in SH
+      || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in SH
+      || outputType == MediaType.SH // All valid characters in SH are also valid in SH
+    ;
+  }
 
-	@Override
-	public void write(int c) throws IOException {
-		checkCharacter((char)c);
-		out.write(c);
-	}
+  @Override
+  public void write(int c) throws IOException {
+    checkCharacter((char)c);
+    out.write(c);
+  }
 
-	@Override
-	public void write(char[] cbuf, int off, int len) throws IOException {
-		checkCharacters(cbuf, off, len);
-		out.write(cbuf, off, len);
-	}
+  @Override
+  public void write(char[] cbuf, int off, int len) throws IOException {
+    checkCharacters(cbuf, off, len);
+    out.write(cbuf, off, len);
+  }
 
-	@Override
-	public void write(String str, int off, int len) throws IOException {
-		if(str == null) throw new IllegalArgumentException("str is null");
-		checkCharacters(str, off, off + len);
-		out.write(str, off, len);
-	}
+  @Override
+  public void write(String str, int off, int len) throws IOException {
+    if (str == null) {
+      throw new IllegalArgumentException("str is null");
+    }
+    checkCharacters(str, off, off + len);
+    out.write(str, off, len);
+  }
 
-	@Override
-	public ShValidator append(CharSequence csq) throws IOException {
-		checkCharacters(csq, 0, csq.length());
-		out.append(csq);
-		return this;
-	}
+  @Override
+  public ShValidator append(CharSequence csq) throws IOException {
+    checkCharacters(csq, 0, csq.length());
+    out.append(csq);
+    return this;
+  }
 
-	@Override
-	public ShValidator append(CharSequence csq, int start, int end) throws IOException {
-		checkCharacters(csq, start, end);
-		out.append(csq, start, end);
-		return this;
-	}
+  @Override
+  public ShValidator append(CharSequence csq, int start, int end) throws IOException {
+    checkCharacters(csq, start, end);
+    out.append(csq, start, end);
+    return this;
+  }
 
-	@Override
-	public ShValidator append(char c) throws IOException {
-		checkCharacter(c);
-		out.append(c);
-		return this;
-	}
+  @Override
+  public ShValidator append(char c) throws IOException {
+    checkCharacter(c);
+    out.append(c);
+    return this;
+  }
 }

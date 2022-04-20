@@ -41,411 +41,411 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class PsqlWriter extends WhitespaceWriter implements Text, Psql {
 
-	/**
-	 * @param  out  Conditionally passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
-	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
-	 * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
-	 *                         This allows the indentation to be coordinated between nested content types.
-	 * @param  isNoClose  Called to determine result of {@link #isNoClose()}
-	 * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer,
-	 *                 will only be called to be idempotent, implementation can assume will only be called once.
-	 */
-	public PsqlWriter(
-		EncodingContext encodingContext,
-		MediaEncoder encoder,
-		Writer out,
-		boolean outOptimized,
-		Whitespace indentDelegate,
-		Predicate<? super MediaWriter> isNoClose,
-		IOConsumer<? super MediaWriter> closer
-	) {
-		super(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
-	}
+  /**
+   * @param  out  Conditionally passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+   * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+   * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
+   *                         This allows the indentation to be coordinated between nested content types.
+   * @param  isNoClose  Called to determine result of {@link #isNoClose()}
+   * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer,
+   *                 will only be called to be idempotent, implementation can assume will only be called once.
+   */
+  public PsqlWriter(
+    EncodingContext encodingContext,
+    MediaEncoder encoder,
+    Writer out,
+    boolean outOptimized,
+    Whitespace indentDelegate,
+    Predicate<? super MediaWriter> isNoClose,
+    IOConsumer<? super MediaWriter> closer
+  ) {
+    super(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
+  }
 
-	/**
-	 * Simplified constructor.
-	 *
-	 * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
-	 *
-	 * @see  #DEFAULT_IS_NO_CLOSE
-	 * @see  #DEFAULT_CLOSER
-	 */
-	public PsqlWriter(
-		EncodingContext encodingContext,
-		MediaEncoder encoder,
-		Writer out
-	) {
-		this(encodingContext, encoder, out, false, null, DEFAULT_IS_NO_CLOSE, DEFAULT_CLOSER);
-	}
+  /**
+   * Simplified constructor.
+   *
+   * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+   *
+   * @see  #DEFAULT_IS_NO_CLOSE
+   * @see  #DEFAULT_CLOSER
+   */
+  public PsqlWriter(
+    EncodingContext encodingContext,
+    MediaEncoder encoder,
+    Writer out
+  ) {
+    this(encodingContext, encoder, out, false, null, DEFAULT_IS_NO_CLOSE, DEFAULT_CLOSER);
+  }
 
-	@Override
-	public MediaType getValidMediaInputType() {
-		return MediaType.PSQL;
-	}
+  @Override
+  public MediaType getValidMediaInputType() {
+    return MediaType.PSQL;
+  }
 
-	@Override
-	public PsqlWriter append(char c) throws IOException {
-		super.append(c);
-		return this;
-	}
+  @Override
+  public PsqlWriter append(char c) throws IOException {
+    super.append(c);
+    return this;
+  }
 
-	@Override
-	public PsqlWriter append(CharSequence csq) throws IOException {
-		super.append(csq);
-		return this;
-	}
+  @Override
+  public PsqlWriter append(CharSequence csq) throws IOException {
+    super.append(csq);
+    return this;
+  }
 
-	@Override
-	public PsqlWriter append(CharSequence csq, int start, int end) throws IOException {
-		super.append(csq, start, end);
-		return this;
-	}
+  @Override
+  public PsqlWriter append(CharSequence csq, int start, int end) throws IOException {
+    super.append(csq, start, end);
+    return this;
+  }
 
-	// <editor-fold desc="Encode - manual self-type and deprecate since not expected" defaultstate="collapsed">
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter encode(MediaType contentType, char ch) throws IOException {
-		super.encode(contentType, ch);
-		return this;
-	}
+  // <editor-fold desc="Encode - manual self-type and deprecate since not expected" defaultstate="collapsed">
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter encode(MediaType contentType, char ch) throws IOException {
+    super.encode(contentType, ch);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter encode(MediaType contentType, char[] cbuf) throws IOException {
-		super.encode(contentType, cbuf);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter encode(MediaType contentType, char[] cbuf) throws IOException {
+    super.encode(contentType, cbuf);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter encode(MediaType contentType, char[] cbuf, int offset, int len) throws IOException {
-		super.encode(contentType, cbuf, offset, len);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter encode(MediaType contentType, char[] cbuf, int offset, int len) throws IOException {
+    super.encode(contentType, cbuf, offset, len);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter encode(MediaType contentType, CharSequence csq) throws IOException {
-		super.encode(contentType, csq);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter encode(MediaType contentType, CharSequence csq) throws IOException {
+    super.encode(contentType, csq);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException {
-		super.encode(contentType, csq, start, end);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException {
+    super.encode(contentType, csq, start, end);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter encode(MediaType contentType, Object content) throws IOException {
-		super.encode(contentType, content);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter encode(MediaType contentType, Object content) throws IOException {
+    super.encode(contentType, content);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public <Ex extends Throwable> PsqlWriter encode(MediaType contentType, IOSupplierE<?, Ex> content) throws IOException, Ex {
-		super.encode(contentType, content);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public <Ex extends Throwable> PsqlWriter encode(MediaType contentType, IOSupplierE<?, Ex> content) throws IOException, Ex {
+    super.encode(contentType, content);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public <Ex extends Throwable> PsqlWriter encode(MediaType contentType, MediaWritable<Ex> content) throws IOException, Ex {
-		super.encode(contentType, content);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public <Ex extends Throwable> PsqlWriter encode(MediaType contentType, MediaWritable<Ex> content) throws IOException, Ex {
+    super.encode(contentType, content);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public MediaWriter encode(MediaType contentType) throws IOException {
-		return super.encode(contentType);
-	}
-	// </editor-fold>
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public MediaWriter encode(MediaType contentType) throws IOException {
+    return super.encode(contentType);
+  }
+  // </editor-fold>
 
-	// <editor-fold desc="Whitespace - manual self-type" defaultstate="collapsed">
-	@Override
-	public PsqlWriter nl() throws IOException {
-		super.nl();
-		return this;
-	}
+  // <editor-fold desc="Whitespace - manual self-type" defaultstate="collapsed">
+  @Override
+  public PsqlWriter nl() throws IOException {
+    super.nl();
+    return this;
+  }
 
-	@Override
-	public PsqlWriter nli() throws IOException {
-		super.nli();
-		return this;
-	}
+  @Override
+  public PsqlWriter nli() throws IOException {
+    super.nli();
+    return this;
+  }
 
-	@Override
-	public PsqlWriter nli(int depthOffset) throws IOException {
-		super.nli(depthOffset);
-		return this;
-	}
+  @Override
+  public PsqlWriter nli(int depthOffset) throws IOException {
+    super.nli(depthOffset);
+    return this;
+  }
 
-	@Override
-	public PsqlWriter indent() throws IOException {
-		super.indent();
-		return this;
-	}
+  @Override
+  public PsqlWriter indent() throws IOException {
+    super.indent();
+    return this;
+  }
 
-	@Override
-	public PsqlWriter indent(int depthOffset) throws IOException {
-		super.indent(depthOffset);
-		return this;
-	}
+  @Override
+  public PsqlWriter indent(int depthOffset) throws IOException {
+    super.indent(depthOffset);
+    return this;
+  }
 
-	@Override
-	public PsqlWriter setIndent(boolean indent) {
-		super.setIndent(indent);
-		return this;
-	}
+  @Override
+  public PsqlWriter setIndent(boolean indent) {
+    super.setIndent(indent);
+    return this;
+  }
 
-	@Override
-	public PsqlWriter setDepth(int depth) {
-		super.setDepth(depth);
-		return this;
-	}
+  @Override
+  public PsqlWriter setDepth(int depth) {
+    super.setDepth(depth);
+    return this;
+  }
 
-	@Override
-	public PsqlWriter incDepth() {
-		super.incDepth();
-		return this;
-	}
+  @Override
+  public PsqlWriter incDepth() {
+    super.incDepth();
+    return this;
+  }
 
-	@Override
-	public PsqlWriter decDepth() {
-		super.decDepth();
-		return this;
-	}
+  @Override
+  public PsqlWriter decDepth() {
+    super.decDepth();
+    return this;
+  }
 
-	@Override
-	public PsqlWriter sp() throws IOException {
-		super.sp();
-		return this;
-	}
+  @Override
+  public PsqlWriter sp() throws IOException {
+    super.sp();
+    return this;
+  }
 
-	@Override
-	public PsqlWriter sp(int count) throws IOException {
-		super.sp(count);
-		return this;
-	}
-	// </editor-fold>
+  @Override
+  public PsqlWriter sp(int count) throws IOException {
+    super.sp(count);
+    return this;
+  }
+  // </editor-fold>
 
-	// <editor-fold desc="Text - manual self-type" defaultstate="collapsed">
-	@Override
-	public PsqlWriter nbsp() throws IOException {
-		Text.super.nbsp();
-		return this;
-	}
+  // <editor-fold desc="Text - manual self-type" defaultstate="collapsed">
+  @Override
+  public PsqlWriter nbsp() throws IOException {
+    Text.super.nbsp();
+    return this;
+  }
 
-	@Override
-	public PsqlWriter nbsp(int count) throws IOException {
-		Text.super.nbsp(count);
-		return this;
-	}
+  @Override
+  public PsqlWriter nbsp(int count) throws IOException {
+    Text.super.nbsp(count);
+    return this;
+  }
 
-	@Override
-	public PsqlWriter text(char ch) throws IOException {
-		Text.super.text(ch);
-		return this;
-	}
+  @Override
+  public PsqlWriter text(char ch) throws IOException {
+    Text.super.text(ch);
+    return this;
+  }
 
-	@Override
-	public PsqlWriter text(char[] cbuf) throws IOException {
-		Text.super.text(cbuf);
-		return this;
-	}
+  @Override
+  public PsqlWriter text(char[] cbuf) throws IOException {
+    Text.super.text(cbuf);
+    return this;
+  }
 
-	@Override
-	public PsqlWriter text(char[] cbuf, int offset, int len) throws IOException {
-		Text.super.text(cbuf, offset, len);
-		return this;
-	}
+  @Override
+  public PsqlWriter text(char[] cbuf, int offset, int len) throws IOException {
+    Text.super.text(cbuf, offset, len);
+    return this;
+  }
 
-	@Override
-	public PsqlWriter text(CharSequence csq) throws IOException {
-		Text.super.text(csq);
-		return this;
-	}
+  @Override
+  public PsqlWriter text(CharSequence csq) throws IOException {
+    Text.super.text(csq);
+    return this;
+  }
 
-	@Override
-	public PsqlWriter text(CharSequence csq, int start, int end) throws IOException {
-		Text.super.text(csq, start, end);
-		return this;
-	}
+  @Override
+  public PsqlWriter text(CharSequence csq, int start, int end) throws IOException {
+    Text.super.text(csq, start, end);
+    return this;
+  }
 
-	@Override
-	public PsqlWriter text(Object text) throws IOException {
-		Text.super.text(text);
-		return this;
-	}
+  @Override
+  public PsqlWriter text(Object text) throws IOException {
+    Text.super.text(text);
+    return this;
+  }
 
-	@Override
-	public <Ex extends Throwable> PsqlWriter text(IOSupplierE<?, Ex> text) throws IOException, Ex {
-		Text.super.text(text);
-		return this;
-	}
+  @Override
+  public <Ex extends Throwable> PsqlWriter text(IOSupplierE<?, Ex> text) throws IOException, Ex {
+    Text.super.text(text);
+    return this;
+  }
 
-	@Override
-	public <Ex extends Throwable> PsqlWriter text(TextWritable<Ex> text) throws IOException, Ex {
-		Text.super.text(text);
-		return this;
-	}
-	// </editor-fold>
+  @Override
+  public <Ex extends Throwable> PsqlWriter text(TextWritable<Ex> text) throws IOException, Ex {
+    Text.super.text(text);
+    return this;
+  }
+  // </editor-fold>
 
-	// <editor-fold desc="Psql - manual self-type and deprecate since not expected" defaultstate="collapsed">
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing PostgreSQL <code>psql</code> command input
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter psql(char ch) throws IOException {
-		Psql.super.psql(ch);
-		return this;
-	}
+  // <editor-fold desc="Psql - manual self-type and deprecate since not expected" defaultstate="collapsed">
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing PostgreSQL <code>psql</code> command input
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter psql(char ch) throws IOException {
+    Psql.super.psql(ch);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing PostgreSQL <code>psql</code> command input
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter psql(char[] cbuf) throws IOException {
-		Psql.super.psql(cbuf);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing PostgreSQL <code>psql</code> command input
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter psql(char[] cbuf) throws IOException {
+    Psql.super.psql(cbuf);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing PostgreSQL <code>psql</code> command input
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter psql(char[] cbuf, int offset, int len) throws IOException {
-		Psql.super.psql(cbuf, offset, len);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing PostgreSQL <code>psql</code> command input
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter psql(char[] cbuf, int offset, int len) throws IOException {
+    Psql.super.psql(cbuf, offset, len);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing PostgreSQL <code>psql</code> command input
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter psql(CharSequence csq) throws IOException {
-		Psql.super.psql(csq);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing PostgreSQL <code>psql</code> command input
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter psql(CharSequence csq) throws IOException {
+    Psql.super.psql(csq);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing PostgreSQL <code>psql</code> command input
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter psql(CharSequence csq, int start, int end) throws IOException {
-		Psql.super.psql(csq, start, end);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing PostgreSQL <code>psql</code> command input
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter psql(CharSequence csq, int start, int end) throws IOException {
+    Psql.super.psql(csq, start, end);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing PostgreSQL <code>psql</code> command input
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter psql(Object psql) throws IOException {
-		Psql.super.psql(psql);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing PostgreSQL <code>psql</code> command input
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter psql(Object psql) throws IOException {
+    Psql.super.psql(psql);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing PostgreSQL <code>psql</code> command input
-	 */
-	@Deprecated
-	@Override
-	public <Ex extends Throwable> PsqlWriter psql(IOSupplierE<?, Ex> psql) throws IOException, Ex {
-		Psql.super.psql(psql);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing PostgreSQL <code>psql</code> command input
+   */
+  @Deprecated
+  @Override
+  public <Ex extends Throwable> PsqlWriter psql(IOSupplierE<?, Ex> psql) throws IOException, Ex {
+    Psql.super.psql(psql);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing PostgreSQL <code>psql</code> command input
-	 */
-	@Deprecated
-	@Override
-	public <Ex extends Throwable> PsqlWriter psql(PsqlWritable<Ex> psql) throws IOException, Ex {
-		Psql.super.psql(psql);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing PostgreSQL <code>psql</code> command input
+   */
+  @Deprecated
+  @Override
+  public <Ex extends Throwable> PsqlWriter psql(PsqlWritable<Ex> psql) throws IOException, Ex {
+    Psql.super.psql(psql);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing PostgreSQL <code>psql</code> command input
-	 */
-	@Deprecated
-	@Override
-	public PsqlWriter psql() throws IOException {
-		return Psql.super.psql();
-	}
-	// </editor-fold>
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing PostgreSQL <code>psql</code> command input
+   */
+  @Deprecated
+  @Override
+  public PsqlWriter psql() throws IOException {
+    return Psql.super.psql();
+  }
+  // </editor-fold>
 }

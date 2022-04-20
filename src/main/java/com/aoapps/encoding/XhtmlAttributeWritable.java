@@ -35,14 +35,14 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public interface XhtmlAttributeWritable<Ex extends Throwable> extends WhitespaceWritable<Ex> {
 
-	@Override
-	default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
-		if(writer instanceof XhtmlAttributeWriter) {
-			writeTo((XhtmlAttributeWriter)writer);
-		} else {
-			throw new AssertionError("Expected " + XhtmlAttributeWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
-		}
-	}
+  @Override
+  default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
+    if (writer instanceof XhtmlAttributeWriter) {
+      writeTo((XhtmlAttributeWriter)writer);
+    } else {
+      throw new AssertionError("Expected " + XhtmlAttributeWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
+    }
+  }
 
-	void writeTo(XhtmlAttributeWriter writer) throws IOException, Ex;
+  void writeTo(XhtmlAttributeWriter writer) throws IOException, Ex;
 }

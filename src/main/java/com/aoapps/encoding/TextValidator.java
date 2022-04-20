@@ -34,27 +34,27 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class TextValidator extends MediaValidator {
 
-	TextValidator(Writer out) {
-		super(out);
-	}
+  TextValidator(Writer out) {
+    super(out);
+  }
 
-	@Override
-	public MediaType getValidMediaInputType() {
-		return MediaType.TEXT;
-	}
+  @Override
+  public MediaType getValidMediaInputType() {
+    return MediaType.TEXT;
+  }
 
-	@Override
-	public boolean isValidatingMediaInputType(MediaType inputType) {
-		return
-			inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT
-			|| inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT
-			|| inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT
-			|| inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT
-		;
-	}
+  @Override
+  public boolean isValidatingMediaInputType(MediaType inputType) {
+    return
+      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT
+      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT
+      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT
+      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT
+    ;
+  }
 
-	@Override
-	public boolean canSkipValidation(MediaType outputType) {
-		return true; // All characters are valid in TEXT
-	}
+  @Override
+  public boolean canSkipValidation(MediaType outputType) {
+    return true; // All characters are valid in TEXT
+  }
 }

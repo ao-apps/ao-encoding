@@ -41,281 +41,281 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class UrlWriter extends MediaWriter implements Url {
 
-	/**
-	 * @param  out  Conditionally passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
-	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
-	 * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
-	 *                         This allows the indentation to be coordinated between nested content types.
-	 * @param  isNoClose  Called to determine result of {@link #isNoClose()}
-	 * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer,
-	 *                 will only be called to be idempotent, implementation can assume will only be called once.
-	 */
-	public UrlWriter(
-		EncodingContext encodingContext,
-		MediaEncoder encoder,
-		Writer out,
-		boolean outOptimized,
-		Whitespace indentDelegate,
-		Predicate<? super MediaWriter> isNoClose,
-		IOConsumer<? super MediaWriter> closer
-	) {
-		super(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
-	}
+  /**
+   * @param  out  Conditionally passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+   * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+   * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
+   *                         This allows the indentation to be coordinated between nested content types.
+   * @param  isNoClose  Called to determine result of {@link #isNoClose()}
+   * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer,
+   *                 will only be called to be idempotent, implementation can assume will only be called once.
+   */
+  public UrlWriter(
+    EncodingContext encodingContext,
+    MediaEncoder encoder,
+    Writer out,
+    boolean outOptimized,
+    Whitespace indentDelegate,
+    Predicate<? super MediaWriter> isNoClose,
+    IOConsumer<? super MediaWriter> closer
+  ) {
+    super(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
+  }
 
-	/**
-	 * Simplified constructor.
-	 *
-	 * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
-	 *
-	 * @see  #DEFAULT_IS_NO_CLOSE
-	 * @see  #DEFAULT_CLOSER
-	 */
-	public UrlWriter(
-		EncodingContext encodingContext,
-		MediaEncoder encoder,
-		Writer out
-	) {
-		this(encodingContext, encoder, out, false, null, DEFAULT_IS_NO_CLOSE, DEFAULT_CLOSER);
-	}
+  /**
+   * Simplified constructor.
+   *
+   * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+   *
+   * @see  #DEFAULT_IS_NO_CLOSE
+   * @see  #DEFAULT_CLOSER
+   */
+  public UrlWriter(
+    EncodingContext encodingContext,
+    MediaEncoder encoder,
+    Writer out
+  ) {
+    this(encodingContext, encoder, out, false, null, DEFAULT_IS_NO_CLOSE, DEFAULT_CLOSER);
+  }
 
-	@Override
-	public MediaType getValidMediaInputType() {
-		return MediaType.URL;
-	}
+  @Override
+  public MediaType getValidMediaInputType() {
+    return MediaType.URL;
+  }
 
-	@Override
-	public UrlWriter append(char c) throws IOException {
-		super.append(c);
-		return this;
-	}
+  @Override
+  public UrlWriter append(char c) throws IOException {
+    super.append(c);
+    return this;
+  }
 
-	@Override
-	public UrlWriter append(CharSequence csq) throws IOException {
-		super.append(csq);
-		return this;
-	}
+  @Override
+  public UrlWriter append(CharSequence csq) throws IOException {
+    super.append(csq);
+    return this;
+  }
 
-	@Override
-	public UrlWriter append(CharSequence csq, int start, int end) throws IOException {
-		super.append(csq, start, end);
-		return this;
-	}
+  @Override
+  public UrlWriter append(CharSequence csq, int start, int end) throws IOException {
+    super.append(csq, start, end);
+    return this;
+  }
 
-	// <editor-fold desc="Encode - manual self-type and deprecate since not expected" defaultstate="collapsed">
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter encode(MediaType contentType, char ch) throws IOException {
-		super.encode(contentType, ch);
-		return this;
-	}
+  // <editor-fold desc="Encode - manual self-type and deprecate since not expected" defaultstate="collapsed">
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public UrlWriter encode(MediaType contentType, char ch) throws IOException {
+    super.encode(contentType, ch);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter encode(MediaType contentType, char[] cbuf) throws IOException {
-		super.encode(contentType, cbuf);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public UrlWriter encode(MediaType contentType, char[] cbuf) throws IOException {
+    super.encode(contentType, cbuf);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter encode(MediaType contentType, char[] cbuf, int offset, int len) throws IOException {
-		super.encode(contentType, cbuf, offset, len);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public UrlWriter encode(MediaType contentType, char[] cbuf, int offset, int len) throws IOException {
+    super.encode(contentType, cbuf, offset, len);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter encode(MediaType contentType, CharSequence csq) throws IOException {
-		super.encode(contentType, csq);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public UrlWriter encode(MediaType contentType, CharSequence csq) throws IOException {
+    super.encode(contentType, csq);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException {
-		super.encode(contentType, csq, start, end);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public UrlWriter encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException {
+    super.encode(contentType, csq, start, end);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter encode(MediaType contentType, Object content) throws IOException {
-		super.encode(contentType, content);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public UrlWriter encode(MediaType contentType, Object content) throws IOException {
+    super.encode(contentType, content);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public <Ex extends Throwable> UrlWriter encode(MediaType contentType, IOSupplierE<?, Ex> content) throws IOException, Ex {
-		super.encode(contentType, content);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public <Ex extends Throwable> UrlWriter encode(MediaType contentType, IOSupplierE<?, Ex> content) throws IOException, Ex {
+    super.encode(contentType, content);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public <Ex extends Throwable> UrlWriter encode(MediaType contentType, MediaWritable<Ex> content) throws IOException, Ex {
-		super.encode(contentType, content);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public <Ex extends Throwable> UrlWriter encode(MediaType contentType, MediaWritable<Ex> content) throws IOException, Ex {
+    super.encode(contentType, content);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
-	 */
-	@Deprecated
-	@Override
-	public MediaWriter encode(MediaType contentType) throws IOException {
-		return super.encode(contentType);
-	}
-	// </editor-fold>
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Encoding of arbitrary content types is not expected since all supported types have per-type methods.
+   */
+  @Deprecated
+  @Override
+  public MediaWriter encode(MediaType contentType) throws IOException {
+    return super.encode(contentType);
+  }
+  // </editor-fold>
 
-	// <editor-fold desc="Url - manual self-type and deprecate since not expected" defaultstate="collapsed">
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing URL
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter url(char ch) throws IOException {
-		Url.super.url(ch);
-		return this;
-	}
+  // <editor-fold desc="Url - manual self-type and deprecate since not expected" defaultstate="collapsed">
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing URL
+   */
+  @Deprecated
+  @Override
+  public UrlWriter url(char ch) throws IOException {
+    Url.super.url(ch);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing URL
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter url(char[] cbuf) throws IOException {
-		Url.super.url(cbuf);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing URL
+   */
+  @Deprecated
+  @Override
+  public UrlWriter url(char[] cbuf) throws IOException {
+    Url.super.url(cbuf);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing URL
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter url(char[] cbuf, int offset, int len) throws IOException {
-		Url.super.url(cbuf, offset, len);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing URL
+   */
+  @Deprecated
+  @Override
+  public UrlWriter url(char[] cbuf, int offset, int len) throws IOException {
+    Url.super.url(cbuf, offset, len);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing URL
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter url(CharSequence csq) throws IOException {
-		Url.super.url(csq);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing URL
+   */
+  @Deprecated
+  @Override
+  public UrlWriter url(CharSequence csq) throws IOException {
+    Url.super.url(csq);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing URL
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter url(CharSequence csq, int start, int end) throws IOException {
-		Url.super.url(csq, start, end);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing URL
+   */
+  @Deprecated
+  @Override
+  public UrlWriter url(CharSequence csq, int start, int end) throws IOException {
+    Url.super.url(csq, start, end);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing URL
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter url(Object url) throws IOException {
-		Url.super.url(url);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing URL
+   */
+  @Deprecated
+  @Override
+  public UrlWriter url(Object url) throws IOException {
+    Url.super.url(url);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing URL
-	 */
-	@Deprecated
-	@Override
-	public <Ex extends Throwable> UrlWriter url(IOSupplierE<?, Ex> url) throws IOException, Ex {
-		Url.super.url(url);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing URL
+   */
+  @Deprecated
+  @Override
+  public <Ex extends Throwable> UrlWriter url(IOSupplierE<?, Ex> url) throws IOException, Ex {
+    Url.super.url(url);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing URL
-	 */
-	@Deprecated
-	@Override
-	public <Ex extends Throwable> UrlWriter url(UrlWritable<Ex> url) throws IOException, Ex {
-		Url.super.url(url);
-		return this;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing URL
+   */
+  @Deprecated
+  @Override
+  public <Ex extends Throwable> UrlWriter url(UrlWritable<Ex> url) throws IOException, Ex {
+    Url.super.url(url);
+    return this;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @deprecated  Already writing URL
-	 */
-	@Deprecated
-	@Override
-	public UrlWriter url() throws IOException {
-		return Url.super.url();
-	}
-	// </editor-fold>
+  /**
+   * {@inheritDoc}
+   *
+   * @deprecated  Already writing URL
+   */
+  @Deprecated
+  @Override
+  public UrlWriter url() throws IOException {
+    return Url.super.url();
+  }
+  // </editor-fold>
 }

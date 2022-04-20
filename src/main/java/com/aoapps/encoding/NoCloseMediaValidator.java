@@ -37,102 +37,104 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class NoCloseMediaValidator extends MediaValidator {
 
-	/**
-	 * Returns {@code out} when it is already a {@link MediaValidator#isNoClose()}, otherwise
-	 * returns a new {@link NoCloseMediaValidator} wrapping {@code out}.
-	 */
-	public static MediaValidator wrap(MediaValidator out) {
-		return out.isNoClose() ? out : new NoCloseMediaValidator(out);
-	}
+  /**
+   * Returns {@code out} when it is already a {@link MediaValidator#isNoClose()}, otherwise
+   * returns a new {@link NoCloseMediaValidator} wrapping {@code out}.
+   */
+  public static MediaValidator wrap(MediaValidator out) {
+    return out.isNoClose() ? out : new NoCloseMediaValidator(out);
+  }
 
-	/**
-	 * Dispatches to {@link #wrap(com.aoapps.encoding.MediaValidator)} when out is a {@link MediaValidator}, otherwise
-	 * dispatches to {@link NoCloseWriter#wrap(java.io.Writer)}.
-	 *
-	 * @see  #wrap(com.aoapps.encoding.MediaValidator)
-	 * @see  NoCloseWriter#wrap(java.io.Writer)
-	 */
-	@SuppressWarnings("unchecked")
-	public static <W extends Writer & NoClose> W wrap(Writer out) {
-		if(out instanceof MediaValidator) return (W)wrap((MediaValidator)out);
-		return NoCloseWriter.wrap(out);
-	}
+  /**
+   * Dispatches to {@link #wrap(com.aoapps.encoding.MediaValidator)} when out is a {@link MediaValidator}, otherwise
+   * dispatches to {@link NoCloseWriter#wrap(java.io.Writer)}.
+   *
+   * @see  #wrap(com.aoapps.encoding.MediaValidator)
+   * @see  NoCloseWriter#wrap(java.io.Writer)
+   */
+  @SuppressWarnings("unchecked")
+  public static <W extends Writer & NoClose> W wrap(Writer out) {
+    if (out instanceof MediaValidator) {
+      return (W)wrap((MediaValidator)out);
+    }
+    return NoCloseWriter.wrap(out);
+  }
 
-	private final MediaValidator wrapped;
+  private final MediaValidator wrapped;
 
-	/**
-	 * @see  #wrap(com.aoapps.encoding.MediaValidator)
-	 */
-	private NoCloseMediaValidator(MediaValidator out) {
-		super(out);
-		assert !out.isNoClose() : "Should not have wrapped when already isNoClose()";
-		wrapped = out;
-	}
+  /**
+   * @see  #wrap(com.aoapps.encoding.MediaValidator)
+   */
+  private NoCloseMediaValidator(MediaValidator out) {
+    super(out);
+    assert !out.isNoClose() : "Should not have wrapped when already isNoClose()";
+    wrapped = out;
+  }
 
-	@Override
-	public MediaType getValidMediaInputType() {
-		return wrapped.getValidMediaInputType();
-	}
+  @Override
+  public MediaType getValidMediaInputType() {
+    return wrapped.getValidMediaInputType();
+  }
 
-	@Override
-	public boolean isValidatingMediaInputType(MediaType inputType) {
-		return wrapped.isValidatingMediaInputType(inputType);
-	}
+  @Override
+  public boolean isValidatingMediaInputType(MediaType inputType) {
+    return wrapped.isValidatingMediaInputType(inputType);
+  }
 
-	@Override
-	public boolean canSkipValidation(MediaType outputType) {
-		return wrapped.canSkipValidation(outputType);
-	}
+  @Override
+  public boolean canSkipValidation(MediaType outputType) {
+    return wrapped.canSkipValidation(outputType);
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @return  the wrapped writer passed through {@link #wrap(java.io.Writer)}
-	 *          or {@link #wrap(com.aoapps.encoding.MediaValidator)}.
-	 */
-	@Override
-	public Writer getOut() {
-		return wrap(wrapped.getOut());
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @return  the wrapped writer passed through {@link #wrap(java.io.Writer)}
+   *          or {@link #wrap(com.aoapps.encoding.MediaValidator)}.
+   */
+  @Override
+  public Writer getOut() {
+    return wrap(wrapped.getOut());
+  }
 
-	@Override
-	public NoCloseMediaValidator append(CharSequence csq) throws IOException {
-		out.append(csq);
-		return this;
-	}
+  @Override
+  public NoCloseMediaValidator append(CharSequence csq) throws IOException {
+    out.append(csq);
+    return this;
+  }
 
-	@Override
-	public NoCloseMediaValidator append(CharSequence csq, int start, int end) throws IOException {
-		out.append(csq, start, end);
-		return this;
-	}
+  @Override
+  public NoCloseMediaValidator append(CharSequence csq, int start, int end) throws IOException {
+    out.append(csq, start, end);
+    return this;
+  }
 
-	@Override
-	public NoCloseMediaValidator append(char c) throws IOException {
-		out.append(c);
-		return this;
-	}
+  @Override
+  public NoCloseMediaValidator append(char c) throws IOException {
+    out.append(c);
+    return this;
+  }
 
-	@Override
-	public void validate(boolean trim) throws IOException {
-		wrapped.validate(trim);
-	}
+  @Override
+  public void validate(boolean trim) throws IOException {
+    wrapped.validate(trim);
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @return  {@code true} since this is always no-close.
-	 */
-	@Override
-	public boolean isNoClose() {
-		return true;
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @return  {@code true} since this is always no-close.
+   */
+  @Override
+  public boolean isNoClose() {
+    return true;
+  }
 
-	/**
-	 * Does not close the wrapped validator.
-	 */
-	@Override
-	public void close() {
-		// Do nothing
-	}
+  /**
+   * Does not close the wrapped validator.
+   */
+  @Override
+  public void close() {
+    // Do nothing
+  }
 }

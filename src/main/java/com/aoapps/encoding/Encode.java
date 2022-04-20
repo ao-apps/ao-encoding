@@ -35,161 +35,165 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public interface Encode {
 
-	// <editor-fold desc="Encode - definition" defaultstate="collapsed">
-	/**
-	 * Encodes the given nested type with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 */
-	default Encode encode(MediaType contentType, char ch) throws IOException {
-		try (MediaWriter mw = encode(contentType)) {
-			mw.append(ch);
-		}
-		return this;
-	}
+  // <editor-fold desc="Encode - definition" defaultstate="collapsed">
+  /**
+   * Encodes the given nested type with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
+   * </p>
+   *
+   * @return  {@code this} writer
+   */
+  default Encode encode(MediaType contentType, char ch) throws IOException {
+    try (MediaWriter mw = encode(contentType)) {
+      mw.append(ch);
+    }
+    return this;
+  }
 
-	/**
-	 * Encodes the given nested type with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 */
-	default Encode encode(MediaType contentType, char[] cbuf) throws IOException {
-		try (MediaWriter mw = encode(contentType)) {
-			if(cbuf != null) mw.write(cbuf);
-		}
-		return this;
-	}
+  /**
+   * Encodes the given nested type with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
+   * </p>
+   *
+   * @return  {@code this} writer
+   */
+  default Encode encode(MediaType contentType, char[] cbuf) throws IOException {
+    try (MediaWriter mw = encode(contentType)) {
+      if (cbuf != null) {
+        mw.write(cbuf);
+      }
+    }
+    return this;
+  }
 
-	/**
-	 * Encodes the given nested type with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 */
-	default Encode encode(MediaType contentType, char[] cbuf, int offset, int len) throws IOException {
-		try (MediaWriter mw = encode(contentType)) {
-			if(cbuf != null) mw.write(cbuf, offset, len);
-		}
-		return this;
-	}
+  /**
+   * Encodes the given nested type with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
+   * </p>
+   *
+   * @return  {@code this} writer
+   */
+  default Encode encode(MediaType contentType, char[] cbuf, int offset, int len) throws IOException {
+    try (MediaWriter mw = encode(contentType)) {
+      if (cbuf != null) {
+        mw.write(cbuf, offset, len);
+      }
+    }
+    return this;
+  }
 
-	/**
-	 * Encodes the given nested type with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * If the string is translated, comments will be added giving the
-	 * translation lookup id to aid in translation of server-translated values.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 */
-	Encode encode(MediaType contentType, CharSequence csq) throws IOException;
+  /**
+   * Encodes the given nested type with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
+   * </p>
+   * <p>
+   * If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.
+   * </p>
+   *
+   * @return  {@code this} writer
+   */
+  Encode encode(MediaType contentType, CharSequence csq) throws IOException;
 
-	/**
-	 * Encodes the given nested type with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * If the string is translated, comments will be added giving the
-	 * translation lookup id to aid in translation of server-translated values.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 */
-	Encode encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException;
+  /**
+   * Encodes the given nested type with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
+   * </p>
+   * <p>
+   * If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.
+   * </p>
+   *
+   * @return  {@code this} writer
+   */
+  Encode encode(MediaType contentType, CharSequence csq, int start, int end) throws IOException;
 
-	/**
-	 * Encodes the given nested type with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * If the string is translated, comments will be added giving the
-	 * translation lookup id to aid in translation of server-translated values.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 */
-	Encode encode(MediaType contentType, Object content) throws IOException;
+  /**
+   * Encodes the given nested type with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
+   * </p>
+   * <p>
+   * If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.
+   * </p>
+   *
+   * @return  {@code this} writer
+   */
+  Encode encode(MediaType contentType, Object content) throws IOException;
 
-	/**
-	 * Encodes the given nested type with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * If the string is translated, comments will be added giving the
-	 * translation lookup id to aid in translation of server-translated values.
-	 * </p>
-	 *
-	 * @param  <Ex>  An arbitrary exception type that may be thrown
-	 *
-	 * @return  {@code this} writer
-	 */
-	default <Ex extends Throwable> Encode encode(MediaType contentType, IOSupplierE<?, Ex> content) throws IOException, Ex {
-		return encode(contentType, (content == null) ? null : content.get());
-	}
+  /**
+   * Encodes the given nested type with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
+   * </p>
+   * <p>
+   * If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.
+   * </p>
+   *
+   * @param  <Ex>  An arbitrary exception type that may be thrown
+   *
+   * @return  {@code this} writer
+   */
+  default <Ex extends Throwable> Encode encode(MediaType contentType, IOSupplierE<?, Ex> content) throws IOException, Ex {
+    return encode(contentType, (content == null) ? null : content.get());
+  }
 
-	/**
-	 * Encodes the given nested type with proper encoding.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 *
-	 * @param  <Ex>  An arbitrary exception type that may be thrown
-	 *
-	 * @return  {@code this} writer
-	 */
-	default <Ex extends Throwable> Encode encode(MediaType contentType, MediaWritable<Ex> content) throws IOException, Ex {
-		try (MediaWriter mw = encode(contentType)) {
-			if(content != null) {
-				content.writeTo(mw);
-			}
-		}
-		return this;
-	}
+  /**
+   * Encodes the given nested type with proper encoding.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
+   * </p>
+   * <p>
+   * Does not perform any translation markups.
+   * </p>
+   *
+   * @param  <Ex>  An arbitrary exception type that may be thrown
+   *
+   * @return  {@code this} writer
+   */
+  default <Ex extends Throwable> Encode encode(MediaType contentType, MediaWritable<Ex> content) throws IOException, Ex {
+    try (MediaWriter mw = encode(contentType)) {
+      if (content != null) {
+        content.writeTo(mw);
+      }
+    }
+    return this;
+  }
 
-	/**
-	 * Encodes the given nested type with proper encoding.
-	 * This is well suited for use in a try-with-resources block.
-	 * <p>
-	 * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-	 * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-	 * </p>
-	 * <p>
-	 * Does not perform any translation markups.
-	 * </p>
-	 *
-	 * @return  A new writer that may be used for the given content type.
-	 *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
-	 *          <p>
-	 *          The returned writer will be of the specific subclass of {@link MediaWriter} matching {@code contentType}
-	 *          (see {@link MediaType#getMediaWriterClass()}.  This means {@link MediaWriter#getValidMediaInputType()} will
-	 *          be {@code contentType}.
-	 *          </p>
-	 */
-	MediaWriter encode(MediaType contentType) throws IOException;
-	// </editor-fold>
+  /**
+   * Encodes the given nested type with proper encoding.
+   * This is well suited for use in a try-with-resources block.
+   * <p>
+   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
+   * </p>
+   * <p>
+   * Does not perform any translation markups.
+   * </p>
+   *
+   * @return  A new writer that may be used for the given content type.
+   *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
+   *          <p>
+   *          The returned writer will be of the specific subclass of {@link MediaWriter} matching {@code contentType}
+   *          (see {@link MediaType#getMediaWriterClass()}.  This means {@link MediaWriter#getValidMediaInputType()} will
+   *          be {@code contentType}.
+   *          </p>
+   */
+  MediaWriter encode(MediaType contentType) throws IOException;
+  // </editor-fold>
 }

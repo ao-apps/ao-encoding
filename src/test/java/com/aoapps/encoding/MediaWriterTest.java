@@ -37,31 +37,31 @@ import org.junit.Test;
 @Immutable
 public class MediaWriterTest {
 
-	/**
-	 * Tests that all {@link MediaWriter} implementations have a set of per-type interfaces precisely
-	 * matching the encoders supported by {@link MediaEncoder#getInstance(com.aoapps.encoding.EncodingContext, com.aoapps.encoding.MediaType, com.aoapps.encoding.MediaType)}.
-	 */
-	@Test
-	public void testPerTypeInterfacesMatchEncoders() {
-		for(MediaType containerType : MediaType.values()) {
-			MediaWriter mediaWriter = containerType.newMediaWriter(EncodingContext.DEFAULT, new ValidateOnlyEncoder(containerType), NullWriter.getInstance());
-			// Find the set of supported MediaEncoder
-			Set<MediaType> supportedEncoders = EnumSet.noneOf(MediaType.class);
-			// Find the set of implemented interfaces
-			Set<MediaType> implementedInterfaces = EnumSet.noneOf(MediaType.class);
-			for(MediaType contentType : MediaType.values()) {
-				try {
-					MediaEncoder.getInstance(EncodingContext.DEFAULT, contentType, containerType);
-					supportedEncoders.add(contentType);
-				} catch(UnsupportedEncodingException e) {
-					// Not supported
-				}
-				assertTrue(contentType.getEncodeInterface().isInterface());
-				if(contentType.getEncodeInterface().isInstance(mediaWriter)) {
-					implementedInterfaces.add(contentType);
-				}
-			}
-			assertEquals("Set of per-type interfaces must match set of supported media encoders", supportedEncoders, implementedInterfaces);
-		}
-	}
+  /**
+   * Tests that all {@link MediaWriter} implementations have a set of per-type interfaces precisely
+   * matching the encoders supported by {@link MediaEncoder#getInstance(com.aoapps.encoding.EncodingContext, com.aoapps.encoding.MediaType, com.aoapps.encoding.MediaType)}.
+   */
+  @Test
+  public void testPerTypeInterfacesMatchEncoders() {
+    for (MediaType containerType : MediaType.values()) {
+      MediaWriter mediaWriter = containerType.newMediaWriter(EncodingContext.DEFAULT, new ValidateOnlyEncoder(containerType), NullWriter.getInstance());
+      // Find the set of supported MediaEncoder
+      Set<MediaType> supportedEncoders = EnumSet.noneOf(MediaType.class);
+      // Find the set of implemented interfaces
+      Set<MediaType> implementedInterfaces = EnumSet.noneOf(MediaType.class);
+      for (MediaType contentType : MediaType.values()) {
+        try {
+          MediaEncoder.getInstance(EncodingContext.DEFAULT, contentType, containerType);
+          supportedEncoders.add(contentType);
+        } catch (UnsupportedEncodingException e) {
+          // Not supported
+        }
+        assertTrue(contentType.getEncodeInterface().isInterface());
+        if (contentType.getEncodeInterface().isInstance(mediaWriter)) {
+          implementedInterfaces.add(contentType);
+        }
+      }
+      assertEquals("Set of per-type interfaces must match set of supported media encoders", supportedEncoders, implementedInterfaces);
+    }
+  }
 }

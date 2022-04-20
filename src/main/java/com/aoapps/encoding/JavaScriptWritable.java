@@ -35,14 +35,14 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public interface JavaScriptWritable<Ex extends Throwable> extends WhitespaceWritable<Ex> {
 
-	@Override
-	default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
-		if(writer instanceof JavaScriptWriter) {
-			writeTo((JavaScriptWriter)writer);
-		} else {
-			throw new AssertionError("Expected " + JavaScriptWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
-		}
-	}
+  @Override
+  default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
+    if (writer instanceof JavaScriptWriter) {
+      writeTo((JavaScriptWriter)writer);
+    } else {
+      throw new AssertionError("Expected " + JavaScriptWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
+    }
+  }
 
-	void writeTo(JavaScriptWriter writer) throws IOException, Ex;
+  void writeTo(JavaScriptWriter writer) throws IOException, Ex;
 }

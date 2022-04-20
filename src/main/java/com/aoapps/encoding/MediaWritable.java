@@ -34,5 +34,5 @@ import javax.annotation.concurrent.ThreadSafe;
 @FunctionalInterface
 @ThreadSafe
 public interface MediaWritable<Ex extends Throwable> {
-	void writeTo(MediaWriter writer) throws IOException, Ex;
+  void writeTo(MediaWriter writer) throws IOException, Ex;
 }

@@ -35,14 +35,14 @@ import javax.annotation.concurrent.ThreadSafe;
 @FunctionalInterface
 public interface StyleWritable<Ex extends Throwable> extends WhitespaceWritable<Ex> {
 
-	@Override
-	default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
-		if(writer instanceof StyleWriter) {
-			writeTo((StyleWriter)writer);
-		} else {
-			throw new AssertionError("Expected " + StyleWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
-		}
-	}
+  @Override
+  default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
+    if (writer instanceof StyleWriter) {
+      writeTo((StyleWriter)writer);
+    } else {
+      throw new AssertionError("Expected " + StyleWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
+    }
+  }
 
-	void writeTo(StyleWriter writer) throws IOException, Ex;
+  void writeTo(StyleWriter writer) throws IOException, Ex;
 }

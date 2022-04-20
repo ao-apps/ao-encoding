@@ -35,85 +35,85 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public interface EncodingContext {
 
-	/**
-	 * Default encoding context.
-	 * Also used when there is no context available.
-	 *
-	 * @see  Doctype#DEFAULT
-	 * @see  Serialization#DEFAULT
-	 * @see  StandardCharsets#UTF_8
-	 */
-	EncodingContext DEFAULT = new EncodingContext() {};
+  /**
+   * Default encoding context.
+   * Also used when there is no context available.
+   *
+   * @see  Doctype#DEFAULT
+   * @see  Serialization#DEFAULT
+   * @see  StandardCharsets#UTF_8
+   */
+  EncodingContext DEFAULT = new EncodingContext() {};
 
-	/**
-	 * Encoding context for XML always.
-	 *
-	 * @see  Doctype#DEFAULT
-	 * @see  Serialization#XML
-	 * @see  StandardCharsets#UTF_8
-	 */
-	@SuppressWarnings("Convert2Lambda") // Cannot actually convert to Lambda, despite NetBeans 12.0 suggesting
-	EncodingContext XML = new EncodingContext() {
-		@Override
-		public Serialization getSerialization() {
-			return Serialization.XML;
-		}
-	};
+  /**
+   * Encoding context for XML always.
+   *
+   * @see  Doctype#DEFAULT
+   * @see  Serialization#XML
+   * @see  StandardCharsets#UTF_8
+   */
+  @SuppressWarnings("Convert2Lambda") // Cannot actually convert to Lambda, despite NetBeans 12.0 suggesting
+  EncodingContext XML = new EncodingContext() {
+    @Override
+    public Serialization getSerialization() {
+      return Serialization.XML;
+    }
+  };
 
-	/**
-	 * Encoding context for SGML always.
-	 *
-	 * @see  Doctype#DEFAULT
-	 * @see  Serialization#SGML
-	 * @see  StandardCharsets#UTF_8
-	 */
-	@SuppressWarnings("Convert2Lambda") // Cannot actually convert to Lambda, despite NetBeans 12.0 suggesting
-	EncodingContext SGML = new EncodingContext() {
-		@Override
-		public Serialization getSerialization() {
-			return Serialization.SGML;
-		}
-	};
+  /**
+   * Encoding context for SGML always.
+   *
+   * @see  Doctype#DEFAULT
+   * @see  Serialization#SGML
+   * @see  StandardCharsets#UTF_8
+   */
+  @SuppressWarnings("Convert2Lambda") // Cannot actually convert to Lambda, despite NetBeans 12.0 suggesting
+  EncodingContext SGML = new EncodingContext() {
+    @Override
+    public Serialization getSerialization() {
+      return Serialization.SGML;
+    }
+  };
 
-	/**
-	 * Encodes a URL for the current encoding context.
-	 * The resulting URL must be valid <a href="https://datatracker.ietf.org/doc/html/rfc3986">RFC 3986 URI</a> or
-	 * <a href="https://datatracker.ietf.org/doc/html/rfc3987">RFC 3987 IRI</a>.
-	 * <p>
-	 * Defaults to performing no encoding.
-	 * </p>
-	 */
-	default String encodeURL(String url) {
-		return url;
-	}
+  /**
+   * Encodes a URL for the current encoding context.
+   * The resulting URL must be valid <a href="https://datatracker.ietf.org/doc/html/rfc3986">RFC 3986 URI</a> or
+   * <a href="https://datatracker.ietf.org/doc/html/rfc3987">RFC 3987 IRI</a>.
+   * <p>
+   * Defaults to performing no encoding.
+   * </p>
+   */
+  default String encodeURL(String url) {
+    return url;
+  }
 
-	/**
-	 * The current doctype.
-	 * <p>
-	 * Defaults to {@link Doctype#DEFAULT}.
-	 * </p>
-	 */
-	default Doctype getDoctype() {
-		return Doctype.DEFAULT;
-	}
+  /**
+   * The current doctype.
+   * <p>
+   * Defaults to {@link Doctype#DEFAULT}.
+   * </p>
+   */
+  default Doctype getDoctype() {
+    return Doctype.DEFAULT;
+  }
 
-	/**
-	 * The current serialization.
-	 * <p>
-	 * Defaults to {@link Serialization#DEFAULT}.
-	 * </p>
-	 */
-	default Serialization getSerialization() {
-		return Serialization.DEFAULT;
-	}
+  /**
+   * The current serialization.
+   * <p>
+   * Defaults to {@link Serialization#DEFAULT}.
+   * </p>
+   */
+  default Serialization getSerialization() {
+    return Serialization.DEFAULT;
+  }
 
-	/**
-	 * The output character encoding.
-	 * <p>
-	 * Defaults to {@link StandardCharsets#UTF_8}.
-	 * </p>
-	 */
-	default Charset getCharacterEncoding() {
-		return StandardCharsets.UTF_8;
-	}
+  /**
+   * The output character encoding.
+   * <p>
+   * Defaults to {@link StandardCharsets#UTF_8}.
+   * </p>
+   */
+  default Charset getCharacterEncoding() {
+    return StandardCharsets.UTF_8;
+  }
 }

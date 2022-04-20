@@ -34,176 +34,198 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public interface Whitespace {
 
-	// <editor-fold desc="Whitespace - definition" defaultstate="collapsed">
-	/**
-	 * The character used for newlines.
-	 * <p>
-	 * This is {@code '\n'} on all platforms.  If a different newline is required,
-	 * such as {@code "\r\n"} for email, filter the output.
-	 * </p>
-	 */
-	char NL = '\n';
+  // <editor-fold desc="Whitespace - definition" defaultstate="collapsed">
+  /**
+   * The character used for newlines.
+   * <p>
+   * This is {@code '\n'} on all platforms.  If a different newline is required,
+   * such as {@code "\r\n"} for email, filter the output.
+   * </p>
+   */
+  char NL = '\n';
 
-	/**
-	 * The character used for indentation, which is {@code '\t'}.
-	 */
-	char INDENT = '\t';
+  /**
+   * The number of space characters per indentation level.
+   */
+  // 1) Matches indentation of ao-checkstyle-config: https://oss.aoapps.com/checkstyle-config/
+  //    Which, in-turn, is derived from Google Java Style Guide: https://google.github.io/styleguide/javaguide.html
+  //
+  // 2) Matches ao-lang:XmlUtils
+  int INDENT_SPACES = 2;
 
-	/**
-	 * The character used for space, which is {@code ' '}.
-	 */
-	char SPACE = ' ';
+  /**
+   * The character used for space, which is {@code ' '}.
+   */
+  char SPACE = ' ';
 
-	/**
-	 * Writes a newline.
-	 * <p>
-	 * This is {@code '\n'} on all platforms.  If a different newline is required,
-	 * such as {@code "\r\n"} for email, filter the output.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #NL
-	 * @see  #nli()
-	 * @see  #nli(int)
-	 */
-	Whitespace nl() throws IOException;
+  /**
+   * Writes a newline.
+   * <p>
+   * This is {@code '\n'} on all platforms.  If a different newline is required,
+   * such as {@code "\r\n"} for email, filter the output.
+   * </p>
+   *
+   * @return  {@code this} writer
+   *
+   * @see  #NL
+   * @see  #nli()
+   * @see  #nli(int)
+   */
+  Whitespace nl() throws IOException;
 
-	/**
-	 * Writes a newline, followed by current indentation when {@linkplain #getIndent() indentation enabled}.
-	 * <p>
-	 * This is {@code '\n'} on all platforms.  If a different newline is required,
-	 * such as {@code "\r\n"} for email, filter the output.
-	 * </p>
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #nli(int)
-	 * @see  #nl()
-	 * @see  #indent()
-	 * @see  #getIndent()
-	 * @see  #setIndent(boolean)
-	 */
-	default Whitespace nli() throws IOException {
-		return nli(0);
-	}
+  /**
+   * Writes a newline, followed by current indentation when {@linkplain #getIndent() indentation enabled}.
+   * <p>
+   * This is {@code '\n'} on all platforms.  If a different newline is required,
+   * such as {@code "\r\n"} for email, filter the output.
+   * </p>
+   *
+   * @return  {@code this} writer
+   *
+   * @see  #nli(int)
+   * @see  #nl()
+   * @see  #indent()
+   * @see  #getIndent()
+   * @see  #setIndent(boolean)
+   */
+  default Whitespace nli() throws IOException {
+    return nli(0);
+  }
 
-	/**
-	 * Writes a newline, followed by current indentation with a depth offset when {@linkplain #getIndent() indentation enabled}.
-	 * <p>
-	 * This is {@code '\n'} on all platforms.  If a different newline is required,
-	 * such as {@code "\r\n"} for email, filter the output.
-	 * </p>
-	 *
-	 * @param  depthOffset  A value added to the current indentation depth.
-	 *                      For example, pass {@code -1} when performing a newline before a closing tag or ending curly brace.
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #nli()
-	 * @see  #nl()
-	 * @see  #indent(int)
-	 * @see  #getIndent()
-	 * @see  #setIndent(boolean)
-	 */
-	default Whitespace nli(int depthOffset) throws IOException {
-		nl();
-		return indent(depthOffset);
-	}
+  /**
+   * Writes a newline, followed by current indentation with a depth offset when {@linkplain #getIndent() indentation enabled}.
+   * <p>
+   * This is {@code '\n'} on all platforms.  If a different newline is required,
+   * such as {@code "\r\n"} for email, filter the output.
+   * </p>
+   *
+   * @param  depthOffset  A value added to the current indentation depth.
+   *                      For example, pass {@code -1} when performing a newline before a closing tag or ending curly brace.
+   *
+   * @return  {@code this} writer
+   *
+   * @see  #nli()
+   * @see  #nl()
+   * @see  #indent(int)
+   * @see  #getIndent()
+   * @see  #setIndent(boolean)
+   */
+  default Whitespace nli(int depthOffset) throws IOException {
+    nl();
+    return indent(depthOffset);
+  }
 
-	/**
-	 * Writes the current indentation when {@linkplain #getIndent() indentation enabled}.
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #indent(int)
-	 * @see  #INDENT
-	 * @see  #nli()
-	 * @see  #getIndent()
-	 * @see  #setIndent(boolean)
-	 */
-	default Whitespace indent() throws IOException {
-		return indent(0);
-	}
+  /**
+   * Writes the current indentation when {@linkplain #getIndent() indentation enabled}.
+   *
+   * @return  {@code this} writer
+   *
+   * @see  #indent(int)
+   * @see  #INDENT_SPACES
+   * @see  #nli()
+   * @see  #getIndent()
+   * @see  #setIndent(boolean)
+   */
+  default Whitespace indent() throws IOException {
+    return indent(0);
+  }
 
-	/**
-	 * Writes the current indentation with a depth offset when {@linkplain #getIndent() indentation enabled}.
-	 *
-	 * @param  depthOffset  A value added to the current indentation depth.
-	 *                      For example, pass {@code -1} when performing a newline before a closing tag or ending curly brace.
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #indent()
-	 * @see  #INDENT
-	 * @see  #nli(int)
-	 * @see  #getIndent()
-	 * @see  #setIndent(boolean)
-	 */
-	Whitespace indent(int depthOffset) throws IOException;
+  /**
+   * Writes the current indentation with a depth offset when {@linkplain #getIndent() indentation enabled}.
+   *
+   * @param  depthOffset  A value added to the current indentation depth.
+   *                      For example, pass {@code -1} when performing a newline before a closing tag or ending curly brace.
+   *
+   * @return  {@code this} writer
+   *
+   * @see  #indent()
+   * @see  #INDENT_SPACES
+   * @see  #nli(int)
+   * @see  #getIndent()
+   * @see  #setIndent(boolean)
+   */
+  default Whitespace indent(int depthOffset) throws IOException {
+    if (getIndent()) {
+      int d = getDepth();
+      assert d >= 0;
+      d += depthOffset;
+      int spaces;
+      if (d < 0) {
+        // Handle underflow and overflow
+        spaces = (depthOffset < 0) ? 0 : Integer.MAX_VALUE;
+      } else if (d > (Integer.MAX_VALUE / INDENT_SPACES)) {
+        spaces = Integer.MAX_VALUE;
+      } else {
+        spaces = d * INDENT_SPACES;
+      }
+      return sp(spaces);
+    } else {
+      return this;
+    }
+  }
 
-	/**
-	 * Gets if indentation is currently enabled, off by default.
-	 */
-	boolean getIndent();
+  /**
+   * Gets if indentation is currently enabled, off by default.
+   */
+  boolean getIndent();
 
-	/**
-	 * Enables or disabled indentation.
-	 *
-	 * @return  {@code this} writer
-	 */
-	Whitespace setIndent(boolean indent);
+  /**
+   * Enables or disabled indentation.
+   *
+   * @return  {@code this} writer
+   */
+  Whitespace setIndent(boolean indent);
 
-	/**
-	 * Gets the current indentation depth, which begins at zero.
-	 * This value is not updated when indentation is disabled.
-	 * Not all tags will trigger indentation.
-	 */
-	int getDepth();
+  /**
+   * Gets the current indentation depth, which begins at zero.
+   * This value is not updated when indentation is disabled.
+   * Not all tags will trigger indentation.
+   */
+  int getDepth();
 
-	/**
-	 * Sets the indentation depth.
-	 *
-	 * @return  {@code this} writer
-	 */
-	Whitespace setDepth(int depth);
+  /**
+   * Sets the indentation depth.
+   *
+   * @return  {@code this} writer
+   */
+  Whitespace setDepth(int depth);
 
-	/**
-	 * Increments the indentation depth, if enabled.
-	 *
-	 * @return  {@code this} writer
-	 */
-	Whitespace incDepth();
+  /**
+   * Increments the indentation depth, if enabled.
+   *
+   * @return  {@code this} writer
+   */
+  Whitespace incDepth();
 
-	/**
-	 * Decrements the indentation depth, if enabled.
-	 *
-	 * @return  {@code this} writer
-	 */
-	Whitespace decDepth();
+  /**
+   * Decrements the indentation depth, if enabled.
+   *
+   * @return  {@code this} writer
+   */
+  Whitespace decDepth();
 
-	/**
-	 * Writes one space character.
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #sp(int)
-	 * @see  #SPACE
-	 */
-	default Whitespace sp() throws IOException {
-		return sp(1);
-	}
+  /**
+   * Writes one space character.
+   *
+   * @return  {@code this} writer
+   *
+   * @see  #sp(int)
+   * @see  #SPACE
+   */
+  default Whitespace sp() throws IOException {
+    return sp(1);
+  }
 
-	/**
-	 * Writes the given number of space characters.
-	 *
-	 * @param  count  When {@code count <= 0}, nothing is written.
-	 *
-	 * @return  {@code this} writer
-	 *
-	 * @see  #sp()
-	 * @see  #SPACE
-	 */
-	Whitespace sp(int count) throws IOException;
-	// </editor-fold>
+  /**
+   * Writes the given number of space characters.
+   *
+   * @param  count  When {@code count <= 0}, nothing is written.
+   *
+   * @return  {@code this} writer
+   *
+   * @see  #sp()
+   * @see  #SPACE
+   */
+  Whitespace sp(int count) throws IOException;
+  // </editor-fold>
 }

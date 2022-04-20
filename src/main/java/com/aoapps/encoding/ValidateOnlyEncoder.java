@@ -38,119 +38,119 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public class ValidateOnlyEncoder extends MediaEncoder {
 
-	private final MediaValidator validator;
+  private final MediaValidator validator;
 
-	/**
-	 * Writes through to the given validator.
-	 */
-	public ValidateOnlyEncoder(MediaValidator validator) {
-		this.validator = validator;
-	}
+  /**
+   * Writes through to the given validator.
+   */
+  public ValidateOnlyEncoder(MediaValidator validator) {
+    this.validator = validator;
+  }
 
-	/**
-	 * Writes through to the correct validator for the given content type, then discards all output.
-	 *
-	 * @see  MediaValidator#getMediaValidator(com.aoapps.encoding.MediaType, java.io.Writer)
-	 * @see  NullWriter#getInstance()
-	 */
-	public ValidateOnlyEncoder(MediaType contentType) {
-		this(MediaValidator.getMediaValidator(contentType, NullWriter.getInstance()));
-		assert validator.getValidMediaInputType() == contentType;
-	}
+  /**
+   * Writes through to the correct validator for the given content type, then discards all output.
+   *
+   * @see  MediaValidator#getMediaValidator(com.aoapps.encoding.MediaType, java.io.Writer)
+   * @see  NullWriter#getInstance()
+   */
+  public ValidateOnlyEncoder(MediaType contentType) {
+    this(MediaValidator.getMediaValidator(contentType, NullWriter.getInstance()));
+    assert validator.getValidMediaInputType() == contentType;
+  }
 
-	@Override
-	public MediaType getValidMediaInputType() {
-		return validator.getValidMediaInputType();
-	}
+  @Override
+  public MediaType getValidMediaInputType() {
+    return validator.getValidMediaInputType();
+  }
 
-	@Override
-	public boolean isValidatingMediaInputType(MediaType inputType) {
-		return validator.isValidatingMediaInputType(inputType);
-	}
+  @Override
+  public boolean isValidatingMediaInputType(MediaType inputType) {
+    return validator.isValidatingMediaInputType(inputType);
+  }
 
-	@Override
-	public boolean canSkipValidation(MediaType outputType) {
-		return validator.canSkipValidation(outputType);
-	}
+  @Override
+  public boolean canSkipValidation(MediaType outputType) {
+    return validator.canSkipValidation(outputType);
+  }
 
-	@Override
-	public MediaType getValidMediaOutputType() {
-		assert validator.getValidMediaInputType() == validator.getValidMediaOutputType();
-		return validator.getValidMediaOutputType();
-	}
+  @Override
+  public MediaType getValidMediaOutputType() {
+    assert validator.getValidMediaInputType() == validator.getValidMediaOutputType();
+    return validator.getValidMediaOutputType();
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @return  The result of {@link MediaValidator#isBuffered()}
-	 */
-	@Override
-	public final boolean isBuffered() {
-		return validator.isBuffered();
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @return  The result of {@link MediaValidator#isBuffered()}
+   */
+  @Override
+  public final boolean isBuffered() {
+    return validator.isBuffered();
+  }
 
-	@Override
-	public void write(int c, Writer out) throws IOException {
-		assert Assertions.isValidating(out, validator.getValidMediaInputType());
-		validator.write(c);
-		out.write(c);
-	}
+  @Override
+  public void write(int c, Writer out) throws IOException {
+    assert Assertions.isValidating(out, validator.getValidMediaInputType());
+    validator.write(c);
+    out.write(c);
+  }
 
-	@Override
-	public void write(char[] cbuf, Writer out) throws IOException {
-		assert Assertions.isValidating(out, validator.getValidMediaInputType());
-		validator.write(cbuf);
-		out.write(cbuf);
-	}
+  @Override
+  public void write(char[] cbuf, Writer out) throws IOException {
+    assert Assertions.isValidating(out, validator.getValidMediaInputType());
+    validator.write(cbuf);
+    out.write(cbuf);
+  }
 
-	@Override
-	public void write(char[] cbuf, int off, int len, Writer out) throws IOException {
-		assert Assertions.isValidating(out, validator.getValidMediaInputType());
-		validator.write(cbuf, off, len);
-		out.write(cbuf, off, len);
-	}
+  @Override
+  public void write(char[] cbuf, int off, int len, Writer out) throws IOException {
+    assert Assertions.isValidating(out, validator.getValidMediaInputType());
+    validator.write(cbuf, off, len);
+    out.write(cbuf, off, len);
+  }
 
-	@Override
-	public void write(String str, Writer out) throws IOException {
-		assert Assertions.isValidating(out, validator.getValidMediaInputType());
-		validator.write(str);
-		out.write(str);
-	}
+  @Override
+  public void write(String str, Writer out) throws IOException {
+    assert Assertions.isValidating(out, validator.getValidMediaInputType());
+    validator.write(str);
+    out.write(str);
+  }
 
-	@Override
-	public void write(String str, int off, int len, Writer out) throws IOException {
-		assert Assertions.isValidating(out, validator.getValidMediaInputType());
-		validator.write(str, off, len);
-		out.write(str, off, len);
-	}
+  @Override
+  public void write(String str, int off, int len, Writer out) throws IOException {
+    assert Assertions.isValidating(out, validator.getValidMediaInputType());
+    validator.write(str, off, len);
+    out.write(str, off, len);
+  }
 
-	@Override
-	public ValidateOnlyEncoder append(char c, Appendable out) throws IOException {
-		assert Assertions.isValidating(out, validator.getValidMediaInputType());
-		validator.append(c);
-		out.append(c);
-		return this;
-	}
+  @Override
+  public ValidateOnlyEncoder append(char c, Appendable out) throws IOException {
+    assert Assertions.isValidating(out, validator.getValidMediaInputType());
+    validator.append(c);
+    out.append(c);
+    return this;
+  }
 
-	@Override
-	public ValidateOnlyEncoder append(CharSequence csq, Appendable out) throws IOException {
-		assert Assertions.isValidating(out, validator.getValidMediaInputType());
-		validator.append(csq);
-		out.append(csq);
-		return this;
-	}
+  @Override
+  public ValidateOnlyEncoder append(CharSequence csq, Appendable out) throws IOException {
+    assert Assertions.isValidating(out, validator.getValidMediaInputType());
+    validator.append(csq);
+    out.append(csq);
+    return this;
+  }
 
-	@Override
-	public ValidateOnlyEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException {
-		assert Assertions.isValidating(out, validator.getValidMediaInputType());
-		validator.append(csq, start, end);
-		out.append(csq, start, end);
-		return this;
-	}
+  @Override
+  public ValidateOnlyEncoder append(CharSequence csq, int start, int end, Appendable out) throws IOException {
+    assert Assertions.isValidating(out, validator.getValidMediaInputType());
+    validator.append(csq, start, end);
+    out.append(csq, start, end);
+    return this;
+  }
 
-	@Override
-	public void writeSuffixTo(Appendable out, boolean trim) throws IOException {
-		super.writeSuffixTo(out, trim);
-		validator.validate(trim);
-	}
+  @Override
+  public void writeSuffixTo(Appendable out, boolean trim) throws IOException {
+    super.writeSuffixTo(out, trim);
+    validator.validate(trim);
+  }
 }

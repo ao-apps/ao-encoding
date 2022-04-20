@@ -42,8 +42,8 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public interface ValidMediaOutput {
 
-	/**
-	 * Gets the output type.
-	 */
-	MediaType getValidMediaOutputType();
+  /**
+   * Gets the output type.
+   */
+  MediaType getValidMediaOutputType();
 }
