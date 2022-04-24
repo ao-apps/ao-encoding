@@ -66,7 +66,7 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
    */
   public static final Predicate<? super MediaWriter> DEFAULT_IS_NO_CLOSE = mediaWriter -> {
     Writer out = mediaWriter.out;
-    return (out instanceof NoClose) && ((NoClose)out).isNoClose();
+    return (out instanceof NoClose) && ((NoClose) out).isNoClose();
   };
 
   /**
@@ -95,21 +95,21 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
    */
   @SuppressWarnings({"AssertWithSideEffects", "LeakingThisInConstructor", "OverridableMethodCallInConstructor"})
   MediaWriter(
-    EncodingContext encodingContext,
-    MediaEncoder encoder,
-    Writer out,
-    boolean outOptimized,
-    Whitespace indentDelegate,
-    Predicate<? super MediaWriter> isNoClose,
-    IOConsumer<? super MediaWriter> closer
+      EncodingContext encodingContext,
+      MediaEncoder encoder,
+      Writer out,
+      boolean outOptimized,
+      Whitespace indentDelegate,
+      Predicate<? super MediaWriter> isNoClose,
+      IOConsumer<? super MediaWriter> closer
   ) {
     super(encoder, out, outOptimized);
     Writer optimized = null;
-    assert !((optimized = getOut()) instanceof MediaValidator) || !((MediaValidator)optimized).canSkipValidation(encoder.getValidMediaOutputType()) :
-      "Validation should have been skipped by " + CoercionOptimizer.class.getName() + " registered by " + MediaValidator.class.getName()
-      + " for outputType = " + encoder.getValidMediaOutputType().name();
-    assert !(optimized instanceof MediaValidator) || ((MediaValidator)optimized).isValidatingMediaInputType(encoder.getValidMediaOutputType()) :
-      "MediaValidator = " + optimized.getClass().getName() + " is not validating outputType = " + encoder.getValidMediaOutputType().name();
+    assert !((optimized = getOut()) instanceof MediaValidator) || !((MediaValidator) optimized).canSkipValidation(encoder.getValidMediaOutputType()) :
+        "Validation should have been skipped by " + CoercionOptimizer.class.getName() + " registered by " + MediaValidator.class.getName()
+            + " for outputType = " + encoder.getValidMediaOutputType().name();
+    assert !(optimized instanceof MediaValidator) || ((MediaValidator) optimized).isValidatingMediaInputType(encoder.getValidMediaOutputType()) :
+        "MediaValidator = " + optimized.getClass().getName() + " is not validating outputType = " + encoder.getValidMediaOutputType().name();
     this.encodingContext = NullArgumentException.checkNotNull(encodingContext, "encodingContext");
     this.encoder = encoder;
     this.indentDelegate = indentDelegate;
@@ -226,14 +226,14 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
         assert markupType != null;
         BundleLookupThreadContext threadContext;
         if (
-          markupType == MarkupType.NONE
-          || (threadContext = BundleLookupThreadContext.getThreadContext()) == null
-          // Other types that will not be converted to String for bundle lookups
-          || !(csq instanceof String)
+            markupType == MarkupType.NONE
+                || (threadContext = BundleLookupThreadContext.getThreadContext()) == null
+                // Other types that will not be converted to String for bundle lookups
+                || !(csq instanceof String)
         ) {
           encoder.append(csq, out);
         } else {
-          String str = (String)csq;
+          String str = (String) csq;
           BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
           if (buffered) {
             // Do not bypass buffered encoder for markup
@@ -272,14 +272,14 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
           assert markupType != null;
           BundleLookupThreadContext threadContext;
           if (
-            markupType == MarkupType.NONE
-            || (threadContext = BundleLookupThreadContext.getThreadContext()) == null
-            // Other types that will not be converted to String for bundle lookups
-            || !(csq instanceof String)
+              markupType == MarkupType.NONE
+                  || (threadContext = BundleLookupThreadContext.getThreadContext()) == null
+                  // Other types that will not be converted to String for bundle lookups
+                  || !(csq instanceof String)
           ) {
             newEncoder.append(csq, optimized);
           } else {
-            String str = (String)csq;
+            String str = (String) csq;
             BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
             if (lookupMarkup != null) {
               lookupMarkup.appendPrefixTo(markupType, newEncoder, optimized);
@@ -297,11 +297,11 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
         assert markupType != null;
         BundleLookupThreadContext threadContext;
         if (
-          csq == null
-          || markupType == MarkupType.NONE
-          || (threadContext = BundleLookupThreadContext.getThreadContext()) == null
-          // Other types that will not be converted to String for bundle lookups
-          || !(csq instanceof String)
+            csq == null
+                || markupType == MarkupType.NONE
+                || (threadContext = BundleLookupThreadContext.getThreadContext()) == null
+                // Other types that will not be converted to String for bundle lookups
+                || !(csq instanceof String)
         ) {
           newEncoder.writePrefixTo(optimized);
           if (csq != null) {
@@ -309,7 +309,7 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
           }
           newEncoder.writeSuffixTo(optimized, false);
         } else {
-          String str = (String)csq;
+          String str = (String) csq;
           BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup(str);
           if (lookupMarkup != null) {
             lookupMarkup.appendPrefixTo(markupType, optimized);
@@ -338,14 +338,14 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
         assert markupType != null;
         BundleLookupThreadContext threadContext;
         if (
-          markupType == MarkupType.NONE
-          || (threadContext = BundleLookupThreadContext.getThreadContext()) == null
-          // Other types that will not be converted to String for bundle lookups
-          || !(csq instanceof String)
+            markupType == MarkupType.NONE
+                || (threadContext = BundleLookupThreadContext.getThreadContext()) == null
+                // Other types that will not be converted to String for bundle lookups
+                || !(csq instanceof String)
         ) {
           encoder.append(csq, start, end, out);
         } else {
-          BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup((String)csq);
+          BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup((String) csq);
           if (buffered) {
             // Do not bypass buffered encoder for markup
             if (lookupMarkup != null) {
@@ -383,14 +383,14 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
           assert markupType != null;
           BundleLookupThreadContext threadContext;
           if (
-            markupType == MarkupType.NONE
-            || (threadContext = BundleLookupThreadContext.getThreadContext()) == null
-            // Other types that will not be converted to String for bundle lookups
-            || !(csq instanceof String)
+              markupType == MarkupType.NONE
+                  || (threadContext = BundleLookupThreadContext.getThreadContext()) == null
+                  // Other types that will not be converted to String for bundle lookups
+                  || !(csq instanceof String)
           ) {
             newEncoder.append(csq, start, end, optimized);
           } else {
-            BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup((String)csq);
+            BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup((String) csq);
             if (lookupMarkup != null) {
               lookupMarkup.appendPrefixTo(markupType, newEncoder, optimized);
             }
@@ -407,11 +407,11 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
         assert markupType != null;
         BundleLookupThreadContext threadContext;
         if (
-          csq == null
-          || markupType == MarkupType.NONE
-          || (threadContext = BundleLookupThreadContext.getThreadContext()) == null
-          // Other types that will not be converted to String for bundle lookups
-          || !(csq instanceof String)
+            csq == null
+                || markupType == MarkupType.NONE
+                || (threadContext = BundleLookupThreadContext.getThreadContext()) == null
+                // Other types that will not be converted to String for bundle lookups
+                || !(csq instanceof String)
         ) {
           newEncoder.writePrefixTo(optimized);
           if (csq != null) {
@@ -419,7 +419,7 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
           }
           newEncoder.writeSuffixTo(optimized, false);
         } else {
-          BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup((String)csq);
+          BundleLookupMarkup lookupMarkup = threadContext.getLookupMarkup((String) csq);
           if (lookupMarkup != null) {
             lookupMarkup.appendPrefixTo(markupType, optimized);
           }
@@ -440,30 +440,30 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
   public MediaWriter encode(MediaType contentType, Object content) throws IOException {
     // Support Optional
     while (content instanceof Optional) {
-      content = ((Optional<?>)content).orElse(null);
+      content = ((Optional<?>) content).orElse(null);
     }
     while (content instanceof IOSupplierE<?, ?>) {
       try {
-        content = ((IOSupplierE<?, ?>)content).get();
+        content = ((IOSupplierE<?, ?>) content).get();
       } catch (Throwable t) {
         throw Throwables.wrap(t, IOException.class, IOException::new);
       }
     }
     if (content instanceof char[]) {
-      return encode(contentType, (char[])content);
+      return encode(contentType, (char[]) content);
     }
     if (content instanceof CharSequence) {
-      return encode(contentType, (CharSequence)content);
+      return encode(contentType, (CharSequence) content);
     }
     if (content instanceof Writable) {
-      Writable writable = (Writable)content;
+      Writable writable = (Writable) content;
       if (writable.isFastToString()) {
         return encode(contentType, writable.toString());
       }
     }
     if (content instanceof MediaWritable) {
       try {
-        return encode(contentType, (MediaWritable<?>)content);
+        return encode(contentType, (MediaWritable<?>) content);
       } catch (Throwable t) {
         throw Throwables.wrap(t, IOException.class, IOException::new);
       }
@@ -475,24 +475,24 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
       if (encoder.isBuffered()) {
         // Do not bypass buffered encoder for markup
         MarkupCoercion.write(
-          content,
-          containerType.getMarkupType(),
-          true,
-          encoder,
-          false,
-          out,
-          true
+            content,
+            containerType.getMarkupType(),
+            true,
+            encoder,
+            false,
+            out,
+            true
         );
       } else {
         // Bypass encoder for markup
         MarkupCoercion.write(
-          content,
-          encoder.getValidMediaOutputType().getMarkupType(),
-          false,
-          encoder,
-          false,
-          out,
-          true
+            content,
+            encoder.getValidMediaOutputType().getMarkupType(),
+            false,
+            encoder,
+            false,
+            out,
+            true
         );
       }
     } else {
@@ -505,24 +505,24 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
       if (newEncoder.isBuffered()) {
         // Do not bypass buffered encoder for markup
         MarkupCoercion.write(
-          content,
-          contentType.getMarkupType(),
-          true,
-          newEncoder,
-          true,
-          this,
-          true // There are no CoercionOptimizer registered for MediaWritable
+            content,
+            contentType.getMarkupType(),
+            true,
+            newEncoder,
+            true,
+            this,
+            true // There are no CoercionOptimizer registered for MediaWritable
         );
       } else {
         // Bypass encoder for markup
         MarkupCoercion.write(
-          content,
-          containerType.getMarkupType(),
-          false,
-          newEncoder,
-          true,
-          this,
-          true // There are no CoercionOptimizer registered for MediaWritable
+            content,
+            containerType.getMarkupType(),
+            false,
+            newEncoder,
+            true,
+            this,
+            true // There are no CoercionOptimizer registered for MediaWritable
         );
       }
     }
@@ -553,13 +553,13 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
       } else {
         // Create new writer to ignore close
         newMediaWriter = contentType.newMediaWriter(
-          encodingContext,
-          encoder,
-          out,
-          true,
-          getIndentDelegate(),
-          mediaWriter -> true, // isNoClose
-          null // Ignore close
+            encodingContext,
+            encoder,
+            out,
+            true,
+            getIndentDelegate(),
+            mediaWriter -> true, // isNoClose
+            null // Ignore close
         );
       }
     } else {
@@ -570,13 +570,13 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
         newEncoder = new ValidateOnlyEncoder(contentType);
       }
       newMediaWriter = contentType.newMediaWriter(
-        encodingContext,
-        newEncoder,
-        this,
-        true, // There are no CoercionOptimizer registered for MediaWritable
-        getIndentDelegate(),
-        mediaWriter -> false, // !isNoClose
-        closing -> closing.writeSuffix(false)
+          encodingContext,
+          newEncoder,
+          this,
+          true, // There are no CoercionOptimizer registered for MediaWritable
+          getIndentDelegate(),
+          mediaWriter -> false, // !isNoClose
+          closing -> closing.writeSuffix(false)
       );
       newMediaWriter.writePrefix();
     }

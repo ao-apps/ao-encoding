@@ -58,7 +58,7 @@ public abstract class BufferedEncoder extends MediaEncoder {
   @Override
   public final void write(int c, Writer out) {
     assert Assertions.isValidating(out, getValidMediaOutputType());
-    buffer.append((char)c);
+    buffer.append((char) c);
   }
 
   @Override
@@ -88,7 +88,7 @@ public abstract class BufferedEncoder extends MediaEncoder {
     if (str == null) {
       throw new IllegalArgumentException("str is null");
     }
-    buffer.append(str, off, off+len);
+    buffer.append(str, off, off + len);
   }
 
   @Override

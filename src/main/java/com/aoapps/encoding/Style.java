@@ -131,6 +131,7 @@ public interface Style extends Encode {
   @Deprecated
   @Override
   MediaWriter encode(MediaType contentType) throws IOException;
+
   // </editor-fold>
 
   // <editor-fold desc="Style - definition" defaultstate="collapsed">
@@ -276,7 +277,7 @@ public interface Style extends Encode {
    *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
    */
   default StyleWriter style() throws IOException {
-    return (StyleWriter)encode(MediaType.CSS);
+    return (StyleWriter) encode(MediaType.CSS);
   }
   // </editor-fold>
 }

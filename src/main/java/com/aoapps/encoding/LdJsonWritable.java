@@ -38,7 +38,7 @@ public interface LdJsonWritable<Ex extends Throwable> extends JsonWritable<Ex> {
   @Override
   default void writeTo(JsonWriter writer) throws IOException, Ex {
     if (writer instanceof LdJsonWriter) {
-      writeTo((LdJsonWriter)writer);
+      writeTo((LdJsonWriter) writer);
     } else {
       throw new AssertionError("Expected " + LdJsonWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
     }

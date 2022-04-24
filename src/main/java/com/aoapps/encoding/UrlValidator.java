@@ -105,13 +105,13 @@ public final class UrlValidator extends BufferedValidator {
         return;
       default:
         if (
-          // ALPHA
-          (c >= 'a' && c <= 'z')
-          || (c >= 'A' && c <= 'Z')
-          // DIGIT
-          || (c >= '0' && c <= '9')
-          // IRI
-          || c >= 128
+            // ALPHA
+            (c >= 'a' && c <= 'z')
+                || (c >= 'A' && c <= 'Z')
+                // DIGIT
+                || (c >= '0' && c <= '9')
+                // IRI
+                || c >= 128
         ) {
           return;
         }
@@ -145,6 +145,7 @@ public final class UrlValidator extends BufferedValidator {
       checkCharacter(str.charAt(start++));
     }
   }
+
   // </editor-fold>
 
   UrlValidator(Writer out) {
@@ -159,18 +160,18 @@ public final class UrlValidator extends BufferedValidator {
   @Override
   public boolean isValidatingMediaInputType(MediaType inputType) {
     return
-      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL
-      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL
-      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL
-      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL
-      || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL
+        inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL
+            || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL
+            || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL
+            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL
+            || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL
     ;
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-      outputType == MediaType.URL // All valid characters in URL are also valid in URL
+        outputType == MediaType.URL // All valid characters in URL are also valid in URL
     ;
   }
 

@@ -51,13 +51,13 @@ public final class XhtmlWriter extends WhitespaceWriter implements Xhtml, XhtmlA
    *                 will only be called to be idempotent, implementation can assume will only be called once.
    */
   public XhtmlWriter(
-    EncodingContext encodingContext,
-    MediaEncoder encoder,
-    Writer out,
-    boolean outOptimized,
-    Whitespace indentDelegate,
-    Predicate<? super MediaWriter> isNoClose,
-    IOConsumer<? super MediaWriter> closer
+      EncodingContext encodingContext,
+      MediaEncoder encoder,
+      Writer out,
+      boolean outOptimized,
+      Whitespace indentDelegate,
+      Predicate<? super MediaWriter> isNoClose,
+      IOConsumer<? super MediaWriter> closer
   ) {
     super(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
   }
@@ -71,9 +71,9 @@ public final class XhtmlWriter extends WhitespaceWriter implements Xhtml, XhtmlA
    * @see  #DEFAULT_CLOSER
    */
   public XhtmlWriter(
-    EncodingContext encodingContext,
-    MediaEncoder encoder,
-    Writer out
+      EncodingContext encodingContext,
+      MediaEncoder encoder,
+      Writer out
   ) {
     this(encodingContext, encoder, out, false, null, DEFAULT_IS_NO_CLOSE, DEFAULT_CLOSER);
   }
@@ -208,6 +208,7 @@ public final class XhtmlWriter extends WhitespaceWriter implements Xhtml, XhtmlA
   public MediaWriter encode(MediaType contentType) throws IOException {
     return super.encode(contentType);
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Whitespace - manual self-type" defaultstate="collapsed">
@@ -276,6 +277,7 @@ public final class XhtmlWriter extends WhitespaceWriter implements Xhtml, XhtmlA
     super.sp(count);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Xhtml - manual self-type and deprecate since not expected" defaultstate="collapsed">
@@ -385,6 +387,7 @@ public final class XhtmlWriter extends WhitespaceWriter implements Xhtml, XhtmlA
   public XhtmlWriter xhtml() throws IOException {
     return Xhtml.super.xhtml();
   }
+
   // </editor-fold>
 
   // <editor-fold desc="XhtmlAttribute - manual self-type" defaultstate="collapsed">
@@ -435,6 +438,7 @@ public final class XhtmlWriter extends WhitespaceWriter implements Xhtml, XhtmlA
     XhtmlAttribute.super.xhtmlAttribute(xhtmlAttribute);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Style - manual self-type" defaultstate="collapsed">
@@ -485,6 +489,7 @@ public final class XhtmlWriter extends WhitespaceWriter implements Xhtml, XhtmlA
     Style.super.style(style);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="JavaScript - manual self-type" defaultstate="collapsed">
@@ -535,6 +540,7 @@ public final class XhtmlWriter extends WhitespaceWriter implements Xhtml, XhtmlA
     JavaScript.super.javascript(javascript);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Json - manual self-type" defaultstate="collapsed">
@@ -585,6 +591,7 @@ public final class XhtmlWriter extends WhitespaceWriter implements Xhtml, XhtmlA
     Json.super.json(json);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="LdJson - manual self-type" defaultstate="collapsed">
@@ -635,6 +642,7 @@ public final class XhtmlWriter extends WhitespaceWriter implements Xhtml, XhtmlA
     LdJson.super.ldJson(ldJson);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Text - manual self-type" defaultstate="collapsed">
@@ -697,6 +705,7 @@ public final class XhtmlWriter extends WhitespaceWriter implements Xhtml, XhtmlA
     Text.super.text(text);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Url - manual self-type" defaultstate="collapsed">

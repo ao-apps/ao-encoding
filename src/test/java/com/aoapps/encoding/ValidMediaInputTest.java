@@ -83,7 +83,7 @@ public class ValidMediaInputTest {
         if (validator.isValidatingMediaInputType(inputType)) {
           // Check all possible characters
           for (int c = Character.MIN_VALUE; c <= Character.MAX_VALUE; c++) {
-            char ch = (char)c;
+            char ch = (char) c;
             boolean canonicalInvalid;
             try {
               canonical.write(ch);
@@ -97,11 +97,11 @@ public class ValidMediaInputTest {
               boolean validatorInvalid;
               try {
                 if (validator instanceof MediaValidator) {
-                  MediaValidator mv = (MediaValidator)validator;
+                  MediaValidator mv = (MediaValidator) validator;
                   mv.append(ch);
                   mv.validate(false);
                 } else if (validator instanceof MediaEncoder) {
-                  MediaEncoder me = (MediaEncoder)validator;
+                  MediaEncoder me = (MediaEncoder) validator;
                   me.writePrefixTo(nullOut);
                   me.append(ch, nullOut);
                   me.writeSuffixTo(nullOut, false);
@@ -116,12 +116,12 @@ public class ValidMediaInputTest {
               // The validator must also catch the invalid character
               if (!validatorInvalid) {
                 throw new AssertionError(
-                  String.format(
-                    "canonical (%s) caught invalid character that validator (%s) did not: 0x%X",
-                    canonical.getClass().getSimpleName(),
-                    validator.getClass().getSimpleName(),
-                    c
-                  )
+                    String.format(
+                        "canonical (%s) caught invalid character that validator (%s) did not: 0x%X",
+                        canonical.getClass().getSimpleName(),
+                        validator.getClass().getSimpleName(),
+                        c
+                    )
                 );
               }
             }
@@ -131,7 +131,7 @@ public class ValidMediaInputTest {
           // declare the inputType in isValidatingMediaInputType
           boolean overlap = true;
           for (int c = Character.MIN_VALUE; c <= Character.MAX_VALUE; c++) {
-            char ch = (char)c;
+            char ch = (char) c;
             boolean canonicalInvalid;
             try {
               canonical.append(ch);
@@ -145,11 +145,11 @@ public class ValidMediaInputTest {
               boolean validatorInvalid;
               try {
                 if (validator instanceof MediaValidator) {
-                  MediaValidator mv = (MediaValidator)validator;
+                  MediaValidator mv = (MediaValidator) validator;
                   mv.write(ch);
                   mv.validate(false);
                 } else if (validator instanceof MediaEncoder) {
-                  MediaEncoder me = (MediaEncoder)validator;
+                  MediaEncoder me = (MediaEncoder) validator;
                   me.writePrefixTo(nullOut);
                   me.write(ch, nullOut);
                   me.writeSuffixTo(nullOut, false);
@@ -169,13 +169,13 @@ public class ValidMediaInputTest {
           }
           if (overlap) {
             throw new AssertionError(
-              String.format(
-                "All invalid characters in canonical (%s) are also invalid in validator (%s), "
-                + "validator should also declare this media type in isValidatingMediaInputType(inputType = %s)",
-                canonical.getClass().getSimpleName(),
-                validator.getClass().getSimpleName(),
-                inputType.name()
-              )
+                String.format(
+                    "All invalid characters in canonical (%s) are also invalid in validator (%s), "
+                        + "validator should also declare this media type in isValidatingMediaInputType(inputType = %s)",
+                    canonical.getClass().getSimpleName(),
+                    validator.getClass().getSimpleName(),
+                    inputType.name()
+                )
             );
           }
         }
@@ -206,7 +206,7 @@ public class ValidMediaInputTest {
         if (validator.canSkipValidation(outputType)) {
           // Check all possible characters
           for (int c = Character.MIN_VALUE; c <= Character.MAX_VALUE; c++) {
-            char ch = (char)c;
+            char ch = (char) c;
             boolean canonicalValid;
             try {
               canonical.append(ch);
@@ -220,11 +220,11 @@ public class ValidMediaInputTest {
               boolean validatorValid;
               try {
                 if (validator instanceof MediaValidator) {
-                  MediaValidator mv = (MediaValidator)validator;
+                  MediaValidator mv = (MediaValidator) validator;
                   mv.write(ch);
                   mv.validate(false);
                 } else if (validator instanceof MediaEncoder) {
-                  MediaEncoder me = (MediaEncoder)validator;
+                  MediaEncoder me = (MediaEncoder) validator;
                   me.writePrefixTo(nullOut);
                   me.write(ch, nullOut);
                   me.writeSuffixTo(nullOut, false);
@@ -239,12 +239,12 @@ public class ValidMediaInputTest {
               // The validator must also allow the valid character
               if (!validatorValid) {
                 throw new AssertionError(
-                  String.format(
-                    "canonical (%s) allows valid character that validator (%s) did not: 0x%X",
-                    canonical.getClass().getSimpleName(),
-                    validator.getClass().getSimpleName(),
-                    c
-                  )
+                    String.format(
+                        "canonical (%s) allows valid character that validator (%s) did not: 0x%X",
+                        canonical.getClass().getSimpleName(),
+                        validator.getClass().getSimpleName(),
+                        c
+                    )
                 );
               }
             }
@@ -254,7 +254,7 @@ public class ValidMediaInputTest {
           // declare the outputType in canSkipValidation
           boolean overlap = true;
           for (int c = Character.MIN_VALUE; c <= Character.MAX_VALUE; c++) {
-            char ch = (char)c;
+            char ch = (char) c;
             boolean canonicalValid;
             try {
               canonical.write(ch);
@@ -268,11 +268,11 @@ public class ValidMediaInputTest {
               boolean validatorValid;
               try {
                 if (validator instanceof MediaValidator) {
-                  MediaValidator mv = (MediaValidator)validator;
+                  MediaValidator mv = (MediaValidator) validator;
                   mv.append(ch);
                   mv.validate(false);
                 } else if (validator instanceof MediaEncoder) {
-                  MediaEncoder me = (MediaEncoder)validator;
+                  MediaEncoder me = (MediaEncoder) validator;
                   me.writePrefixTo(nullOut);
                   me.append(ch, nullOut);
                   me.writeSuffixTo(nullOut, false);
@@ -292,13 +292,13 @@ public class ValidMediaInputTest {
           }
           if (overlap) {
             throw new AssertionError(
-              String.format(
-                "All valid characters in canonical (%s) are also valid in validator (%s), "
-                + "validator should also declare this media type in canSkipValidation(outputType = %s)",
-                canonical.getClass().getSimpleName(),
-                validator.getClass().getSimpleName(),
-                outputType.name()
-              )
+                String.format(
+                    "All valid characters in canonical (%s) are also valid in validator (%s), "
+                        + "validator should also declare this media type in canSkipValidation(outputType = %s)",
+                    canonical.getClass().getSimpleName(),
+                    validator.getClass().getSimpleName(),
+                    outputType.name()
+                )
             );
           }
         }

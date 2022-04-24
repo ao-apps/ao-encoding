@@ -51,13 +51,13 @@ public final class MysqlWriter extends WhitespaceWriter implements Text, Mysql {
    *                 will only be called to be idempotent, implementation can assume will only be called once.
    */
   public MysqlWriter(
-    EncodingContext encodingContext,
-    MediaEncoder encoder,
-    Writer out,
-    boolean outOptimized,
-    Whitespace indentDelegate,
-    Predicate<? super MediaWriter> isNoClose,
-    IOConsumer<? super MediaWriter> closer
+      EncodingContext encodingContext,
+      MediaEncoder encoder,
+      Writer out,
+      boolean outOptimized,
+      Whitespace indentDelegate,
+      Predicate<? super MediaWriter> isNoClose,
+      IOConsumer<? super MediaWriter> closer
   ) {
     super(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
   }
@@ -71,9 +71,9 @@ public final class MysqlWriter extends WhitespaceWriter implements Text, Mysql {
    * @see  #DEFAULT_CLOSER
    */
   public MysqlWriter(
-    EncodingContext encodingContext,
-    MediaEncoder encoder,
-    Writer out
+      EncodingContext encodingContext,
+      MediaEncoder encoder,
+      Writer out
   ) {
     this(encodingContext, encoder, out, false, null, DEFAULT_IS_NO_CLOSE, DEFAULT_CLOSER);
   }
@@ -208,6 +208,7 @@ public final class MysqlWriter extends WhitespaceWriter implements Text, Mysql {
   public MediaWriter encode(MediaType contentType) throws IOException {
     return super.encode(contentType);
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Whitespace - manual self-type" defaultstate="collapsed">
@@ -276,6 +277,7 @@ public final class MysqlWriter extends WhitespaceWriter implements Text, Mysql {
     super.sp(count);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Text - manual self-type" defaultstate="collapsed">
@@ -338,6 +340,7 @@ public final class MysqlWriter extends WhitespaceWriter implements Text, Mysql {
     Text.super.text(text);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Mysql - manual self-type and deprecate since not expected" defaultstate="collapsed">

@@ -63,7 +63,7 @@ public final class TextInJavaScriptEncoder extends MediaEncoder {
       // Note: This also prevents the potential closing of scripts with "</script>" or CDATA blocks with "]]>" inside strings.
       case '>': return "\\u003e";
       default:
-        if (ch<' ') {
+        if (ch < ' ') {
           return JavaScriptUtil.getUnicodeEscapeString(ch);
         }
         // No conversion necessary
@@ -92,17 +92,17 @@ public final class TextInJavaScriptEncoder extends MediaEncoder {
     for (int c = off; c < end; c++) {
       String escaped = getEscapedCharacter(cbuf[c]);
       if (escaped != null) {
-        if (toPrint>0) {
-          out.write(cbuf, c-toPrint, toPrint);
-          toPrint=0;
+        if (toPrint > 0) {
+          out.write(cbuf, c - toPrint, toPrint);
+          toPrint = 0;
         }
         out.write(escaped);
       } else {
         toPrint++;
       }
     }
-    if (toPrint>0) {
-      out.write(cbuf, end-toPrint, toPrint);
+    if (toPrint > 0) {
+      out.write(cbuf, end - toPrint, toPrint);
     }
   }
 
@@ -170,10 +170,10 @@ public final class TextInJavaScriptEncoder extends MediaEncoder {
   @Override
   public boolean isValidatingMediaInputType(MediaType inputType) {
     return
-      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in JAVASCRIPT
-      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in JAVASCRIPT
-      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in JAVASCRIPT
-      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in JAVASCRIPT
+        inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in JAVASCRIPT
+            || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in JAVASCRIPT
+            || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in JAVASCRIPT
+            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in JAVASCRIPT
     ;
   }
 
@@ -195,7 +195,7 @@ public final class TextInJavaScriptEncoder extends MediaEncoder {
 
   @Override
   public void write(int c, Writer out) throws IOException {
-    encodeTextInJavascript((char)c, out);
+    encodeTextInJavascript((char) c, out);
   }
 
   @Override
@@ -221,7 +221,7 @@ public final class TextInJavaScriptEncoder extends MediaEncoder {
     if (str == null) {
       throw new IllegalArgumentException("str is null");
     }
-    encodeTextInJavascript(str, off, off+len, out);
+    encodeTextInJavascript(str, off, off + len, out);
   }
 
   @Override

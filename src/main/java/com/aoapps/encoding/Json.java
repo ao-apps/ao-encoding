@@ -131,6 +131,7 @@ public interface Json extends Encode {
   @Deprecated
   @Override
   MediaWriter encode(MediaType contentType) throws IOException;
+
   // </editor-fold>
 
   // <editor-fold desc="Json - definition" defaultstate="collapsed">
@@ -277,7 +278,7 @@ public interface Json extends Encode {
    *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
    */
   default JsonWriter json() throws IOException {
-    return (JsonWriter)encode(MediaType.JSON);
+    return (JsonWriter) encode(MediaType.JSON);
   }
   // </editor-fold>
 }

@@ -51,13 +51,13 @@ public final class UrlWriter extends MediaWriter implements Url {
    *                 will only be called to be idempotent, implementation can assume will only be called once.
    */
   public UrlWriter(
-    EncodingContext encodingContext,
-    MediaEncoder encoder,
-    Writer out,
-    boolean outOptimized,
-    Whitespace indentDelegate,
-    Predicate<? super MediaWriter> isNoClose,
-    IOConsumer<? super MediaWriter> closer
+      EncodingContext encodingContext,
+      MediaEncoder encoder,
+      Writer out,
+      boolean outOptimized,
+      Whitespace indentDelegate,
+      Predicate<? super MediaWriter> isNoClose,
+      IOConsumer<? super MediaWriter> closer
   ) {
     super(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
   }
@@ -71,9 +71,9 @@ public final class UrlWriter extends MediaWriter implements Url {
    * @see  #DEFAULT_CLOSER
    */
   public UrlWriter(
-    EncodingContext encodingContext,
-    MediaEncoder encoder,
-    Writer out
+      EncodingContext encodingContext,
+      MediaEncoder encoder,
+      Writer out
   ) {
     this(encodingContext, encoder, out, false, null, DEFAULT_IS_NO_CLOSE, DEFAULT_CLOSER);
   }
@@ -208,6 +208,7 @@ public final class UrlWriter extends MediaWriter implements Url {
   public MediaWriter encode(MediaType contentType) throws IOException {
     return super.encode(contentType);
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Url - manual self-type and deprecate since not expected" defaultstate="collapsed">

@@ -131,6 +131,7 @@ public interface Mysql extends Encode {
   @Deprecated
   @Override
   MediaWriter encode(MediaType contentType) throws IOException;
+
   // </editor-fold>
 
   // <editor-fold desc="Mysql - definition" defaultstate="collapsed">
@@ -276,7 +277,7 @@ public interface Mysql extends Encode {
    *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
    */
   default MysqlWriter mysql() throws IOException {
-    return (MysqlWriter)encode(MediaType.MYSQL);
+    return (MysqlWriter) encode(MediaType.MYSQL);
   }
   // </editor-fold>
 }

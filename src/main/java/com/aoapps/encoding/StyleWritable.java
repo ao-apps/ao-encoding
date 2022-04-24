@@ -38,7 +38,7 @@ public interface StyleWritable<Ex extends Throwable> extends WhitespaceWritable<
   @Override
   default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
     if (writer instanceof StyleWriter) {
-      writeTo((StyleWriter)writer);
+      writeTo((StyleWriter) writer);
     } else {
       throw new AssertionError("Expected " + StyleWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
     }

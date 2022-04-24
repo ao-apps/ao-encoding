@@ -38,7 +38,7 @@ public interface UrlWritable<Ex extends Throwable> extends MediaWritable<Ex> {
   @Override
   default void writeTo(MediaWriter writer) throws IOException, Ex {
     if (writer instanceof UrlWriter) {
-      writeTo((UrlWriter)writer);
+      writeTo((UrlWriter) writer);
     } else {
       throw new AssertionError("Expected " + UrlWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
     }

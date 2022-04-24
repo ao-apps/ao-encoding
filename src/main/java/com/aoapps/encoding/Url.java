@@ -132,6 +132,7 @@ public interface Url extends Encode {
   @Deprecated
   @Override
   MediaWriter encode(MediaType contentType) throws IOException;
+
   // </editor-fold>
 
   // <editor-fold desc="Url - definition" defaultstate="collapsed">
@@ -287,7 +288,7 @@ public interface Url extends Encode {
    *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
    */
   default UrlWriter url() throws IOException {
-    return (UrlWriter)encode(MediaType.URL);
+    return (UrlWriter) encode(MediaType.URL);
   }
   // </editor-fold>
 }

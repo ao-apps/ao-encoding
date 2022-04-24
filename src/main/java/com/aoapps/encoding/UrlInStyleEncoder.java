@@ -57,18 +57,18 @@ public class UrlInStyleEncoder extends BufferedEncoder {
   @Override
   public boolean isValidatingMediaInputType(MediaType inputType) {
     return
-      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL in CSS
-      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in CSS
-      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in CSS
-      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in CSS
-      || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in CSS
+        inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL in CSS
+            || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in CSS
+            || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in CSS
+            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in CSS
+            || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in CSS
     ;
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-      outputType == MediaType.URL // All valid characters in URL are also valid in URL in CSS
+        outputType == MediaType.URL // All valid characters in URL are also valid in URL in CSS
     ;
   }
 
@@ -89,6 +89,7 @@ public class UrlInStyleEncoder extends BufferedEncoder {
    * Precomputed escapes for the expected case of encoding matching {@link EncodingContext#DEFAULT}
    */
   private static final String[] DEFAULT_ESCAPES = new String[END_ENCODE + 1 - BEGIN_ENCODE];
+
   static {
     String charsetName = EncodingContext.DEFAULT.getCharacterEncoding().name();
     try {
@@ -119,9 +120,9 @@ public class UrlInStyleEncoder extends BufferedEncoder {
     for (int i = 0; i < len; i++) {
       char ch = encoded.charAt(i);
       if (
-        (ch >= BEGIN_ENCODE && ch <= END_ENCODE)
-        || ch == '\uFFFE'
-        || ch == '\uFFFF'
+          (ch >= BEGIN_ENCODE && ch <= END_ENCODE)
+              || ch == '\uFFFE'
+              || ch == '\uFFFF'
       ) {
         StringBuilder sb = new StringBuilder(len + (len - i) * 2); // Enough room should all additional characters need to be %HH encoded
         sb.append(encoded, 0, i);

@@ -42,23 +42,23 @@ import javax.annotation.concurrent.ThreadSafe;
 @Immutable
 public enum Serialization {
   SGML {
-    @Override
-    public String getContentType() {
-      return ContentType.HTML;
-    }
+  @Override
+  public String getContentType() {
+    return ContentType.HTML;
+  }
 
-    @Override
-    public String getSelfClose() {
-      return ">";
-    }
+  @Override
+  public String getSelfClose() {
+    return ">";
+  }
 
-    // Override to write single character instead of string
-    @Override
-    public Serialization selfClose(Appendable out) throws IOException {
-      out.append('>');
-      return this;
-    }
-  },
+  // Override to write single character instead of string
+  @Override
+  public Serialization selfClose(Appendable out) throws IOException {
+    out.append('>');
+    return this;
+  }
+},
   XML {
     @Override
     public String getContentType() {
@@ -127,9 +127,9 @@ public enum Serialization {
               // No q parameter parsing for */*
               hasAcceptStarStar = true;
             } else if (
-              // Parse and check the q for these two types
-              acceptType.equalsIgnoreCase(ContentType.XHTML)
-              || acceptType.equalsIgnoreCase(ContentType.HTML)
+                // Parse and check the q for these two types
+                acceptType.equalsIgnoreCase(ContentType.XHTML)
+                    || acceptType.equalsIgnoreCase(ContentType.HTML)
             ) {
               // Find any q value
               boolean hasNegativeQ = false;
@@ -189,7 +189,7 @@ public enum Serialization {
 
   public static Serialization select(Enumeration<? extends String> acceptHeaderValues) {
     return select(
-      new EnumerationIterator<>(acceptHeaderValues)
+        new EnumerationIterator<>(acceptHeaderValues)
     );
   }
 }

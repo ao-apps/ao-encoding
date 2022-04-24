@@ -38,7 +38,7 @@ public interface JavaScriptWritable<Ex extends Throwable> extends WhitespaceWrit
   @Override
   default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
     if (writer instanceof JavaScriptWriter) {
-      writeTo((JavaScriptWriter)writer);
+      writeTo((JavaScriptWriter) writer);
     } else {
       throw new AssertionError("Expected " + JavaScriptWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
     }

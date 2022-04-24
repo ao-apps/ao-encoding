@@ -40,10 +40,11 @@ public class MediaEncoderTest {
     private final MediaValidator canonical;
     private final MediaEncoder encoder;
     private final char ch;
+
     private NoInvalidAllowedAppendable(
-      MediaValidator canonical,
-      MediaEncoder encoder,
-      char ch
+        MediaValidator canonical,
+        MediaEncoder encoder,
+        char ch
     ) {
       this.canonical = canonical;
       this.encoder = encoder;
@@ -57,14 +58,14 @@ public class MediaEncoderTest {
       } catch (IOException e) {
         assert e instanceof InvalidCharacterException;
         throw new AssertionError(
-          String.format(
-            "encoder (%s) wrote invalid output for character 0x%X that canonical (%s) caught: 0x%X",
-            encoder.getClass().getSimpleName(),
-            (int)ch,
-            canonical.getClass().getSimpleName(),
-            (int)c
-          ),
-          e
+            String.format(
+                "encoder (%s) wrote invalid output for character 0x%X that canonical (%s) caught: 0x%X",
+                encoder.getClass().getSimpleName(),
+                (int) ch,
+                canonical.getClass().getSimpleName(),
+                (int) c
+            ),
+            e
         );
       }
       return this;
@@ -77,14 +78,14 @@ public class MediaEncoderTest {
       } catch (IOException e) {
         assert e instanceof InvalidCharacterException;
         throw new AssertionError(
-          String.format(
-            "encoder (%s) wrote invalid output for character 0x%X that canonical (%s) caught: %s",
-            encoder.getClass().getSimpleName(),
-            (int)ch,
-            canonical.getClass().getSimpleName(),
-            csq
-          ),
-          e
+            String.format(
+                "encoder (%s) wrote invalid output for character 0x%X that canonical (%s) caught: %s",
+                encoder.getClass().getSimpleName(),
+                (int) ch,
+                canonical.getClass().getSimpleName(),
+                csq
+            ),
+            e
         );
       }
       return this;
@@ -97,14 +98,14 @@ public class MediaEncoderTest {
       } catch (IOException e) {
         assert e instanceof InvalidCharacterException;
         throw new AssertionError(
-          String.format(
-            "encoder (%s) wrote invalid output for character 0x%X that canonical (%s) caught: %s",
-            encoder.getClass().getSimpleName(),
-            (int)ch,
-            canonical.getClass().getSimpleName(),
-            csq.subSequence(start, end)
-          ),
-          e
+            String.format(
+                "encoder (%s) wrote invalid output for character 0x%X that canonical (%s) caught: %s",
+                encoder.getClass().getSimpleName(),
+                (int) ch,
+                canonical.getClass().getSimpleName(),
+                csq.subSequence(start, end)
+            ),
+            e
         );
       }
       return this;
@@ -128,11 +129,11 @@ public class MediaEncoderTest {
           MediaEncoder encoder = MediaEncoder.getInstance(EncodingContext.DEFAULT, contentType, containerType);
           if (encoder != null) {
             for (int c = Character.MIN_VALUE; c <= Character.MAX_VALUE; c++) {
-              char ch = (char)c;
+              char ch = (char) c;
               NoInvalidAllowedAppendable noInvalidAllowed = new NoInvalidAllowedAppendable(
-                canonical,
-                encoder,
-                ch
+                  canonical,
+                  encoder,
+                  ch
               );
               // No errors should happen in writePrefixTo, all output must be valid
               try {
@@ -141,9 +142,9 @@ public class MediaEncoderTest {
               } catch (IOException e) {
                 assert e instanceof InvalidCharacterException;
                 throw new AssertionError(
-                  "Error from writePrefixTo: " + encoder.getClass().getSimpleName() + " into "
-                  + canonical.getClass().getSimpleName(),
-                  e
+                    "Error from writePrefixTo: " + encoder.getClass().getSimpleName() + " into "
+                        + canonical.getClass().getSimpleName(),
+                    e
                 );
               }
               try {
@@ -160,9 +161,9 @@ public class MediaEncoderTest {
               } catch (IOException e) {
                 assert e instanceof InvalidCharacterException;
                 throw new AssertionError(
-                  "Error from final canonical validation: " + encoder.getClass().getSimpleName() + " into "
-                  + canonical.getClass().getSimpleName(),
-                  e
+                    "Error from final canonical validation: " + encoder.getClass().getSimpleName() + " into "
+                        + canonical.getClass().getSimpleName(),
+                    e
                 );
               }
             }
@@ -194,16 +195,16 @@ public class MediaEncoderTest {
             // When no encoder is needed, it must also be skippable on canonical validator
             if (!canonical.canSkipValidation(contentType)) {
               throw new AssertionError(
-                String.format(
-                  "\"No encoder needed\" for %s into %s, but %s.canSkipValidation(%s) returned false, "
-                  + "which indicates not all valid characters in %s are valid in %s",
-                  contentType.name(),
-                  containerType.name(),
-                  canonical.getClass().getSimpleName(),
-                  contentType.name(),
-                  contentType.name(),
-                  containerType.name()
-                )
+                  String.format(
+                      "\"No encoder needed\" for %s into %s, but %s.canSkipValidation(%s) returned false, "
+                          + "which indicates not all valid characters in %s are valid in %s",
+                      contentType.name(),
+                      containerType.name(),
+                      canonical.getClass().getSimpleName(),
+                      contentType.name(),
+                      contentType.name(),
+                      containerType.name()
+                  )
               );
             }
           }

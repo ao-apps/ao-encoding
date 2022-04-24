@@ -53,12 +53,12 @@ public final class XhtmlAttributeValidator extends MediaValidator {
    */
   public static void checkCharacter(char c) throws InvalidCharacterException {
     if (
-      c == '<'
-      || c == '>'
-      || c == '\''
-      || c == '"'
-      || c < 0x20
-      || c > 0xFFFD
+        c == '<'
+            || c == '>'
+            || c == '\''
+            || c == '"'
+            || c < 0x20
+            || c > 0xFFFD
     ) {
       throw new InvalidCharacterException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
     }
@@ -88,6 +88,7 @@ public final class XhtmlAttributeValidator extends MediaValidator {
       checkCharacter(str.charAt(start++));
     }
   }
+
   // </editor-fold>
 
   XhtmlAttributeValidator(Writer out) {
@@ -102,25 +103,25 @@ public final class XhtmlAttributeValidator extends MediaValidator {
   @Override
   public boolean isValidatingMediaInputType(MediaType inputType) {
     return
-      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in XHTML_ATTRIBUTE
-      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in XHTML_ATTRIBUTE
-      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in XHTML_ATTRIBUTE
-      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in XHTML_ATTRIBUTE
-      || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in XHTML_ATTRIBUTE
-      || inputType == MediaType.XHTML_ATTRIBUTE // All invalid characters in XHTML_ATTRIBUTE are also invalid in XHTML_ATTRIBUTE
+        inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in XHTML_ATTRIBUTE
+            || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in XHTML_ATTRIBUTE
+            || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in XHTML_ATTRIBUTE
+            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in XHTML_ATTRIBUTE
+            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in XHTML_ATTRIBUTE
+            || inputType == MediaType.XHTML_ATTRIBUTE // All invalid characters in XHTML_ATTRIBUTE are also invalid in XHTML_ATTRIBUTE
     ;
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-      outputType == MediaType.XHTML_ATTRIBUTE // All valid characters in XHTML_ATTRIBUTE are also valid in XHTML_ATTRIBUTE
+        outputType == MediaType.XHTML_ATTRIBUTE // All valid characters in XHTML_ATTRIBUTE are also valid in XHTML_ATTRIBUTE
     ;
   }
 
   @Override
   public void write(int c) throws IOException {
-    checkCharacter((char)c);
+    checkCharacter((char) c);
     out.write(c);
   }
 

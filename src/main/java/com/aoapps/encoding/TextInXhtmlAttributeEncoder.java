@@ -96,17 +96,17 @@ public final class TextInXhtmlAttributeEncoder extends MediaEncoder {
     for (int c = off; c < end; c++) {
       String escaped = getEscapedCharacter(cbuf[c]);
       if (escaped != null) {
-        if (toPrint>0) {
-          out.write(cbuf, c-toPrint, toPrint);
-          toPrint=0;
+        if (toPrint > 0) {
+          out.write(cbuf, c - toPrint, toPrint);
+          toPrint = 0;
         }
         out.write(escaped);
       } else {
         toPrint++;
       }
     }
-    if (toPrint>0) {
-      out.write(cbuf, end-toPrint, toPrint);
+    if (toPrint > 0) {
+      out.write(cbuf, end - toPrint, toPrint);
     }
   }
 
@@ -171,23 +171,23 @@ public final class TextInXhtmlAttributeEncoder extends MediaEncoder {
   @Override
   public boolean isValidatingMediaInputType(MediaType inputType) {
     return
-      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in XHTML_ATTRIBUTE
-      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in XHTML_ATTRIBUTE
-      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in XHTML_ATTRIBUTE
-      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in XHTML_ATTRIBUTE
-      || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in TEXT in XHTML_ATTRIBUTE
+        inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in XHTML_ATTRIBUTE
+            || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in XHTML_ATTRIBUTE
+            || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in XHTML_ATTRIBUTE
+            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in XHTML_ATTRIBUTE
+            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in TEXT in XHTML_ATTRIBUTE
     ;
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-      outputType == MediaType.CSS // All valid characters in CSS are also valid in TEXT in XHTML_ATTRIBUTE
-      || outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in TEXT in XHTML_ATTRIBUTE
-      || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in TEXT in XHTML_ATTRIBUTE
-      || outputType == MediaType.SH // All valid characters in SH are also valid in TEXT in XHTML_ATTRIBUTE
-      || outputType == MediaType.XHTML // All valid characters in XHTML are also valid in TEXT in XHTML_ATTRIBUTE
-      || outputType == MediaType.XHTML_ATTRIBUTE // All valid characters in XHTML_ATTRIBUTE are also valid in TEXT in XHTML_ATTRIBUTE
+        outputType == MediaType.CSS // All valid characters in CSS are also valid in TEXT in XHTML_ATTRIBUTE
+            || outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in TEXT in XHTML_ATTRIBUTE
+            || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in TEXT in XHTML_ATTRIBUTE
+            || outputType == MediaType.SH // All valid characters in SH are also valid in TEXT in XHTML_ATTRIBUTE
+            || outputType == MediaType.XHTML // All valid characters in XHTML are also valid in TEXT in XHTML_ATTRIBUTE
+            || outputType == MediaType.XHTML_ATTRIBUTE // All valid characters in XHTML_ATTRIBUTE are also valid in TEXT in XHTML_ATTRIBUTE
     ;
   }
 
@@ -198,7 +198,7 @@ public final class TextInXhtmlAttributeEncoder extends MediaEncoder {
 
   @Override
   public void write(int c, Writer out) throws IOException {
-    encodeTextInXhtmlAttribute((char)c, out);
+    encodeTextInXhtmlAttribute((char) c, out);
   }
 
   @Override
@@ -224,7 +224,7 @@ public final class TextInXhtmlAttributeEncoder extends MediaEncoder {
     if (str == null) {
       throw new IllegalArgumentException("str is null");
     }
-    encodeTextInXhtmlAttribute(str, off, off+len, out);
+    encodeTextInXhtmlAttribute(str, off, off + len, out);
   }
 
   @Override

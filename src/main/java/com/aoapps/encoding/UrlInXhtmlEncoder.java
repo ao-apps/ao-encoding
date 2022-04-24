@@ -54,18 +54,18 @@ public class UrlInXhtmlEncoder extends BufferedEncoder {
   @Override
   public boolean isValidatingMediaInputType(MediaType inputType) {
     return
-      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL in XHTML
-      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in XHTML
-      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in XHTML
-      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in XHTML
-      || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in XHTML
+        inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL in XHTML
+            || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in XHTML
+            || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in XHTML
+            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in XHTML
+            || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in XHTML
     ;
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-      outputType == MediaType.URL // All valid characters in URL are also valid in URL in XHTML
+        outputType == MediaType.URL // All valid characters in URL are also valid in URL in XHTML
     ;
   }
 
@@ -75,12 +75,12 @@ public class UrlInXhtmlEncoder extends BufferedEncoder {
   }
 
   /**
-   * {@code '\uFFFE' URL-encoded in {@link EncodingContext#DEFAULT}
+   * {@code '\\uFFFE'} URL-encoded in {@link EncodingContext#DEFAULT}
    */
   static final String DEFAULT_FFFE;
 
   /**
-   * {@code '\uFFFF' URL-encoded in {@link EncodingContext#DEFAULT}
+   * {@code '\\uFFFF'} URL-encoded in {@link EncodingContext#DEFAULT}
    */
   static final String DEFAULT_FFFF;
 
@@ -113,12 +113,12 @@ public class UrlInXhtmlEncoder extends BufferedEncoder {
       Charset charset = (encodingContext == null ? EncodingContext.DEFAULT : encodingContext).getCharacterEncoding();
       String charsetName = charset.name();
       String newUrl = encoded.replace(
-        "\uFFFE",
-        (charset == EncodingContext.DEFAULT.getCharacterEncoding())
-          // Use precomputed for default charset
-          ? DEFAULT_FFFE
-          // Compute for current non-default charset
-          : URLEncoder.encode("\uFFFE", charsetName)
+          "\uFFFE",
+          (charset == EncodingContext.DEFAULT.getCharacterEncoding())
+              // Use precomputed for default charset
+              ? DEFAULT_FFFE
+              // Compute for current non-default charset
+              : URLEncoder.encode("\uFFFE", charsetName)
       );
       assert newUrl.length() > encoded.length();
       assert URLDecoder.decode(encoded, charsetName).equals(URLDecoder.decode(newUrl, charsetName));
@@ -128,12 +128,12 @@ public class UrlInXhtmlEncoder extends BufferedEncoder {
       Charset charset = (encodingContext == null ? EncodingContext.DEFAULT : encodingContext).getCharacterEncoding();
       String charsetName = charset.name();
       String newUrl = encoded.replace(
-        "\uFFFF",
-        (charset == EncodingContext.DEFAULT.getCharacterEncoding())
-          // Use precomputed for default charset
-          ? DEFAULT_FFFF
-          // Compute for current non-default charset
-          : URLEncoder.encode("\uFFFF", charset.name())
+          "\uFFFF",
+          (charset == EncodingContext.DEFAULT.getCharacterEncoding())
+              // Use precomputed for default charset
+              ? DEFAULT_FFFF
+              // Compute for current non-default charset
+              : URLEncoder.encode("\uFFFF", charset.name())
       );
       assert newUrl.length() > encoded.length();
       assert URLDecoder.decode(encoded, charsetName).equals(URLDecoder.decode(newUrl, charsetName));

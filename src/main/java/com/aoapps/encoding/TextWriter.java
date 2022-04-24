@@ -51,13 +51,13 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
    *                 will only be called to be idempotent, implementation can assume will only be called once.
    */
   public TextWriter(
-    EncodingContext encodingContext,
-    MediaEncoder encoder,
-    Writer out,
-    boolean outOptimized,
-    Whitespace indentDelegate,
-    Predicate<? super MediaWriter> isNoClose,
-    IOConsumer<? super MediaWriter> closer
+      EncodingContext encodingContext,
+      MediaEncoder encoder,
+      Writer out,
+      boolean outOptimized,
+      Whitespace indentDelegate,
+      Predicate<? super MediaWriter> isNoClose,
+      IOConsumer<? super MediaWriter> closer
   ) {
     super(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
   }
@@ -71,9 +71,9 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
    * @see  #DEFAULT_CLOSER
    */
   public TextWriter(
-    EncodingContext encodingContext,
-    MediaEncoder encoder,
-    Writer out
+      EncodingContext encodingContext,
+      MediaEncoder encoder,
+      Writer out
   ) {
     this(encodingContext, encoder, out, false, null, DEFAULT_IS_NO_CLOSE, DEFAULT_CLOSER);
   }
@@ -208,6 +208,7 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
   public MediaWriter encode(MediaType contentType) throws IOException {
     return super.encode(contentType);
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Whitespace - manual self-type" defaultstate="collapsed">
@@ -276,6 +277,7 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
     super.sp(count);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Xhtml - manual self-type" defaultstate="collapsed">
@@ -326,6 +328,7 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
     Xhtml.super.xhtml(xhtml);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="XhtmlAttribute - manual self-type" defaultstate="collapsed">
@@ -376,6 +379,7 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
     XhtmlAttribute.super.xhtmlAttribute(xhtmlAttribute);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Style - manual self-type" defaultstate="collapsed">
@@ -426,6 +430,7 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
     Style.super.style(style);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="JavaScript - manual self-type" defaultstate="collapsed">
@@ -476,6 +481,7 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
     JavaScript.super.javascript(javascript);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Json - manual self-type" defaultstate="collapsed">
@@ -526,6 +532,7 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
     Json.super.json(json);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="LdJson - manual self-type" defaultstate="collapsed">
@@ -576,6 +583,7 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
     LdJson.super.ldJson(ldJson);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Text - manual self-type and deprecate since not expected" defaultstate="collapsed">
@@ -697,6 +705,7 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
   public TextWriter text() throws IOException {
     return Text.super.text();
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Url - manual self-type" defaultstate="collapsed">
@@ -747,6 +756,7 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
     Url.super.url(url);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Sh - manual self-type" defaultstate="collapsed">
@@ -797,6 +807,7 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
     Sh.super.sh(sh);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Mysql - manual self-type" defaultstate="collapsed">
@@ -847,6 +858,7 @@ public final class TextWriter extends WhitespaceWriter implements Xhtml, XhtmlAt
     Mysql.super.mysql(mysql);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Psql - manual self-type" defaultstate="collapsed">

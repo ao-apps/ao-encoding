@@ -78,8 +78,8 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
     final MediaValidator mvTemp;
     final MediaValidator inputValidator;
     if (
-      out instanceof MediaValidator
-      && (mvTemp = (MediaValidator)out).isValidatingMediaInputType(contentType)
+        out instanceof MediaValidator
+            && (mvTemp = (MediaValidator) out).isValidatingMediaInputType(contentType)
     ) {
       inputValidator = mvTemp;
     } else {
@@ -118,10 +118,10 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
           throw new AssertionError(RESOURCES.getMessage("unableToFindValidator", contentType.getContentType()));
       }
       assert inputValidator.getValidMediaInputType() == contentType :
-        "inputValidator.getValidMediaInputType() != contentType: " + inputValidator.getValidMediaInputType().name() + " != " + contentType.name();
+          "inputValidator.getValidMediaInputType() != contentType: " + inputValidator.getValidMediaInputType().name() + " != " + contentType.name();
     }
     assert inputValidator.isValidatingMediaInputType(contentType) :
-      "inputValidator = " + inputValidator.getClass().getName() + " is not validating contentType = " + contentType.name();
+        "inputValidator = " + inputValidator.getClass().getName() + " is not validating contentType = " + contentType.name();
     return inputValidator;
   }
 
@@ -132,9 +132,9 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
     Writer optimized = Coercion.optimize(out, null);
     // Maintain NoClose
     if (
-      optimized != out
-      &&  (out       instanceof NoClose && ((NoClose)out      ).isNoClose()) // original   isNoClose
-      && !(optimized instanceof NoClose && ((NoClose)optimized).isNoClose()) // optimized !isNoClose
+        optimized != out
+            &&  (out       instanceof NoClose && ((NoClose) out      ).isNoClose()) // original   isNoClose
+            && !(optimized instanceof NoClose && ((NoClose) optimized).isNoClose()) // optimized !isNoClose
     ) {
       // Requires wrapping
       optimized = NoCloseMediaValidator.wrap(optimized);
@@ -164,7 +164,7 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
 
   @Override
   public boolean isNoClose() {
-    return (out instanceof NoClose) && ((NoClose)out).isNoClose();
+    return (out instanceof NoClose) && ((NoClose) out).isNoClose();
   }
 
   /**
@@ -243,20 +243,20 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
     // Unwrap out to avoid unnecessary validation of known valid output
     Coercion.registerOptimizer((Writer out, Encoder encoder) -> {
       if (encoder instanceof MediaEncoder) {
-        MediaEncoder mediaEncoder = (MediaEncoder)encoder;
+        MediaEncoder mediaEncoder = (MediaEncoder) encoder;
         assert Assertions.isValidating(out, mediaEncoder.getValidMediaOutputType());
         if (out instanceof MediaValidator) {
-          MediaValidator validator = (MediaValidator)out;
+          MediaValidator validator = (MediaValidator) out;
           if (validator.canSkipValidation(mediaEncoder.getValidMediaOutputType())) {
             // Can skip validation, write directly to the wrapped output through the encoder
             if (logger.isLoggable(Level.FINER)) {
               logger.finer(
-                "Skipping validation of " + mediaEncoder.getValidMediaOutputType()
-                + " into " + validator.getValidMediaInputType()
+                  "Skipping validation of " + mediaEncoder.getValidMediaOutputType()
+                      + " into " + validator.getValidMediaInputType()
               );
             }
             Writer newOut = validator.getOut();
-            assert !validator.isNoClose() || (newOut instanceof NoClose && ((NoClose)newOut).isNoClose()) : "NoClose must have been maintained during optimized wrapping";
+            assert !validator.isNoClose() || (newOut instanceof NoClose && ((NoClose) newOut).isNoClose()) : "NoClose must have been maintained during optimized wrapping";
             return newOut;
           }
         }

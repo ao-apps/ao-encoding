@@ -131,6 +131,7 @@ public interface Psql extends Encode {
   @Deprecated
   @Override
   MediaWriter encode(MediaType contentType) throws IOException;
+
   // </editor-fold>
 
   // <editor-fold desc="Psql - definition" defaultstate="collapsed">
@@ -276,7 +277,7 @@ public interface Psql extends Encode {
    *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
    */
   default PsqlWriter psql() throws IOException {
-    return (PsqlWriter)encode(MediaType.PSQL);
+    return (PsqlWriter) encode(MediaType.PSQL);
   }
   // </editor-fold>
 }

@@ -54,12 +54,12 @@ public final class StyleValidator extends MediaValidator {
    */
   public static void checkCharacter(char c) throws InvalidCharacterException {
     if (
-      (c < 0x20 || c > 0x7E) // common case first
-      && c != '\t'
-      && c != '\n'
-      && c != '\r'
-      // 7F to 9F - control characters
-      && (c < 0xA0 || c > 0xFFFD)
+        (c < 0x20 || c > 0x7E) // common case first
+            && c != '\t'
+            && c != '\n'
+            && c != '\r'
+            // 7F to 9F - control characters
+            && (c < 0xA0 || c > 0xFFFD)
     ) {
       throw new InvalidCharacterException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
     }
@@ -91,6 +91,7 @@ public final class StyleValidator extends MediaValidator {
       checkCharacter(str.charAt(start++));
     }
   }
+
   // </editor-fold>
 
   StyleValidator(Writer out) {
@@ -105,28 +106,28 @@ public final class StyleValidator extends MediaValidator {
   @Override
   public boolean isValidatingMediaInputType(MediaType inputType) {
     return
-      inputType == MediaType.CSS // All invalid characters in CSS are also invalid in CSS
-      || inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in CSS
-      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in CSS
-      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in CSS
-      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in CSS
-      || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS
+        inputType == MediaType.CSS // All invalid characters in CSS are also invalid in CSS
+            || inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in CSS
+            || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in CSS
+            || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in CSS
+            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in CSS
+            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS
     ;
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-      outputType == MediaType.CSS // All valid characters in CSS are also valid in CSS
-      || outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in CSS
-      || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in CSS
-      || outputType == MediaType.SH // All valid characters in SH are also valid in CSS
+        outputType == MediaType.CSS // All valid characters in CSS are also valid in CSS
+            || outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in CSS
+            || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in CSS
+            || outputType == MediaType.SH // All valid characters in SH are also valid in CSS
     ;
   }
 
   @Override
   public void write(int c) throws IOException {
-    checkCharacter((char)c);
+    checkCharacter((char) c);
     out.write(c);
   }
 

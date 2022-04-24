@@ -50,10 +50,10 @@ public final class JavaScriptValidator extends MediaValidator {
   @Override
   public boolean isValidatingMediaInputType(MediaType inputType) {
     return
-      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in JAVASCRIPT
-      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in JAVASCRIPT
-      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in JAVASCRIPT
-      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT
+        inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in JAVASCRIPT
+            || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in JAVASCRIPT
+            || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in JAVASCRIPT
+            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT
     ;
   }
 

@@ -38,7 +38,7 @@ public interface WhitespaceWritable<Ex extends Throwable> extends MediaWritable<
   @Override
   default void writeTo(MediaWriter writer) throws IOException, Ex {
     if (writer instanceof WhitespaceWriter) {
-      writeTo((WhitespaceWriter)writer);
+      writeTo((WhitespaceWriter) writer);
     } else {
       throw new AssertionError("Expected " + WhitespaceWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
     }

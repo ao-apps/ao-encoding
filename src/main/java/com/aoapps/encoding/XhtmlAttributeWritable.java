@@ -38,7 +38,7 @@ public interface XhtmlAttributeWritable<Ex extends Throwable> extends Whitespace
   @Override
   default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
     if (writer instanceof XhtmlAttributeWriter) {
-      writeTo((XhtmlAttributeWriter)writer);
+      writeTo((XhtmlAttributeWriter) writer);
     } else {
       throw new AssertionError("Expected " + XhtmlAttributeWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
     }

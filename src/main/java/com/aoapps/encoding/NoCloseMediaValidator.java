@@ -55,7 +55,7 @@ public final class NoCloseMediaValidator extends MediaValidator {
   @SuppressWarnings("unchecked")
   public static <W extends Writer & NoClose> W wrap(Writer out) {
     if (out instanceof MediaValidator) {
-      return (W)wrap((MediaValidator)out);
+      return (W) wrap((MediaValidator) out);
     }
     return NoCloseWriter.wrap(out);
   }

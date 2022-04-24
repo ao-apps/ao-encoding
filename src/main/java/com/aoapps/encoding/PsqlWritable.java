@@ -38,7 +38,7 @@ public interface PsqlWritable<Ex extends Throwable> extends WhitespaceWritable<E
   @Override
   default void writeTo(WhitespaceWriter writer) throws IOException, Ex {
     if (writer instanceof PsqlWriter) {
-      writeTo((PsqlWriter)writer);
+      writeTo((PsqlWriter) writer);
     } else {
       throw new AssertionError("Expected " + PsqlWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
     }

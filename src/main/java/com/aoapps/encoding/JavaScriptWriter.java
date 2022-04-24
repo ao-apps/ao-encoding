@@ -51,13 +51,13 @@ public class JavaScriptWriter extends WhitespaceWriter implements JavaScript, Js
    *                 will only be called to be idempotent, implementation can assume will only be called once.
    */
   public JavaScriptWriter(
-    EncodingContext encodingContext,
-    MediaEncoder encoder,
-    Writer out,
-    boolean outOptimized,
-    Whitespace indentDelegate,
-    Predicate<? super MediaWriter> isNoClose,
-    IOConsumer<? super MediaWriter> closer
+      EncodingContext encodingContext,
+      MediaEncoder encoder,
+      Writer out,
+      boolean outOptimized,
+      Whitespace indentDelegate,
+      Predicate<? super MediaWriter> isNoClose,
+      IOConsumer<? super MediaWriter> closer
   ) {
     super(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
   }
@@ -71,9 +71,9 @@ public class JavaScriptWriter extends WhitespaceWriter implements JavaScript, Js
    * @see  #DEFAULT_CLOSER
    */
   public JavaScriptWriter(
-    EncodingContext encodingContext,
-    MediaEncoder encoder,
-    Writer out
+      EncodingContext encodingContext,
+      MediaEncoder encoder,
+      Writer out
   ) {
     this(encodingContext, encoder, out, false, null, DEFAULT_IS_NO_CLOSE, DEFAULT_CLOSER);
   }
@@ -208,6 +208,7 @@ public class JavaScriptWriter extends WhitespaceWriter implements JavaScript, Js
   public MediaWriter encode(MediaType contentType) throws IOException {
     return super.encode(contentType);
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Whitespace - manual self-type" defaultstate="collapsed">
@@ -276,6 +277,7 @@ public class JavaScriptWriter extends WhitespaceWriter implements JavaScript, Js
     super.sp(count);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="JavaScript - manual self-type and deprecate since not expected" defaultstate="collapsed">
@@ -385,6 +387,7 @@ public class JavaScriptWriter extends WhitespaceWriter implements JavaScript, Js
   public JavaScriptWriter javascript() throws IOException {
     return JavaScript.super.javascript();
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Json - manual self-type and deprecate since not expected" defaultstate="collapsed">
@@ -494,6 +497,7 @@ public class JavaScriptWriter extends WhitespaceWriter implements JavaScript, Js
   public JsonWriter json() throws IOException {
     return Json.super.json();
   }
+
   // </editor-fold>
 
   // <editor-fold desc="LdJson - manual self-type and deprecate since not expected" defaultstate="collapsed">
@@ -603,6 +607,7 @@ public class JavaScriptWriter extends WhitespaceWriter implements JavaScript, Js
   public LdJsonWriter ldJson() throws IOException {
     return LdJson.super.ldJson();
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Text - manual self-type" defaultstate="collapsed">
@@ -665,6 +670,7 @@ public class JavaScriptWriter extends WhitespaceWriter implements JavaScript, Js
     Text.super.text(text);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold desc="Url - manual self-type" defaultstate="collapsed">

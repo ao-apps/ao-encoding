@@ -40,7 +40,8 @@ final class JavaScriptUtil {
     throw new AssertionError();
   }
 
-  private static final char[] hexChars={'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+  private static final char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
   private static char getHex(int value) {
     return hexChars[value & 15];
   }
@@ -58,16 +59,17 @@ final class JavaScriptUtil {
   // 0xFFFE <= ch < 0x10000
   private static final String FFFE = "\\ufffe";
   private static final String FFFF = "\\uffff";
+
   static {
     for (int ch = 0; ch < ENCODE_RANGE_1_END; ch++) {
       // Escape using JavaScript unicode escape.
       javascriptUnicodeEscapeStrings1[ch] =
-        ("\\u" + getHex(ch >>> 12) + getHex(ch >>> 8) + getHex(ch >>> 4) + getHex(ch)).intern();
+          ("\\u" + getHex(ch >>> 12) + getHex(ch >>> 8) + getHex(ch >>> 4) + getHex(ch)).intern();
     }
     for (int ch = ENCODE_RANGE_2_START; ch < ENCODE_RANGE_2_END; ch++) {
       // Escape using JavaScript unicode escape.
       javascriptUnicodeEscapeStrings2[ch - ENCODE_RANGE_2_START] =
-        ("\\u" + getHex(ch >>> 12) + getHex(ch >>> 8) + getHex(ch >>> 4) + getHex(ch)).intern();
+          ("\\u" + getHex(ch >>> 12) + getHex(ch >>> 8) + getHex(ch >>> 4) + getHex(ch)).intern();
     }
     assert 0xfffe >= ENCODE_RANGE_2_END;
   }

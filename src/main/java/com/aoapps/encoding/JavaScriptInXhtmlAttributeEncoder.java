@@ -84,17 +84,17 @@ public final class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
     for (int c = off; c < end; c++) {
       String escaped = getEscapedCharacter(cbuf[c]);
       if (escaped != null) {
-        if (toPrint>0) {
-          out.write(cbuf, c-toPrint, toPrint);
-          toPrint=0;
+        if (toPrint > 0) {
+          out.write(cbuf, c - toPrint, toPrint);
+          toPrint = 0;
         }
         out.write(escaped);
       } else {
         toPrint++;
       }
     }
-    if (toPrint>0) {
-      out.write(cbuf, end-toPrint, toPrint);
+    if (toPrint > 0) {
+      out.write(cbuf, end - toPrint, toPrint);
     }
   }
 
@@ -146,10 +146,10 @@ public final class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
   @Override
   public boolean isValidatingMediaInputType(MediaType inputType) {
     return
-      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
-      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
-      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
-      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
+        inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
+            || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
+            || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
+            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
     ;
   }
 
@@ -165,7 +165,7 @@ public final class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
 
   @Override
   public void write(int c, Writer out) throws IOException {
-    encodeJavascriptInXhtmlAttribute((char)c, out);
+    encodeJavascriptInXhtmlAttribute((char) c, out);
   }
 
   @Override
@@ -191,7 +191,7 @@ public final class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
     if (str == null) {
       throw new IllegalArgumentException("str is null");
     }
-    encodeJavascriptInXhtmlAttribute(str, off, off+len, out);
+    encodeJavascriptInXhtmlAttribute(str, off, off + len, out);
   }
 
   @Override

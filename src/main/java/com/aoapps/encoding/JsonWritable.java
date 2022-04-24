@@ -38,7 +38,7 @@ public interface JsonWritable<Ex extends Throwable> extends JavaScriptWritable<E
   @Override
   default void writeTo(JavaScriptWriter writer) throws IOException, Ex {
     if (writer instanceof JsonWriter) {
-      writeTo((JsonWriter)writer);
+      writeTo((JsonWriter) writer);
     } else {
       throw new AssertionError("Expected " + JsonWriter.class.getName() + ", got " + (writer == null ? null : writer.getClass().getName()));
     }

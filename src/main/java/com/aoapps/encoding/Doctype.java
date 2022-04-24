@@ -39,33 +39,33 @@ import javax.annotation.concurrent.ThreadSafe;
 public enum Doctype {
   // See http://www.ibm.com/developerworks/library/x-think45/
   HTML5 {
-    @Override
-    public String getDoctype(Serialization serialization) {
-      return "<!DOCTYPE html>" + Whitespace.NL;
-    }
-    @Override
-    public String getScriptType() {
-      return "";
-    }
-    @Override
-    public Doctype scriptType(Appendable out) throws IOException {
-      // Do nothing
-      return this;
-    }
-    @Override
-    public String getStyleType() {
-      return "";
-    }
-    @Override
-    public Doctype styleType(Appendable out) throws IOException {
-      // Do nothing
-      return this;
-    }
-    @Override
-    public boolean supportsIRI() {
-      return true;
-    }
-  },
+  @Override
+  public String getDoctype(Serialization serialization) {
+    return "<!DOCTYPE html>" + Whitespace.NL;
+  }
+  @Override
+  public String getScriptType() {
+    return "";
+  }
+  @Override
+  public Doctype scriptType(Appendable out) throws IOException {
+    // Do nothing
+    return this;
+  }
+  @Override
+  public String getStyleType() {
+    return "";
+  }
+  @Override
+  public Doctype styleType(Appendable out) throws IOException {
+    // Do nothing
+    return this;
+  }
+  @Override
+  public boolean supportsIRI() {
+    return true;
+  }
+},
   STRICT {
     @Override
     public String getDoctype(Serialization serialization) {
@@ -189,8 +189,8 @@ public enum Doctype {
 
   private static boolean isUTF8(String documentEncoding) {
     return
-      StandardCharsets.UTF_8.name().equalsIgnoreCase(documentEncoding)
-      || Charset.forName(documentEncoding) == StandardCharsets.UTF_8;
+        StandardCharsets.UTF_8.name().equalsIgnoreCase(documentEncoding)
+            || Charset.forName(documentEncoding) == StandardCharsets.UTF_8;
   }
 
   public String getXmlDeclaration(Serialization serialization, String documentEncoding) {

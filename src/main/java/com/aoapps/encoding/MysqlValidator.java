@@ -48,11 +48,11 @@ public final class MysqlValidator extends MediaValidator {
    */
   public static void checkCharacter(char c) throws InvalidCharacterException {
     if (
-      (c < 0x20 || c > 0x7E) // common case first
-      && c != '\t'
-      && c != '\n'
-      // 7F to 9F - control characters
-      && (c < 0xA0 || c > 0xFFFD)
+        (c < 0x20 || c > 0x7E) // common case first
+            && c != '\t'
+            && c != '\n'
+            // 7F to 9F - control characters
+            && (c < 0xA0 || c > 0xFFFD)
     ) {
       throw new InvalidCharacterException(RESOURCES, "invalidCharacter", Integer.toHexString(c));
     }
@@ -82,6 +82,7 @@ public final class MysqlValidator extends MediaValidator {
       checkCharacter(str.charAt(start++));
     }
   }
+
   // </editor-fold>
 
   MysqlValidator(Writer out) {
@@ -96,30 +97,30 @@ public final class MysqlValidator extends MediaValidator {
   @Override
   public boolean isValidatingMediaInputType(MediaType inputType) {
     return
-      inputType == MediaType.CSS // All invalid characters in CSS are also invalid in MYSQL
-      || inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in MYSQL
-      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in MYSQL
-      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in MYSQL
-      || inputType == MediaType.MYSQL // All invalid characters in MYSQL are also invalid in MYSQL
-      || inputType == MediaType.PSQL // All invalid characters in PSQL are also invalid in MYSQL
-      || inputType == MediaType.SH // All invalid characters in SH are also invalid in MYSQL
-      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in MYSQL
-      || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in MYSQL
+        inputType == MediaType.CSS // All invalid characters in CSS are also invalid in MYSQL
+            || inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in MYSQL
+            || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in MYSQL
+            || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in MYSQL
+            || inputType == MediaType.MYSQL // All invalid characters in MYSQL are also invalid in MYSQL
+            || inputType == MediaType.PSQL // All invalid characters in PSQL are also invalid in MYSQL
+            || inputType == MediaType.SH // All invalid characters in SH are also invalid in MYSQL
+            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in MYSQL
+            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in MYSQL
     ;
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-      outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in MYSQL
-      || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in MYSQL
-      || outputType == MediaType.SH // All valid characters in SH are also valid in MYSQL
+        outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in MYSQL
+            || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in MYSQL
+            || outputType == MediaType.SH // All valid characters in SH are also valid in MYSQL
     ;
   }
 
   @Override
   public void write(int c) throws IOException {
-    checkCharacter((char)c);
+    checkCharacter((char) c);
     out.write(c);
   }
 

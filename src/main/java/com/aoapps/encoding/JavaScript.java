@@ -131,6 +131,7 @@ public interface JavaScript extends Encode {
   @Deprecated
   @Override
   MediaWriter encode(MediaType contentType) throws IOException;
+
   // </editor-fold>
 
   // <editor-fold desc="JavaScript - definition" defaultstate="collapsed">
@@ -276,7 +277,7 @@ public interface JavaScript extends Encode {
    *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
    */
   default JavaScriptWriter javascript() throws IOException {
-    return (JavaScriptWriter)encode(MediaType.JAVASCRIPT);
+    return (JavaScriptWriter) encode(MediaType.JAVASCRIPT);
   }
   // </editor-fold>
 }

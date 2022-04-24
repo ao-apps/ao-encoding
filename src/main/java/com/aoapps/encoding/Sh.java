@@ -131,6 +131,7 @@ public interface Sh extends Encode {
   @Deprecated
   @Override
   MediaWriter encode(MediaType contentType) throws IOException;
+
   // </editor-fold>
 
   // <editor-fold desc="Sh - definition" defaultstate="collapsed">
@@ -276,7 +277,7 @@ public interface Sh extends Encode {
    *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
    */
   default ShWriter sh() throws IOException {
-    return (ShWriter)encode(MediaType.SH);
+    return (ShWriter) encode(MediaType.SH);
   }
   // </editor-fold>
 }

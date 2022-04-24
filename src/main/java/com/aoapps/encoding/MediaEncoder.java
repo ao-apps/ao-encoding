@@ -108,8 +108,8 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
           case TEXT :            return null;
           case XHTML :
             encoder = (encodingContext == EncodingContext.DEFAULT)
-              ? StyleInXhtmlEncoder.styleInXhtmlEncoder
-              : new StyleInXhtmlEncoder(encodingContext);
+                ? StyleInXhtmlEncoder.styleInXhtmlEncoder
+                : new StyleInXhtmlEncoder(encodingContext);
             break;
           case XHTML_ATTRIBUTE : encoder = StyleInXhtmlAttributeEncoder.styleInXhtmlAttributeEncoder; break;
           default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
@@ -162,21 +162,21 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
           case TEXT :            return null;
           default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
         }
-        //break;
+      //break;
       case PSQL :
         switch (containerType) {
           case PSQL :            return null;
           case TEXT :            return null;
           default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
         }
-        //break;
+      //break;
       case SH :
         switch (containerType) {
           case SH :              return null;
           case TEXT :            return null;
           default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
         }
-        //break;
+      //break;
       case TEXT:
         switch (containerType) {
           case CSS :             encoder = TextInStyleEncoder.textInStyleEncoder; break;
@@ -211,7 +211,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
           case XHTML :           return null;
           default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
         }
-        //break;
+      //break;
       case XHTML_ATTRIBUTE :
         switch (containerType) {
           case TEXT :            return null;
@@ -219,16 +219,16 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
           case XHTML_ATTRIBUTE : return null;
           default :              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
         }
-        //break;
+      //break;
       default : throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
     }
     // Make sure types match - bug catching
     assert encoder.getValidMediaOutputType() == containerType :
-      "encoder.getValidMediaOutputType() != containerType: " + encoder.getValidMediaOutputType() + " != " + containerType;
+        "encoder.getValidMediaOutputType() != containerType: " + encoder.getValidMediaOutputType() + " != " + containerType;
     assert encoder.getValidMediaInputType() == contentType :
-      "encoder.getValidMediaInputType() != contentType: " + encoder.getValidMediaInputType() + " != " + contentType;
+        "encoder.getValidMediaInputType() != contentType: " + encoder.getValidMediaInputType() + " != " + contentType;
     assert encoder.isValidatingMediaInputType(contentType) :
-      "encoder = " + encoder.getClass().getName() + " is not validating contentType = " + contentType.name();
+        "encoder = " + encoder.getClass().getName() + " is not validating contentType = " + contentType.name();
     return encoder;
   }
 

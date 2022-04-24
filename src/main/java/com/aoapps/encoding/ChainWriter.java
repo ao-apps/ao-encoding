@@ -110,15 +110,15 @@ public final class ChainWriter implements Appendable, Closeable {
     this.encodingContext = NullArgumentException.checkNotNull(encodingContext, "encodingContext");
     this.out = out;
     javascriptInXhtmlAttributeWriter = new JavaScriptWriter(
-      encodingContext,
-      javascriptInXhtmlAttributeEncoder,
-      out
+        encodingContext,
+        javascriptInXhtmlAttributeEncoder,
+        out
     );
     try {
       javascriptInXhtmlWriter = new JavaScriptWriter(
-        encodingContext,
-        MediaEncoder.getInstance(encodingContext, MediaType.JAVASCRIPT, MediaType.XHTML),
-        out
+          encodingContext,
+          MediaEncoder.getInstance(encodingContext, MediaType.JAVASCRIPT, MediaType.XHTML),
+          out
       );
     } catch (UnsupportedEncodingException e) {
       throw new AssertionError("JAVASCRIPT in XHTML is implemented", e);
@@ -147,10 +147,10 @@ public final class ChainWriter implements Appendable, Closeable {
   public ChainWriter(EncodingContext encodingContext, Writer out) {
     // If out is a PrintWriter, cast instead of wrapping again
     this(
-      encodingContext,
-      (out instanceof PrintWriter)
-      ? (PrintWriter)out
-      : new PrintWriter(out)
+        encodingContext,
+        (out instanceof PrintWriter)
+            ? (PrintWriter) out
+            : new PrintWriter(out)
     );
   }
 
@@ -177,10 +177,10 @@ public final class ChainWriter implements Appendable, Closeable {
    */
   public ChainWriter(EncodingContext encodingContext, Writer out, boolean autoFlush) {
     this(
-      encodingContext,
-      (out instanceof PrintWriter)
-      ? (PrintWriter)out
-      : new PrintWriter(out, autoFlush)
+        encodingContext,
+        (out instanceof PrintWriter)
+            ? (PrintWriter) out
+            : new PrintWriter(out, autoFlush)
     );
   }
 
@@ -201,6 +201,7 @@ public final class ChainWriter implements Appendable, Closeable {
   public PrintWriter getPrintWriter() {
     return out;
   }
+
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc="Nearly PrintWriter source compatible">
@@ -539,6 +540,7 @@ public final class ChainWriter implements Appendable, Closeable {
     out.append(c);
     return this;
   }
+
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc="Encoding Methods">
@@ -565,13 +567,13 @@ public final class ChainWriter implements Appendable, Closeable {
     assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
     assert out == Coercion.optimize(out, encoder) : "There are no optimizers for PrintWriter";
     MarkupCoercion.write(
-      value,
-      MarkupType.XHTML,
-      false,
-      encoder,
-      true,
-      out,
-      true // There are no optimizers for PrintWriter
+        value,
+        MarkupType.XHTML,
+        false,
+        encoder,
+        true,
+        out,
+        true // There are no optimizers for PrintWriter
     );
     return this;
   }
@@ -625,13 +627,13 @@ public final class ChainWriter implements Appendable, Closeable {
     assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
     assert out == Coercion.optimize(out, encoder) : "There are no optimizers for PrintWriter";
     MarkupCoercion.write(
-      value,
-      MarkupType.JAVASCRIPT,
-      false,
-      encoder,
-      true,
-      out,
-      true // There are no optimizers for PrintWriter
+        value,
+        MarkupType.JAVASCRIPT,
+        false,
+        encoder,
+        true,
+        out,
+        true // There are no optimizers for PrintWriter
     );
     return this;
   }
@@ -656,13 +658,13 @@ public final class ChainWriter implements Appendable, Closeable {
     assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
     assert javascriptInXhtmlAttributeWriter == Coercion.optimize(javascriptInXhtmlAttributeWriter, encoder) : "There are no optimizers for " + JavaScriptWriter.class.getName();
     MarkupCoercion.write(
-      value,
-      MarkupType.JAVASCRIPT,
-      false,
-      encoder,
-      true,
-      javascriptInXhtmlAttributeWriter,
-      true // There are no optimizers for JavaScriptWriter
+        value,
+        MarkupType.JAVASCRIPT,
+        false,
+        encoder,
+        true,
+        javascriptInXhtmlAttributeWriter,
+        true // There are no optimizers for JavaScriptWriter
     );
     return this;
   }
@@ -687,13 +689,13 @@ public final class ChainWriter implements Appendable, Closeable {
     assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
     assert javascriptInXhtmlWriter == Coercion.optimize(javascriptInXhtmlWriter, encoder) : "There are no optimizers for " + JavaScriptWriter.class.getName();
     MarkupCoercion.write(
-      value,
-      MarkupType.JAVASCRIPT,
-      false,
-      encoder,
-      true,
-      javascriptInXhtmlWriter,
-      true // There are no optimizers for JavaScriptWriter
+        value,
+        MarkupType.JAVASCRIPT,
+        false,
+        encoder,
+        true,
+        javascriptInXhtmlWriter,
+        true // There are no optimizers for JavaScriptWriter
     );
     return this;
   }
@@ -714,13 +716,13 @@ public final class ChainWriter implements Appendable, Closeable {
     assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
     assert out == Coercion.optimize(out, encoder) : "There are no optimizers for PrintWriter";
     MarkupCoercion.write(
-      value,
-      MarkupType.MYSQL,
-      false,
-      encoder,
-      true,
-      out,
-      true // There are no optimizers for PrintWriter
+        value,
+        MarkupType.MYSQL,
+        false,
+        encoder,
+        true,
+        out,
+        true // There are no optimizers for PrintWriter
     );
     return this;
   }
@@ -741,13 +743,13 @@ public final class ChainWriter implements Appendable, Closeable {
     assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
     assert out == Coercion.optimize(out, encoder) : "There are no optimizers for PrintWriter";
     MarkupCoercion.write(
-      value,
-      MarkupType.PSQL,
-      false,
-      encoder,
-      true,
-      out,
-      true // There are no optimizers for PrintWriter
+        value,
+        MarkupType.PSQL,
+        false,
+        encoder,
+        true,
+        out,
+        true // There are no optimizers for PrintWriter
     );
     return this;
   }
@@ -768,20 +770,21 @@ public final class ChainWriter implements Appendable, Closeable {
     assert !encoder.isBuffered() : "Is OK to bypass encoder for markup";
     assert out == Coercion.optimize(out, encoder) : "There are no optimizers for PrintWriter";
     MarkupCoercion.write(
-      value,
-      MarkupType.SH,
-      false,
-      encoder,
-      true,
-      out,
-      true // There are no optimizers for PrintWriter
+        value,
+        MarkupType.SH,
+        false,
+        encoder,
+        true,
+        out,
+        true // There are no optimizers for PrintWriter
     );
     return this;
   }
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc="HTML Utilities">
-  private static final char[] hexChars={'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+  private static final char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
   private static char getHex(int value) {
     return hexChars[value & 15];
   }

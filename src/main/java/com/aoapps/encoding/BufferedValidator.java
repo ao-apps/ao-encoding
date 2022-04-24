@@ -58,7 +58,7 @@ public abstract class BufferedValidator extends MediaValidator {
 
   @Override
   public final void write(int c) {
-    buffer.append((char)c);
+    buffer.append((char) c);
   }
 
   @Override
@@ -84,7 +84,7 @@ public abstract class BufferedValidator extends MediaValidator {
     if (str == null) {
       throw new IllegalArgumentException("str is null");
     }
-    buffer.append(str, off, off+len);
+    buffer.append(str, off, off + len);
   }
 
   @Override

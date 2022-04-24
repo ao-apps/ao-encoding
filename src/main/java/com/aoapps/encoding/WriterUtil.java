@@ -56,6 +56,7 @@ public final class WriterUtil {
    * {@link Whitespace#NL} combined with {@link Whitespace#SPACE} characters.
    */
   public static final String NL_SPACE_CHARS;
+
   static {
     char[] ch = new char[BLOCK_SIZE];
     ch[0] = Whitespace.NL;
@@ -67,6 +68,7 @@ public final class WriterUtil {
    * {@link Whitespace#SPACE} characters.
    */
   public static final String SPACE_CHARS;
+
   static {
     char[] ch = new char[BLOCK_SIZE];
     Arrays.fill(ch, 0, BLOCK_SIZE, Whitespace.SPACE);
@@ -77,6 +79,7 @@ public final class WriterUtil {
    * {@link Text#NBSP} characters.
    */
   public static final String NBSP_CHARS;
+
   static {
     char[] ch = new char[BLOCK_SIZE];
     Arrays.fill(ch, 0, BLOCK_SIZE, Text.NBSP);

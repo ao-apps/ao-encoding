@@ -51,7 +51,7 @@ public class InvalidCharacterException extends LocalizedIOException {
 
   static {
     Throwables.registerSurrogateFactory(InvalidCharacterException.class, (template, cause) ->
-      new InvalidCharacterException(cause, template.getResources(), template.getKey(), template.getArgs())
+        new InvalidCharacterException(cause, template.getResources(), template.getKey(), template.getArgs())
     );
   }
 }

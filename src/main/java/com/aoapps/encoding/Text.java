@@ -78,7 +78,7 @@ public interface Text extends Encode {
 
   // <editor-fold desc="Text - definition" defaultstate="collapsed">
   /**
-   * The character used for non-breaking space, which is {@code '\u00A0'}.
+   * The character used for non-breaking space, which is {@code '\\u00A0'}.
    */
   char NBSP = '\u00A0';
 
@@ -261,7 +261,7 @@ public interface Text extends Encode {
    *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
    */
   default TextWriter text() throws IOException {
-    return (TextWriter)encode(MediaType.TEXT);
+    return (TextWriter) encode(MediaType.TEXT);
   }
   // </editor-fold>
 }

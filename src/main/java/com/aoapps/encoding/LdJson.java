@@ -131,6 +131,7 @@ public interface LdJson extends Encode {
   @Deprecated
   @Override
   MediaWriter encode(MediaType contentType) throws IOException;
+
   // </editor-fold>
 
   // <editor-fold desc="LdJson - definition" defaultstate="collapsed">
@@ -276,7 +277,7 @@ public interface LdJson extends Encode {
    *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
    */
   default LdJsonWriter ldJson() throws IOException {
-    return (LdJsonWriter)encode(MediaType.LD_JSON);
+    return (LdJsonWriter) encode(MediaType.LD_JSON);
   }
   // </editor-fold>
 }

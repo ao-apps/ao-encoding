@@ -41,9 +41,9 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
   UrlInJavaScriptEncoder(MediaType outputType, EncodingContext encodingContext) {
     super(128);
     if (
-      outputType != MediaType.JAVASCRIPT
-      && outputType != MediaType.JSON
-      && outputType != MediaType.LD_JSON
+        outputType != MediaType.JAVASCRIPT
+            && outputType != MediaType.JSON
+            && outputType != MediaType.LD_JSON
     ) {
       throw new IllegalArgumentException("Unsupported output type: " + outputType);
     }
@@ -59,18 +59,18 @@ public class UrlInJavaScriptEncoder extends BufferedEncoder {
   @Override
   public boolean isValidatingMediaInputType(MediaType inputType) {
     return
-      inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL in JAVASCRIPT
-      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in JAVASCRIPT
-      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in JAVASCRIPT
-      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in JAVASCRIPT
-      || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in JAVASCRIPT
+        inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in URL in JAVASCRIPT
+            || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in JAVASCRIPT
+            || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in JAVASCRIPT
+            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in JAVASCRIPT
+            || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in JAVASCRIPT
     ;
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-      outputType == MediaType.URL // All valid characters in URL are also valid in URL in JAVASCRIPT
+        outputType == MediaType.URL // All valid characters in URL are also valid in URL in JAVASCRIPT
     ;
   }
 

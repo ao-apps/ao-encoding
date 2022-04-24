@@ -44,21 +44,21 @@ final class Assertions {
   private static boolean isValidating(ValidMediaInput out, MediaType outputType) {
     if (!out.canSkipValidation(outputType) && !out.isValidatingMediaInputType(outputType)) {
       throw new AssertionError(
-        String.format(
-          "%s is not validating %s, nor can validation be skipped",
-          outputType.name(),
-          out.getClass().getName()
-        )
+          String.format(
+              "%s is not validating %s, nor can validation be skipped",
+              outputType.name(),
+              out.getClass().getName()
+          )
       );
     }
     return true;
   }
 
   static boolean isValidating(Appendable out, MediaType outputType) {
-    return !(out instanceof ValidMediaInput) || isValidating((ValidMediaInput)out, outputType);
+    return !(out instanceof ValidMediaInput) || isValidating((ValidMediaInput) out, outputType);
   }
 
   static boolean isValidating(Writer out, MediaType outputType) {
-    return !(out instanceof ValidMediaInput) || isValidating((ValidMediaInput)out, outputType);
+    return !(out instanceof ValidMediaInput) || isValidating((ValidMediaInput) out, outputType);
   }
 }

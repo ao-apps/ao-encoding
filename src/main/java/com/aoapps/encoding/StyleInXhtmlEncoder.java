@@ -102,22 +102,22 @@ public final class StyleInXhtmlEncoder extends MediaEncoder {
   @Override
   public boolean isValidatingMediaInputType(MediaType inputType) {
     return
-      inputType == MediaType.CSS // All invalid characters in CSS are also invalid in CSS in XHTML
-      || inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in CSS in XHTML
-      || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in CSS in XHTML
-      || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in CSS in XHTML
-      || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in CSS in XHTML
-      || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS in XHTML
+        inputType == MediaType.CSS // All invalid characters in CSS are also invalid in CSS in XHTML
+            || inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in CSS in XHTML
+            || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in CSS in XHTML
+            || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in CSS in XHTML
+            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in CSS in XHTML
+            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS in XHTML
     ;
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-      outputType == MediaType.CSS // All valid characters in CSS are also valid in CSS in XHTML
-      || outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in CSS in XHTML
-      || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in CSS in XHTML
-      || outputType == MediaType.SH // All valid characters in SH are also valid in CSS in XHTML
+        outputType == MediaType.CSS // All valid characters in CSS are also valid in CSS in XHTML
+            || outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in CSS in XHTML
+            || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in CSS in XHTML
+            || outputType == MediaType.SH // All valid characters in SH are also valid in CSS in XHTML
     ;
   }
 
@@ -140,7 +140,7 @@ public final class StyleInXhtmlEncoder extends MediaEncoder {
 
   @Override
   public void write(int c, Writer out) throws IOException {
-    encodeStyleInXhtml((char)c, out);
+    encodeStyleInXhtml((char) c, out);
   }
 
   @Override
@@ -166,7 +166,7 @@ public final class StyleInXhtmlEncoder extends MediaEncoder {
     if (str == null) {
       throw new IllegalArgumentException("str is null");
     }
-    encodeStyleInXhtml(str, off, off+len, out);
+    encodeStyleInXhtml(str, off, off + len, out);
   }
 
   @Override

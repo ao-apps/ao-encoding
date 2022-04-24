@@ -131,6 +131,7 @@ public interface Xhtml extends Encode {
   @Deprecated
   @Override
   MediaWriter encode(MediaType contentType) throws IOException;
+
   // </editor-fold>
 
   // <editor-fold desc="Xhtml - definition" defaultstate="collapsed">
@@ -276,7 +277,7 @@ public interface Xhtml extends Encode {
    *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
    */
   default XhtmlWriter xhtml() throws IOException {
-    return (XhtmlWriter)encode(MediaType.XHTML);
+    return (XhtmlWriter) encode(MediaType.XHTML);
   }
   // </editor-fold>
 }

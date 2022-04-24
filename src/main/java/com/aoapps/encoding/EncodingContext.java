@@ -43,7 +43,8 @@ public interface EncodingContext {
    * @see  Serialization#DEFAULT
    * @see  StandardCharsets#UTF_8
    */
-  EncodingContext DEFAULT = new EncodingContext() {};
+  EncodingContext DEFAULT = new EncodingContext() {
+  };
 
   /**
    * Encoding context for XML always.
