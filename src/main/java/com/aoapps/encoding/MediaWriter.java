@@ -64,7 +64,7 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
    * Defaults to {@code (out instanceof NoClose) && ((NoClose)out).isNoClose()}
    * </p>
    */
-  public static final Predicate<? super MediaWriter> DEFAULT_IS_NO_CLOSE = mediaWriter -> {
+  public static final Predicate<? super MediaWriter> DEFAULT_IS_NO_CLOSE = (MediaWriter mediaWriter) -> {
     Writer out = mediaWriter.out;
     return (out instanceof NoClose) && ((NoClose) out).isNoClose();
   };
