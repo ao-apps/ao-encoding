@@ -50,7 +50,7 @@ public final class TextInShEncoder extends MediaEncoder {
 
   // <editor-fold defaultstate="collapsed" desc="Static Utility Methods">
   /**
-   * From <a href="https://www.gnu.org/software/bash/manual/html_node/ANSI_002dC-Quoting.html">https://www.gnu.org/software/bash/manual/html_node/ANSI_002dC-Quoting.html</a>
+   * From <a href="https://www.gnu.org/software/bash/manual/html_node/ANSI_002dC-Quoting.html">https://www.gnu.org/software/bash/manual/html_node/ANSI_002dC-Quoting.html</a>.
    */
   private static final String[] LOW_CONTROL = {
       "\\x01",
@@ -138,33 +138,38 @@ public final class TextInShEncoder extends MediaEncoder {
    */
   private static String getEscapedCharacter(char c) throws InvalidCharacterException {
     switch (c) {
-      case '\\' : return "\\\\";
-      case '\'' : return "\\'";
-      case '"'  : return "\\\"";
-      case '?'  : return "\\?";
+      case '\\':
+        return "\\\\";
+      case '\'':
+        return "\\'";
+      case '"':
+        return "\\\"";
+      case '?':
+        return "\\?";
+      default:
+        if (
+            (c >= 0x20 && c <= 0x7E) // common case first
+                || (c >= 0xA0 && c <= 0xFFFD)
+        ) {
+          return null;
+        }
+        // 01 to 1F - control characters
+        if (c >= 0x01 && c <= 0x1F) {
+          return LOW_CONTROL[c - 0x01];
+        }
+        // 7F to 9F - control characters
+        if (c >= 0x7F && c <= 0x9F) {
+          return HIGH_CONTROL[c - 0x7F];
+        }
+        if (c == 0xFFFE) {
+          return "\\uFFFE";
+        }
+        if (c == 0xFFFF) {
+          return "\\uFFFF";
+        }
+        assert c == 0 : "The only character not supported is NULL (\\x00), got " + Integer.toHexString(c);
+        throw new InvalidCharacterException(ShValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
     }
-    if (
-        (c >= 0x20 && c <= 0x7E) // common case first
-            || (c >= 0xA0 && c <= 0xFFFD)
-    ) {
-      return null;
-    }
-    // 01 to 1F - control characters
-    if (c >= 0x01 && c <= 0x1F) {
-      return LOW_CONTROL[c - 0x01];
-    }
-    // 7F to 9F - control characters
-    if (c >= 0x7F && c <= 0x9F) {
-      return HIGH_CONTROL[c - 0x7F];
-    }
-    if (c == 0xFFFE) {
-      return "\\uFFFE";
-    }
-    if (c == 0xFFFF) {
-      return "\\uFFFF";
-    }
-    assert c == 0 : "The only character not supported is NULL (\\x00), got " + Integer.toHexString(c);
-    throw new InvalidCharacterException(ShValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
   }
 
   /**
@@ -275,8 +280,7 @@ public final class TextInShEncoder extends MediaEncoder {
         inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in SH
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in SH
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in SH
-            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in SH
-    ;
+            || inputType == MediaType.TEXT; // All invalid characters in TEXT are also invalid in TEXT in SH
   }
 
   @Override
@@ -288,8 +292,7 @@ public final class TextInShEncoder extends MediaEncoder {
             || outputType == MediaType.SH // All valid characters in SH are also valid in TEXT in SH
             || outputType == MediaType.URL // All valid characters in URL are also valid in TEXT in SH
             || outputType == MediaType.XHTML // All valid characters in XHTML are also valid in TEXT in SH
-            || outputType == MediaType.XHTML_ATTRIBUTE // All valid characters in XHTML_ATTRIBUTE are also valid in TEXT in SH
-    ;
+            || outputType == MediaType.XHTML_ATTRIBUTE; // All valid characters in XHTML_ATTRIBUTE are also valid in TEXT in SH
   }
 
   @Override

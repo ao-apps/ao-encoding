@@ -58,15 +58,13 @@ public class UrlInXhtmlEncoder extends BufferedEncoder {
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in XHTML
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in XHTML
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in XHTML
-            || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in XHTML
-    ;
+            || inputType == MediaType.URL; // All invalid characters in URL are also invalid in URL in XHTML
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-        outputType == MediaType.URL // All valid characters in URL are also valid in URL in XHTML
-    ;
+        outputType == MediaType.URL; // All valid characters in URL are also valid in URL in XHTML
   }
 
   @Override
@@ -75,12 +73,12 @@ public class UrlInXhtmlEncoder extends BufferedEncoder {
   }
 
   /**
-   * {@code '\\uFFFE'} URL-encoded in {@link EncodingContext#DEFAULT}
+   * {@code '\\uFFFE'} URL-encoded in {@link EncodingContext#DEFAULT}.
    */
   static final String DEFAULT_FFFE;
 
   /**
-   * {@code '\\uFFFF'} URL-encoded in {@link EncodingContext#DEFAULT}
+   * {@code '\\uFFFF'} URL-encoded in {@link EncodingContext#DEFAULT}.
    */
   static final String DEFAULT_FFFF;
 

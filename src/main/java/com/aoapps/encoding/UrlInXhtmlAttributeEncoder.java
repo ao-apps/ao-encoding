@@ -57,15 +57,13 @@ public class UrlInXhtmlAttributeEncoder extends BufferedEncoder {
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in XHTML_ATTRIBUTE
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in XHTML_ATTRIBUTE
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in XHTML_ATTRIBUTE
-            || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in XHTML_ATTRIBUTE
-    ;
+            || inputType == MediaType.URL; // All invalid characters in URL are also invalid in URL in XHTML_ATTRIBUTE
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-        outputType == MediaType.URL // All valid characters in URL are also valid in URL in XHTML_ATTRIBUTE
-    ;
+        outputType == MediaType.URL; // All valid characters in URL are also valid in URL in XHTML_ATTRIBUTE
   }
 
   @Override

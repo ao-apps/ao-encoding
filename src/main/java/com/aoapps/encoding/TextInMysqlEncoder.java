@@ -51,23 +51,34 @@ public final class TextInMysqlEncoder extends MediaEncoder {
    */
   private static String getEscapedCharacter(char c) throws InvalidCharacterException {
     switch (c) {
-      case '\0' : return "\\0";
-      case '\'' : return "''";
-      // Not needed inside single quotes overall: case '"' : return "\\\"";
-      case '\b' : return "\\b";
-      case '\n' : return null;
-      case '\r' : return "\\r";
-      case '\t' : return "\\t";
-      case 26   : return "\\Z";
-      case '\\' : return "\\\\";
+      // Not needed inside single quotes overall:
+      // case '"':
+      //   return "\\\"";
+      case '\0':
+        return "\\0";
+      case '\'':
+        return "''";
+      case '\b':
+        return "\\b";
+      case '\n':
+        return null;
+      case '\r':
+        return "\\r";
+      case '\t':
+        return "\\t";
+      case 26:
+        return "\\Z";
+      case '\\':
+        return "\\\\";
+      default:
+        if (
+            (c >= 0x20 && c <= 0x7E) // common case first
+                || (c >= 0xA0 && c <= 0xFFFD)
+        ) {
+          return null;
+        }
+        throw new InvalidCharacterException(MysqlValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
     }
-    if (
-        (c >= 0x20 && c <= 0x7E) // common case first
-            || (c >= 0xA0 && c <= 0xFFFD)
-    ) {
-      return null;
-    }
-    throw new InvalidCharacterException(MysqlValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
   }
 
   /**
@@ -178,8 +189,7 @@ public final class TextInMysqlEncoder extends MediaEncoder {
         inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in MYSQL
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in MYSQL
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in MYSQL
-            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in MYSQL
-    ;
+            || inputType == MediaType.TEXT; // All invalid characters in TEXT are also invalid in TEXT in MYSQL
   }
 
   @Override
@@ -188,8 +198,7 @@ public final class TextInMysqlEncoder extends MediaEncoder {
         outputType == MediaType.CSS // All valid characters in CSS are also valid in TEXT in MYSQL
             || outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in TEXT in MYSQL
             || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in TEXT in MYSQL
-            || outputType == MediaType.SH // All valid characters in SH are also valid in TEXT in MYSQL
-    ;
+            || outputType == MediaType.SH; // All valid characters in SH are also valid in TEXT in MYSQL
   }
 
   @Override

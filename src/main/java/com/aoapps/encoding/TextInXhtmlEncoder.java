@@ -53,9 +53,12 @@ public final class TextInXhtmlEncoder extends MediaEncoder {
     // 0.0037849858401 ms per call with switch
     // 0.00360391125522 ms per call with if, no room to improve here
     switch (c) {
-      case '<': return "&lt;";
-      case '>': return "&gt;";
-      case '&': return "&amp;";
+      case '<':
+        return "&lt;";
+      case '>':
+        return "&gt;";
+      case '&':
+        return "&amp;";
       default:
         XhtmlValidator.checkCharacter(c);
         return null;
@@ -171,8 +174,7 @@ public final class TextInXhtmlEncoder extends MediaEncoder {
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in XHTML
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in XHTML
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in XHTML
-            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in TEXT in XHTML
-    ;
+            || inputType == MediaType.XHTML; // All invalid characters in XHTML are also invalid in TEXT in XHTML
   }
 
   @Override
@@ -183,8 +185,7 @@ public final class TextInXhtmlEncoder extends MediaEncoder {
             || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in TEXT in XHTML
             || outputType == MediaType.SH // All valid characters in SH are also valid in TEXT in XHTML
             || outputType == MediaType.XHTML // All valid characters in XHTML are also valid in TEXT in XHTML
-            || outputType == MediaType.XHTML_ATTRIBUTE // All valid characters in XHTML_ATTRIBUTE are also valid in TEXT in XHTML
-    ;
+            || outputType == MediaType.XHTML_ATTRIBUTE; // All valid characters in XHTML_ATTRIBUTE are also valid in TEXT in XHTML
   }
 
   @Override

@@ -42,23 +42,23 @@ import javax.annotation.concurrent.ThreadSafe;
 @Immutable
 public enum Serialization {
   SGML {
-  @Override
-  public String getContentType() {
-    return ContentType.HTML;
-  }
+    @Override
+    public String getContentType() {
+      return ContentType.HTML;
+    }
 
-  @Override
-  public String getSelfClose() {
-    return ">";
-  }
+    @Override
+    public String getSelfClose() {
+      return ">";
+    }
 
-  // Override to write single character instead of string
-  @Override
-  public Serialization selfClose(Appendable out) throws IOException {
-    out.append('>');
-    return this;
-  }
-},
+    // Override to write single character instead of string
+    @Override
+    public Serialization selfClose(Appendable out) throws IOException {
+      out.append('>');
+      return this;
+    }
+  },
   XML {
     @Override
     public String getContentType() {
@@ -98,7 +98,7 @@ public enum Serialization {
 
   /**
    * Determine if the content may be served as <code>application/xhtml+xml</code> by the
-   * rules defined in <a href="http://www.w3.org/TR/xhtml-media-types/">http://www.w3.org/TR/xhtml-media-types/</a>
+   * rules defined in <a href="http://www.w3.org/TR/xhtml-media-types/">http://www.w3.org/TR/xhtml-media-types/</a>.
    * Default to <code>application/xhtml+xml</code> as discussed at
    * <a href="https://web.archive.org/web/20080913043830/http://www.smackthemouse.com/xhtmlxml">http://www.smackthemouse.com/xhtmlxml</a>
    */

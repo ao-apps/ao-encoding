@@ -61,15 +61,13 @@ public class UrlInStyleEncoder extends BufferedEncoder {
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL in CSS
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL in CSS
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL in CSS
-            || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL in CSS
-    ;
+            || inputType == MediaType.URL; // All invalid characters in URL are also invalid in URL in CSS
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-        outputType == MediaType.URL // All valid characters in URL are also valid in URL in CSS
-    ;
+        outputType == MediaType.URL; // All valid characters in URL are also valid in URL in CSS
   }
 
   @Override
@@ -86,7 +84,7 @@ public class UrlInStyleEncoder extends BufferedEncoder {
   private static final char BEGIN_ENCODE = '\u0080';
   private static final char END_ENCODE = '\u009F';
   /**
-   * Precomputed escapes for the expected case of encoding matching {@link EncodingContext#DEFAULT}
+   * Precomputed escapes for the expected case of encoding matching {@link EncodingContext#DEFAULT}.
    */
   private static final String[] DEFAULT_ESCAPES = new String[END_ENCODE + 1 - BEGIN_ENCODE];
 
@@ -128,18 +126,18 @@ public class UrlInStyleEncoder extends BufferedEncoder {
         sb.append(encoded, 0, i);
         Charset charset = (encodingContext == null ? EncodingContext.DEFAULT : encodingContext).getCharacterEncoding();
         String charsetName = charset.name();
-        String fffe_escape;
-        String ffff_escape;
+        String fffeEscape;
+        String ffffEscape;
         String[] escapes;
         if (charset == EncodingContext.DEFAULT.getCharacterEncoding()) {
           // Use precomputed for default charset
-          fffe_escape = UrlInXhtmlEncoder.DEFAULT_FFFE;
-          ffff_escape = UrlInXhtmlEncoder.DEFAULT_FFFF;
+          fffeEscape = UrlInXhtmlEncoder.DEFAULT_FFFE;
+          ffffEscape = UrlInXhtmlEncoder.DEFAULT_FFFF;
           escapes = DEFAULT_ESCAPES;
         } else {
           // Escapes computed once each for current non-default charset
-          fffe_escape = null;
-          ffff_escape = null;
+          fffeEscape = null;
+          ffffEscape = null;
           escapes = new String[END_ENCODE + 1 - BEGIN_ENCODE];
         }
         while (true) {
@@ -154,15 +152,15 @@ public class UrlInStyleEncoder extends BufferedEncoder {
             }
             sb.append(escape);
           } else if (ch == '\uFFFE') {
-            if (fffe_escape == null) {
-              fffe_escape = URLEncoder.encode("\uFFFE", charsetName);
+            if (fffeEscape == null) {
+              fffeEscape = URLEncoder.encode("\uFFFE", charsetName);
             }
-            sb.append(fffe_escape);
+            sb.append(fffeEscape);
           } else if (ch == '\uFFFF') {
-            if (ffff_escape == null) {
-              ffff_escape = URLEncoder.encode("\uFFFF", charsetName);
+            if (ffffEscape == null) {
+              ffffEscape = URLEncoder.encode("\uFFFF", charsetName);
             }
-            sb.append(ffff_escape);
+            sb.append(ffffEscape);
           } else {
             sb.append(ch);
           }

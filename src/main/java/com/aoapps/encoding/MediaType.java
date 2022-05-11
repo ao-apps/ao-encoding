@@ -50,55 +50,54 @@ public enum MediaType {
    * An (X)HTML document (<code>application/xhtml+xml</code>).
    */
   XHTML(ContentType.XHTML) {
-  @Override
-  @SuppressWarnings("deprecation")
-  boolean isUsedFor(String contentType) {
-    return
-        ContentType.XHTML.equalsIgnoreCase(contentType)
-            || ContentType.HTML.equalsIgnoreCase(contentType)
-            // Also use this type for general purpose XML documents
-            || ContentType.XML.equalsIgnoreCase(contentType)
-            || ContentType.XML_OLD.equalsIgnoreCase(contentType)
-    ;
-  }
+    @Override
+    @SuppressWarnings("deprecation")
+    boolean isUsedFor(String contentType) {
+      return
+          ContentType.XHTML.equalsIgnoreCase(contentType)
+              || ContentType.HTML.equalsIgnoreCase(contentType)
+              // Also use this type for general purpose XML documents
+              || ContentType.XML.equalsIgnoreCase(contentType)
+              || ContentType.XML_OLD.equalsIgnoreCase(contentType);
+    }
 
-  @Override
-  public MarkupType getMarkupType() {
-    return MarkupType.XHTML;
-  }
+    @Override
+    public MarkupType getMarkupType() {
+      return MarkupType.XHTML;
+    }
 
-  @Override
-  public XhtmlWriter newMediaWriter(
-      EncodingContext encodingContext,
-      MediaEncoder encoder,
-      Writer out,
-      boolean outOptimized,
-      Whitespace indentDelegate,
-      Predicate<? super MediaWriter> isNoClose,
-      IOConsumer<? super MediaWriter> closer
-  ) {
-    return new XhtmlWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
-  }
+    @Override
+    public XhtmlWriter newMediaWriter(
+        EncodingContext encodingContext,
+        MediaEncoder encoder,
+        Writer out,
+        boolean outOptimized,
+        Whitespace indentDelegate,
+        Predicate<? super MediaWriter> isNoClose,
+        IOConsumer<? super MediaWriter> closer
+    ) {
+      return new XhtmlWriter(encodingContext, encoder, out, outOptimized, indentDelegate, isNoClose, closer);
+    }
 
-  @Override
-  public XhtmlWriter newMediaWriter(
-      EncodingContext encodingContext,
-      MediaEncoder encoder,
-      Writer out
-  ) {
-    return new XhtmlWriter(encodingContext, encoder, out);
-  }
+    @Override
+    public XhtmlWriter newMediaWriter(
+        EncodingContext encodingContext,
+        MediaEncoder encoder,
+        Writer out
+    ) {
+      return new XhtmlWriter(encodingContext, encoder, out);
+    }
 
-  @Override
-  Class<? extends Encode> getEncodeInterface() {
-    return Xhtml.class;
-  }
+    @Override
+    Class<? extends Encode> getEncodeInterface() {
+      return Xhtml.class;
+    }
 
-  @Override
-  Class<? extends MediaWriter> getMediaWriterClass() {
-    return XhtmlWriter.class;
-  }
-},
+    @Override
+    Class<? extends MediaWriter> getMediaWriterClass() {
+      return XhtmlWriter.class;
+    }
+  },
 
   /**
    * Indicates that a value contains a XHTML attribute only.  This is a non-standard
@@ -149,10 +148,10 @@ public enum MediaType {
     }
   },
 
-  /**
-   * An HTML document (<code>text/html</code>).
-   */
-  // HTML(ContentType.HTML),
+  ///**
+  // * An HTML document (<code>text/html</code>).
+  // */
+  //HTML(ContentType.HTML),
 
   /**
    * A CSS stylesheet (<code>text/css</code>).
@@ -623,7 +622,7 @@ public enum MediaType {
   public abstract MarkupType getMarkupType();
 
   /**
-   * Should this content type generally be trimmed before validation?
+   * Should this content type generally be trimmed before validation?.
    *
    * @see  MediaValidator#validate(boolean)
    * @see  Encoder#writeSuffixTo(java.lang.Appendable, boolean)

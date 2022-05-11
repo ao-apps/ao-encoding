@@ -59,7 +59,7 @@ public final class PsqlValidator extends MediaValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <p>
    * See <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
    * </p>
@@ -72,7 +72,7 @@ public final class PsqlValidator extends MediaValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <p>
    * See <a href="https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS">4.1.2.2. String Constants with C-style Escapes</a>.
    * </p>
@@ -105,8 +105,7 @@ public final class PsqlValidator extends MediaValidator {
             || inputType == MediaType.PSQL // All invalid characters in PSQL are also invalid in PSQL
             || inputType == MediaType.SH // All invalid characters in SH are also invalid in PSQL
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in PSQL
-            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in PSQL
-    ;
+            || inputType == MediaType.XHTML; // All invalid characters in XHTML are also invalid in PSQL
   }
 
   @Override
@@ -114,8 +113,7 @@ public final class PsqlValidator extends MediaValidator {
     return
         outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in PSQL
             || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in PSQL
-            || outputType == MediaType.SH // All valid characters in SH are also valid in PSQL
-    ;
+            || outputType == MediaType.SH; // All valid characters in SH are also valid in PSQL
   }
 
   @Override

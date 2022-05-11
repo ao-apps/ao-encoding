@@ -55,45 +55,45 @@ public final class UrlValidator extends BufferedValidator {
        * Reserved Characters
        */
       // gen-delims
-      case ':' :
-      case '/' :
-      case '?' :
-      case '#' :
-      case '[' :
-      case ']' :
-      case '@' :
+      case ':':
+      case '/':
+      case '?':
+      case '#':
+      case '[':
+      case ']':
+      case '@':
       // sub-delims
-      case '!' :
-      case '$' :
-      case '&' :
-      case '\'' :
-      case '(' :
-      case ')' :
-      case '*' :
-      case '+' :
-      case ',' :
-      case ';' :
-      case '=' :
+      case '!':
+      case '$':
+      case '&':
+      case '\'':
+      case '(':
+      case ')':
+      case '*':
+      case '+':
+      case ',':
+      case ';':
+      case '=':
 
       /*
        * Already percent-encoded
        */
       //
-      case '%' :
+      case '%':
 
       /*
        * IRI-only US-ASCII
        */
-      case '<' :
-      case '>' :
-      case '"' :
-      case ' ' :
-      case '{' :
-      case '}' :
-      case '|' :
-      case '\\' :
-      case '^' :
-      case '`' :
+      case '<':
+      case '>':
+      case '"':
+      case ' ':
+      case '{':
+      case '}':
+      case '|':
+      case '\\':
+      case '^':
+      case '`':
 
       /*
        * Unreserved Characters
@@ -120,7 +120,7 @@ public final class UrlValidator extends BufferedValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <p>
    * See <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
    * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
@@ -134,7 +134,7 @@ public final class UrlValidator extends BufferedValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <p>
    * See <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">RFC 3986: Reserved Characters</a>
    * and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">RFC 3986: Unreserved Characters</a>.
@@ -164,15 +164,13 @@ public final class UrlValidator extends BufferedValidator {
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in URL
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in URL
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in URL
-            || inputType == MediaType.URL // All invalid characters in URL are also invalid in URL
-    ;
+            || inputType == MediaType.URL; // All invalid characters in URL are also invalid in URL
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-        outputType == MediaType.URL // All valid characters in URL are also valid in URL
-    ;
+        outputType == MediaType.URL; // All valid characters in URL are also valid in URL
   }
 
   @Override

@@ -24,6 +24,7 @@
 package com.aoapps.encoding;
 
 import static com.aoapps.encoding.TextInXhtmlAttributeEncoder.encodeTextInXhtmlAttribute;
+
 import com.aoapps.lang.Coercion;
 import java.io.IOException;
 import java.io.Writer;
@@ -64,11 +65,15 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
       // This didn't work as hoped, just don't use "]]>" in scripts!
       // Note: TextInJavaScriptEncoder always encodes the ">", so dynamic values
       //       in JavaScript strings will never have "]]>".
-      // case ']' : return "\\u005d";
+      // case ']':
+      //   return "\\u005d";
       // Commented-out because now using CDATA
-      // case '<': return "&lt;";
-      // case '>': return "&gt;";
-      // case '&': return "&amp;";
+      // case '<':
+      //   return "&lt;";
+      // case '>':
+      //   return "&gt;";
+      // case '&':
+      //   return "&amp;";
       // These character ranges are passed through unmodified
       case '\r':
       case '\n':
@@ -194,8 +199,7 @@ public final class JavaScriptInXhtmlEncoder extends MediaEncoder {
         inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in JAVASCRIPT in XHTML
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in JAVASCRIPT in XHTML
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in JAVASCRIPT in XHTML
-            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT in XHTML
-    ;
+            || inputType == MediaType.TEXT; // All invalid characters in TEXT are also invalid in JAVASCRIPT in XHTML
   }
 
   @Override

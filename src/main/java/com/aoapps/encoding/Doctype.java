@@ -24,6 +24,7 @@
 package com.aoapps.encoding;
 
 import static com.aoapps.encoding.TextInXhtmlAttributeEncoder.encodeTextInXhtmlAttribute;
+
 import com.aoapps.lang.io.ContentType;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -39,33 +40,38 @@ import javax.annotation.concurrent.ThreadSafe;
 public enum Doctype {
   // See http://www.ibm.com/developerworks/library/x-think45/
   HTML5 {
-  @Override
-  public String getDoctype(Serialization serialization) {
-    return "<!DOCTYPE html>" + Whitespace.NL;
-  }
-  @Override
-  public String getScriptType() {
-    return "";
-  }
-  @Override
-  public Doctype scriptType(Appendable out) throws IOException {
-    // Do nothing
-    return this;
-  }
-  @Override
-  public String getStyleType() {
-    return "";
-  }
-  @Override
-  public Doctype styleType(Appendable out) throws IOException {
-    // Do nothing
-    return this;
-  }
-  @Override
-  public boolean supportsIRI() {
-    return true;
-  }
-},
+    @Override
+    public String getDoctype(Serialization serialization) {
+      return "<!DOCTYPE html>" + Whitespace.NL;
+    }
+
+    @Override
+    public String getScriptType() {
+      return "";
+    }
+
+    @Override
+    public Doctype scriptType(Appendable out) throws IOException {
+      // Do nothing
+      return this;
+    }
+
+    @Override
+    public String getStyleType() {
+      return "";
+    }
+
+    @Override
+    public Doctype styleType(Appendable out) throws IOException {
+      // Do nothing
+      return this;
+    }
+
+    @Override
+    public boolean getSupportsIRI() {
+      return true;
+    }
+  },
   STRICT {
     @Override
     public String getDoctype(Serialization serialization) {
@@ -78,11 +84,13 @@ public enum Doctype {
           throw new AssertionError();
       }
     }
+
     @Override
     @SuppressWarnings("deprecation")
     public String getScriptType() {
       return " type=\"" + ContentType.JAVASCRIPT_OLD + '"';
     }
+
     @Override
     public String getStyleType() {
       return " type=\"" + ContentType.CSS + '"';
@@ -100,18 +108,22 @@ public enum Doctype {
           throw new AssertionError();
       }
     }
+
     @Override
     public String getScriptType() {
       return STRICT.getScriptType();
     }
+
     @Override
     public Doctype scriptType(Appendable out) throws IOException {
       return STRICT.scriptType(out);
     }
+
     @Override
     public String getStyleType() {
       return STRICT.getStyleType();
     }
+
     @Override
     public Doctype styleType(Appendable out) throws IOException {
       return STRICT.styleType(out);
@@ -129,18 +141,22 @@ public enum Doctype {
           throw new AssertionError();
       }
     }
+
     @Override
     public String getScriptType() {
       return STRICT.getScriptType();
     }
+
     @Override
     public Doctype scriptType(Appendable out) throws IOException {
       return STRICT.scriptType(out);
     }
+
     @Override
     public String getStyleType() {
       return STRICT.getStyleType();
     }
+
     @Override
     public Doctype styleType(Appendable out) throws IOException {
       return STRICT.styleType(out);
@@ -151,29 +167,35 @@ public enum Doctype {
     public String getXmlDeclaration(Serialization serialization, String documentEncoding) {
       return "";
     }
+
     @Override
     public boolean xmlDeclaration(Serialization serialization, String documentEncoding, Appendable out) {
       // Do nothing
       return false;
     }
+
     @Override
     public String getDoctype(Serialization serialization) {
       return "";
     }
+
     @Override
     public boolean doctype(Serialization serialization, Appendable out) throws IOException {
       // Do nothing
       return false;
     }
+
     @Override
     public String getScriptType() {
       // Very old doctype-less, support IE6: http://www.javascriptkit.com/javatutors/languageattri3.shtml
       return " language=\"JavaScript1.3\"";
     }
+
     @Override
     public String getStyleType() {
       return STRICT.getStyleType();
     }
+
     @Override
     public Doctype styleType(Appendable out) throws IOException {
       return STRICT.styleType(out);
@@ -187,7 +209,7 @@ public enum Doctype {
    */
   public static final Doctype DEFAULT = Doctype.HTML5;
 
-  private static boolean isUTF8(String documentEncoding) {
+  private static boolean isUtf8(String documentEncoding) {
     return
         StandardCharsets.UTF_8.name().equalsIgnoreCase(documentEncoding)
             || Charset.forName(documentEncoding) == StandardCharsets.UTF_8;
@@ -211,7 +233,7 @@ public enum Doctype {
    * @return  {@code true} when declaration written (including trailing {@link Whitespace#NL})
    */
   public boolean xmlDeclaration(Serialization serialization, String documentEncoding, Appendable out) throws IOException {
-    if (serialization == Serialization.XML && !isUTF8(documentEncoding)) {
+    if (serialization == Serialization.XML && !isUtf8(documentEncoding)) {
       out.append("<?xml version=\"1.0\" encoding=\"");
       encodeTextInXhtmlAttribute(documentEncoding, out);
       out.append("\"?>" + Whitespace.NL);
@@ -280,10 +302,22 @@ public enum Doctype {
   }
 
   /**
-   * Does this doctype support <a href="https://datatracker.ietf.org/doc/html/rfc3987">RFC 3987 IRI</a>
+   * Does this doctype support <a href="https://datatracker.ietf.org/doc/html/rfc3987">RFC 3987 IRI</a>.
    * Unicode format URLs?
    */
-  public boolean supportsIRI() {
+  public boolean getSupportsIRI() {
     return false;
+  }
+
+  /**
+   * Does this doctype support <a href="https://datatracker.ietf.org/doc/html/rfc3987">RFC 3987 IRI</a>.
+   * Unicode format URLs?
+   *
+   * @deprecated  Please use {@link #getSupportsIRI()} instead.
+   */
+  // TODO: Remove in 8.0.0 release
+  @Deprecated
+  public final boolean supportsIRI() {
+    return getSupportsIRI();
   }
 }

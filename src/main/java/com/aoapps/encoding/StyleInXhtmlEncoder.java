@@ -107,8 +107,7 @@ public final class StyleInXhtmlEncoder extends MediaEncoder {
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in CSS in XHTML
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in CSS in XHTML
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in CSS in XHTML
-            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS in XHTML
-    ;
+            || inputType == MediaType.XHTML; // All invalid characters in XHTML are also invalid in CSS in XHTML
   }
 
   @Override
@@ -117,8 +116,7 @@ public final class StyleInXhtmlEncoder extends MediaEncoder {
         outputType == MediaType.CSS // All valid characters in CSS are also valid in CSS in XHTML
             || outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in CSS in XHTML
             || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in CSS in XHTML
-            || outputType == MediaType.SH // All valid characters in SH are also valid in CSS in XHTML
-    ;
+            || outputType == MediaType.SH; // All valid characters in SH are also valid in CSS in XHTML
   }
 
   @Override

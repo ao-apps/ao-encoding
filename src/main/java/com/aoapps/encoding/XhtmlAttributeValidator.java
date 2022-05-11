@@ -65,7 +65,7 @@ public final class XhtmlAttributeValidator extends MediaValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <p>
    * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
    * </p>
@@ -78,7 +78,7 @@ public final class XhtmlAttributeValidator extends MediaValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <p>
    * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
    * </p>
@@ -108,15 +108,13 @@ public final class XhtmlAttributeValidator extends MediaValidator {
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in XHTML_ATTRIBUTE
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in XHTML_ATTRIBUTE
             || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in XHTML_ATTRIBUTE
-            || inputType == MediaType.XHTML_ATTRIBUTE // All invalid characters in XHTML_ATTRIBUTE are also invalid in XHTML_ATTRIBUTE
-    ;
+            || inputType == MediaType.XHTML_ATTRIBUTE; // All invalid characters in XHTML_ATTRIBUTE are also invalid in XHTML_ATTRIBUTE
   }
 
   @Override
   public boolean canSkipValidation(MediaType outputType) {
     return
-        outputType == MediaType.XHTML_ATTRIBUTE // All valid characters in XHTML_ATTRIBUTE are also valid in XHTML_ATTRIBUTE
-    ;
+        outputType == MediaType.XHTML_ATTRIBUTE; // All valid characters in XHTML_ATTRIBUTE are also valid in XHTML_ATTRIBUTE
   }
 
   @Override

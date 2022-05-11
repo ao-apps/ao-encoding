@@ -126,14 +126,14 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
   }
 
   /**
-   * Optimize while maintaining {@link NoClose}
+   * Optimize while maintaining {@link NoClose}.
    */
   private static Writer optimize(Writer out) {
     Writer optimized = Coercion.optimize(out, null);
     // Maintain NoClose
     if (
         optimized != out
-            &&  (out       instanceof NoClose && ((NoClose) out      ).isNoClose()) // original   isNoClose
+            &&  (out       instanceof NoClose && ((NoClose) out).      isNoClose()) // original   isNoClose
             && !(optimized instanceof NoClose && ((NoClose) optimized).isNoClose()) // optimized !isNoClose
     ) {
       // Requires wrapping

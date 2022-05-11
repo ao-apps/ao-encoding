@@ -57,20 +57,28 @@ public final class TextInStyleEncoder extends MediaEncoder {
    */
   private static String getEscapedCharacter(char c) throws InvalidCharacterException {
     switch (c) {
-      case '"' : return "\\\"";
-      // Not needed inside double quotes overall: case ''' : return "\\'";
-      case '\t' : return "\\9 ";
-      case '\n' : return "\\A\\\n";
-      case '\r' : return "\\D ";
-      case '\\' : return "\\\\";
+      // Not needed inside double quotes overall:
+      // case ''':
+      //   return "\\'";
+      case '"':
+        return "\\\"";
+      case '\t':
+        return "\\9 ";
+      case '\n':
+        return "\\A\\\n";
+      case '\r':
+        return "\\D ";
+      case '\\':
+        return "\\\\";
+      default:
+        if (
+            (c >= 0x20 && c <= 0x7E) // common case first
+                || (c >= 0xA0 && c <= 0xFFFD)
+        ) {
+          return null;
+        }
+        throw new InvalidCharacterException(StyleValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
     }
-    if (
-        (c >= 0x20 && c <= 0x7E) // common case first
-            || (c >= 0xA0 && c <= 0xFFFD)
-    ) {
-      return null;
-    }
-    throw new InvalidCharacterException(StyleValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
   }
 
   /**
@@ -201,8 +209,7 @@ public final class TextInStyleEncoder extends MediaEncoder {
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in CSS
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in CSS
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in CSS
-            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in TEXT in CSS
-    ;
+            || inputType == MediaType.XHTML; // All invalid characters in XHTML are also invalid in TEXT in CSS
   }
 
   @Override
@@ -211,8 +218,7 @@ public final class TextInStyleEncoder extends MediaEncoder {
         outputType == MediaType.CSS // All valid characters in CSS are also valid in TEXT in CSS
             || outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in TEXT in CSS
             || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in TEXT in CSS
-            || outputType == MediaType.SH // All valid characters in SH are also valid in TEXT in CSS
-    ;
+            || outputType == MediaType.SH; // All valid characters in SH are also valid in TEXT in CSS
   }
 
   @Override

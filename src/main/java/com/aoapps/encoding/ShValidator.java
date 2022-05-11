@@ -66,7 +66,7 @@ public final class ShValidator extends MediaValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <p>
    * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
    * </p>
@@ -79,7 +79,7 @@ public final class ShValidator extends MediaValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <p>
    * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
    * </p>
@@ -112,8 +112,7 @@ public final class ShValidator extends MediaValidator {
             || inputType == MediaType.PSQL // All invalid characters in PSQL are also invalid in SH
             || inputType == MediaType.SH // All invalid characters in SH are also invalid in SH
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in SH
-            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in SH
-    ;
+            || inputType == MediaType.XHTML; // All invalid characters in XHTML are also invalid in SH
   }
 
   @Override
@@ -121,8 +120,7 @@ public final class ShValidator extends MediaValidator {
     return
         outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in SH
             || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in SH
-            || outputType == MediaType.SH // All valid characters in SH are also valid in SH
-    ;
+            || outputType == MediaType.SH; // All valid characters in SH are also valid in SH
   }
 
   @Override

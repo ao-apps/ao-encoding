@@ -30,6 +30,7 @@ import static com.aoapps.encoding.TextInPsqlEncoder.textInPsqlEncoder;
 import static com.aoapps.encoding.TextInShEncoder.textInShEncoder;
 import static com.aoapps.encoding.TextInXhtmlAttributeEncoder.textInXhtmlAttributeEncoder;
 import static com.aoapps.encoding.TextInXhtmlEncoder.textInXhtmlEncoder;
+
 import com.aoapps.hodgepodge.i18n.MarkupCoercion;
 import com.aoapps.hodgepodge.i18n.MarkupType;
 import com.aoapps.lang.Coercion;

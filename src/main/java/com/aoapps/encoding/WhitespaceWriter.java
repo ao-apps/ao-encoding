@@ -143,7 +143,7 @@ public abstract class WhitespaceWriter extends MediaWriter implements Whitespace
 
   // <editor-fold desc="Whitespace - implementation" defaultstate="collapsed">
   /**
-   * Is indenting enabled?
+   * Is indenting enabled?.
    */
   // Matches AnyDocument.indent
   private volatile boolean indent;

@@ -51,15 +51,24 @@ public final class TextInXhtmlAttributeEncoder extends MediaEncoder {
    */
   private static String getEscapedCharacter(char c) throws InvalidCharacterException {
     switch (c) {
-      case '<': return "&lt;";
-      case '>': return "&gt;";
-      case '&': return "&amp;";
-      case '\'': return "&#39;";
-      case '"': return "&quot;";
-      case '\t': return "&#x9;";
-      case '\r': return "&#xD;";
-      case '\n': return "&#xA;";
-      // case ' ': return null;
+      case '<':
+        return "&lt;";
+      case '>':
+        return "&gt;";
+      case '&':
+        return "&amp;";
+      case '\'':
+        return "&#39;";
+      case '"':
+        return "&quot;";
+      case '\t':
+        return "&#x9;";
+      case '\r':
+        return "&#xD;";
+      case '\n':
+        return "&#xA;";
+      // case ' ':
+      //   return null;
       default:
         XhtmlAttributeValidator.checkCharacter(c);
         return null;
@@ -175,8 +184,7 @@ public final class TextInXhtmlAttributeEncoder extends MediaEncoder {
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in XHTML_ATTRIBUTE
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in XHTML_ATTRIBUTE
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in XHTML_ATTRIBUTE
-            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in TEXT in XHTML_ATTRIBUTE
-    ;
+            || inputType == MediaType.XHTML; // All invalid characters in XHTML are also invalid in TEXT in XHTML_ATTRIBUTE
   }
 
   @Override
@@ -187,8 +195,7 @@ public final class TextInXhtmlAttributeEncoder extends MediaEncoder {
             || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in TEXT in XHTML_ATTRIBUTE
             || outputType == MediaType.SH // All valid characters in SH are also valid in TEXT in XHTML_ATTRIBUTE
             || outputType == MediaType.XHTML // All valid characters in XHTML are also valid in TEXT in XHTML_ATTRIBUTE
-            || outputType == MediaType.XHTML_ATTRIBUTE // All valid characters in XHTML_ATTRIBUTE are also valid in TEXT in XHTML_ATTRIBUTE
-    ;
+            || outputType == MediaType.XHTML_ATTRIBUTE; // All valid characters in XHTML_ATTRIBUTE are also valid in TEXT in XHTML_ATTRIBUTE
   }
 
   @Override

@@ -59,7 +59,7 @@ public final class MysqlValidator extends MediaValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <p>
    * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
    * </p>
@@ -72,7 +72,7 @@ public final class MysqlValidator extends MediaValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <p>
    * See <a href="https://dev.mysql.com/doc/en/string-literals.html#character-escape-sequences">Table 9.1 Special Character Escape Sequences</a>.
    * </p>
@@ -105,8 +105,7 @@ public final class MysqlValidator extends MediaValidator {
             || inputType == MediaType.PSQL // All invalid characters in PSQL are also invalid in MYSQL
             || inputType == MediaType.SH // All invalid characters in SH are also invalid in MYSQL
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in MYSQL
-            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in MYSQL
-    ;
+            || inputType == MediaType.XHTML; // All invalid characters in XHTML are also invalid in MYSQL
   }
 
   @Override
@@ -114,8 +113,7 @@ public final class MysqlValidator extends MediaValidator {
     return
         outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in MYSQL
             || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in MYSQL
-            || outputType == MediaType.SH // All valid characters in SH are also valid in MYSQL
-    ;
+            || outputType == MediaType.SH; // All valid characters in SH are also valid in MYSQL
   }
 
   @Override

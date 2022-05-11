@@ -48,20 +48,31 @@ public final class TextInJavaScriptEncoder extends MediaEncoder {
    */
   private static String getEscapedCharacter(char ch) {
     switch (ch) {
-      case '"': return "\\\"";
-      case '\'': return "\\'";
-      case '\\': return "\\\\";
-      case '\b': return "\\b";
-      case '\f': return "\\f";
-      case '\r': return "\\r";
-      case '\n': return "\\n";
-      case '\t': return "\\t";
+      case '"':
+        return "\\\"";
+      case '\'':
+        return "\\'";
+      case '\\':
+        return "\\\\";
+      case '\b':
+        return "\\b";
+      case '\f':
+        return "\\f";
+      case '\r':
+        return "\\r";
+      case '\n':
+        return "\\n";
+      case '\t':
+        return "\\t";
 
       // Encode the following as unicode because escape for HTML and XHTML is different
-      case '&': return "\\u0026";
-      case '<': return "\\u003c";
+      case '&':
+        return "\\u0026";
+      case '<':
+        return "\\u003c";
       // Note: This also prevents the potential closing of scripts with "</script>" or CDATA blocks with "]]>" inside strings.
-      case '>': return "\\u003e";
+      case '>':
+        return "\\u003e";
       default:
         if (ch < ' ') {
           return JavaScriptUtil.getUnicodeEscapeString(ch);
@@ -173,8 +184,7 @@ public final class TextInJavaScriptEncoder extends MediaEncoder {
         inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in TEXT in JAVASCRIPT
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in TEXT in JAVASCRIPT
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in TEXT in JAVASCRIPT
-            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in TEXT in JAVASCRIPT
-    ;
+            || inputType == MediaType.TEXT; // All invalid characters in TEXT are also invalid in TEXT in JAVASCRIPT
   }
 
   @Override

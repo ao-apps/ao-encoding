@@ -63,7 +63,7 @@ public final class XhtmlValidator extends MediaValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <p>
    * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
    * </p>
@@ -76,7 +76,7 @@ public final class XhtmlValidator extends MediaValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <p>
    * See <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>.
    * </p>
@@ -105,8 +105,7 @@ public final class XhtmlValidator extends MediaValidator {
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in XHTML
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in XHTML
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in XHTML
-            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in XHTML
-    ;
+            || inputType == MediaType.XHTML; // All invalid characters in XHTML are also invalid in XHTML
   }
 
   @Override
@@ -117,8 +116,7 @@ public final class XhtmlValidator extends MediaValidator {
             || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in XHTML
             || outputType == MediaType.SH // All valid characters in SH are also valid in XHTML
             || outputType == MediaType.XHTML // All valid characters in XHTML are also valid in XHTML
-            || outputType == MediaType.XHTML_ATTRIBUTE // All valid characters in XHTML_ATTRIBUTE are also valid in XHTML
-    ;
+            || outputType == MediaType.XHTML_ATTRIBUTE; // All valid characters in XHTML_ATTRIBUTE are also valid in XHTML
   }
 
   @Override

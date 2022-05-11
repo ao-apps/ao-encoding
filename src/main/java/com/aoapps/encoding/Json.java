@@ -198,7 +198,6 @@ public interface Json extends Encode {
    * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code <script type="application/json">…</script>}.
    * </p>
    * <p>
-   * <p>
    * If the string is translated, comments will be added giving the
    * translation lookup id to aid in translation of server-translated values.
    * </p>

@@ -66,7 +66,7 @@ public final class StyleValidator extends MediaValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <ul>
    * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
    * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
@@ -80,7 +80,7 @@ public final class StyleValidator extends MediaValidator {
   }
 
   /**
-   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid
+   * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
    * <ul>
    * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#characters">4.1.3 Characters and case</a>.</li>
    * <li>See <a href="https://www.w3.org/TR/CSS2/syndata.html#strings">4.3.7 Strings</a>.</li>
@@ -111,8 +111,7 @@ public final class StyleValidator extends MediaValidator {
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in CSS
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in CSS
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in CSS
-            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS
-    ;
+            || inputType == MediaType.XHTML; // All invalid characters in XHTML are also invalid in CSS
   }
 
   @Override
@@ -121,8 +120,7 @@ public final class StyleValidator extends MediaValidator {
         outputType == MediaType.CSS // All valid characters in CSS are also valid in CSS
             || outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in CSS
             || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in CSS
-            || outputType == MediaType.SH // All valid characters in SH are also valid in CSS
-    ;
+            || outputType == MediaType.SH; // All valid characters in SH are also valid in CSS
   }
 
   @Override

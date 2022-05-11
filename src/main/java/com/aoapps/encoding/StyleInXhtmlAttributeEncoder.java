@@ -57,22 +57,31 @@ public final class StyleInXhtmlAttributeEncoder extends MediaEncoder {
   private static String getEscapedCharacter(char c) throws InvalidCharacterException {
     switch (c) {
       // These characters are allowed in CSS but need encoded for XHTML
-      case '<': return "&lt;";
-      case '>': return "&gt;";
-      case '&': return "&amp;";
-      case '"': return "&quot;";
-      case '\'': return "&#39;";
-      case '\r': return "&#xD;";
-      case '\n': return "&#xA;";
-      case '\t': return "&#x9;";
+      case '<':
+        return "&lt;";
+      case '>':
+        return "&gt;";
+      case '&':
+        return "&amp;";
+      case '"':
+        return "&quot;";
+      case '\'':
+        return "&#39;";
+      case '\r':
+        return "&#xD;";
+      case '\n':
+        return "&#xA;";
+      case '\t':
+        return "&#x9;";
+      default:
+        if (
+            (c >= 0x20 && c <= 0x7E) // common case first
+                || (c >= 0xA0 && c <= 0xFFFD)
+        ) {
+          return null;
+        }
+        throw new InvalidCharacterException(StyleValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
     }
-    if (
-        (c >= 0x20 && c <= 0x7E) // common case first
-            || (c >= 0xA0 && c <= 0xFFFD)
-    ) {
-      return null;
-    }
-    throw new InvalidCharacterException(StyleValidator.RESOURCES, "invalidCharacter", Integer.toHexString(c));
   }
 
   /**
@@ -199,8 +208,7 @@ public final class StyleInXhtmlAttributeEncoder extends MediaEncoder {
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in CSS in XHTML_ATTRIBUTE
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in CSS in XHTML_ATTRIBUTE
             || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in CSS in XHTML_ATTRIBUTE
-            || inputType == MediaType.XHTML // All invalid characters in XHTML are also invalid in CSS in XHTML_ATTRIBUTE
-    ;
+            || inputType == MediaType.XHTML; // All invalid characters in XHTML are also invalid in CSS in XHTML_ATTRIBUTE
   }
 
   @Override
@@ -209,8 +217,7 @@ public final class StyleInXhtmlAttributeEncoder extends MediaEncoder {
         outputType == MediaType.CSS // All valid characters in CSS are also valid in CSS in XHTML_ATTRIBUTE
             || outputType == MediaType.MYSQL // All valid characters in MYSQL are also valid in CSS in XHTML_ATTRIBUTE
             || outputType == MediaType.PSQL // All valid characters in PSQL are also valid in CSS in XHTML_ATTRIBUTE
-            || outputType == MediaType.SH // All valid characters in SH are also valid in CSS in XHTML_ATTRIBUTE
-    ;
+            || outputType == MediaType.SH; // All valid characters in SH are also valid in CSS in XHTML_ATTRIBUTE
   }
 
   @Override

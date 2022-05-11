@@ -49,14 +49,22 @@ public final class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
   private static String getEscapedCharacter(char ch) {
     switch (ch) {
       // These characters are allowed in JavaScript but need encoded for XHTML
-      case '<': return "&lt;";
-      case '>': return "&gt;";
-      case '&': return "&amp;";
-      case '"': return "&quot;";
-      case '\'': return "&#39;";
-      case '\r': return "&#xD;";
-      case '\n': return "&#xA;";
-      case '\t': return "&#x9;";
+      case '<':
+        return "&lt;";
+      case '>':
+        return "&gt;";
+      case '&':
+        return "&amp;";
+      case '"':
+        return "&quot;";
+      case '\'':
+        return "&#39;";
+      case '\r':
+        return "&#xD;";
+      case '\n':
+        return "&#xA;";
+      case '\t':
+        return "&#x9;";
       default:
         // Escape using JavaScript unicode escape when needed
         return JavaScriptUtil.getUnicodeEscapeString(ch);
@@ -149,8 +157,7 @@ public final class JavaScriptInXhtmlAttributeEncoder extends MediaEncoder {
         inputType == MediaType.JAVASCRIPT // All invalid characters in JAVASCRIPT are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
             || inputType == MediaType.JSON // All invalid characters in JSON are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
             || inputType == MediaType.LD_JSON // All invalid characters in LD_JSON are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
-            || inputType == MediaType.TEXT // All invalid characters in TEXT are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
-    ;
+            || inputType == MediaType.TEXT; // All invalid characters in TEXT are also invalid in JAVASCRIPT in XHTML_ATTRIBUTE
   }
 
   @Override
