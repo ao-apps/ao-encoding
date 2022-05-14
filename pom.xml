@@ -29,7 +29,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
-  <groupId>com.aoapps</groupId><artifactId>ao-encoding</artifactId><version>7.0.0</version>
+  <groupId>com.aoapps</groupId><artifactId>ao-encoding</artifactId><version>7.0.0-POST-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <properties>
@@ -90,7 +90,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
     <connection>scm:git:git://github.com/ao-apps/ao-encoding.git</connection>
     <developerConnection>scm:git:git@github.com:ao-apps/ao-encoding.git</developerConnection>
     <url>https://github.com/ao-apps/ao-encoding</url>
-    <tag>ao-encoding-7.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
