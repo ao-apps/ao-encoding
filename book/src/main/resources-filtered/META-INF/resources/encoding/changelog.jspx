@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-10-29T20:03:30-05:00"
-    dateModified="2022-04-19T20:58:39-05:00"
+    dateModified="2022-05-13T21:32:49-05:00"
   >
     <c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
       <changelog:release
@@ -48,79 +48,91 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
         repository="@{nexusUrl}content/repositories/snapshots/"
         scmUrl="@{project.scm.url}"
       >
+        <!-- TODO:
         <ul>
-          <!-- TODO:
           <li>
             When a value is fastToString, select optimal quoting type based on content, which might be no quotes.
             Use this capability from ao:out tag in ao-taglib to simplify the output under common cases, while still
             supporting the full encoding capability.
           </li>
-          -->
-          <li>Added support for <code>java.nio.charset.Charset</code>.</li>
-          <li>Implemented <ao:a href="https://www.w3.org/TR/CSS2/syndata.html#characters">CSS encoding</ao:a>.</li>
-          <li>Added <code>EncodingContext.getCharacterEncoding()</code> to get output character encoding.</li>
-          <li>Increased number of validation skips and substitutions through new tests that verify all characters.</li>
-          <li>Encoder suffix and validate now accept optional trim, when trimmed, validation is applied after trimming.</li>
-          <li><code>MediaWriter</code> now unwraps the writer via <code>Coercion.optimize(Writer, Encoder)</code>.</li>
-          <li>
-            Now throws new <code>InvalidCharacterException</code> when invalid characters are detected instead
-            of less specific <code>IOException</code>.
-          </li>
-          <li>
-            Removed self-referential generics that were emulating self-types.  Instead, manually overloading
-            all methods.  Although a bit tedious in the implementation, this cleans-up the API by removing
-            unnecessary type parameter.
-          </li>
-          <li>Removed deprecated items:
-            <ol>
-              <li><code>com.aoapps.encoding.Coercion</code></li>
-              <li><code>com.aoapps.encoding.MediaValidator.validate()</code></li>
-              <li><code>com.aoapps.encoding.Supplier</code></li>
-            </ol>
-          </li>
-          <li>
-            New <code>ValidateOnlyEncoder</code> that may be used for <code>MediaWriter</code> when no
-            character encoding is required.
-          </li>
-          <li>Per-type output interfaces with related per-type writer implementations:
-            <ol>
-              <li>Renamed <code>WhitespaceWriter</code> to <code>Whitespace</code></li>
-              <li>Renamed <code>TextWriter</code> to <code>Text</code></li>
-              <li>
-                <code>Text</code> no longer extends <code>Whitespace</code>, implementations
-                that require both can either extend both or use the intersection type
-                <code><![CDATA[Text &amp; Whitespace]]></code>.
-              </li>
-              <li>Per-type interfaces provide writer/content-agnostic output while minimizing implementation boilerplate.</li>
-              <li>
-                Per-type <code>MediaWriter</code> implementations, with convenient per-content-type methods
-                for all supported content types.
-              </li>
-              <li>Per-type <code>MediaWritable</code> functional interfaces.</li>
-            </ol>
-          </li>
-          <li>
-            <p>
-              Renamed lowerCamelCase from "javaScript" to "javascript" (so javascript reads as a single word),
-              for example, is now "javascriptInXhtmlAttributeEncoder" and "textInJavascriptEncoder".
-            </p>
-            <p>
-              <em>
-                We did not leave any deprecated compatibility methods.  This is a major version bump that
-                may require minor source changes to those upgrading.
-              </em>
-            </p>
-          </li>
-          <li>Added support for translation markups to <code>CharSequence</code> encoders.</li>
-          <li>Implementation is now 100% thread-safe.</li>
-          <li>
-            Indentation changed from tab to two-space for consistency with the new
-            <core:link book="/checkstyle-config" page="/index.jspx" /> project, which itself is based on
-            <ao:a href="https://google.github.io/styleguide/javaguide.html">Google Java Style Guide</ao:a>.
-          </li>
         </ul>
+        -->
       </changelog:release>
     </c:if>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="7.0.0"
+      datePublished="2022-05-13T21:32:49-05:00"
+      groupId="@{project.groupId}"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Added support for <code>java.nio.charset.Charset</code>.</li>
+        <li>Implemented <ao:a href="https://www.w3.org/TR/CSS2/syndata.html#characters">CSS encoding</ao:a>.</li>
+        <li>Added <code>EncodingContext.getCharacterEncoding()</code> to get output character encoding.</li>
+        <li>Increased number of validation skips and substitutions through new tests that verify all characters.</li>
+        <li>Encoder suffix and validate now accept optional trim, when trimmed, validation is applied after trimming.</li>
+        <li><code>MediaWriter</code> now unwraps the writer via <code>Coercion.optimize(Writer, Encoder)</code>.</li>
+        <li>
+          Now throws new <code>InvalidCharacterException</code> when invalid characters are detected instead
+          of less specific <code>IOException</code>.
+        </li>
+        <li>
+          Removed self-referential generics that were emulating self-types.  Instead, manually overloading
+          all methods.  Although a bit tedious in the implementation, this cleans-up the API by removing
+          unnecessary type parameter.
+        </li>
+        <li>Removed deprecated items:
+          <ol>
+            <li><code>com.aoapps.encoding.Coercion</code></li>
+            <li><code>com.aoapps.encoding.MediaValidator.validate()</code></li>
+            <li><code>com.aoapps.encoding.Supplier</code></li>
+          </ol>
+        </li>
+        <li>
+          New <code>ValidateOnlyEncoder</code> that may be used for <code>MediaWriter</code> when no
+          character encoding is required.
+        </li>
+        <li>Per-type output interfaces with related per-type writer implementations:
+          <ol>
+            <li>Renamed <code>WhitespaceWriter</code> to <code>Whitespace</code></li>
+            <li>Renamed <code>TextWriter</code> to <code>Text</code></li>
+            <li>
+              <code>Text</code> no longer extends <code>Whitespace</code>, implementations
+              that require both can either extend both or use the intersection type
+              <code><![CDATA[Text &amp; Whitespace]]></code>.
+            </li>
+            <li>Per-type interfaces provide writer/content-agnostic output while minimizing implementation boilerplate.</li>
+            <li>
+              Per-type <code>MediaWriter</code> implementations, with convenient per-content-type methods
+              for all supported content types.
+            </li>
+            <li>Per-type <code>MediaWritable</code> functional interfaces.</li>
+          </ol>
+        </li>
+        <li>
+          <p>
+            Renamed lowerCamelCase from "javaScript" to "javascript" (so javascript reads as a single word),
+            for example, is now "javascriptInXhtmlAttributeEncoder" and "textInJavascriptEncoder".
+          </p>
+          <p>
+            <em>
+              We did not leave any deprecated compatibility methods.  This is a major version bump that
+              may require minor source changes to those upgrading.
+            </em>
+          </p>
+        </li>
+        <li>Added support for translation markups to <code>CharSequence</code> encoders.</li>
+        <li>Implementation is now 100% thread-safe.</li>
+        <li>
+          Indentation changed from tab to two-space for consistency with the new
+          <core:link book="/checkstyle-config" page="/index.jspx" /> project, which itself is based on
+          <ao:a href="https://google.github.io/styleguide/javaguide.html">Google Java Style Guide</ao:a>.
+        </li>
+      </ul>
+    </changelog:release>
 
     <changelog:release
       projectName="@{documented.name}"
