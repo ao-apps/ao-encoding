@@ -27,7 +27,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * <p>
- * Indicates that at object can be trusted to generate output with only
+ * Indicates that the object can be trusted to generate output with only
  * valid characters for the provided type.  This will allow input validation
  * of the same type to be skipped.
  * </p>
