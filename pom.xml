@@ -281,7 +281,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
       </dependency>
       <!-- Transitive -->
       <dependency>
-        <groupId>com.aoapps</groupId><artifactId>ao-tempfiles</artifactId><version>3.0.0${POST-SNAPSHOT}</version>
+        <groupId>com.aoapps</groupId><artifactId>ao-tempfiles</artifactId><version>3.0.1${POST-SNAPSHOT}</version>
       </dependency>
       <!-- Test Direct -->
       <dependency>
