@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-encoding - High performance streaming character encoding.
-Copyright (C) 2022  AO Industries, Inc.
+Copyright (C) 2022, 2023  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
     message="'supportsIRI'"
   />
 
-  <!-- Using "Ex" for generic exceptions, since "E" if often "Element" -->
+  <!-- Using "Ex" for generic exceptions, since "E" is often "Element" -->
   <suppress
     checks="(InterfaceTypeParameterName|MethodTypeParameterName)"
     message="'Ex'"
