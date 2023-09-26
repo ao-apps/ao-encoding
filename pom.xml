@@ -50,8 +50,6 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
         <li><a target="${javadoc.target}" href="https://oss.aoapps.com/encoding/taglib/">AO Encoding Taglib</a></li>
       </ul>
     </div>]]></javadoc.modules>
-    <!-- Dependencies -->
-    <jsr305.version>3.0.2</jsr305.version>
   </properties>
 
   <name>AO Encoding</name>
@@ -224,7 +222,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
                   <location>${project.build.directory}/offlineLinks/com.aoapps/ao-lang</location>
                 </offlineLink>
                 <offlineLink>
-                  <url>https://javadoc.io/doc/com.google.code.findbugs/jsr305/${jsr305.version}/</url>
+                  <url>https://javadoc.io/doc/com.google.code.findbugs/jsr305/${com.google.code.findbugs:jsr305:jar.version}/</url>
                   <location>${project.build.directory}/offlineLinks/com.google.code.findbugs/jsr305</location>
                 </offlineLink>
                 <!-- Test Direct -->
@@ -300,7 +298,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
         <groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.5.1${POST-SNAPSHOT}</version>
       </dependency>
       <dependency>
-        <groupId>com.google.code.findbugs</groupId><artifactId>jsr305</artifactId><version>${jsr305.version}</version>
+        <groupId>com.google.code.findbugs</groupId><artifactId>jsr305</artifactId><version>3.0.2</version>
       </dependency>
       <!-- Transitive -->
       <dependency>
