@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2013, 2015, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -45,10 +45,9 @@ import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Streaming versions of media encoders.
- * <p>
- * Note: The specialized subclasses implement {@linkplain Encode per-type interfaces} precisely matching
- * {@linkplain MediaEncoder#getInstance(com.aoapps.encoding.EncodingContext, com.aoapps.encoding.MediaType, com.aoapps.encoding.MediaType) the supported encoders}.
- * </p>
+ *
+ * <p>Note: The specialized subclasses implement {@linkplain Encode per-type interfaces} precisely matching
+ * {@linkplain MediaEncoder#getInstance(com.aoapps.encoding.EncodingContext, com.aoapps.encoding.MediaType, com.aoapps.encoding.MediaType) the supported encoders}.</p>
  *
  * @see  MediaEncoder
  *
@@ -60,9 +59,8 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
   /**
    * The {@code isNoClose(MediaWriter)} implementation used for methods where not specified, such as
    * {@link MediaType#newMediaWriter(com.aoapps.encoding.EncodingContext, com.aoapps.encoding.MediaEncoder, java.io.Writer)}.
-   * <p>
-   * Defaults to {@code (out instanceof NoClose) && ((NoClose)out).isNoClose()}
-   * </p>
+   *
+   * <p>Defaults to {@code (out instanceof NoClose) && ((NoClose)out).isNoClose()}</p>
    */
   public static final Predicate<? super MediaWriter> DEFAULT_IS_NO_CLOSE = (MediaWriter mediaWriter) -> {
     Writer out = mediaWriter.out;
@@ -72,9 +70,8 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
   /**
    * The {@code closer(MediaWriter)} implementation used for methods where not specified, such as
    * {@link MediaType#newMediaWriter(com.aoapps.encoding.EncodingContext, com.aoapps.encoding.MediaEncoder, java.io.Writer)}.
-   * <p>
-   * Defaults to {@code mediaWriter.out.close()}
-   * </p>
+   *
+   * <p>Defaults to {@code mediaWriter.out.close()}</p>
    */
   public static final IOConsumer<? super MediaWriter> DEFAULT_CLOSER = mediaWriter -> mediaWriter.out.close();
 
@@ -154,10 +151,9 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
 
   /**
    * {@inheritDoc}
-   * <p>
-   * Gets the media type this specific type of media writer represents.
-   * This is a one-to-one relationship: every media type has a specific writer.
-   * </p>
+   *
+   * <p>Gets the media type this specific type of media writer represents.
+   * This is a one-to-one relationship: every media type has a specific writer.</p>
    */
   @Override
   public abstract MediaType getValidMediaInputType();

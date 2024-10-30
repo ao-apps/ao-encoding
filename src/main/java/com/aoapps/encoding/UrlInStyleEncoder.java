@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2022  AO Industries, Inc.
+ * Copyright (C) 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -33,9 +33,8 @@ import javax.annotation.concurrent.ThreadSafe;
 /**
  * Encodes a URL into CSS, using {@link EncodingContext#encodeURL(java.lang.String)}
  * to rewrite the URL as needed and surrounds it in <code>url("…")</code>.
- * <p>
- * See <a href="https://www.w3.org/TR/CSS2/syndata.html#uri">4.3.4 URLs and URIs</a>.
- * </p>
+ *
+ * <p>See <a href="https://www.w3.org/TR/CSS2/syndata.html#uri">4.3.4 URLs and URIs</a>.</p>
  *
  * @author  AO Industries, Inc.
  */

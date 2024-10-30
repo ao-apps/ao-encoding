@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -138,10 +138,9 @@ public final class ChainWriter implements Appendable, Closeable {
 
   /**
    * Create a new PrintWriter, if needed, without automatic line flushing.
-   * <p>
-   * When {@code out} is already a {@link PrintWriter}, it is used directly,
-   * regardless of {@code autoFlush} settings.
-   * </p>
+   *
+   * <p>When {@code out} is already a {@link PrintWriter}, it is used directly,
+   * regardless of {@code autoFlush} settings.</p>
    *
    * @param  out        A character-output stream
    */
@@ -167,10 +166,9 @@ public final class ChainWriter implements Appendable, Closeable {
 
   /**
    * Create a new PrintWriter, if needed.
-   * <p>
-   * When {@code out} is already a {@link PrintWriter}, it is used directly,
-   * regardless of {@code autoFlush} settings.
-   * </p>
+   *
+   * <p>When {@code out} is already a {@link PrintWriter}, it is used directly,
+   * regardless of {@code autoFlush} settings.</p>
    *
    * @param  out        A character-output stream
    * @param  autoFlush  A boolean; if true, the println() methods will flush
@@ -209,11 +207,10 @@ public final class ChainWriter implements Appendable, Closeable {
 
   /**
    * Flushes the stream.
-  * <p>
-  * Unlike <code>{@link PrintWriter#flush()}</code>, exceptions are thrown immediately, as requiring the caller
-  * to remember to invoke <code>{@link PrintWriter#checkError()}</code> too easily leads to swallowed
-  * exceptions and hard-to-diagnose runtime problems.
-  * </p>
+   *
+   * <p>Unlike <code>{@link PrintWriter#flush()}</code>, exceptions are thrown immediately, as requiring the caller
+   * to remember to invoke <code>{@link PrintWriter#checkError()}</code> too easily leads to swallowed
+   * exceptions and hard-to-diagnose runtime problems.</p>
    */
   public ChainWriter flush() throws IOException {
     if (out.checkError()) {
@@ -224,11 +221,10 @@ public final class ChainWriter implements Appendable, Closeable {
 
   /**
    * Closes the stream.
-  * <p>
-  * Unlike <code>{@link PrintWriter#close()}</code>, exceptions are thrown immediately, as requiring the caller
-  * to remember to invoke <code>{@link PrintWriter#checkError()}</code> too easily leads to swallowed
-  * exceptions and hard-to-diagnose runtime problems.
-  * </p>
+   *
+   * <p>Unlike <code>{@link PrintWriter#close()}</code>, exceptions are thrown immediately, as requiring the caller
+   * to remember to invoke <code>{@link PrintWriter#checkError()}</code> too easily leads to swallowed
+   * exceptions and hard-to-diagnose runtime problems.</p>
    */
   @Override
   public void close() throws IOException {

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2022  AO Industries, Inc.
+ * Copyright (C) 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -61,17 +61,14 @@ public class ValidMediaInputTest {
   }
 
   /**
-   * <p>
    * Tests that all true results of {@link ValidMediaInput#isValidatingMediaInputType(com.aoapps.encoding.MediaType)}
    * catch all characters that are invalid in the media type.  Characters are compared versus the media-type
    * specific validators from {@link MediaValidator#getMediaValidator(com.aoapps.encoding.MediaType, java.io.Writer)}.
-   * </p>
-   * <p>
-   * Tests that the implementation of {@link ValidMediaInput#isValidatingMediaInputType(com.aoapps.encoding.MediaType)}
+   *
+   * <p>Tests that the implementation of {@link ValidMediaInput#isValidatingMediaInputType(com.aoapps.encoding.MediaType)}
    * is maximally broad for most optimized implementation.  All possible character values are compared, and if any
    * validator is determined to disallow all characters, it will ensure a true result from
-   * {@link ValidMediaInput#isValidatingMediaInputType(com.aoapps.encoding.MediaType)}.
-   * </p>
+   * {@link ValidMediaInput#isValidatingMediaInputType(com.aoapps.encoding.MediaType)}.</p>
    */
   @Test
   public void testIsValidatingMediaInputTypeConsistency() {
@@ -184,17 +181,14 @@ public class ValidMediaInputTest {
   }
 
   /**
-   * <p>
    * Tests that all true results of {@link ValidMediaInput#canSkipValidation(com.aoapps.encoding.MediaType)}
    * allow all characters that are valid in the media type.  Characters are compared versus the media-type
    * specific validators from {@link MediaValidator#getMediaValidator(com.aoapps.encoding.MediaType, java.io.Writer)}.
-   * </p>
-   * <p>
-   * Tests that the implementation of {@link ValidMediaInput#canSkipValidation(com.aoapps.encoding.MediaType)}
+   *
+   * <p>Tests that the implementation of {@link ValidMediaInput#canSkipValidation(com.aoapps.encoding.MediaType)}
    * is maximally broad for most optimized implementation.  All possible character values are compared, and if any
    * validator is determined to allow all characters, it will ensure a true result from
-   * {@link ValidMediaInput#canSkipValidation(com.aoapps.encoding.MediaType)}.
-   * </p>
+   * {@link ValidMediaInput#canSkipValidation(com.aoapps.encoding.MediaType)}.</p>
    */
   @Test
   public void testCanSkipValidation() {

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -76,12 +76,11 @@ final class JavaScriptUtil {
 
   /**
    * Gets the Unicode escape for a JavaScript character or null if may be passed-through without escape.
-   * <p>
-   * Code points outside the BMP (0x10000+) are simply handled as their
+   *
+   * <p>Code points outside the BMP (0x10000+) are simply handled as their
    * individual surrogates {@code "\\uhhhh\\uhhhh"}-escaped.  This is safe,
    * completely interoperable between Java and JavaScript, and works with
-   * simple one-char-at-a-time streaming implementations.
-   * </p>
+   * simple one-char-at-a-time streaming implementations.</p>
    *
    * @param ch  The character to encode
    *

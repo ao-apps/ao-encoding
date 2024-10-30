@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -34,10 +34,9 @@ import javax.annotation.concurrent.ThreadSafe;
  * we are validating a more strict subset of characters that are generally text editor and copy/paste friendly.
  * We will consider shell scripts relying on unusual characters, even if technically supported, to be
  * invalid.  This choice is made to help isolate bugs and accidental conflations of data and code.
- * <p>
- * This implementation is based on <a href="https://www.gnu.org/software/bash/">Bash</a>, but
- * it is expected to be compatible with other shells.
- * </p>
+ *
+ * <p>This implementation is based on <a href="https://www.gnu.org/software/bash/">Bash</a>, but
+ * it is expected to be compatible with other shells.</p>
  *
  * @author  AO Industries, Inc.
  */
@@ -49,9 +48,8 @@ public final class ShValidator extends MediaValidator {
 
   /**
    * Checks one character, throws {@link InvalidCharacterException} if invalid.
-   * <p>
-   * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
-   * </p>
+   *
+   * <p>See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.</p>
    */
   public static void checkCharacter(char c) throws InvalidCharacterException {
     if (
@@ -67,9 +65,8 @@ public final class ShValidator extends MediaValidator {
 
   /**
    * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
-   * <p>
-   * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
-   * </p>
+   *
+   * <p>See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.</p>
    */
   public static void checkCharacters(char[] cbuf, int off, int len) throws InvalidCharacterException {
     int end = off + len;
@@ -80,9 +77,8 @@ public final class ShValidator extends MediaValidator {
 
   /**
    * Checks a set of characters, throws {@link InvalidCharacterException} if invalid.
-   * <p>
-   * See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.
-   * </p>
+   *
+   * <p>See <a href="https://www.tldp.org/LDP/abs/html/special-chars.html#CONTROLCHARREF">Advanced Bash-Scripting Guide: Special Characters: Control Characters</a>.</p>
    */
   public static void checkCharacters(CharSequence str, int start, int end) throws InvalidCharacterException {
     while (start < end) {

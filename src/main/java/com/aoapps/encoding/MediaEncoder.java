@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -34,16 +34,13 @@ import java.util.ResourceBundle;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
- * <p>
  * Encodes media to allow it to be contained in a different type of media.
  * For example, one may have plaintext inside of HTML, or arbitrary text inside
  * a JavaScript String inside an onclick attribute of an area tag in a XHTML
  * document.  All necessary encoding is automatically performed.
- * </p>
- * <p>
- * Each encoder both validates its input characters and produces valid output
- * characters.
- * </p>
+ *
+ * <p>Each encoder both validates its input characters and produces valid output
+ * characters.</p>
  *
  * @author  AO Industries, Inc.
  */
@@ -56,38 +53,32 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
    * Gets the media encoder for the requested types or {@code null} if
    * no encoding is necessary.  When an encoder is returned it is also a validator
    * for the contentType and produces valid output for the containerType.
-   * <p>
-   * An encoder is not needed when no prefix or suffix is needed, all valid
+   *
+   * <p>An encoder is not needed when no prefix or suffix is needed, all valid
    * {@code contentType} characters are also valid in {@code containerType},
    * and with the same representation.  Furthermore, there must be some meaningful
    * relationship between {@code contentType} and {@code containerType} -
-   * simply having compatible characters alone is insufficient.
-   * </p>
-   * <p>
-   * When no encoder is returned, it is necessary to use {@linkplain MediaValidator a separate validator}
-   * if character validation is required.
-   * </p>
-   * <p>
-   * Media encoder implementations are extremely light weight.  Although they can be reused after calling
+   * simply having compatible characters alone is insufficient.</p>
+   *
+   * <p>When no encoder is returned, it is necessary to use {@linkplain MediaValidator a separate validator}
+   * if character validation is required.</p>
+   *
+   * <p>Media encoder implementations are extremely light weight.  Although they can be reused after calling
    * {@link #writeSuffixTo(java.lang.Appendable, boolean)}, there is likely no benefit in caching or reusing
    * instances.  The only possible exception would be any {@link BufferedEncoder}, which currently is only
    * the encoders for {@link MediaType#URL}; however, since URLs are generally fairly short, the reuse of underlying
-   * buffers would be of marginal benefit.
-   * </p>
-   * <p>
-   * Please note that most types can be encoded both to and from {@link MediaType#TEXT}.  Thus, when a specialized
+   * buffers would be of marginal benefit.</p>
+   *
+   * <p>Please note that most types can be encoded both to and from {@link MediaType#TEXT}.  Thus, when a specialized
    * encoder is not available (as indicated by throwing {@link UnsupportedEncodingException}), it may be possible to
    * use an intermediate TEXT to connect between types, such as CSS -&gt; TEXT -&gt; XHTML will just display the raw
-   * CSS directly.
-   * </p>
-   * <p>
-   * No automatic intermediate TEXT conversion is done, because the addition of new encoders could suddenly change
-   * the semantics.
-   * </p>
-   * <p>
-   * Note: {@linkplain MediaEncoder#getInstance(com.aoapps.encoding.EncodingContext, com.aoapps.encoding.MediaType, com.aoapps.encoding.MediaType) The supported encoders}
-   * precisely matches the specialized subclasses of {@link MediaWriter} that implement {@linkplain Encode per-type interfaces}.
-   * </p>
+   * CSS directly.</p>
+   *
+   * <p>No automatic intermediate TEXT conversion is done, because the addition of new encoders could suddenly change
+   * the semantics.</p>
+   *
+   * <p>Note: {@linkplain MediaEncoder#getInstance(com.aoapps.encoding.EncodingContext, com.aoapps.encoding.MediaType, com.aoapps.encoding.MediaType) The supported encoders}
+   * precisely matches the specialized subclasses of {@link MediaWriter} that implement {@linkplain Encode per-type interfaces}.</p>
    *
    * @param  encodingContext  Required encoding context
    *
@@ -102,195 +93,207 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
     NullArgumentException.checkNotNull(encodingContext, "encodingContext");
     final MediaEncoder encoder;
     switch (contentType) {
-      case CSS: {
-        switch (containerType) {
-          case CSS:
-          case TEXT:
-            return null;
-          case XHTML:
-            encoder = (encodingContext == EncodingContext.DEFAULT)
-                ? StyleInXhtmlEncoder.styleInXhtmlEncoder
-                : new StyleInXhtmlEncoder(encodingContext);
-            break;
-          case XHTML_ATTRIBUTE:
-            encoder = StyleInXhtmlAttributeEncoder.styleInXhtmlAttributeEncoder;
-            break;
-          default:
-            throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
-        }
-        break;
-      }
-      case JAVASCRIPT: {
-        switch (containerType) {
-          case JAVASCRIPT:
-          case JSON:
-          case LD_JSON:
-            return null;
-          case TEXT:
-            return null;
-          case XHTML: {
-            assert contentType == MediaType.JAVASCRIPT;
-            if (encodingContext == EncodingContext.DEFAULT) {
-              encoder = JavaScriptInXhtmlEncoder.javascriptInXhtmlEncoder;
-            } else {
-              encoder = new JavaScriptInXhtmlEncoder(MediaType.JAVASCRIPT, encodingContext);
-            }
-            break;
+      case CSS:
+        {
+          switch (containerType) {
+            case CSS:
+            case TEXT:
+              return null;
+            case XHTML:
+              encoder = (encodingContext == EncodingContext.DEFAULT)
+                  ? StyleInXhtmlEncoder.styleInXhtmlEncoder
+                  : new StyleInXhtmlEncoder(encodingContext);
+              break;
+            case XHTML_ATTRIBUTE:
+              encoder = StyleInXhtmlAttributeEncoder.styleInXhtmlAttributeEncoder;
+              break;
+            default:
+              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
           }
-          case XHTML_ATTRIBUTE:
-            encoder = JavaScriptInXhtmlAttributeEncoder.javascriptInXhtmlAttributeEncoder;
-            break;
-          default:
-            throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+          break;
         }
-        break;
-      }
-      case JSON:
-      case LD_JSON: {
-        switch (containerType) {
-          case JAVASCRIPT:
-          case JSON:
-          case LD_JSON:
-            return null;
-          case TEXT:
-            return null;
-          case XHTML: {
-            assert contentType == MediaType.JSON || contentType == MediaType.LD_JSON;
-            if (encodingContext == EncodingContext.DEFAULT) {
-              if (contentType == MediaType.JSON) {
-                encoder = JavaScriptInXhtmlEncoder.jsonInXhtmlEncoder;
-              } else {
-                assert contentType == MediaType.LD_JSON;
-                encoder = JavaScriptInXhtmlEncoder.ldJsonInXhtmlEncoder;
+      case JAVASCRIPT:
+        {
+          switch (containerType) {
+            case JAVASCRIPT:
+            case JSON:
+            case LD_JSON:
+              return null;
+            case TEXT:
+              return null;
+            case XHTML:
+              {
+                assert contentType == MediaType.JAVASCRIPT;
+                if (encodingContext == EncodingContext.DEFAULT) {
+                  encoder = JavaScriptInXhtmlEncoder.javascriptInXhtmlEncoder;
+                } else {
+                  encoder = new JavaScriptInXhtmlEncoder(MediaType.JAVASCRIPT, encodingContext);
+                }
+                break;
               }
-            } else {
-              encoder = new JavaScriptInXhtmlEncoder(contentType, encodingContext);
-            }
-            break;
+            case XHTML_ATTRIBUTE:
+              encoder = JavaScriptInXhtmlAttributeEncoder.javascriptInXhtmlAttributeEncoder;
+              break;
+            default:
+              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
           }
-          default:
-            throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+          break;
         }
-        break;
-      }
-      case MYSQL: {
-        switch (containerType) {
-          case MYSQL:
-            return null;
-          case TEXT:
-            return null;
-          default:
-            throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+      case JSON:
+      case LD_JSON:
+        {
+          switch (containerType) {
+            case JAVASCRIPT:
+            case JSON:
+            case LD_JSON:
+              return null;
+            case TEXT:
+              return null;
+            case XHTML:
+              {
+                assert contentType == MediaType.JSON || contentType == MediaType.LD_JSON;
+                if (encodingContext == EncodingContext.DEFAULT) {
+                  if (contentType == MediaType.JSON) {
+                    encoder = JavaScriptInXhtmlEncoder.jsonInXhtmlEncoder;
+                  } else {
+                    assert contentType == MediaType.LD_JSON;
+                    encoder = JavaScriptInXhtmlEncoder.ldJsonInXhtmlEncoder;
+                  }
+                } else {
+                  encoder = new JavaScriptInXhtmlEncoder(contentType, encodingContext);
+                }
+                break;
+              }
+            default:
+              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+          }
+          break;
         }
-        //break;
-      }
-      case PSQL: {
-        switch (containerType) {
-          case PSQL:
-            return null;
-          case TEXT:
-            return null;
-          default:
-            throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+      case MYSQL:
+        {
+          switch (containerType) {
+            case MYSQL:
+              return null;
+            case TEXT:
+              return null;
+            default:
+              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+          }
+          //break;
         }
-        //break;
-      }
-      case SH: {
-        switch (containerType) {
-          case SH:
-            return null;
-          case TEXT:
-            return null;
-          default:
-            throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+      case PSQL:
+        {
+          switch (containerType) {
+            case PSQL:
+              return null;
+            case TEXT:
+              return null;
+            default:
+              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+          }
+          //break;
         }
-        //break;
-      }
-      case TEXT: {
-        switch (containerType) {
-          case CSS:
-            encoder = TextInStyleEncoder.textInStyleEncoder;
-            break;
-          case JAVASCRIPT:
-            encoder = TextInJavaScriptEncoder.textInJavascriptEncoder;
-            break;
-          case JSON:
-            encoder = TextInJavaScriptEncoder.textInJsonEncoder;
-            break;
-          case LD_JSON:
-            encoder = TextInJavaScriptEncoder.textInLdJsonEncoder;
-            break;
-          case MYSQL:
-            encoder = TextInMysqlEncoder.textInMysqlEncoder;
-            break;
-          case PSQL:
-            encoder = TextInPsqlEncoder.textInPsqlEncoder;
-            break;
-          case SH:
-            encoder = TextInShEncoder.textInShEncoder;
-            break;
-          case TEXT:
-            return null;
-          case XHTML:
-            encoder = TextInXhtmlEncoder.textInXhtmlEncoder;
-            break;
-          case XHTML_ATTRIBUTE:
-            encoder = TextInXhtmlAttributeEncoder.textInXhtmlAttributeEncoder;
-            break;
-          default:
-            throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+      case SH:
+        {
+          switch (containerType) {
+            case SH:
+              return null;
+            case TEXT:
+              return null;
+            default:
+              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+          }
+          //break;
         }
-        break;
-      }
-      case URL: {
-        switch (containerType) {
-          case CSS:
-            encoder = new UrlInStyleEncoder(encodingContext);
-            break;
-          case JAVASCRIPT:
-          case JSON:
-          case LD_JSON:
-            encoder = new UrlInJavaScriptEncoder(containerType, encodingContext);
-            break;
-          case TEXT:
-            return null;
-          case URL:
-            return null;
-          case XHTML:
-            encoder = new UrlInXhtmlEncoder(encodingContext);
-            break;
-          case XHTML_ATTRIBUTE:
-            encoder = new UrlInXhtmlAttributeEncoder(encodingContext);
-            break;
-          default:
-            throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+      case TEXT:
+        {
+          switch (containerType) {
+            case CSS:
+              encoder = TextInStyleEncoder.textInStyleEncoder;
+              break;
+            case JAVASCRIPT:
+              encoder = TextInJavaScriptEncoder.textInJavascriptEncoder;
+              break;
+            case JSON:
+              encoder = TextInJavaScriptEncoder.textInJsonEncoder;
+              break;
+            case LD_JSON:
+              encoder = TextInJavaScriptEncoder.textInLdJsonEncoder;
+              break;
+            case MYSQL:
+              encoder = TextInMysqlEncoder.textInMysqlEncoder;
+              break;
+            case PSQL:
+              encoder = TextInPsqlEncoder.textInPsqlEncoder;
+              break;
+            case SH:
+              encoder = TextInShEncoder.textInShEncoder;
+              break;
+            case TEXT:
+              return null;
+            case XHTML:
+              encoder = TextInXhtmlEncoder.textInXhtmlEncoder;
+              break;
+            case XHTML_ATTRIBUTE:
+              encoder = TextInXhtmlAttributeEncoder.textInXhtmlAttributeEncoder;
+              break;
+            default:
+              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+          }
+          break;
         }
-        break;
-      }
-      case XHTML: {
-        switch (containerType) {
-          case TEXT:
-            return null;
-          case XHTML:
-            return null;
-          default:
-            throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+      case URL:
+        {
+          switch (containerType) {
+            case CSS:
+              encoder = new UrlInStyleEncoder(encodingContext);
+              break;
+            case JAVASCRIPT:
+            case JSON:
+            case LD_JSON:
+              encoder = new UrlInJavaScriptEncoder(containerType, encodingContext);
+              break;
+            case TEXT:
+              return null;
+            case URL:
+              return null;
+            case XHTML:
+              encoder = new UrlInXhtmlEncoder(encodingContext);
+              break;
+            case XHTML_ATTRIBUTE:
+              encoder = new UrlInXhtmlAttributeEncoder(encodingContext);
+              break;
+            default:
+              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+          }
+          break;
         }
-        //break;
-      }
-      case XHTML_ATTRIBUTE: {
-        switch (containerType) {
-          case TEXT:
-            return null;
-          case XHTML:
-            return null;
-          case XHTML_ATTRIBUTE:
-            return null;
-          default:
-            throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+      case XHTML:
+        {
+          switch (containerType) {
+            case TEXT:
+              return null;
+            case XHTML:
+              return null;
+            default:
+              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+          }
+          //break;
         }
-        //break;
-      }
+      case XHTML_ATTRIBUTE:
+        {
+          switch (containerType) {
+            case TEXT:
+              return null;
+            case XHTML:
+              return null;
+            case XHTML_ATTRIBUTE:
+              return null;
+            default:
+              throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
+          }
+          //break;
+        }
       default:
         throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
     }
@@ -310,9 +313,8 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 
   /**
    * {@inheritDoc}
-   * <p>
-   * This default implementation validates media types in assertion but writes nothing.
-   * </p>
+   *
+   * <p>This default implementation validates media types in assertion but writes nothing.</p>
    */
   @Override
   public void writePrefixTo(Appendable out) throws IOException {
@@ -345,9 +347,8 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 
   /**
    * {@inheritDoc}
-   * <p>
-   * This default implementation calls {@link #writeSuffixTo(java.lang.Appendable, boolean)} without trimming.
-   * </p>
+   *
+   * <p>This default implementation calls {@link #writeSuffixTo(java.lang.Appendable, boolean)} without trimming.</p>
    *
    * @deprecated  Please use {@link #writeSuffixTo(java.lang.Appendable, boolean)} while specifying desired trim.
    */
@@ -359,9 +360,8 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
 
   /**
    * {@inheritDoc}
-   * <p>
-   * This default implementation validates media types in assertion but writes nothing.
-   * </p>
+   *
+   * <p>This default implementation validates media types in assertion but writes nothing.</p>
    */
   @Override
   public void writeSuffixTo(Appendable out, boolean trim) throws IOException {

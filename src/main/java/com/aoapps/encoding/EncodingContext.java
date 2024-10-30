@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -80,9 +80,8 @@ public interface EncodingContext {
    * Encodes a URL for the current encoding context.
    * The resulting URL must be valid <a href="https://datatracker.ietf.org/doc/html/rfc3986">RFC 3986 URI</a> or
    * <a href="https://datatracker.ietf.org/doc/html/rfc3987">RFC 3987 IRI</a>.
-   * <p>
-   * Defaults to performing no encoding.
-   * </p>
+   *
+   * <p>Defaults to performing no encoding.</p>
    */
   default String encodeURL(String url) {
     return url;
@@ -90,9 +89,8 @@ public interface EncodingContext {
 
   /**
    * The current doctype.
-   * <p>
-   * Defaults to {@link Doctype#DEFAULT}.
-   * </p>
+   *
+   * <p>Defaults to {@link Doctype#DEFAULT}.</p>
    */
   default Doctype getDoctype() {
     return Doctype.DEFAULT;
@@ -100,9 +98,8 @@ public interface EncodingContext {
 
   /**
    * The current serialization.
-   * <p>
-   * Defaults to {@link Serialization#DEFAULT}.
-   * </p>
+   *
+   * <p>Defaults to {@link Serialization#DEFAULT}.</p>
    */
   default Serialization getSerialization() {
     return Serialization.DEFAULT;
@@ -110,9 +107,8 @@ public interface EncodingContext {
 
   /**
    * The output character encoding.
-   * <p>
-   * Defaults to {@link StandardCharsets#UTF_8}.
-   * </p>
+   *
+   * <p>Defaults to {@link StandardCharsets#UTF_8}.</p>
    */
   default Charset getCharacterEncoding() {
     return StandardCharsets.UTF_8;

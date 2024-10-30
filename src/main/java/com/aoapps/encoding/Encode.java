@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2022  AO Industries, Inc.
+ * Copyright (C) 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -38,10 +38,9 @@ public interface Encode {
   // <editor-fold desc="Encode - definition" defaultstate="collapsed">
   /**
    * Encodes the given nested type with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
    *
    * @return  {@code this} writer
    */
@@ -54,10 +53,9 @@ public interface Encode {
 
   /**
    * Encodes the given nested type with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
    *
    * @return  {@code this} writer
    */
@@ -72,10 +70,9 @@ public interface Encode {
 
   /**
    * Encodes the given nested type with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
    *
    * @return  {@code this} writer
    */
@@ -90,14 +87,12 @@ public interface Encode {
 
   /**
    * Encodes the given nested type with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
-   * <p>
-   * If the string is translated, comments will be added giving the
-   * translation lookup id to aid in translation of server-translated values.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
+   *
+   * <p>If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.</p>
    *
    * @return  {@code this} writer
    */
@@ -105,14 +100,12 @@ public interface Encode {
 
   /**
    * Encodes the given nested type with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
-   * <p>
-   * If the string is translated, comments will be added giving the
-   * translation lookup id to aid in translation of server-translated values.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
+   *
+   * <p>If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.</p>
    *
    * @return  {@code this} writer
    */
@@ -120,14 +113,12 @@ public interface Encode {
 
   /**
    * Encodes the given nested type with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
-   * <p>
-   * If the string is translated, comments will be added giving the
-   * translation lookup id to aid in translation of server-translated values.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
+   *
+   * <p>If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.</p>
    *
    * @return  {@code this} writer
    */
@@ -135,14 +126,12 @@ public interface Encode {
 
   /**
    * Encodes the given nested type with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
-   * <p>
-   * If the string is translated, comments will be added giving the
-   * translation lookup id to aid in translation of server-translated values.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
+   *
+   * <p>If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.</p>
    *
    * @param  <Ex>  An arbitrary exception type that may be thrown
    *
@@ -154,13 +143,11 @@ public interface Encode {
 
   /**
    * Encodes the given nested type with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
-   * <p>
-   * Does not perform any translation markups.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
+   *
+   * <p>Does not perform any translation markups.</p>
    *
    * @param  <Ex>  An arbitrary exception type that may be thrown
    *
@@ -178,21 +165,18 @@ public interface Encode {
   /**
    * Encodes the given nested type with proper encoding.
    * This is well suited for use in a try-with-resources block.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
-   * <p>
-   * Does not perform any translation markups.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
+   *
+   * <p>Does not perform any translation markups.</p>
    *
    * @return  A new writer that may be used for the given content type.
    *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.
-   *          <p>
-   *          The returned writer will be of the specific subclass of {@link MediaWriter} matching {@code contentType}
+   *
+   *          <p>The returned writer will be of the specific subclass of {@link MediaWriter} matching {@code contentType}
    *          (see {@link MediaType#getMediaWriterClass()}.  This means {@link MediaWriter#getValidMediaInputType()} will
-   *          be {@code contentType}.
-   *          </p>
+   *          be {@code contentType}.</p>
    */
   MediaWriter encode(MediaType contentType) throws IOException;
   // </editor-fold>

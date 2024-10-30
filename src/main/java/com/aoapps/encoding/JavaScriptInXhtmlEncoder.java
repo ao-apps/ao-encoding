@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -32,18 +32,15 @@ import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
- * <p>
  * Encode JavaScript and related formats into XHTML.  The static utility methods
  * only encode the characters.  When used as a {@link MediaWriter}, it automatically
  * adds the &lt;script&gt; tags and optionally a CDATA block.
- * </p>
- * <p>
- * The CDATA block is not added for JSON and LD_JSON, because JSON does not
+ *
+ * <p>The CDATA block is not added for JSON and LD_JSON, because JSON does not
  * support comments (insert Captain Picard facepalm pic here).  However, as the
  * JSON format will only contain &lt;, &gt;, or &amp; within quoted strings,
  * and those characters are unicode escaped, this should not present a
- * compatibility issue between HTML and XHTML.
- * </p>
+ * compatibility issue between HTML and XHTML.</p>
  *
  * @author  AO Industries, Inc.
  */

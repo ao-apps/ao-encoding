@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-encoding - High performance streaming character encoding.
-Copyright (C) 2022, 2023  AO Industries, Inc.
+Copyright (C) 2022, 2023, 2024  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -29,6 +29,16 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
 
   <!-- TODO: Complete Javadocs -->
   <suppress checks="(MissingJavadocMethod|MissingJavadocType|SummaryJavadoc)" />
+
+  <!-- Cannot find how to allow <p> inside @param and @return -->
+  <suppress
+    checks="JavadocParagraph"
+    files="[/\\]com[/\\]aoapps[/\\]encoding[/\\]Encode\.java$"
+  />
+  <suppress
+    checks="JavadocParagraph"
+    files="[/\\]com[/\\]aoapps[/\\]encoding[/\\]Encoding\.java$"
+  />
 
   <!-- TODO: Remove in 8.0.0 release -->
   <suppress

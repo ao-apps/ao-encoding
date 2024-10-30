@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -84,10 +84,9 @@ public interface Text extends Encode {
 
   /**
    * Writes one non-breaking space character.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
    *
    * @return  {@code this} writer
    *
@@ -100,10 +99,9 @@ public interface Text extends Encode {
 
   /**
    * Writes the given number of non-breaking space characters.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
    *
    * @param  count  When {@code count <= 0}, nothing is written.
    *
@@ -121,10 +119,9 @@ public interface Text extends Encode {
 
   /**
    * Writes the given text with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
    *
    * @return  {@code this} writer
    */
@@ -134,10 +131,9 @@ public interface Text extends Encode {
 
   /**
    * Writes the given text with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
    *
    * @return  {@code this} writer
    */
@@ -147,10 +143,9 @@ public interface Text extends Encode {
 
   /**
    * Writes the given text with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
    *
    * @return  {@code this} writer
    */
@@ -160,14 +155,12 @@ public interface Text extends Encode {
 
   /**
    * Writes the given text with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
-   * <p>
-   * If the string is translated, comments will be added giving the
-   * translation lookup id to aid in translation of server-translated values.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
+   *
+   * <p>If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.</p>
    *
    * @return  {@code this} writer
    */
@@ -177,14 +170,12 @@ public interface Text extends Encode {
 
   /**
    * Writes the given text with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
-   * <p>
-   * If the string is translated, comments will be added giving the
-   * translation lookup id to aid in translation of server-translated values.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
+   *
+   * <p>If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.</p>
    *
    * @return  {@code this} writer
    */
@@ -194,14 +185,12 @@ public interface Text extends Encode {
 
   /**
    * Writes the given text with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
-   * <p>
-   * If the string is translated, comments will be added giving the
-   * translation lookup id to aid in translation of server-translated values.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
+   *
+   * <p>If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.</p>
    *
    * @return  {@code this} writer
    */
@@ -211,14 +200,12 @@ public interface Text extends Encode {
 
   /**
    * Writes the given text with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
-   * <p>
-   * If the string is translated, comments will be added giving the
-   * translation lookup id to aid in translation of server-translated values.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
+   *
+   * <p>If the string is translated, comments will be added giving the
+   * translation lookup id to aid in translation of server-translated values.</p>
    *
    * @param  <Ex>  An arbitrary exception type that may be thrown
    *
@@ -230,13 +217,11 @@ public interface Text extends Encode {
 
   /**
    * Writes the given text with proper encoding.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
-   * <p>
-   * Does not perform any translation markups.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
+   *
+   * <p>Does not perform any translation markups.</p>
    *
    * @param  <Ex>  An arbitrary exception type that may be thrown
    *
@@ -249,13 +234,11 @@ public interface Text extends Encode {
   /**
    * Writes the given text with proper encoding.
    * This is well suited for use in a try-with-resources block.
-   * <p>
-   * Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
-   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.
-   * </p>
-   * <p>
-   * Does not perform any translation markups.
-   * </p>
+   *
+   * <p>Adds {@linkplain MediaEncoder#writePrefixTo(java.lang.Appendable) prefixes}
+   * and {@linkplain MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean) suffixes} by media type, such as {@code "…"}.</p>
+   *
+   * <p>Does not perform any translation markups.</p>
    *
    * @return  A new writer that may be used for arbitrary text.
    *          This writer must be closed for completed calls to {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}.

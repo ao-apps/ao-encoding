@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -37,10 +37,9 @@ public interface Whitespace {
   // <editor-fold desc="Whitespace - definition" defaultstate="collapsed">
   /**
    * The character used for newlines.
-   * <p>
-   * This is {@code '\n'} on all platforms.  If a different newline is required,
-   * such as {@code "\r\n"} for email, filter the output.
-   * </p>
+   *
+   * <p>This is {@code '\n'} on all platforms.  If a different newline is required,
+   * such as {@code "\r\n"} for email, filter the output.</p>
    */
   char NL = '\n';
 
@@ -60,10 +59,9 @@ public interface Whitespace {
 
   /**
    * Writes a newline.
-   * <p>
-   * This is {@code '\n'} on all platforms.  If a different newline is required,
-   * such as {@code "\r\n"} for email, filter the output.
-   * </p>
+   *
+   * <p>This is {@code '\n'} on all platforms.  If a different newline is required,
+   * such as {@code "\r\n"} for email, filter the output.</p>
    *
    * @return  {@code this} writer
    *
@@ -75,10 +73,9 @@ public interface Whitespace {
 
   /**
    * Writes a newline, followed by current indentation when {@linkplain #getIndent() indentation enabled}.
-   * <p>
-   * This is {@code '\n'} on all platforms.  If a different newline is required,
-   * such as {@code "\r\n"} for email, filter the output.
-   * </p>
+   *
+   * <p>This is {@code '\n'} on all platforms.  If a different newline is required,
+   * such as {@code "\r\n"} for email, filter the output.</p>
    *
    * @return  {@code this} writer
    *
@@ -94,10 +91,9 @@ public interface Whitespace {
 
   /**
    * Writes a newline, followed by current indentation with a depth offset when {@linkplain #getIndent() indentation enabled}.
-   * <p>
-   * This is {@code '\n'} on all platforms.  If a different newline is required,
-   * such as {@code "\r\n"} for email, filter the output.
-   * </p>
+   *
+   * <p>This is {@code '\n'} on all platforms.  If a different newline is required,
+   * such as {@code "\r\n"} for email, filter the output.</p>
    *
    * @param  depthOffset  A value added to the current indentation depth.
    *                      For example, pass {@code -1} when performing a newline before a closing tag or ending curly brace.

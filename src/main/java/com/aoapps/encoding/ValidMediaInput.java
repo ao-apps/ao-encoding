@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2015, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2015, 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -44,14 +44,12 @@ public interface ValidMediaInput {
   /**
    * Checks if this is validating the provided type, which allows one validator to be substituted in place of another.
    * This is acceptable when this validator is equal to, or more strict, than the given {@code inputType}.
-   * <p>
-   * Please note that this validator only needs to block invalid characters for {@code inputType}.  This validator
-   * does not need to let through all characters, just block the invalid.  This is a one-way optimization.
-   * </p>
-   * <p>
-   * This is almost the inverse operation of {@link #isValidatingMediaInputType(com.aoapps.encoding.MediaType)}, with
-   * the exception of characters only invalid due to nested encodings.
-   * </p>
+   *
+   * <p>Please note that this validator only needs to block invalid characters for {@code inputType}.  This validator
+   * does not need to let through all characters, just block the invalid.  This is a one-way optimization.</p>
+   *
+   * <p>This is almost the inverse operation of {@link #isValidatingMediaInputType(com.aoapps.encoding.MediaType)}, with
+   * the exception of characters only invalid due to nested encodings.</p>
    *
    * @see  #canSkipValidation(com.aoapps.encoding.MediaType)
    *
@@ -63,10 +61,9 @@ public interface ValidMediaInput {
    * Checks if validation may be skipped when the characters being written to this
    * validator is already known to be valid with the given media type.  This may be done when every valid character
    * for the given media type is also valid within this validator.
-   * <p>
-   * This is almost the inverse operation of {@link #isValidatingMediaInputType(com.aoapps.encoding.MediaType)}, with
-   * the exception of characters only invalid due to nested encodings.
-   * </p>
+   *
+   * <p>This is almost the inverse operation of {@link #isValidatingMediaInputType(com.aoapps.encoding.MediaType)}, with
+   * the exception of characters only invalid due to nested encodings.</p>
    *
    * @see  #isValidatingMediaInputType(com.aoapps.encoding.MediaType)
    *

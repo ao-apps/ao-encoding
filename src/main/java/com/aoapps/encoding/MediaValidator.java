@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -52,15 +52,13 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
    * Gets the media validator for the given type.  If the given writer is
    * {@linkplain MediaValidator#isValidatingMediaInputType(com.aoapps.encoding.MediaType) already validator for the requested type},
    * will return the provided writer.
-   * <p>
-   * Please note, the returned validator may be more strict than the requested media type.  It is guaranteed to
-   * forbid at least all the invalid characters of {@code contentType}, but may also forbid more.
-   * </p>
-   * <p>
-   * When the returned {@code validator != out}, {@link #validate(boolean)} must be called to finalize the validation.
+   *
+   * <p>Please note, the returned validator may be more strict than the requested media type.  It is guaranteed to
+   * forbid at least all the invalid characters of {@code contentType}, but may also forbid more.</p>
+   *
+   * <p>When the returned {@code validator != out}, {@link #validate(boolean)} must be called to finalize the validation.
    * When the returned {@code validator == out}, {@link #validate(boolean)} should not be called, since the provided writer
-   * will finalize the validation within its proper scope.
-   * </p>
+   * will finalize the validation within its proper scope.</p>
    *
    * @param  out  First, when is already validating the content type, is returned directly.
    *              Second, will be optimized via {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}

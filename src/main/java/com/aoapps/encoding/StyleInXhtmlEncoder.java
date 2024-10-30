@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2022  AO Industries, Inc.
+ * Copyright (C) 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -30,11 +30,9 @@ import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
- * <p>
  * Encode CSS into XHTML.  The static utility methods only validate the characters since all valid CSS characters are
  * also valid in XHTML and do not require additional encoding.
  * When used as a {@link MediaWriter}, it automatically adds the &lt;style&gt; tags and optionally a CDATA block.
- * </p>
  *
  * @author  AO Industries, Inc.
  */

@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -30,17 +30,14 @@ import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
- * <p>
  * Encodes arbitrary text for use in a shell script.
- * </p>
- * <p>
- * This implementation is based on <a href="https://www.gnu.org/software/bash/">Bash</a>,
+ *
+ * <p>This implementation is based on <a href="https://www.gnu.org/software/bash/">Bash</a>,
  * it is expected to be compatible with all shells implementing
  * <a href="https://www.gnu.org/software/bash/manual/html_node/ANSI_002dC-Quoting.html">ANSI-C quoting</a>.
  * Per this <a href="https://unix.stackexchange.com/a/371873">Stack Exchange Answer</a>, this includes
  * <a href="http://www.kornshell.org/">ksh</a>, <a href="http://www.zsh.org/">zsh</a>, and some builds of
- * <a href="http://www.in-ulm.de/~mascheck/various/ash/">ash</a>.
- * </p>
+ * <a href="http://www.in-ulm.de/~mascheck/various/ash/">ash</a>.</p>
  *
  * @author  AO Industries, Inc.
  */
