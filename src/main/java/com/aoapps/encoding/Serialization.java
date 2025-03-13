@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2019, 2020, 2021, 2022, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -103,7 +103,7 @@ public enum Serialization {
    * <a href="https://web.archive.org/web/20080913043830/http://www.smackthemouse.com/xhtmlxml">http://www.smackthemouse.com/xhtmlxml</a>
    */
   @SuppressWarnings("AssignmentToForLoopParameter")
-  public static Serialization select(Iterator<? extends String> acceptHeaderValues) {
+  public static Serialization select(Iterator<String> acceptHeaderValues) {
     // Some test accept headers:
     //   Firefox: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
     //   IE 6: */*
@@ -183,11 +183,11 @@ public enum Serialization {
     return SGML;
   }
 
-  public static Serialization select(Iterable<? extends String> acceptHeaderValues) {
+  public static Serialization select(Iterable<String> acceptHeaderValues) {
     return select(acceptHeaderValues.iterator());
   }
 
-  public static Serialization select(Enumeration<? extends String> acceptHeaderValues) {
+  public static Serialization select(Enumeration<String> acceptHeaderValues) {
     return select(
         new EnumerationIterator<>(acceptHeaderValues)
     );
