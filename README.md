@@ -22,7 +22,7 @@ High performance streaming character encoding.
 * [Project Home](https://oss.aoapps.com/encoding/)
 * [Changelog](https://oss.aoapps.com/encoding/changelog)
 * [API Docs](https://oss.aoapps.com/encoding/apidocs/)
-* [Maven Central Repository](https://central.sonatype.com/artifact/com.aoapps/ao-encoding)
+* [Central Repository](https://central.sonatype.com/artifact/com.aoapps/ao-encoding)
 * [GitHub](https://github.com/ao-apps/ao-encoding)
 
 ## Modules
