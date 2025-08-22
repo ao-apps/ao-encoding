@@ -179,7 +179,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
             default:
               throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
           }
-          //break;
+          // break;
         }
       case PSQL:
         {
@@ -191,7 +191,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
             default:
               throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
           }
-          //break;
+          // break;
         }
       case SH:
         {
@@ -203,7 +203,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
             default:
               throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
           }
-          //break;
+          // break;
         }
       case TEXT:
         {
@@ -278,7 +278,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
             default:
               throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
           }
-          //break;
+          // break;
         }
       case XHTML_ATTRIBUTE:
         {
@@ -292,7 +292,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
             default:
               throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
           }
-          //break;
+          // break;
         }
       default:
         throw new LocalizedUnsupportedEncodingException(RESOURCES, "unableToFindEncoder", contentType.getContentType(), containerType.getContentType());
