@@ -606,7 +606,6 @@ public enum MediaType {
     return getContentType();
   }
 
-
   abstract boolean isUsedFor(String contentType);
 
   /**
