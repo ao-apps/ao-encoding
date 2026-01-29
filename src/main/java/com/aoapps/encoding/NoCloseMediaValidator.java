@@ -46,10 +46,10 @@ public final class NoCloseMediaValidator extends MediaValidator {
   }
 
   /**
-   * Dispatches to {@link #wrap(com.aoapps.encoding.MediaValidator)} when out is a {@link MediaValidator}, otherwise
+   * Dispatches to {@link NoCloseMediaValidator#wrap(com.aoapps.encoding.MediaValidator)} when out is a {@link MediaValidator}, otherwise
    * dispatches to {@link NoCloseWriter#wrap(java.io.Writer)}.
    *
-   * @see  #wrap(com.aoapps.encoding.MediaValidator)
+   * @see  NoCloseMediaValidator#wrap(com.aoapps.encoding.MediaValidator)
    * @see  NoCloseWriter#wrap(java.io.Writer)
    */
   @SuppressWarnings("unchecked")
@@ -63,7 +63,7 @@ public final class NoCloseMediaValidator extends MediaValidator {
   private final MediaValidator wrapped;
 
   /**
-   * @see  #wrap(com.aoapps.encoding.MediaValidator)
+   * @see  NoCloseMediaValidator#wrap(com.aoapps.encoding.MediaValidator)
    */
   private NoCloseMediaValidator(MediaValidator out) {
     super(out);
@@ -89,8 +89,8 @@ public final class NoCloseMediaValidator extends MediaValidator {
   /**
    * {@inheritDoc}
    *
-   * @return  the wrapped writer passed through {@link #wrap(java.io.Writer)}
-   *          or {@link #wrap(com.aoapps.encoding.MediaValidator)}.
+   * @return  the wrapped writer passed through {@link NoCloseMediaValidator#wrap(java.io.Writer)}
+   *          or {@link NoCloseMediaValidator#wrap(com.aoapps.encoding.MediaValidator)}.
    */
   @Override
   public Writer getOut() {

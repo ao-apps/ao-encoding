@@ -75,7 +75,7 @@ public final class ChainWriter implements Appendable, Closeable {
   /**
    * @see  EncodingContext#DEFAULT
    *
-   * @deprecated  Please use {@link #ChainWriter(com.aoapps.encoding.EncodingContext, java.io.OutputStream)}
+   * @deprecated  Please use {@link ChainWriter#ChainWriter(com.aoapps.encoding.EncodingContext, java.io.OutputStream)}
    */
   @Deprecated
   public ChainWriter(OutputStream out) {
@@ -99,7 +99,7 @@ public final class ChainWriter implements Appendable, Closeable {
   /**
    * @see  EncodingContext#DEFAULT
    *
-   * @deprecated  Please use {@link #ChainWriter(com.aoapps.encoding.EncodingContext, java.io.OutputStream, boolean)}
+   * @deprecated  Please use {@link ChainWriter#ChainWriter(com.aoapps.encoding.EncodingContext, java.io.OutputStream, boolean)}
    */
   @Deprecated
   public ChainWriter(OutputStream out, boolean autoFlush) {
@@ -129,7 +129,7 @@ public final class ChainWriter implements Appendable, Closeable {
   /**
    * @see  EncodingContext#DEFAULT
    *
-   * @deprecated  Please use {@link #ChainWriter(com.aoapps.encoding.EncodingContext, java.io.PrintWriter)}
+   * @deprecated  Please use {@link ChainWriter#ChainWriter(com.aoapps.encoding.EncodingContext, java.io.PrintWriter)}
    */
   @Deprecated
   public ChainWriter(PrintWriter out) {
@@ -157,7 +157,7 @@ public final class ChainWriter implements Appendable, Closeable {
   /**
    * @see  EncodingContext#DEFAULT
    *
-   * @deprecated  Please use {@link #ChainWriter(com.aoapps.encoding.EncodingContext, java.io.Writer)}
+   * @deprecated  Please use {@link ChainWriter#ChainWriter(com.aoapps.encoding.EncodingContext, java.io.Writer)}
    */
   @Deprecated
   public ChainWriter(Writer out) {
@@ -186,7 +186,7 @@ public final class ChainWriter implements Appendable, Closeable {
   /**
    * @see  EncodingContext#DEFAULT
    *
-   * @deprecated  Please use {@link #ChainWriter(com.aoapps.encoding.EncodingContext, java.io.Writer, boolean)}
+   * @deprecated  Please use {@link ChainWriter#ChainWriter(com.aoapps.encoding.EncodingContext, java.io.Writer, boolean)}
    */
   @Deprecated
   public ChainWriter(Writer out, boolean autoFlush) {
@@ -301,7 +301,7 @@ public final class ChainWriter implements Appendable, Closeable {
    * Print an integer.  The string produced by <code>{@link
    * java.lang.String#valueOf(int)}</code> is translated into bytes according
    * to the platform's default character encoding, and these bytes are
-   * written in exactly the manner of the <code>{@link #write(int)}</code>
+   * written in exactly the manner of the <code>{@link ChainWriter#write(int)}</code>
    * method.
    *
    * @param      i   The <code>int</code> to be printed
@@ -316,7 +316,7 @@ public final class ChainWriter implements Appendable, Closeable {
    * Print a long integer.  The string produced by <code>{@link
    * java.lang.String#valueOf(long)}</code> is translated into bytes
    * according to the platform's default character encoding, and these bytes
-   * are written in exactly the manner of the <code>{@link #write(int)}</code>
+   * are written in exactly the manner of the <code>{@link ChainWriter#write(int)}</code>
    * method.
    *
    * @param      l   The <code>long</code> to be printed
@@ -330,7 +330,7 @@ public final class ChainWriter implements Appendable, Closeable {
    * Print a floating-point number.  The string produced by <code>{@link
    * java.lang.String#valueOf(float)}</code> is translated into bytes
    * according to the platform's default character encoding, and these bytes
-   * are written in exactly the manner of the <code>{@link #write(int)}</code>
+   * are written in exactly the manner of the <code>{@link ChainWriter#write(int)}</code>
    * method.
    *
    * @param      f   The <code>float</code> to be printed
@@ -358,7 +358,7 @@ public final class ChainWriter implements Appendable, Closeable {
   /**
    * Print an array of characters.  The characters are converted into bytes
    * according to the platform's default character encoding, and these bytes
-   * are written in exactly the manner of the <code>{@link #write(int)}</code>
+   * are written in exactly the manner of the <code>{@link ChainWriter#write(int)}</code>
    * method.
    *
    * @param      s   The array of chars to be printed
@@ -375,7 +375,7 @@ public final class ChainWriter implements Appendable, Closeable {
    * <code>"null"</code> is printed.  Otherwise, the string's characters are
    * converted into bytes according to the platform's default character
    * encoding, and these bytes are written in exactly the manner of the
-   * <code>{@link #write(int)}</code> method.
+   * <code>{@link ChainWriter#write(int)}</code> method.
    *
    * @param      s   The <code>String</code> to be printed
    */
@@ -388,7 +388,7 @@ public final class ChainWriter implements Appendable, Closeable {
    * Print an object.  The string produced by the <code>{@link
    * java.lang.String#valueOf(Object)}</code> method is translated into bytes
    * according to the platform's default character encoding, and these bytes
-   * are written in exactly the manner of the <code>{@link #write(int)}</code>
+   * are written in exactly the manner of the <code>{@link ChainWriter#write(int)}</code>
    * method.
    *
    * @param      obj   The <code>Object</code> to be printed
@@ -412,8 +412,8 @@ public final class ChainWriter implements Appendable, Closeable {
 
   /**
    * Print a boolean value and then terminate the line.  This method behaves
-   * as though it invokes <code>{@link #print(boolean)}</code> and then
-   * <code>{@link #println()}</code>.
+   * as though it invokes <code>{@link ChainWriter#print(boolean)}</code> and then
+   * <code>{@link ChainWriter#println()}</code>.
    */
   public ChainWriter println(boolean x) {
     out.println(x);
@@ -422,7 +422,7 @@ public final class ChainWriter implements Appendable, Closeable {
 
   /**
    * Print a character and then terminate the line.  This method behaves as
-   * though it invokes <code>{@link #print(char)}</code> and then <code>{@link
+   * though it invokes <code>{@link ChainWriter#print(char)}</code> and then <code>{@link
    * #println()}</code>.
    */
   public ChainWriter println(char x) {
@@ -432,7 +432,7 @@ public final class ChainWriter implements Appendable, Closeable {
 
   /**
    * Print an integer and then terminate the line.  This method behaves as
-   * though it invokes <code>{@link #print(int)}</code> and then <code>{@link
+   * though it invokes <code>{@link ChainWriter#print(int)}</code> and then <code>{@link
    * #println()}</code>.
    */
   public ChainWriter println(int x) {
@@ -442,8 +442,8 @@ public final class ChainWriter implements Appendable, Closeable {
 
   /**
    * Print a long integer and then terminate the line.  This method behaves
-   * as though it invokes <code>{@link #print(long)}</code> and then
-   * <code>{@link #println()}</code>.
+   * as though it invokes <code>{@link ChainWriter#print(long)}</code> and then
+   * <code>{@link ChainWriter#println()}</code>.
    */
   public ChainWriter println(long x) {
     out.println(x);
@@ -452,8 +452,8 @@ public final class ChainWriter implements Appendable, Closeable {
 
   /**
    * Print a floating-point number and then terminate the line.  This method
-   * behaves as though it invokes <code>{@link #print(float)}</code> and then
-   * <code>{@link #println()}</code>.
+   * behaves as though it invokes <code>{@link ChainWriter#print(float)}</code> and then
+   * <code>{@link ChainWriter#println()}</code>.
    */
   public ChainWriter println(float x) {
     out.println(x);
@@ -463,7 +463,7 @@ public final class ChainWriter implements Appendable, Closeable {
   /**
    * Print a double-precision floating-point number and then terminate the
    * line.  This method behaves as though it invokes <code>{@link
-   * #print(double)}</code> and then <code>{@link #println()}</code>.
+   * #print(double)}</code> and then <code>{@link ChainWriter#println()}</code>.
    */
   public ChainWriter println(double x) {
     out.println(x);
@@ -472,8 +472,8 @@ public final class ChainWriter implements Appendable, Closeable {
 
   /**
    * Print an array of characters and then terminate the line.  This method
-   * behaves as though it invokes <code>{@link #print(char[])}</code> and then
-   * <code>{@link #println()}</code>.
+   * behaves as though it invokes <code>{@link ChainWriter#print(char[])}</code> and then
+   * <code>{@link ChainWriter#println()}</code>.
    */
   public ChainWriter println(char[] x) {
     out.println(x);
@@ -482,8 +482,8 @@ public final class ChainWriter implements Appendable, Closeable {
 
   /**
    * Print a String and then terminate the line.  This method behaves as
-   * though it invokes <code>{@link #print(String)}</code> and then
-   * <code>{@link #println()}</code>.
+   * though it invokes <code>{@link ChainWriter#print(String)}</code> and then
+   * <code>{@link ChainWriter#println()}</code>.
    */
   public ChainWriter println(String x) {
     out.println(x);
@@ -492,8 +492,8 @@ public final class ChainWriter implements Appendable, Closeable {
 
   /**
    * Print an Object and then terminate the line.  This method behaves as
-   * though it invokes <code>{@link #print(Object)}</code> and then
-   * <code>{@link #println()}</code>.
+   * though it invokes <code>{@link ChainWriter#print(Object)}</code> and then
+   * <code>{@link ChainWriter#println()}</code>.
    */
   public ChainWriter println(Object x) {
     out.println(x);
@@ -581,7 +581,7 @@ public final class ChainWriter implements Appendable, Closeable {
    *
    * @param value the string to be escaped.
    *
-   * @see  #textInXhtml(java.lang.Object)
+   * @see  ChainWriter#textInXhtml(java.lang.Object)
    *
    * @deprecated  the effects of makeBr and makeNbsp should be handled by CSS white-space property.
    */
@@ -598,7 +598,7 @@ public final class ChainWriter implements Appendable, Closeable {
    * @param makeBr  will write &lt;br /&gt; tags for every newline character
    * @param makeNbsp  will write &amp;#160; for a space when another space follows
    *
-   * @see  #textInXhtml(java.lang.Object)
+   * @see  ChainWriter#textInXhtml(java.lang.Object)
    *
    * @deprecated  the effects of makeBr and makeNbsp should be handled by CSS white-space property.
    */

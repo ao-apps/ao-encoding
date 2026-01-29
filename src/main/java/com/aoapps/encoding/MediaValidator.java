@@ -56,8 +56,8 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
    * <p>Please note, the returned validator may be more strict than the requested media type.  It is guaranteed to
    * forbid at least all the invalid characters of {@code contentType}, but may also forbid more.</p>
    *
-   * <p>When the returned {@code validator != out}, {@link #validate(boolean)} must be called to finalize the validation.
-   * When the returned {@code validator == out}, {@link #validate(boolean)} should not be called, since the provided writer
+   * <p>When the returned {@code validator != out}, {@link MediaValidator#validate(boolean)} must be called to finalize the validation.
+   * When the returned {@code validator == out}, {@link MediaValidator#validate(boolean)} should not be called, since the provided writer
    * will finalize the validation within its proper scope.</p>
    *
    * @param  out  First, when is already validating the content type, is returned directly.
@@ -153,7 +153,7 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
   /**
    * The output type must be the same as the input type.
    *
-   * @return  The result of {@link #getValidMediaInputType()}
+   * @return  The result of {@link MediaValidator#getValidMediaInputType()}
    */
   @Override
   public final MediaType getValidMediaOutputType() {
@@ -166,8 +166,8 @@ public abstract class MediaValidator extends FilterWriter implements ValidMediaF
   }
 
   /**
-   * Is this validator buffered?  A buffered validator may delay validation until {@link #validate(boolean)}.
-   * Furthermore, a buffered validator should not be bypassed before any buffered data has been written via {@link #validate(boolean)}.
+   * Is this validator buffered?  A buffered validator may delay validation until {@link MediaValidator#validate(boolean)}.
+   * Furthermore, a buffered validator should not be bypassed before any buffered data has been written via {@link MediaValidator#validate(boolean)}.
    * An example of encoder bypassing is performing direct output on the writer from {@link EncoderWriter#getOut()}.
    *
    * @return  {@code false} by default

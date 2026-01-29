@@ -90,8 +90,8 @@ public interface Text extends Encode {
    *
    * @return  {@code this} writer
    *
-   * @see  #nbsp(int)
-   * @see  #NBSP
+   * @see  Text#nbsp(int)
+   * @see  Text#NBSP
    */
   default Text nbsp() throws IOException {
     return nbsp(1);
@@ -107,8 +107,8 @@ public interface Text extends Encode {
    *
    * @return  {@code this} writer
    *
-   * @see  #nbsp()
-   * @see  #NBSP
+   * @see  Text#nbsp()
+   * @see  Text#NBSP
    */
   default Text nbsp(int count) throws IOException {
     try (TextWriter tmw = text()) {

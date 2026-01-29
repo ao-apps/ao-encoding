@@ -46,8 +46,8 @@ public final class XhtmlAttributeWriter extends WhitespaceWriter implements Xhtm
    * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
    * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
    *                         This allows the indentation to be coordinated between nested content types.
-   * @param  isNoClose  Called to determine result of {@link #isNoClose()}
-   * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer,
+   * @param  isNoClose  Called to determine result of {@link XhtmlAttributeWriter#isNoClose()}
+   * @param  closer  Called on {@link XhtmlAttributeWriter#close()}, which may optionally perform final suffix write and/or close the underlying writer,
    *                 will only be called to be idempotent, implementation can assume will only be called once.
    */
   public XhtmlAttributeWriter(
@@ -67,8 +67,8 @@ public final class XhtmlAttributeWriter extends WhitespaceWriter implements Xhtm
    *
    * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
    *
-   * @see  #DEFAULT_IS_NO_CLOSE
-   * @see  #DEFAULT_CLOSER
+   * @see  XhtmlAttributeWriter#DEFAULT_IS_NO_CLOSE
+   * @see  XhtmlAttributeWriter#DEFAULT_CLOSER
    */
   public XhtmlAttributeWriter(
       EncodingContext encodingContext,

@@ -46,8 +46,8 @@ public final class ShWriter extends WhitespaceWriter implements Text, Sh {
    * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
    * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
    *                         This allows the indentation to be coordinated between nested content types.
-   * @param  isNoClose  Called to determine result of {@link #isNoClose()}
-   * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer,
+   * @param  isNoClose  Called to determine result of {@link ShWriter#isNoClose()}
+   * @param  closer  Called on {@link ShWriter#close()}, which may optionally perform final suffix write and/or close the underlying writer,
    *                 will only be called to be idempotent, implementation can assume will only be called once.
    */
   public ShWriter(
@@ -67,8 +67,8 @@ public final class ShWriter extends WhitespaceWriter implements Text, Sh {
    *
    * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
    *
-   * @see  #DEFAULT_IS_NO_CLOSE
-   * @see  #DEFAULT_CLOSER
+   * @see  ShWriter#DEFAULT_IS_NO_CLOSE
+   * @see  ShWriter#DEFAULT_CLOSER
    */
   public ShWriter(
       EncodingContext encodingContext,

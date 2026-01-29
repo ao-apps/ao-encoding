@@ -205,7 +205,7 @@ public enum Doctype {
   /**
    * The default doctype for older implementations that do not set any.
    *
-   * @see  #HTML5
+   * @see  Doctype#HTML5
    */
   public static final Doctype DEFAULT = Doctype.HTML5;
 
@@ -313,7 +313,7 @@ public enum Doctype {
    * Does this doctype support <a href="https://datatracker.ietf.org/doc/html/rfc3987">RFC 3987 IRI</a>.
    * Unicode format URLs?
    *
-   * @deprecated  Please use {@link #getSupportsIRI()} instead.
+   * @deprecated  Please use {@link Doctype#getSupportsIRI()} instead.
    */
   // TODO: Remove in 8.0.0 release
   @Deprecated

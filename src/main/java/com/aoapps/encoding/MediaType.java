@@ -599,7 +599,7 @@ public enum MediaType {
   }
 
   /**
-   * Delegates to {@link #getContentType()}.
+   * Delegates to {@link MediaType#getContentType()}.
    */
   @Override
   public String toString() {

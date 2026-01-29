@@ -48,10 +48,10 @@ public interface ValidMediaInput {
    * <p>Please note that this validator only needs to block invalid characters for {@code inputType}.  This validator
    * does not need to let through all characters, just block the invalid.  This is a one-way optimization.</p>
    *
-   * <p>This is almost the inverse operation of {@link #isValidatingMediaInputType(com.aoapps.encoding.MediaType)}, with
+   * <p>This is almost the inverse operation of {@link ValidMediaInput#isValidatingMediaInputType(com.aoapps.encoding.MediaType)}, with
    * the exception of characters only invalid due to nested encodings.</p>
    *
-   * @see  #canSkipValidation(com.aoapps.encoding.MediaType)
+   * @see  ValidMediaInput#canSkipValidation(com.aoapps.encoding.MediaType)
    *
    * @return {@code true} when this validator will throw exceptions on all invalid characters from the given {@code inputType}
    */
@@ -62,10 +62,10 @@ public interface ValidMediaInput {
    * validator is already known to be valid with the given media type.  This may be done when every valid character
    * for the given media type is also valid within this validator.
    *
-   * <p>This is almost the inverse operation of {@link #isValidatingMediaInputType(com.aoapps.encoding.MediaType)}, with
+   * <p>This is almost the inverse operation of {@link ValidMediaInput#isValidatingMediaInputType(com.aoapps.encoding.MediaType)}, with
    * the exception of characters only invalid due to nested encodings.</p>
    *
-   * @see  #isValidatingMediaInputType(com.aoapps.encoding.MediaType)
+   * @see  ValidMediaInput#isValidatingMediaInputType(com.aoapps.encoding.MediaType)
    *
    * @return {@code true} when all valid characters of the given {@code outputType} are also valid on this validator
    */

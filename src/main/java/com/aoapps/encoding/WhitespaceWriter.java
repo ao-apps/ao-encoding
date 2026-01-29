@@ -47,8 +47,8 @@ public abstract class WhitespaceWriter extends MediaWriter implements Whitespace
    * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
    * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
    *                         This allows the indentation to be coordinated between nested content types.
-   * @param  isNoClose  Called to determine result of {@link #isNoClose()}
-   * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer,
+   * @param  isNoClose  Called to determine result of {@link WhitespaceWriter#isNoClose()}
+   * @param  closer  Called on {@link WhitespaceWriter#close()}, which may optionally perform final suffix write and/or close the underlying writer,
    *                 will only be called to be idempotent, implementation can assume will only be called once.
    */
   WhitespaceWriter(
@@ -66,7 +66,7 @@ public abstract class WhitespaceWriter extends MediaWriter implements Whitespace
   /**
    * {@inheritDoc}
    *
-   * @return  {@link #indentDelegate} when present, otherwise {@code this}
+   * @return  {@link WhitespaceWriter#indentDelegate} when present, otherwise {@code this}
    */
   @Override
   Whitespace getIndentDelegate() {

@@ -34,7 +34,7 @@ import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
- * The type of serialization ({@link #SGML} or {@link #XML}).
+ * The type of serialization ({@link Serialization#SGML} or {@link Serialization#XML}).
  *
  * @author  AO Industries, Inc.
  */
@@ -74,7 +74,7 @@ public enum Serialization {
   /**
    * The default serialization for older implementations that do not set any.
    *
-   * @see  #XML
+   * @see  Serialization#XML
    */
   public static final Serialization DEFAULT = Serialization.XML;
 

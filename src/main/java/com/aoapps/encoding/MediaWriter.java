@@ -86,8 +86,8 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
    * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
    * @param  indentDelegate  When non-null, indentation depth is get/set on the provided {@link Whitespace}, otherwise tracks directly on this writer.
    *                         This allows the indentation to be coordinated between nested content types.
-   * @param  isNoClose  Called to determine result of {@link #isNoClose()}
-   * @param  closer  Called on {@link #close()}, which may optionally perform final suffix write and/or close the underlying writer,
+   * @param  isNoClose  Called to determine result of {@link MediaWriter#isNoClose()}
+   * @param  closer  Called on {@link MediaWriter#close()}, which may optionally perform final suffix write and/or close the underlying writer,
    *                 will only be called to be idempotent, implementation can assume will only be called once.
    */
   @SuppressWarnings({"AssertWithSideEffects", "LeakingThisInConstructor", "OverridableMethodCallInConstructor"})
@@ -143,7 +143,7 @@ public abstract class MediaWriter extends EncoderWriter implements ValidMediaFil
   /**
    * Gets the indentation delegate that should be used for sub-writers.
    *
-   * @return  {@link #indentDelegate} when present, otherwise {@code null} for none
+   * @return  {@link MediaWriter#indentDelegate} when present, otherwise {@code null} for none
    */
   Whitespace getIndentDelegate() {
     return indentDelegate;

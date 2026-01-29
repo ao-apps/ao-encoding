@@ -65,32 +65,32 @@ public interface Whitespace {
    *
    * @return  {@code this} writer
    *
-   * @see  #NL
-   * @see  #nli()
-   * @see  #nli(int)
+   * @see  Whitespace#NL
+   * @see  Whitespace#nli()
+   * @see  Whitespace#nli(int)
    */
   Whitespace nl() throws IOException;
 
   /**
-   * Writes a newline, followed by current indentation when {@linkplain #getIndent() indentation enabled}.
+   * Writes a newline, followed by current indentation when {@linkplain Whitespace#getIndent() indentation enabled}.
    *
    * <p>This is {@code '\n'} on all platforms.  If a different newline is required,
    * such as {@code "\r\n"} for email, filter the output.</p>
    *
    * @return  {@code this} writer
    *
-   * @see  #nli(int)
-   * @see  #nl()
-   * @see  #indent()
-   * @see  #getIndent()
-   * @see  #setIndent(boolean)
+   * @see  Whitespace#nli(int)
+   * @see  Whitespace#nl()
+   * @see  Whitespace#indent()
+   * @see  Whitespace#getIndent()
+   * @see  Whitespace#setIndent(boolean)
    */
   default Whitespace nli() throws IOException {
     return nli(0);
   }
 
   /**
-   * Writes a newline, followed by current indentation with a depth offset when {@linkplain #getIndent() indentation enabled}.
+   * Writes a newline, followed by current indentation with a depth offset when {@linkplain Whitespace#getIndent() indentation enabled}.
    *
    * <p>This is {@code '\n'} on all platforms.  If a different newline is required,
    * such as {@code "\r\n"} for email, filter the output.</p>
@@ -100,11 +100,11 @@ public interface Whitespace {
    *
    * @return  {@code this} writer
    *
-   * @see  #nli()
-   * @see  #nl()
-   * @see  #indent(int)
-   * @see  #getIndent()
-   * @see  #setIndent(boolean)
+   * @see  Whitespace#nli()
+   * @see  Whitespace#nl()
+   * @see  Whitespace#indent(int)
+   * @see  Whitespace#getIndent()
+   * @see  Whitespace#setIndent(boolean)
    */
   default Whitespace nli(int depthOffset) throws IOException {
     nl();
@@ -112,33 +112,33 @@ public interface Whitespace {
   }
 
   /**
-   * Writes the current indentation when {@linkplain #getIndent() indentation enabled}.
+   * Writes the current indentation when {@linkplain Whitespace#getIndent() indentation enabled}.
    *
    * @return  {@code this} writer
    *
-   * @see  #indent(int)
-   * @see  #INDENT_SPACES
-   * @see  #nli()
-   * @see  #getIndent()
-   * @see  #setIndent(boolean)
+   * @see  Whitespace#indent(int)
+   * @see  Whitespace#INDENT_SPACES
+   * @see  Whitespace#nli()
+   * @see  Whitespace#getIndent()
+   * @see  Whitespace#setIndent(boolean)
    */
   default Whitespace indent() throws IOException {
     return indent(0);
   }
 
   /**
-   * Writes the current indentation with a depth offset when {@linkplain #getIndent() indentation enabled}.
+   * Writes the current indentation with a depth offset when {@linkplain Whitespace#getIndent() indentation enabled}.
    *
    * @param  depthOffset  A value added to the current indentation depth.
    *                      For example, pass {@code -1} when performing a newline before a closing tag or ending curly brace.
    *
    * @return  {@code this} writer
    *
-   * @see  #indent()
-   * @see  #INDENT_SPACES
-   * @see  #nli(int)
-   * @see  #getIndent()
-   * @see  #setIndent(boolean)
+   * @see  Whitespace#indent()
+   * @see  Whitespace#INDENT_SPACES
+   * @see  Whitespace#nli(int)
+   * @see  Whitespace#getIndent()
+   * @see  Whitespace#setIndent(boolean)
    */
   default Whitespace indent(int depthOffset) throws IOException {
     if (getIndent()) {
@@ -205,8 +205,8 @@ public interface Whitespace {
    *
    * @return  {@code this} writer
    *
-   * @see  #sp(int)
-   * @see  #SPACE
+   * @see  Whitespace#sp(int)
+   * @see  Whitespace#SPACE
    */
   default Whitespace sp() throws IOException {
     return sp(1);
@@ -219,8 +219,8 @@ public interface Whitespace {
    *
    * @return  {@code this} writer
    *
-   * @see  #sp()
-   * @see  #SPACE
+   * @see  Whitespace#sp()
+   * @see  Whitespace#SPACE
    */
   Whitespace sp(int count) throws IOException;
   // </editor-fold>

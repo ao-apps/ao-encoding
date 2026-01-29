@@ -64,7 +64,7 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
    * if character validation is required.</p>
    *
    * <p>Media encoder implementations are extremely light weight.  Although they can be reused after calling
-   * {@link #writeSuffixTo(java.lang.Appendable, boolean)}, there is likely no benefit in caching or reusing
+   * {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)}, there is likely no benefit in caching or reusing
    * instances.  The only possible exception would be any {@link BufferedEncoder}, which currently is only
    * the encoders for {@link MediaType#URL}; however, since URLs are generally fairly short, the reuse of underlying
    * buffers would be of marginal benefit.</p>
@@ -348,9 +348,9 @@ public abstract class MediaEncoder implements Encoder, ValidMediaFilter {
   /**
    * {@inheritDoc}
    *
-   * <p>This default implementation calls {@link #writeSuffixTo(java.lang.Appendable, boolean)} without trimming.</p>
+   * <p>This default implementation calls {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)} without trimming.</p>
    *
-   * @deprecated  Please use {@link #writeSuffixTo(java.lang.Appendable, boolean)} while specifying desired trim.
+   * @deprecated  Please use {@link MediaEncoder#writeSuffixTo(java.lang.Appendable, boolean)} while specifying desired trim.
    */
   @Deprecated
   @Override
