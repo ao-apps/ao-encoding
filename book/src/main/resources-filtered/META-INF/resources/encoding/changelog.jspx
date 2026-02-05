@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-10-29T20:03:30-05:00"
-    dateModified="2026-01-30T13:20:10Z"
+    dateModified="2026-02-05T18:09:30Z"
   >
     <c:set var="latestRelease" value="7.1.0" />
     <c:if test="${
@@ -477,7 +477,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
           <code>ChainWriter</code> will never wrap a <code>PrintWriter</code> with another <code>PrintWriter</code>,
           even when <code>autoFlush</code> settings do not match.
         </li>
-        <li>Added <code>Coercion</code> support for <ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/CharSequence.html">CharSequence</ao:a>.</li>
+        <li>Added <code>Coercion</code> support for <ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/lang/CharSequence.html">CharSequence</ao:a>.</li>
         <li>Added <code>Coercion</code> support for <code>char[]</code>.</li>
         <li>
           <code>Coercion</code> now trims <code>String</code> and <code>CharSequence</code> based on
@@ -518,7 +518,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
         </li>
         <li>
           Removed <code>MediaException</code>, using
-          <ao:a rel="nofollow" href="@{javadoc.link.javase}java/io/UnsupportedEncodingException.html">UnsupportedEncodingException</ao:a> instead.
+          <ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/io/UnsupportedEncodingException.html">UnsupportedEncodingException</ao:a> instead.
         </li>
         <li>Completely removed <code>NewEncodingUtils</code>.</li>
       </ul>
