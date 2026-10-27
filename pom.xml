@@ -235,6 +235,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
                   jsr305-3.0.2.jar
                 -->
                 <Automatic-Module-Name>${module.name}</Automatic-Module-Name>
+                <Include-Resource>{maven-resources}</Include-Resource>
                 <Private-Package>!.</Private-Package>
               </instructions>
             </configuration>
