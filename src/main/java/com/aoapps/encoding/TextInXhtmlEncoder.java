@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -49,6 +49,9 @@ public final class TextInXhtmlEncoder extends MediaEncoder {
    *
    * @throws  InvalidCharacterException  if any text character cannot be converted to XHTML
    */
+  // TODO: Find standard encoders and verify our implementations against them in tests with them as test dependencies.
+  //       This way, we could keep our streaming implementation while also more stongly ensuring correctness.
+  //       Do for TextInXhtml and also all encodings where possible.  Also test for validators.
   private static String getEscapedCharacter(char c) throws InvalidCharacterException {
     // 0.0037849858401 ms per call with switch
     // 0.00360391125522 ms per call with if, no room to improve here
