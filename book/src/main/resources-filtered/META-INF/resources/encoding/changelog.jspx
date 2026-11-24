@@ -37,7 +37,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-10-29T20:03:30-05:00"
-    dateModified="2026-02-05T18:09:30Z"
+    dateModified="2026-11-24T15:22:18Z"
   >
     <c:set var="latestRelease" value="7.1.0" />
     <c:if test="${
@@ -61,6 +61,12 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
           </li>
         </ul>
         -->
+        <ul>
+          <li>
+            <ao:a href="apidocs/com.aoapps.encoding/com/aoapps/encoding/TextInShEncoder.html">TextInShEncoder</ao:a> was
+            incorrectly encoding <code>'\u001E'</code> to <code>"\\x1D"</code> due to a typo in the lookup table.
+          </li>
+        </ul>
       </changelog:release>
     </c:if>
 

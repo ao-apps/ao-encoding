@@ -1,6 +1,6 @@
 /*
  * ao-encoding - High performance streaming character encoding.
- * Copyright (C) 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021, 2022, 2024, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -79,7 +79,7 @@ public final class TextInShEncoder extends MediaEncoder {
       "\\x1B",
       "\\x1C",
       "\\x1D",
-      "\\x1D",
+      "\\x1E",
       "\\x1F"
   };
   private static final String[] HIGH_CONTROL = {
