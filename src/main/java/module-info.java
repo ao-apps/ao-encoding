@@ -1,5 +1,5 @@
 /*
- * ao-encoding - High performance streaming character encoding.
+ * ao-encoding - High performance, composable, streaming character encoding.
  * Copyright (C) 2021, 2022, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir

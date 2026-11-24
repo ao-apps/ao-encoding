@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-ao-encoding - High performance streaming character encoding.
+ao-encoding - High performance, composable, streaming character encoding.
 Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
@@ -47,7 +47,7 @@ along with ao-encoding.  If not, see <https://www.gnu.org/licenses/>.
     <!-- These values are copied from the project being documented -->
     <documented.artifactId>ao-encoding</documented.artifactId>
     <documented.name>AO Encoding</documented.name>
-    <documented.description>High performance streaming character encoding.</documented.description>
+    <documented.description>High performance, composable, streaming character encoding.</documented.description>
 
     <description.html><![CDATA[Documentation for <a target="${javadoc.target}" href="${project.url}">${documented.name}</a> in <a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a> format.]]></description.html>
   </properties>

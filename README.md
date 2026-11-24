@@ -16,7 +16,7 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?branch=master&project=com.aoapps%3Aao-encoding&metric=sqale_rating)](https://sonarcloud.io/component_measures?branch=master&id=com.aoapps%3Aao-encoding&metric=Maintainability)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?branch=master&project=com.aoapps%3Aao-encoding&metric=coverage)](https://sonarcloud.io/component_measures?branch=master&id=com.aoapps%3Aao-encoding&metric=Coverage)
 
-High performance streaming character encoding.
+High performance, composable, streaming character encoding.
 
 ## Project Links
 * [Project Home](https://oss.aoapps.com/encoding/)
